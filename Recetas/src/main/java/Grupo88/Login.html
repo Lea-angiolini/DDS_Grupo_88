@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<wicket:extend>
+			<div>
+
+				<form id="loginForm" method="get">
+					<fieldset id="login" class="center">
+						<legend>Login</legend>
+						<span>Nombre de Usuario: </span><input type="text" id="username" wicket:id="txtUsername" /><br>
+						<span>Contraseña: </span><input type="password" id="password" wicket:id="txtPassword" /><br>
+
+						<p>
+							<input type="submit" name="btnLogin" value="login" />
+
+						</p>
+					</fieldset>
+				</form>
+
+
+			</div>
+	</wicket:extend>
+</body>
+</html>

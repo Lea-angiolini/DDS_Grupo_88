@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ascii" />
+		<title>MasterPage</title>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	</head>
+	<body style="background-color: beige">
+		<div id="header" wicket:id="header" >header</div>
+		<div id="body">
+			<div id="left" wicket:id="menu">menu</div>
+			<wicket:child/>
+		</div>		
+		<div id="footer" wicket:id="footer">footer</div>
+	</body>
+</html>
