@@ -8,12 +8,13 @@
 	<wicket:extend>
 			<div>
 
-				<form id="loginForm" method="get">
+				<form id="frmLogin" wicket:id="FrmLogin" method="get">
 					<fieldset id="login" class="center">
 						<legend>Login</legend>
-						<span>Nombre de Usuario: </span><input type="text" id="username" wicket:id="txtUsername" /><br>
-						<span>Contraseña: </span><input type="password" id="password" wicket:id="txtPassword" /><br>
-
+						<p wicket:id="nombreDeMierda"></p>
+						<span>Nombre de Usuario: </span><input type="text" id="username" wicket:id="username" /><br>
+						<span>Contrasenia: </span><input type="password" id="password" wicket:id="password" /><br>
+						
 						<p>
 							<input type="submit" name="btnLogin" value="login" />
 

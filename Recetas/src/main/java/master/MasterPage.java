@@ -15,6 +15,7 @@ public class MasterPage extends WebPage {
 	private Component menuPanel;
 	private Component footerPanel;
 	
+
 	
 	public MasterPage() {
 		add(headerPanel = new HeaderPanel("header"));
