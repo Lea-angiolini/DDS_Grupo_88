@@ -36,7 +36,7 @@ public class Login extends MasterPage {
 		
 		private String username;
 		private String password;
-		private String nombreDeMierda;
+		private String lblError;
 
 		public FrmLogin(String id) {
 			super(id);			
@@ -44,21 +44,21 @@ public class Login extends MasterPage {
 
 			add(new TextField("username"));
 			add(new PasswordTextField("password"));
-			add(new Label("nombreDeMierda"));
+			add(new Label("lblError"));
 		}
-		/*
-		public String getUsername(){
+		
+		/*public String getUsername(){
 			return (String)username.getDefaultModelObject();
 		}
 		
 		public String getPassword(){
 			return (String)password.getDefaultModelObject();
-		}
-		*/
+		}*/
+		
 		public final void onSubmit(){
 			
-			if(password != "pass" && username != "usuario")
-				//lblError.setDefaultModelObject("Usuario incorrecto");
+			if(!password.equals("pass") && !username.equals("usuario"))
+				lblError = ("Usuario incorrecto");
 				
 				return;
 			
