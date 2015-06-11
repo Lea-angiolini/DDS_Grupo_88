@@ -1,0 +1,7 @@
+body{
+	background: url("../img/background-pizza.jpg");
+}
+
+.panel-info{
+	background: rgba(255, 255, 255, 0.7); 
+}

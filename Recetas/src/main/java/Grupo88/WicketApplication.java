@@ -1,6 +1,7 @@
 package Grupo88;
 
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
@@ -30,4 +31,5 @@ public class WicketApplication extends WebApplication
 
 		// add your configuration here
 	}
+	
 }
