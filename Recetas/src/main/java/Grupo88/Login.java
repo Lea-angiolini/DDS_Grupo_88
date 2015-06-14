@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.CompoundPropertyModel;
 
 import Database.Browser;
+import ObjetosDB.Usuario;
 
 
 
@@ -22,18 +23,13 @@ public class Login extends MasterPage {
 	//	private TextField<String> txtUsuario;
 //	private PasswordTextField txtPassword;
 //	
+	Usuario user;
+	
 	private FrmLogin frmLogin;
 	public Login(){
 		super();
 		getMenuPanel().setVisible(false);
-		
-///////////////////////
-	
-		ConexionDB.conectarDB(); //Esto no va a ir aca
-		
-//////////////////////
-		
-		
+			
 		add(frmLogin = new FrmLogin("FrmLogin"));
 		
 		frmLogin.add(new Link("registrarse"){
@@ -46,13 +42,6 @@ public class Login extends MasterPage {
 			}
 		});
 		
-		frmLogin.add(new Link("login"){
-			
-			public void onClick() {
-				
-				setResponsePage(Inicio.class);
-			}
-		});
 		
 		frmLogin.add(new Link("buscarReceta"){
 			
@@ -92,11 +81,11 @@ public class Login extends MasterPage {
 			return (String)password.getDefaultModelObject();
 		}*/
 		
-		public final void onSubmit()
+		public final void onSubmit() 
 		{
 			
 			if(Browser.Login(username, password)){
-				
+				user = Browser.cargarUsuario(username);
 				setResponsePage(Inicio.class);
 			}
 			else {

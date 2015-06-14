@@ -1,3 +1,8 @@
+CREATE USER 'llevaYtrae'@'localhost' identified by 'gil';
+GRANT SELECT, UPDATE, DELETE, INSERT ON grupo88.* TO 'llevaYtrae'@'localhost';
+
+
+
 drop database if exists Grupo88;
 Create database Grupo88;
 
@@ -61,7 +66,7 @@ CREATE TABLE Grupo88.Grupos(
 
 CREATE TABLE Grupo88.Usuarios(
 	nombreUsuario varchar(30) primary key,
-	clave varchar(30) not null,
+	clave varchar(120) not null,
     nombre varchar(30) not null,
     apellido varchar(30) not null,
     sexo char(1) not null,
@@ -128,7 +133,30 @@ BEGIN
     where nombre = nombreBuscar;
 END $$
 
+USE `Grupo88` $$
+CREATE PROCEDURE `SP_Login`(
+	in username varchar(30),
+	in pass varchar(120),
+    out bResp boolean
+)
+BEGIN
+	
+    IF EXISTS( SELECT 1 FROM usuarios 
+				WHERE nombreUsuario = username AND
+				clave = pass)
+	THEN
+		SET bResp = true;
+	ELSE
+		SET bResp = false;
+	END IF;
+END $$
 
-CALL `Grupo88`.`ObtenerRecetas`('pollo');
+CREATE PROCEDURE SP_CargarUsuario(
+	IN username varchar(30)
+)
+BEGIN
+
+	SELECT * FROM usuarios where nombreUsuario = username;
+END $$
 DELIMITER ;
 

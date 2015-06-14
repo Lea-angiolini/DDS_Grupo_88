@@ -2,6 +2,7 @@ package Database;
 
 import java.sql.*;
 
+import javax.swing.JOptionPane;
 import javax.swing.text.TableView;
 
 import ObjetosDB.Usuario;
@@ -9,31 +10,61 @@ import ObjetosDB.Usuario;
 
 public class Factory {
 	
-	private Connection con;
+	static private Connection con;
 	
 	public Factory(){
-		try{
-			con = DriverManager.getConnection("jdbc:mysql://localhost/recetasWicket", "aplicacion", "recetas");
+		try {
+		    Class.forName("com.mysql.jdbc.Driver").newInstance();
+		    //JOptionPane.showMessageDialog(null,"Registro exitoso");
+	
+		} catch (Exception ex) {
+	
+			//JOptionPane.showMessageDialog(null, e, "Error en el registro "+e.getMessage(), JOptionPane.ERROR_MESSAGE);
+			ex.printStackTrace();
 		}
-		catch (Exception ex){
-			//TODO: Hacer algo con la excepcion
+		
+		con = null;
+		//...
+	
+		try {
+	
+		    con = DriverManager.getConnection(
+		            "jdbc:mysql://localhost/grupo88?"
+		            + "user=llevaYtrae&password=gil&noAccessToProcedureBodies=true");
+		    
+		    if (con == null)
+		    	throw new SQLException("No se pudo abrir la conexion.");
+		    //JOptionPane.showMessageDialog(null,"conectado exitoso");
+		    
+		} catch (SQLException ex) {
+	
+			JOptionPane.showMessageDialog(null, ex, "Error al conectar"+ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+			//ex.printStackTrace();
 		}
+		
 	}
 	
-	public Boolean loguearUsuario(String user, String password){
+	public Boolean loguearUsuario(String user, String password) {
 		Boolean resp = false;
 		try
 		{
-			CallableStatement cmd = con.prepareCall("{call SP_Login(?,?,?)}");
+			CallableStatement cmd;
+			cmd = con.prepareCall("{call SP_Login(?,?,?)}");
 			
-			cmd.setString("pUsuario", user);
-			cmd.setString("pPassword", password);
-			cmd.registerOutParameter("bResp", Types.BOOLEAN);
-			resp = cmd.execute();
-		
+			cmd.setString(1, user); // MySQL es re puto y quiere los numeros
+			
+			cmd.setString(2, password); // MySQL es re puto y quiere los numeros
+			
+			cmd.registerOutParameter(3, Types.BOOLEAN); // MySQL es re puto y quiere los numeros
+			cmd.execute();
+			
+			resp = cmd.getBoolean(3);
+			
+			
 		}
-		catch(SQLException ex){
+		catch(Exception ex){
 			
+			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 		return resp;
 	}
@@ -42,10 +73,10 @@ public class Factory {
 		ResultSet rs = null;
 		Usuario user = new Usuario();
 		try {
-			CallableStatement cmd = con.prepareCall("{call SP_CargarUsuario(?,?)}");
+			CallableStatement cmd = con.prepareCall("{call SP_CargarUsuario(?)}");
 			
-			cmd.setString("pUsuario", nombreUsuario);
-			cmd.registerOutParameter("usuarioACargar", Types.REF_CURSOR);
+			cmd.setString(1, nombreUsuario);
+			//cmd.registerOutParameter(2, Types.REF_CURSOR);
 			rs = cmd.executeQuery();
 			if(rs.next()){
 				user.setAltura(rs.getInt("altura"));
@@ -55,10 +86,11 @@ public class Factory {
 				user.setRutina(rs.getString("rutina"));
 				user.setSexo(rs.getString("sexo").charAt(0));
 			}
+			JOptionPane.showMessageDialog(null, ""+user.getAltura()+" "+user.getNombre());
 			
 		}
 		catch(SQLException ex){
-			
+			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 		return user;
 		

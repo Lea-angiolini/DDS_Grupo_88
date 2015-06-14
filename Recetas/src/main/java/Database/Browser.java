@@ -12,9 +12,9 @@ import ObjetosDB.Usuario;
 
 public class Browser {
 	
-	public static Boolean Login(String username, String password){
+	public static Boolean Login(String username, String password) {
 		Factory f = new Factory();
-		return f.loguearUsuario(username, password);		
+		return f.loguearUsuario(username, password);
 	}
 	
 	public static Usuario cargarUsuario(String username){
