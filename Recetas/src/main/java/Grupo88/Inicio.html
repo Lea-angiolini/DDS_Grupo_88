@@ -1,26 +1,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 
 	<wicket:extend>
-		<div>
 			<form id="frmInicio" wicket:id="FrmInicio" method="post">
 				<fieldset id="inicio" class="center">
-					<legend>Menu Principal</legend>
-						<span>Bienvenido!</span><br>
-						<button type="button" name="btnBuscarReceta" wicket:id="buscarReceta">Buscar Receta</button>
-						<button type="button" name="btnGestionarReceta" wicket:id="gestionarRecetas">Gestionar Recetas</button>
-						<button type="button" name="btnGestionarPerfil" wicket:id="gestionarPerfil">Gestionar Perfil</button>
-						<button type="button" name="btnSalir" wicket:id="salir">Salir</button>
+                    <div class="container">    
+					        <div id="menu-inicio" class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">                    
+					            <div class="panel panel-info">
+					                    <div class="panel-heading">
+					                        <div class="panel-title"><span class="glyphicon glyphicon-home"></span> Menú Principal</div>
+					                    </div>     
+					
+					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
+                                            <div >
+	                                            <div class="row" style="background:white;border-radius:2px; margin: 10px 0px;">
+	                                                <p><strong>B</strong>ienvenido a su Menú de Inicio, eliga un opción o verifique su historial de recetas o las recetas más populares.</p>
+	                                            </div>
+					
+	                                            <div class="row">
+	                                            
+	                                                <div class="col-md-3">
+	                                                    <button type="button" name="btnBuscarReceta" wicket:id="buscarReceta" class="menu-button btn btn-success">
+	                                                    <span class="glyphicon glyphicon-search"></span> Buscar Receta</button>
+	                                                </div>
+	                                                <div class="col-md-3">
+	                                                    <button type="button" name="btnGestionarReceta" wicket:id="gestionarRecetas" class="menu-button btn btn-default">
+	                                                    <span class="glyphicon glyphicon-pencil"></span> Gestionar Recetas</button>
+	                                                </div>
+	                                                <div class="col-md-3">
+	                                                    <button type="button" name="btnGestionarPerfil" wicket:id="gestionarPerfil" class="menu-button btn btn-danger">
+	                                                    <span class="glyphicon glyphicon-user"></span> Gestionar Perfil</button>
+	                                                </div>
+	                                                <div class="col-md-3">
+	                                                    <button type="button" name="btnSalir" wicket:id="salir" class="menu-button btn btn-warning">
+	                                                    <span class="glyphicon glyphicon-log-out"></span> Salir</button>
+	                                                </div>
+	                
+	                                            
+	                                            </div>
+					                        </div>
+					                   </div>                     
+					               </div>  
+					        </div>
+					        
+					        <div id="historial" class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">                    
+					            <div class="panel panel-info">
+					                    <div class="panel-heading">
+					                        <div class="panel-title"><span class="glyphicon glyphicon-th-list"></span> Historial</div>
+					                    </div>     
+					
+					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
+                                            <div style="background:white;border-radius:2px; margin: 10px 0px;">
+					
+	                                            <table class="table">
+	                                            	<thead>
+	                                            		<tr>
+	                                            			<th>Titulo 1</th>
+															<th>Titulo 2</th>
+	                                            			<th>Titulo 3</th>
+	                                            		</tr>
+	                                            	</thead>
+	                                            	<tbody>
+	                                            		<tr>
+	                                            			<td>Campo 1</td>
+	                                            			<td>Campo 2</td>
+	                                            			<td>Campo 3</td>
+	                                            		</tr>
+	                                            		<tr>
+	                                            			<td>Campo 1</td>
+	                                            			<td>Campo 2</td>
+	                                            			<td>Campo 3</td>
+	                                            		</tr>
+	                                            		<tr>
+	                                            			<td>Campo 1</td>
+	                                            			<td>Campo 2</td>
+	                                            			<td>Campo 3</td>
+	                                            		</tr>
+	                                            		<tr>
+	                                            			<td>Campo 1</td>
+	                                            			<td>Campo 2</td>
+	                                            			<td>Campo 3</td>
+	                                            		</tr>
+	                                            	</tbody>
+	                                            </table>
+												
+					                        </div>
+					                   </div>                     
+					               </div>  
+					        </div>
+					        
+					        <div id="top-recetas" class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">                    
+					            <div class="panel panel-info">
+					                    <div class="panel-heading">
+					                        <div class="panel-title"><span class="glyphicon glyphicon-th-list"></span> Recetas Más Populares</div>
+					                    </div>     
+					
+					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
+                                            <div style="background:white;border-radius:2px; margin: 10px 0px;">
+					
+	                                            <table class="table">
+	                                            	<thead>
+	                                            		<tr>
+	                                            			<th>Posición</th>
+	                                            			<th>Titulo 1</th>
+															<th>Titulo 2</th>
+	                                            			<th>Titulo 3</th>
+	                                            		</tr>
+	                                            	</thead>
+	                                            	<tbody>
+	                                            		<tr>
+	                                            			<td>1.</td>
+	                                            			<td>Campo 1</td>
+	                                            			<td>Campo 2</td>
+	                                            			<td>Campo 3</td>
+	                                            		</tr>
+	                                            		<tr>
+	                                            			<td>2.</td>
+	                                            			<td>Campo 1</td>
+	                                            			<td>Campo 2</td>
+	                                            			<td>Campo 3</td>
+	                                            		</tr>
+	                                            		<tr>
+	                                            			<td>3.</td>
+	                                            			<td>Campo 1</td>
+	                                            			<td>Campo 2</td>
+	                                            			<td>Campo 3</td>
+	                                            		</tr>
+	                                            		<tr>
+	                                            			<td>4.</td>
+	                                            			<td>Campo 1</td>
+	                                            			<td>Campo 2</td>
+	                                            			<td>Campo 3</td>
+	                                            		</tr>
+	                                            	</tbody>
+	                                            </table>
+												
+					                        </div>
+					                   </div>                     
+					               </div>  
+					        </div>
+                    </div>
+						
 				</fieldset>
-				<br>
-				
 			</form>
-		</div>
 	</wicket:extend>
 </body>
 </html>
