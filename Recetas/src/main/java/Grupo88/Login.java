@@ -96,6 +96,7 @@ public class Login extends MasterPage {
 		{
 			
 			if(Browser.Login(username, password)){
+				
 				setResponsePage(Inicio.class);
 			}
 			else {
