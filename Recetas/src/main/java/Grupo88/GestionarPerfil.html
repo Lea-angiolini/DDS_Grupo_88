@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<wicket:extend>
+		<div>
+			<form id="frmGestionarPerfil" wicket:id="FrmGestionarPerfil" method="post">
+				<fieldset id="gestionarPerfil" class="center">
+					<legend>Gestionar Perfil</legend>
+	 						<span>Nombre: </span><input type="text" id="nombre" wicket:id="nombre"/><br><br> 
+ 	  						<label>Sexo:</label><wicket:container wicket:id="sexo">
+ 	  						<input type="radio" id="femenino" value="femenino"/>femenino
+ 	  						<input type="radio" id="masculino" value="masculino"/>masculino</wicket:container><br><br>
+	 						<span>Edad:</span><input type="number" min="0" id="edad" wicket:id="edad"/><br><br> 
+	 						<span>Altura:</span><input type="number" min="0" id="altura" wicket:id="altura"><br><br> 
+	 						<span>Complexion:</span><select wicket:id="complexion" name="complexion">
+	 						<option value="cargar"></option></select><br><br>
+ 	 						<span>Dieta:</span><select wicket:id="dieta" name="dieta">
+ 	 						<option value="cargar"></option></select><br><br>  
+ 	 						<label>Preferencias Alimenticias:</label><br>
+ 	 						<span wicket:id="preferenciasAlimenticias"></span>
+ 	 						<label>Condiciones Preexistentes:</label><br>
+ 	 						<span wicket:id="condicionesPreexistentes"></span>
+ 	 						<button type="button" name="btnGuardar">Guardar</button>
+ 	 						<button type="button" name="btnCancelar" wicket:id="cancelar">Cancelar</button>
+				</fieldset>
+			</form>
+		</div>
+	</wicket:extend>
+</body>
+</html>

@@ -23,45 +23,39 @@ import org.apache.wicket.Session;
 
 import Grupo88.Login.FrmLogin;
 
-public class AltaUsuario extends MasterPage {	
+public class GestionarRecetas extends MasterPage {	
 	
-	private FrmAltaUsuario frmAltaUsuario;
+	private FrmGestionarRecetas frmGestionarRecetas;
 	
-	public AltaUsuario(){
+	public GestionarRecetas(){
 		super();
 		getMenuPanel().setVisible(false);
 		
-		add(frmAltaUsuario = new FrmAltaUsuario("FrmAltaUsuario"));
+		add(frmGestionarRecetas = new FrmGestionarRecetas("FrmGestionarRecetas"));
 		
-		frmAltaUsuario.add(new Link("cancelar"){
+		frmGestionarRecetas.add(new Link("agregarReceta"){
 			
-			@Override
-			public void onClick() {
-			
-				setResponsePage(Login.class);
-				
+			public void onClick(){
+			setResponsePage(AgregarReceta.class);
 			}
 		});
+		
+		frmGestionarRecetas.add(new Link("volver"){
+			
+			public void onClick(){
+			setResponsePage(Inicio.class);
+			}
+		});
+		
 	}
 	
-	public class FrmAltaUsuario extends Form {
+	public class FrmGestionarRecetas extends Form {
 		
 		
-		private String username;
-		private String password;
-		private String repPassword;
-		private String email;
-		
-
-		public FrmAltaUsuario(String id) {
+		public FrmGestionarRecetas(String id) {
 			super(id);			
 			setDefaultModel(new CompoundPropertyModel(this));
 
-			add(new TextField("username"));
-			add(new PasswordTextField("password"));
-			add(new PasswordTextField("repPassword"));
-			add(new EmailTextField("email"));
-			//add(new Button("registrarse"));
 			
 		}
 		

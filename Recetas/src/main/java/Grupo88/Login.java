@@ -35,7 +35,22 @@ public class Login extends MasterPage {
 				setResponsePage(AltaUsuario.class);
 			}
 		});
-
+		
+		frmLogin.add(new Link("login"){
+			
+			public void onClick() {
+				
+				setResponsePage(Inicio.class);
+			}
+		});
+		
+		frmLogin.add(new Link("buscarReceta"){
+			
+			public void onClick() {
+				
+				setResponsePage(BuscarReceta.class);
+			}
+		});
 		
 	}
 	
@@ -67,16 +82,27 @@ public class Login extends MasterPage {
 			return (String)password.getDefaultModelObject();
 		}*/
 		
-		public final void onSubmit(){
+		public final void onSubmit()
+		{
 			
-			if(!password.equals("pass") && !username.equals("usuario"))
+			if(!password.equals("pass") && !username.equals("usuario")){
 				lblError = ("Usuario incorrecto");
 				
-				return;
 			
+			}
+			/*else{
+				frmLogin.add(new Link("login"){
+				
+				public void onClick() {
+					
+					setResponsePage(Inicio.class);
+				}
+			});
+			
+			}*/
+				
 		}
 		
-		
-		
 	}
+		
 }

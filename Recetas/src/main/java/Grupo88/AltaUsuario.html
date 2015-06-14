@@ -8,22 +8,18 @@
 	<wicket:extend>
 		<div>
 			<form id="frmAltaUsuario" wicket:id="FrmAltaUsuario" method="post">
-				<fieldset id="login" class="center">
+				<fieldset id="altaUsuario" class="center">
 					<legend>Alta de Usuario</legend>
 						<span>Nombre de Usuario: </span><input type="text" id="username" wicket:id="username" /><br><br>
 						<span>Contrasenia: </span><input type="password" id="password" wicket:id="password" /><br><br>
 						<span>Repetir Contrasenia: </span><input type="password" id="repPassword" wicket:id="repPassword" /><br><br>
 						<span>E-mail: </span><input type="email" id="email" wicket:id="email" /><br>
+						<button type="button" name="btnConfirmar">Confirmar</button>
+						<button type="button" name="btnCancelar" wicket:id="cancelar">Cancelar</button>
+						
 				</fieldset>
 				<br>
-				<input type="button" name="btnConfirmar" value="confirmar" />
-				
-				
 			</form>
-			
-				<input type="button"name="btnCancelar" value="cancelar" wicket:id="cancelar" />
-				
-		
 		</div>
 		
 	</wicket:extend>

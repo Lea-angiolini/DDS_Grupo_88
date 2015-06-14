@@ -21,47 +21,59 @@ import org.apache.wicket.model.PropertyModel;
 import org.eclipse.jetty.server.Server;
 import org.apache.wicket.Session;
 
+import Grupo88.AltaUsuario.FrmAltaUsuario;
 import Grupo88.Login.FrmLogin;
 
-public class AltaUsuario extends MasterPage {	
+public class Inicio extends MasterPage {
+
+	private FrmInicio frmInicio;
 	
-	private FrmAltaUsuario frmAltaUsuario;
-	
-	public AltaUsuario(){
+	public Inicio(){
 		super();
 		getMenuPanel().setVisible(false);
 		
-		add(frmAltaUsuario = new FrmAltaUsuario("FrmAltaUsuario"));
+		add(frmInicio = new FrmInicio("FrmInicio"));
 		
-		frmAltaUsuario.add(new Link("cancelar"){
+		frmInicio.add(new Link("salir"){
 			
-			@Override
 			public void onClick() {
-			
-				setResponsePage(Login.class);
+			setResponsePage(Login.class);
 				
 			}
 		});
+		
+		frmInicio.add(new Link("gestionarRecetas"){
+			
+			public void onClick(){
+			setResponsePage(GestionarRecetas.class);
+			}
+		});
+		
+		frmInicio.add(new Link("gestionarPerfil"){
+			
+			public void onClick(){
+			setResponsePage(GestionarPerfil.class);
+			}
+		});
+		
+		
+		frmInicio.add(new Link("buscarReceta"){
+			
+			public void onClick() {
+				
+				setResponsePage(BuscarReceta.class);
+			}
+		});
+		
 	}
 	
-	public class FrmAltaUsuario extends Form {
+	public class FrmInicio extends Form {
 		
-		
-		private String username;
-		private String password;
-		private String repPassword;
-		private String email;
 		
 
-		public FrmAltaUsuario(String id) {
+		public FrmInicio(String id) {
 			super(id);			
 			setDefaultModel(new CompoundPropertyModel(this));
-
-			add(new TextField("username"));
-			add(new PasswordTextField("password"));
-			add(new PasswordTextField("repPassword"));
-			add(new EmailTextField("email"));
-			//add(new Button("registrarse"));
 			
 		}
 		

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<wicket:extend>
+		<div>
+			<form id="frmAgregarReceta" wicket:id="FrmAgregarReceta" method="post">
+				<fieldset id="AgregarReceta" class="center">
+					<legend>Agregar Receta</legend><br>
+					<span>Nombre de Receta:</span><input type="text" id="nombreReceta" wicket:id="nombreReceta"/><br><br>
+					
+					<!--Crear lista de ingredientes -->
+					
+					<label>Ingredientes:</label>
+					<input type="text" id="ingrediente" wicket:id="ingrediente"/>
+					<input type="button" name="btnBuscar" value="buscar"/>
+					<input type="button" name="btnNuevoIngrediente" value="nuevo ingrediente"/>
+					<input type="text" id="nuevoIngrediente" wicket:id="nuevoIngrediente" placeholder="nombre de ingrediente"/>
+					<input type="number" min="0" id="calorias" wicket:id="calorias" placeholder="calorias del ingrediente"/>
+					<input type="button" name="btnGuardarIngrediente" value="guardar ingrediente"/><br>
+					<label>Resultados de la busqueda:</label><br>
+					<ul><li><label>Ingrediente 1</label><input type="button" name="btnAgregar" value="+"/></li>
+						<li><label>Ingrediente 2</label><input type="button" name="btnAgregar" value="+"/></li>
+					</ul><br>
+					<label>Ingredientes de la receta:</label><br>
+					<table>
+							<thead>
+							<tr>
+								<td>Ingrediente</td>
+								<td>Cantidad</td>
+								<td></td>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>Ingrediente 1</td>
+								<td><input type="number" min="0" id="cantidad"/></td>
+								<td><input type="button" name="brnQuitarIngrediente" value="-"></td>
+							</tr>
+							<tr>
+								<td>Ingrediente 2</td>
+								<td><input type="number" min="0" id="cantidad"/></td>
+								<td><input type="button" name="brnQuitarIngrediente" value="-"></td>
+							</tr>
+	 						</tbody>					 
+					</table><br><br>
+					
+					<!--Crear lista de condimentos -->
+					
+					<label>Condimentos:</label>
+					<input type="text" id="condimento" wicket:id="condimento"/>
+					<input type="button" name="btnBuscar2" value="buscar"/>
+					<input type="button" name="btnNuevoCondimento" value="nuevo condimento"/>
+					<input type="text" id="nuevoCondimento" wicket:id="nuevoCondimento" placeholder="nombre de condimento"/>
+					<input type="text" id="tipoCondimento" wicket:id="tipoCondimento" placeholder="tipo de condimento"/>
+					<input type="button" name="btnGuardarCondimento" value="guardar condimento"/><br>
+					<label>Resultados de la busqueda:</label><br>
+					<ul><li><label>Condimento 1</label><input type="button" name="btnAgregar2" value="+"/></li>
+						<li><label>Condimento 2</label><input type="button" name="btnAgregar2" value="+"/></li>
+					</ul><br>
+					<label>Condimentos de la receta:</label><br>
+					<table>
+							<thead>
+							<tr>
+								<td>Condimento</td>
+								<td>Tipo de Condimento</td>
+								
+								<td></td>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>Condimento 1</td>
+								<td><input type="text" id="tipoCondimento"/></td>
+								<td><input type="button" name="brnQuitarCondimento" value="-"></td>
+							</tr>
+							<tr>
+								<td>Condimento 2</td>
+								<td><input type="text" id="tipoCondimento"/></td>
+								<td><input type="button" name="brnQuitarCondimento" value="-"></td>
+							</tr>
+	 						</tbody>					 
+					</table><br><br>
+					<label>Procedimiento:</label><br>
+					<label>Paso 1:</label><br>
+					<textarea rows="5" cols="40"></textarea>
+					<input type="file" name="flFoto1" id="foto1"/><br>
+					<input type="button" name="btnAgregarPaso" value="agregar paso"/><br><br><!-- Al hacer click tiene que replicar lo que hay en el paso 1 -->
+					<label>Dificultad:</label>
+						<wicket:container wicket:id="dificultad">
+ 	  						<input type="radio" id="1" value="1"/>
+ 	  						<input type="radio" id="2" value="2"/>
+ 	  						<input type="radio" id="2" value="3"/>
+ 	  						<input type="radio" id="2" value="4"/>
+ 	  						<input type="radio" id="2" value="5"/>
+ 	  					</wicket:container><br><br>
+ 	  				<span>Temporada:</span><select wicket:id="temporada" name="temporada">
+ 	 				<option value="cargar"></option></select><br><br> 
+ 	 				<label>Calorias Totales:</label> 
+ 	 				<input type="number" id="caloriasTotales" wicket:id="caloriasTotales" disabled/><br><br>
+ 	 				<label>Clasificacion:</label><br>
+ 	 				<span wicket:id="clasificacion"></span><br>
+ 	 				<label>Calificacion:</label>
+ 	 					<wicket:container wicket:id="calificacion">
+ 	  						<input type="radio" id="1" value="1"/>
+ 	  						<input type="radio" id="2" value="2"/>
+ 	  						<input type="radio" id="2" value="3"/>
+ 	  						<input type="radio" id="2" value="4"/>
+ 	  						<input type="radio" id="2" value="5"/>
+ 	  					</wicket:container><br><br>
+ 	  				<span>Grupo Alimenticio:</span><select wicket:id="grupoAlimenticio" name="grupoAlimenticio">
+ 	 				<option value="cargar"></option></select><br><br>  
+ 	 				<button type="button" name="btnGuardarReceta">Guardar Receta</button>
+ 	 				<button type="button" name="btnCancelar" wicket:id="cancelar">Cancelar</button>
+				</fieldset>
+			</form>
+		</div>
+	</wicket:extend>
+</body>
+</html>

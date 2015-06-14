@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<wicket:extend>
+		<div>
+			<form id="frmBuscarReceta" wicket:id="FrmBuscarReceta" method="post">
+				<fieldset id="buscarReceta" class="center">
+					<legend>Buscar Receta</legend>
+					<label>Filtros</label><br><br>
+					<span>Temporada:</span><select wicket:id="temporada" name="temporada">
+ 	 				<option value="cargar"></option></select><br><br>
+ 	 				<span>Cantidad de calorias:</span><input type="number" id="calorias" wicket:id="calorias"/><br><br>
+ 	 				<span>Grupo Alimenticio:</span><select wicket:id="grupoAlimenticio" name="grupoAlimenticio">
+ 	 				<option value="cargar"></option></select><br><br>
+ 	 				<span>Ingrediente Principal:</span><select wicket:id="ingredientePrincipal" name="ingredientePrincipal">
+ 	 				<option value="cargar"></option></select><br><br> 
+ 	 				<span>Dificultad:</span><select wicket:id="dificultad" name="dificultad">
+ 	 				<option value="cargar"></option></select><br><br> 
+ 	 				<button type="button" name="btnBuscarReceta" wicket:id="buscarReceta">Buscar Recetas</button>
+ 	 				<button type="button" name="btnSeleccionarReceta" wicket:id="seleccionarReceta">Seleccionar Receta</button>
+ 	 				<button type="button" name="btnVolver" wicket:id="volver">Volver</button>
+				</fieldset>
+			</form>
+		</div>
+	</wicket:extend>
+</body>
+</html>
