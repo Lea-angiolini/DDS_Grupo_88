@@ -1,27 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Registración</title>
 </head>
 <body>
 	<wicket:extend>
 		<div>
 			<form id="frmAltaUsuario" wicket:id="FrmAltaUsuario" method="post">
 				<fieldset id="altaUsuario" class="center">
-					<legend>Alta de Usuario</legend>
-						<span>Nombre de Usuario: </span><input type="text" id="username" wicket:id="username" /><br><br>
-						<span>Contrasenia: </span><input type="password" id="password" wicket:id="password" /><br><br>
-						<span>Repetir Contrasenia: </span><input type="password" id="repPassword" wicket:id="repPassword" /><br><br>
-						<span>E-mail: </span><input type="email" id="email" wicket:id="email" /><br>
-						<button type="button" name="btnConfirmar">Confirmar</button>
-						<button type="button" name="btnCancelar" wicket:id="cancelar">Cancelar</button>
-						
+					<div id="signupbox" style="display:block; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+						<div class="panel panel-info">
+					    	<div class="panel-heading">
+					        	<div class="panel-title">Registración</div>   
+					        </div>  
+					        <div class="panel-body">
+					        	<form id="signupform" class="form-horizontal" role="form">
+					            	<div id="signupalert" style="display:none" class="alert alert-danger">
+					                	<p>Error:</p>
+						                <span></span>
+						            </div>
+						            
+						            <div class="form-group">
+					              		<label for="username" class="col-md-4 control-label">Nombre de usuario</label>
+					                   		<div class="col-md-8">
+					                        	<input type="text" class="form-control" name="username" id="username" wicket:id="username" placeholder="Nombre de usuario">
+					                        </div>
+					                </div>					                                    
+					                <div class="form-group">
+					                	<label for="password" class="col-md-4 control-label">Contraseña</label>
+					                    <div class="col-md-8">
+					                    	<input type="password" class="form-control" name="password" id="password" wicket:id="password" placeholder="Contraseña">
+					                    </div>
+					                </div>
+					                <div class="form-group">
+					                	<label for="repPassword" class="col-md-4 control-label">Repetir contraseña</label>
+					                	<div class="col-md-8">
+					                    	<input type="password" class="form-control" name="repPassword" id="repPassword" wicket:id="repPassword" placeholder="Repetir contraseña">
+					                    </div>
+					                </div>					                                    
+					                <div class="form-group">
+					                	<label for="icode" class="col-md-4 control-label">E-mail</label>
+					                    <div class="col-md-8">
+					                    	<input type="email" class="form-control" name="email" id="email" wicket:id="email" placeholder="E-mail">
+					                    </div>
+					                </div>
+					                <div class="form-group">
+					                	<!-- Button -->                                  
+					                    <div class="col-md-offset-7 col-md-5 text-right">
+					                    	<br>
+					                    	<button id="btnCancelar" type="button" class="btn btn-info" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
+					                    	<button id="btnConfirmar" type="button" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span>&nbsp;Confirmar</button>
+					                    </div>
+					                </div>
+					        	</form>
+					        </div>
+					    </div>
+					</div>					
 				</fieldset>
 				<br>
 			</form>
 		</div>
-		
+
 	</wicket:extend>
 </body>
 </html>
