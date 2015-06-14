@@ -1,7 +1,7 @@
 body{
 	background: url("../img/background-pizza.jpg");
 	background-repeat: no-repeat;
-	background-position-y: 5%;
+	background-position-y: -25px;
 	background-size: 100%;
 }
 
