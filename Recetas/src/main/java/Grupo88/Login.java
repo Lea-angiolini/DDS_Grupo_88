@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.CompoundPropertyModel;
 
 
+
 public class Login extends MasterPage {
 
 /**
@@ -23,6 +24,13 @@ public class Login extends MasterPage {
 	public Login(){
 		super();
 		getMenuPanel().setVisible(false);
+		
+///////////////////////
+	
+		ConexionDB.conectarDB(); //Esto no va a ir aca
+		
+//////////////////////
+		
 		
 		add(frmLogin = new FrmLogin("FrmLogin"));
 		
