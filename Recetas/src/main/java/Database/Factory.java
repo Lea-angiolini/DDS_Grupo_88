@@ -38,7 +38,7 @@ public class Factory {
 		return resp;
 	}
 	
-	public Usuario cargarUsuario(String nombreUsuario){
+	public Usuario cargarDatosBasicosDe(String nombreUsuario){
 		ResultSet rs = null;
 		Usuario user = new Usuario();
 		try {
