@@ -9,6 +9,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.CompoundPropertyModel;
 
+import Database.Browser;
+
 
 
 public class Login extends MasterPage {
@@ -93,21 +95,12 @@ public class Login extends MasterPage {
 		public final void onSubmit()
 		{
 			
-			if(!password.equals("pass") && !username.equals("usuario")){
-				lblError = ("Usuario incorrecto");
-				
-			
+			if(Browser.Login(username, password)){
+				setResponsePage(Inicio.class);
 			}
-			/*else{
-				frmLogin.add(new Link("login"){
-				
-				public void onClick() {
-					
-					setResponsePage(Inicio.class);
-				}
-			});
-			
-			}*/
+			else {
+				lblError = "Usuario incorrecto";
+			}
 				
 		}
 		
