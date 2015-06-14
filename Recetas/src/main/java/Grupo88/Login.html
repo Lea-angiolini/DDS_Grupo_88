@@ -40,9 +40,9 @@
 					                                    <!-- Button -->
 					
 					                                    <div class="col-sm-12 controls">
-															<button type="submit" name="btnLogin" class="btn btn-success" wicket:id="login"><span class="glyphicon glyphicon-log-in"/>&nbsp;&nbsp;Iniciar sesión</button>
-															<button type="button" name="btnRegistro" class="btn btn-primary" wicket:id="registrarse"><span class="glyphicon glyphicon-edit"/> Registrarse</button>
-															<button type="button" name="btnBuscarReceta" class="btn btn-warning" wicket:id="buscarReceta"><span class="glyphicon glyphicon-search"/> Buscar Receta</button>
+															<button type="submit" id="btnLogin" class="btn btn-success" wicket:id="login"><span class="glyphicon glyphicon-log-in"/>&nbsp;&nbsp;Iniciar sesión</button>
+															<button type="button" id="btnRegistro" class="btn btn-primary" wicket:id="registrarse"><span class="glyphicon glyphicon-edit"/> Registrarse</button>
+															<button type="button" id="btnBuscarReceta" class="btn btn-warning" wicket:id="buscarReceta"><span class="glyphicon glyphicon-search"/> Buscar Receta</button>
 															<p wicket:id="lblError"></p>
 					                                    </div>
 					                                </div> 
@@ -59,11 +59,9 @@
 						
 					</fieldset>
 				</form>
-				
-				<form>
-					<!--  <input type="submit" name="btnRegistro" class="btn btn-primary" value="Registrarse" wicket:id="registrarse" />-->
-				</form>
+
 			</div>
 	</wicket:extend>
+	<script src="js/login.js"></script>
 </body>
 </html>
