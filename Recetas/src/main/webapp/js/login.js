@@ -1,3 +1,3 @@
 $("#btnRegistro").click(function() {
-	$("#loginbox").fadeIn("slow");
+	$("#loginbox").fadeOut("slow");
 });
