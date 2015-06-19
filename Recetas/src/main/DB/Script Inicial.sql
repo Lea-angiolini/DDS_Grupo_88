@@ -1,10 +1,10 @@
-CREATE USER 'llevaYtrae'@'localhost' identified by 'gil';
-GRANT SELECT, UPDATE, DELETE, INSERT ON grupo88.* TO 'llevaYtrae'@'localhost';
-
-
-
 drop database if exists Grupo88;
 Create database Grupo88;
+
+DROP USER 'llevaYtrae'@'localhost';
+CREATE USER 'llevaYtrae'@'localhost' identified by 'gil';
+GRANT SELECT, UPDATE, DELETE, INSERT, EXECUTE ON grupo88.* TO 'llevaYtrae'@'localhost';
+
 
 create table Grupo88.Recetas(
 	idReceta int(11) primary key auto_increment,
@@ -114,14 +114,22 @@ CREATE TABLE Grupo88.PreferenciasAlimenticias(
     descripcion varchar(120) not null
 );
 
+insert into Grupo88.dificultad(descripcion)
+values('Facil'),
+	  ('Media'),
+	  ('Dificil');
+
 insert into Grupo88.usuarios
 values('jorge','pass','jorge','gomez','M',170,null,null),
 	  ('maria','pass','maria','rodriguez','F',150,null,null);
 
 insert into Grupo88.Recetas(nombre,creador,idDificultad)
-values('Pollo al horno','jorge',null),
-	  ('milanesas napolitana','maria',null),
-      ('Pulpo en su tinta',null,null);
+values('Pollo al horno','jorge',2),
+	  ('milanesas napolitana','maria',1),
+      ('Pulpo en su tinta',null,3),
+      ('ñoquis','maria',2),
+      ('Pan con queso',null,1),
+      ('Pizza','jorge',1);
     
 
 DELIMITER $$
@@ -157,6 +165,17 @@ CREATE PROCEDURE SP_CargarUsuario(
 BEGIN
 
 	SELECT * FROM usuarios where nombreUsuario = username;
+END $$
+
+CREATE PROCEDURE SP_RecetasPopulares(
+)
+BEGIN
+
+	SELECT rec.nombre, rec.creador, dif.descripcion 
+    FROM recetas rec 
+    JOIN dificultad dif
+    ON rec.idDificultad = dif.idDificultad
+    LIMIT 10;
 END $$
 DELIMITER ;
 

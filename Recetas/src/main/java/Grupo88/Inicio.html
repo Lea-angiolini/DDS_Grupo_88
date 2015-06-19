@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
+<style>
+$("#botonMenu").click(function(){
+    alert("dfddf");
+    //$("button").hide();
+});
+
+</style>
 <body>
 
 	<wicket:extend>
@@ -30,11 +38,11 @@
 	                                                </div>
 	                                                <div class="col-md-3">
 	                                                    <button type="button" name="btnGestionarReceta" wicket:id="gestionarRecetas" class="menu-button btn btn-default">
-	                                                    <span class="glyphicon glyphicon-pencil"></span> Gestionar Recetas</button>
+	                                                    <span class="glyphicon glyphicon-book"></span> Historial</button>
 	                                                </div>
 	                                                <div class="col-md-3">
-	                                                    <button type="button" name="btnGestionarPerfil" wicket:id="gestionarPerfil" class="menu-button btn btn-danger">
-	                                                    <span class="glyphicon glyphicon-user"></span> Gestionar Perfil</button>
+	                                                    <button id="botonMenu" type="button" name="btnGestionarPerfil" wicket:id="gestionarPerfil" class="menu-button btn btn-danger">
+	                                                    <span class="glyphicon glyphicon-user"></span> Recetas Populares</button>
 	                                                </div>
 	                                                <div class="col-md-3">
 	                                                    <button type="button" name="btnSalir" wicket:id="salir" class="menu-button btn btn-warning">
@@ -48,6 +56,24 @@
 					               </div>  
 					        </div>
 					        
+					        
+					        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+					        	<ul class="nav nav-tabs pagination">
+								  
+								  <li class="button">
+								      <a>Historial</a>
+								  </li>
+								  
+								  <li class="button">
+								      <a>Recetas Populares</a>
+								  </li>
+								  
+								</ul>
+					        
+					        </div>
+					        
+					        
+					        
 					        <div id="historial" class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">                    
 					            <div class="panel panel-info">
 					                    <div class="panel-heading">
@@ -57,7 +83,7 @@
 					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
                                             <div style="background:white;border-radius:2px; margin: 10px 0px;">
 					
-	                                            <table class="table">
+	                                            <table class="table table table-hover">
 	                                            	<thead>
 	                                            		<tr>
 	                                            			<th>Titulo 1</th>
@@ -104,41 +130,30 @@
                                             <div style="background:white;border-radius:2px; margin: 10px 0px;">
 					
 	                                            <table class="table">
-	                                            	<thead>
-	                                            		<tr>
-	                                            			<th>Posición</th>
-	                                            			<th>Titulo 1</th>
-															<th>Titulo 2</th>
-	                                            			<th>Titulo 3</th>
-	                                            		</tr>
-	                                            	</thead>
+
 	                                            	<tbody>
-	                                            		<tr>
-	                                            			<td>1.</td>
-	                                            			<td>Campo 1</td>
-	                                            			<td>Campo 2</td>
-	                                            			<td>Campo 3</td>
+	                                            		<tr wicket:id="tablaPopulares">
+	                                            			<td> <a class="btn hover" wicket:id="bt"> 
+	                                            			<ol class="list-inline">
+																 <li>Receta:</li><span wicket:id="campo1" style="padding-right: 100px;"></span>
+																 <li>Creador:</li><span wicket:id="campo2" style="padding-right: 100px;"></span>
+																 <li  style="padding-left: 150px;">Dificultad:</li><span wicket:id="campo3"></span><br>
+																 <dl class="dl-horizontal">
+																	  <dt>Descripcion:</dt>
+																	  <dd>Una receta de mierda para que te atragantes y te mueras</dd>
+																 </dl>																
+																</ol> </a></td>
 	                                            		</tr>
-	                                            		<tr>
-	                                            			<td>2.</td>
-	                                            			<td>Campo 1</td>
-	                                            			<td>Campo 2</td>
-	                                            			<td>Campo 3</td>
-	                                            		</tr>
-	                                            		<tr>
-	                                            			<td>3.</td>
-	                                            			<td>Campo 1</td>
-	                                            			<td>Campo 2</td>
-	                                            			<td>Campo 3</td>
-	                                            		</tr>
-	                                            		<tr>
-	                                            			<td>4.</td>
-	                                            			<td>Campo 1</td>
-	                                            			<td>Campo 2</td>
-	                                            			<td>Campo 3</td>
-	                                            		</tr>
+	                                            		
 	                                            	</tbody>
 	                                            </table>
+												
+												
+												<br><br><br>
+												
+
+												
+												
 												
 					                        </div>
 					                   </div>                     

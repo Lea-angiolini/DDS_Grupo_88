@@ -5,10 +5,12 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.chainsaw.Main;
 
 import Database.Factory;
-import ObjetosDB.Usuario;
+import ObjetosDB.*;
 
 public class Browser {
 	
@@ -24,5 +26,11 @@ public class Browser {
 		//user.setDietas(f.cargarDietas(user.getUsername()));
 		//user.setCondiciones(f.cargarCondiciones(user.getUsername()));
 		return user;
+	}
+	
+	public static Recetas cargarRecetasPopulares(){
+		Factory f = new Factory();
+		Recetas recetas = f.cargarRecetasPopulares();
+		return recetas;
 	}
 }

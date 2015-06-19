@@ -3,9 +3,10 @@ package Database;
 import java.sql.*;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.text.TableView;
 
-import ObjetosDB.Usuario;
+import ObjetosDB.*;
 
 
 public class Factory {
@@ -94,5 +95,33 @@ public class Factory {
 		}
 		return user;
 		
+	}
+	
+	public Recetas cargarRecetasPopulares()
+	{
+		ResultSet rs = null;
+		Recetas recetas = new Recetas();
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("{call SP_RecetasPopulares()}");
+			
+			rs = cmd.executeQuery();
+			
+			
+			while (rs.next()){
+				
+				recetas.agregarNuevaReceta(rs.getString("nombre"), 
+										   rs.getString("creador"), 
+										   rs.getString("descripcion"));
+				
+				
+		}
+		}
+		catch(SQLException ex){
+			
+		}
+		
+		return recetas;
 	}
 }
