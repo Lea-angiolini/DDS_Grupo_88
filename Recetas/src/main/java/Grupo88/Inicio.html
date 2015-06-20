@@ -6,10 +6,6 @@
 </head>
 
 <style>
-$("#botonMenu").click(function(){
-    alert("dfddf");
-    //$("button").hide();
-});
 
 </style>
 <body>
@@ -37,11 +33,11 @@ $("#botonMenu").click(function(){
 	                                                    <span class="glyphicon glyphicon-search"></span> Buscar Receta</button>
 	                                                </div>
 	                                                <div class="col-md-3">
-	                                                    <button type="button" name="btnGestionarReceta" wicket:id="gestionarRecetas" class="menu-button btn btn-default">
+	                                                    <button type="button" name="btnGestionarReceta" wicket:id="historial" class="menu-button btn btn-default">
 	                                                    <span class="glyphicon glyphicon-book"></span> Historial</button>
 	                                                </div>
 	                                                <div class="col-md-3">
-	                                                    <button id="botonMenu" type="button" name="btnGestionarPerfil" wicket:id="gestionarPerfil" class="menu-button btn btn-danger">
+	                                                    <button id="botonMenu" type="button" name="btnGestionarPerfil" wicket:id="recetasPopulares" class="menu-button btn btn-danger">
 	                                                    <span class="glyphicon glyphicon-user"></span> Recetas Populares</button>
 	                                                </div>
 	                                                <div class="col-md-3">
@@ -55,75 +51,15 @@ $("#botonMenu").click(function(){
 					                   </div>                     
 					               </div>  
 					        </div>
-					        
-					        
-					        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-					        	<ul class="nav nav-tabs pagination">
-								  
-								  <li class="button">
-								      <a>Historial</a>
-								  </li>
-								  
-								  <li class="button">
-								      <a>Recetas Populares</a>
-								  </li>
-								  
-								</ul>
-					        
-					        </div>
-					        
-					        
-					        
-					        <div id="historial" class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">                    
-					            <div class="panel panel-info">
-					                    <div class="panel-heading">
-					                        <div class="panel-title"><span class="glyphicon glyphicon-th-list"></span> Historial</div>
-					                    </div>     
-					
-					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
-                                            <div style="background:white;border-radius:2px; margin: 10px 0px;">
-					
-	                                            <table class="table table table-hover">
-	                                            	<thead>
-	                                            		<tr>
-	                                            			<th>Titulo 1</th>
-															<th>Titulo 2</th>
-	                                            			<th>Titulo 3</th>
-	                                            		</tr>
-	                                            	</thead>
-	                                            	<tbody>
-	                                            		<tr>
-	                                            			<td>Campo 1</td>
-	                                            			<td>Campo 2</td>
-	                                            			<td>Campo 3</td>
-	                                            		</tr>
-	                                            		<tr>
-	                                            			<td>Campo 1</td>
-	                                            			<td>Campo 2</td>
-	                                            			<td>Campo 3</td>
-	                                            		</tr>
-	                                            		<tr>
-	                                            			<td>Campo 1</td>
-	                                            			<td>Campo 2</td>
-	                                            			<td>Campo 3</td>
-	                                            		</tr>
-	                                            		<tr>
-	                                            			<td>Campo 1</td>
-	                                            			<td>Campo 2</td>
-	                                            			<td>Campo 3</td>
-	                                            		</tr>
-	                                            	</tbody>
-	                                            </table>
-												
-					                        </div>
-					                   </div>                     
-					               </div>  
-					        </div>
-					        
+					        		 
+		
+		<div wicket:id="contentArea"></div>
+		     
+		<wicket:fragment wicket:id="listaRecetas"> 
 					        <div id="top-recetas" class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">                    
 					            <div class="panel panel-info">
 					                    <div class="panel-heading">
-					                        <div class="panel-title"><span class="glyphicon glyphicon-th-list"></span> Recetas Más Populares</div>
+					                        <div class="panel-title"><span class="glyphicon glyphicon-th-list"></span><span wicket:id="nombreGrilla"></span></div>
 					                    </div>     
 					
 					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
@@ -132,8 +68,8 @@ $("#botonMenu").click(function(){
 	                                            <table class="table">
 
 	                                            	<tbody>
-	                                            		<tr wicket:id="tablaPopulares">
-	                                            			<td> <a class="btn hover" wicket:id="bt"> 
+	                                            		<div class="container" style="display: table-row;" wicket:id="tablaPopulares">
+	                                            			 <button type="button" style="display: table-cell; margin-left:auto; margin-right:auto; clear:both; weight=100%;"class="box" wicket:id="bt"> 
 	                                            			<ol class="list-inline">
 																 <li>Receta:</li><span wicket:id="campo1" style="padding-right: 100px;"></span>
 																 <li>Creador:</li><span wicket:id="campo2" style="padding-right: 100px;"></span>
@@ -142,23 +78,111 @@ $("#botonMenu").click(function(){
 																	  <dt>Descripcion:</dt>
 																	  <dd>Una receta de mierda para que te atragantes y te mueras</dd>
 																 </dl>																
-																</ol> </a></td>
-	                                            		</tr>
+																</ol> </button>
+	                                            		</div>
 	                                            		
 	                                            	</tbody>
 	                                            </table>
-												
-												
-												<br><br><br>
-												
-
-												
-												
-												
 					                        </div>
 					                   </div>                     
 					               </div>  
 					        </div>
+					        
+					        </wicket:fragment>
+					      
+					        
+					        
+					        
+					        
+					        
+					      
+					<wicket:fragment wicket:id="buscarRecetas">
+					   
+					
+						<div id="top-recetas" class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">                    
+					            <div class="panel panel-info">
+					                    <div class="panel-heading">
+					                        <div class="panel-title"><span class="glyphicon glyphicon-th-list"></span><span wicket:id="nombreGrilla"></span></div>
+					                    </div>     
+					
+					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
+                                            <div style="background:transparent;border-radius:2px; margin: 10px 0px;">
+											<div class="row">
+												  <div class="col-md-4"><div class="form-group">
+									              		<label for="calorias" class="control-label">Calorías</label>
+									                   	<div >
+									                       	<input type="number" class="form-control" id="calorias" placeholder="Ingrese un número...">
+									                    </div>
+									                    <br>
+									                </div></div>
+									<div class="col-md-4"><div class="form-group">
+					              		<label for="grupoAlimenticio" class="control-label">Grupo Alimenticio</label>
+					                   	<div>
+					                       	<select class="form-control" id="grupoAlimenticio" placeholder="Seleccione uno...">
+					                       		<option value="cargar"></option>
+					                       	</select>
+					                    </div>
+					                    <br>
+					                </div></div>
+									<div class="col-md-4"><div class="form-group">
+					              		<label for="calificacion" class="control-label">Calificacion de usuarios</label>
+					                   	<div>
+					                       	<select class="form-control" id="calificacion" placeholder="Seleccione una calificacion...">
+					                       		<option value="cargar"></option>
+					                       	</select>
+					                    </div>
+					                    <br>
+					                </div></div>
+											</div>
+											<div class="row">
+												  <div class="col-md-4"><div class="form-group">
+					              		<label for="ingredientePrincipal" class="control-label">Ingrediente Principal</label>
+					                   	<div>
+					                       	<select class="form-control" id="ingredientePrincipal" placeholder="Seleccione uno...">
+					                       		<option value="cargar"></option>
+					                       	</select>
+					                    </div>
+					                    <br>
+					                </div></div>
+												  <div class="col-md-4"><div class="form-group">
+					              		<label for="temporada" class="control-label">Temporada</label>
+					                   	<div>
+					                       	<select class="form-control" id="temporada" placeholder="Seleccione una temporada...">
+					                       		<option value="cargar"></option>
+					                       	</select>
+					                    </div>
+					                    <br>
+					                </div></div>
+	                                              <div class="col-md-4"><div class="form-group">
+					              		<label for="dificultad" class="control-label">Dificultad</label>
+					                   	<div>
+					                       	<select class="form-control" id="dificultad" placeholder="Seleccione una...">
+					                       		<option value="cargar"></option>
+					                       	</select>
+					                    </div>
+					                    <br>
+					                </div></div>
+	                                        </div>
+	                                         <div class="row">
+	                                         <div class="col-md-10"></div>
+	                                         <div class="col-md-2"><button class="btn btn-success">Buscar Recetas</button></div>
+	                                          </div>   
+	                                            
+					                        </div>
+					                   </div>   
+					                   
+					                                    
+					               </div>  
+					        </div>
+
+
+					</wicket:fragment>
+
+					        
+					        
+					        
+					        
+					        
                     </div>
 						
 				</fieldset>

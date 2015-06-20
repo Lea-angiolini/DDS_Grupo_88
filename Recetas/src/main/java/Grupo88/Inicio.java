@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import master.MasterPage;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.core.request.mapper.BookmarkableMapper;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -18,7 +21,11 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.include.Include;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.Loop;
+import org.apache.wicket.markup.html.list.LoopItem;
+import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
@@ -54,17 +61,21 @@ public class Inicio extends MasterPage {
 			}
 		});
 		
-		frmInicio.add(new Link("gestionarRecetas"){
+		frmInicio.add(new Link("historial"){
 			
 			public void onClick(){
-			setResponsePage(GestionarRecetas.class);
+			//setResponsePage(GestionarRecetas.class);
+			Fragment fragment = new  FragmentoRecetasUsuario ("contentArea", "listaRecetas", frmInicio, "maria");
+			frmInicio.add(fragment);
 			}
 		});
 		
-		frmInicio.add(new Link("gestionarPerfil"){
+		frmInicio.add(new Link("recetasPopulares"){
 			
 			public void onClick(){
 			//setResponsePage(GestionarPerfil.class);
+				Fragment fragment = new  FragmentoRecetasPopulares ("contentArea", "listaRecetas", frmInicio);
+				frmInicio.add(fragment);
 			}
 		});
 		
@@ -73,16 +84,36 @@ public class Inicio extends MasterPage {
 			
 			public void onClick() {
 				
-				setResponsePage(BuscarReceta.class);
+				Fragment fragment = new  FragmentoBuscarRecetas ("contentArea", "buscarRecetas", frmInicio);
+				frmInicio.add(fragment);
 			}
 		});
+
+		frmInicio.add(new Label("contentArea",""));
+		
+	}
+	
+	public class FrmInicio extends Form {
 		
 		
+
+		public FrmInicio(String id) {
+			super(id);			
+			setDefaultModel(new CompoundPropertyModel(this));
+			
+		}
 		
-		
-		Recetas recetas = Browser.cargarRecetasPopulares();		
-		
-		frmInicio.add(new DataView("tablaPopulares",  new ListDataProvider(recetas.ObtenerColeccionRecetas())){
+		@Override
+		protected void onSubmit() {
+		// Va a conectarse con BD y comprobar las validaciones
+		super.onSubmit();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private DataView generarTabla(Recetas recetas){
+	
+		return (new DataView("tablaPopulares",  new ListDataProvider(recetas.ObtenerColeccionRecetas())){
 			@Override
 			protected void populateItem(Item item) {
 				// TODO Auto-generated method stub
@@ -107,36 +138,48 @@ public class Inicio extends MasterPage {
 				
 			}
 		});
-/*
-		Button boton = new Button("bt1"){
-			public void onSubmit() {
-				
-				setResponsePage(BuscarReceta.class);
-			};
-		};
-		
-		String span1;
-		span1 = "sadmpasdmam,sdmam,sdsad";
-		boton.add(new Label("span1",span1));
-		frmInicio.add(boton);*/
-				
-		
 	}
 	
-	public class FrmInicio extends Form {
-		
-		
+	 public class FragmentoRecetasPopulares extends Fragment {
+	        public FragmentoRecetasPopulares(String id, String markupId,MarkupContainer markupPorvider) {
+	        	
+	        	super(id, markupId, markupPorvider);
 
-		public FrmInicio(String id) {
-			super(id);			
-			setDefaultModel(new CompoundPropertyModel(this));
-			
-		}
-		
-		@Override
-		protected void onSubmit() {
-		// Va a conectarse con BD y comprobar las validaciones
-		super.onSubmit();
-		}
-	}
+	        	Recetas recetas = Browser.cargarRecetasPopulares();		
+	    		
+	        	markupPorvider.remove(id);
+	        	
+	        	add(new Label("nombreGrilla"," Recetas Más Populares"));
+	    		add(generarTabla(recetas));
+	            
+	        }
+	
+	 }
+	 
+	 
+	 public class FragmentoRecetasUsuario extends Fragment {
+	        public FragmentoRecetasUsuario(String id, String markupId,MarkupContainer markupPorvider, String usuario) {
+	        	
+	        	super(id, markupId, markupPorvider);
+
+	        	Recetas recetas = Browser.cargarRecetasUsuario(usuario);	
+	    		
+	        	markupPorvider.remove(id);
+	        	
+	        	add(new Label("nombreGrilla"," Historial"));
+	        	add(generarTabla(recetas));
+	            
+	        }
+	
+	 }
+	 
+	 public class FragmentoBuscarRecetas extends Fragment {
+	        public FragmentoBuscarRecetas(String id, String markupId,MarkupContainer markupPorvider) {
+	        	super(id, markupId, markupPorvider);
+	        	
+	        	markupPorvider.remove(id);
+	        	add(new Label("nombreGrilla"," Buscar Receta"));
+	        	
+	        }
+	 }
 }

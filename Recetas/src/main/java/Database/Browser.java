@@ -33,4 +33,10 @@ public class Browser {
 		Recetas recetas = f.cargarRecetasPopulares();
 		return recetas;
 	}
+	
+	public static Recetas cargarRecetasUsuario(String usuario){
+		Factory f = new Factory();
+		Recetas recetas = f.cargarRecetasUsuario(usuario);
+		return recetas;
+	}
 }

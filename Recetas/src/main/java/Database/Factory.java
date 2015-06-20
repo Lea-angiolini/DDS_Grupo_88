@@ -124,4 +124,34 @@ public class Factory {
 		
 		return recetas;
 	}
+	
+	public Recetas cargarRecetasUsuario(String usuario)
+	{
+		ResultSet rs = null;
+		Recetas recetas = new Recetas();
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("{call SP_RecetasUsuario(?)}");
+			cmd.setString(1, usuario);
+			
+			rs = cmd.executeQuery();
+			
+			
+			while (rs.next()){
+				
+				recetas.agregarNuevaReceta(rs.getString("nombre"), 
+										   rs.getString("creador"), 
+										   rs.getString("descripcion"));
+				
+				
+		}
+		}
+		catch(SQLException ex){
+			
+		}
+		
+		return recetas;
+	}
+	
 }

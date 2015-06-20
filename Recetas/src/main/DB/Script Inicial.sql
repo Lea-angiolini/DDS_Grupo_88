@@ -114,6 +114,14 @@ CREATE TABLE Grupo88.PreferenciasAlimenticias(
     descripcion varchar(120) not null
 );
 
+CREATE TABLE Grupo88.Historial(
+	idHistorial int auto_increment primary key,
+    fecha date not null,
+    idReceta int not null,
+    usuario varchar(30)
+);
+
+
 insert into Grupo88.dificultad(descripcion)
 values('Facil'),
 	  ('Media'),
@@ -129,8 +137,13 @@ values('Pollo al horno','jorge',2),
       ('Pulpo en su tinta',null,3),
       ('ñoquis','maria',2),
       ('Pan con queso',null,1),
-      ('Pizza','jorge',1);
+      ('Pizza','jorge',1),
+      ('Asado','jorge',2);
     
+
+insert into Grupo88.Historial(fecha,idReceta,usuario)
+values('27/08/2013',3,'jorge');
+
 
 DELIMITER $$
 USE `Grupo88` $$
@@ -177,5 +190,21 @@ BEGIN
     ON rec.idDificultad = dif.idDificultad
     LIMIT 10;
 END $$
+
+CREATE PROCEDURE SP_RecetasUsuario(
+in username varchar(30) 
+)
+BEGIN
+
+	SELECT rec.nombre, rec.creador, dif.descripcion 
+    FROM recetas rec 
+    JOIN dificultad dif
+    ON rec.idDificultad = dif.idDificultad
+    JOIN Historial his
+    ON his.usuario = username
+    WHERE rec.idReceta = his.idReceta
+    LIMIT 10;
+END $$
 DELIMITER ;
 
+call SP_RecetasUsuario('jorge');
