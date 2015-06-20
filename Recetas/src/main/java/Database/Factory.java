@@ -154,4 +154,64 @@ public class Factory {
 		return recetas;
 	}
 	
+	
+	public itemBuscador cargarItemBuscador(){
+		
+		ResultSet rsDificultad = null;
+		itemBuscador items = new itemBuscador();
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select * from Grupo88.dificultad");
+			
+			rsDificultad = cmd.executeQuery();
+			
+			while (rsDificultad.next()){
+				
+			items.setDificultad(rsDificultad.getString("descripcion"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select * from Grupo88.ingredientes");
+			
+			rsDificultad = cmd.executeQuery();
+			
+			while (rsDificultad.next()){
+				
+			items.setIngredientesPrincipal(rsDificultad.getString("nombre"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select * from Grupo88.temporadas");
+			
+			rsDificultad = cmd.executeQuery();
+			
+			while (rsDificultad.next()){
+				
+			items.setTemporada(rsDificultad.getString("nombreTemporada"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		return items;
+		
+	
+	}
 }

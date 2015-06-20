@@ -1,6 +1,7 @@
 package Grupo88;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 
@@ -16,8 +17,10 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.ListChoice;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
@@ -31,6 +34,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.eclipse.jetty.server.Server;
@@ -41,6 +45,7 @@ import Grupo88.AltaUsuario.FrmAltaUsuario;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.Recetas;
 import ObjetosDB.Recetas.Receta;
+import ObjetosDB.itemBuscador;
 
 public class Inicio extends MasterPage {
 
@@ -179,6 +184,13 @@ public class Inicio extends MasterPage {
 	        	
 	        	markupPorvider.remove(id);
 	        	add(new Label("nombreGrilla"," Buscar Receta"));
+	        	
+	        	itemBuscador items = Browser.cargarItemBuscador();
+	        	
+	        	IModel dropdownModel = new Model<String>("");
+	        	add(new DropDownChoice("dificultad",dropdownModel, items.getDificultades()));
+	        	add(new DropDownChoice("temporada",dropdownModel, items.getTemporadas()));
+	        	add(new DropDownChoice("ingrediente",dropdownModel, items.getIngredientesPrincipales()));
 	        	
 	        }
 	 }

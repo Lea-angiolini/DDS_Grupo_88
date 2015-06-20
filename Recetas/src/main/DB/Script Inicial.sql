@@ -121,6 +121,10 @@ CREATE TABLE Grupo88.Historial(
     usuario varchar(30)
 );
 
+CREATE TABLE Grupo88.Temporadas(
+	idTemporada int auto_increment primary key,
+    nombreTemporada varchar(50) not null
+);
 
 insert into Grupo88.dificultad(descripcion)
 values('Facil'),
@@ -142,8 +146,13 @@ values('Pollo al horno','jorge',2),
     
 
 insert into Grupo88.Historial(fecha,idReceta,usuario)
-values('27/08/2013',3,'jorge');
+values('2013-08-27',3,'jorge');
 
+insert into Grupo88.Temporadas(NombreTemporada)
+values('Verano'),('Otoño'),('Invierno'),('Primavera'),('Navidad'),('Pascua'),('Fechas de Final');
+
+insert into Grupo88.ingredientes(nombre,caloriasPorcion)
+values('Pollo',750),('Harina',150),('Pulpo',690),('Vacio',1200);
 
 DELIMITER $$
 USE `Grupo88` $$

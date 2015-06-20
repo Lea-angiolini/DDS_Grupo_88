@@ -39,4 +39,11 @@ public class Browser {
 		Recetas recetas = f.cargarRecetasUsuario(usuario);
 		return recetas;
 	}
+	
+	public static itemBuscador cargarItemBuscador(){
+		Factory f = new Factory();
+		itemBuscador item = f.cargarItemBuscador();
+		return item;
+	
+	}
 }
