@@ -109,9 +109,12 @@
                                             <div style="background:transparent;border-radius:2px; margin: 10px 0px;">
 											<div class="row">
 												  <div class="col-md-4"><div class="form-group">
-									              		<label for="calorias" class="control-label">Calorías</label>
-									                   	<div >
-									                       	<input type="number" class="form-control" id="calorias" placeholder="Ingrese un número...">
+									              		<label for="calorias" class="control-label">Calorías</label><br>
+									                   	<div class="col-md-6">
+									                       	<input type="number" class="form-control" id="caloriasMin" placeholder="Min">
+									                    </div>
+									                    <div  class="col-md-6">
+									                       	<input type="number" class="form-control" id="caloriasMax" placeholder="Max">
 									                    </div>
 									                    <br>
 									                </div></div>
@@ -165,7 +168,7 @@
 	                                        </div>
 	                                         <div class="row">
 	                                         <div class="col-md-10"></div>
-	                                         <div class="col-md-2"><button class="btn btn-success">Buscar Recetas</button></div>
+	                                         <div class="col-md-2"><button wicket:id="botonBuscar" class="btn btn-success">Buscar Recetas</button></div>
 	                                          </div>   
 	                                            
 					                        </div>

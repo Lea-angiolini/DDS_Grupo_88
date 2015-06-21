@@ -187,10 +187,24 @@ public class Inicio extends MasterPage {
 	        	
 	        	itemBuscador items = Browser.cargarItemBuscador();
 	        	
-	        	IModel dropdownModel = new Model<String>("");
-	        	add(new DropDownChoice("dificultad",dropdownModel, items.getDificultades()));
-	        	add(new DropDownChoice("temporada",dropdownModel, items.getTemporadas()));
-	        	add(new DropDownChoice("ingrediente",dropdownModel, items.getIngredientesPrincipales()));
+	        	final IModel dropdownModeldif = new Model<String>("");
+	        	final IModel dropdownModeltemp = new Model<String>("");
+	        	final IModel dropdownModelingr = new Model<String>("");
+	        	
+	        	add(new DropDownChoice("dificultad",dropdownModeldif, items.getDificultades()));
+	        	add(new DropDownChoice("temporada",dropdownModeltemp, items.getTemporadas()));
+	        	add(new DropDownChoice("ingrediente",dropdownModelingr, items.getIngredientesPrincipales()));
+	        	
+	        	add(new Button("botonBuscar") {
+				
+	        	public void onSubmit() {
+	        		
+	        		JOptionPane.showMessageDialog(null, "" + dropdownModeldif.getObject()+" "+
+	        											dropdownModeltemp.getObject()+" "+
+	        											dropdownModelingr.getObject());
+	        	}
+	        	});
+	        	
 	        	
 	        }
 	 }

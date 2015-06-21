@@ -11,6 +11,23 @@ public class itemBuscador {
 	List<String> dificultades = new ArrayList<String>();
 	List<String> gruposAlimenticios = new ArrayList<String>();
 	
+	public itemBuscador(){
+	// Array con los datos del menu desplegable
+	ingredientesPrincipales = new ArrayList<String>();
+	//ingredientesPrincipales.add("");
+	
+	temporadas = new ArrayList<String>();
+	//temporadas.add("");
+	
+	dificultades = new ArrayList<String>();
+	//dificultades.add("");
+	
+	gruposAlimenticios = new ArrayList<String>();
+	//gruposAlimenticios.add("");
+	
+	
+	}
+	
 	//setters por unidad
 	//getters Array completo
 	
