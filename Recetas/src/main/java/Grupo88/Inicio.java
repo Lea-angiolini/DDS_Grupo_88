@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import master.MasterPage;
+import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
@@ -57,6 +58,12 @@ public class Inicio extends MasterPage {
 	public Inicio(){
 		super();
 		getMenuPanel().setVisible(false);
+		
+		if(!((SesionUsuario)getSession()).estaLogueado())
+		{
+			setResponsePage(Login.class);
+		}
+		
 		
 		add(frmInicio = new FrmInicio("FrmInicio"));
 		

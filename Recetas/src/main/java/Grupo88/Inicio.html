@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 
 <style>
@@ -23,7 +24,7 @@
 					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
                                             <div >
 	                                            <div class="row" style="background:transparent;border-radius:2px; margin: 10px 0px;">
-	                                                <p><strong>B</strong>ienvenido a su Menú de Inicio, eliga un opción o verifique su historial de recetas o las recetas más populares.</p>
+	                                                <p><strong>B</strong>ienvenido a su Menú de Inicio, busque recetas, verifique su historial de recetas o las recetas más populares.</p>
 	                                            </div>
 					
 	                                            <div class="row">
@@ -38,7 +39,7 @@
 	                                                </div>
 	                                                <div class="col-md-3">
 	                                                    <button id="botonMenu" type="button" name="btnGestionarPerfil" wicket:id="recetasPopulares" class="menu-button btn btn-danger">
-	                                                    <span class="glyphicon glyphicon-user"></span> Recetas Populares</button>
+	                                                    <span class="glyphicon glyphicon-thumbs-up"></span> Recetas Populares</button>
 	                                                </div>
 	                                                <div class="col-md-3">
 	                                                    <button type="button" name="btnSalir" wicket:id="salir" class="menu-button btn btn-warning">
@@ -71,17 +72,18 @@
 
 	                                            	<tbody>
 	                                            		<div wicket:id="tablaPopulares">
-	                                            		<div  class="col-md-12">
+	                                            		
 	                                            			 <button type="button" class="box col-md-12" style="background-color: rgba(255, 255, 255, 0.8)" wicket:id="bt"> 
-	                                            			 <div class="row">
-																 <div class="col-md-4">Receta: <span wicket:id="campo1" style="padding-right: 100px;"></span></div>
-																 <div class="col-md-4">Creador:<span wicket:id="campo2" style="padding-right: 100px;"></span></div>
-																 <div class="col-md-4">Dificultad:<span wicket:id="campo3"></span></div><br>
+	                                            			 <div class="row" ALIGN=left>
+																 <div class="col-md-6">Receta: <span wicket:id="campo1" style="padding-right: 100px;"></span></div>
+																 <div class="col-md-3">Creador:<span wicket:id="campo2" style="padding-right: 100px;"></span></div>
+																 <div class="col-md-3">Dificultad:<span wicket:id="campo3"></span></div><br>
+																 <br>
 																 <dl class="dl-horizontal">
 																	  <dt>Descripcion:</dt>
 																	  <dd>Una receta de mierda para que te atragantes y te mueras</dd>
 																 </dl>																
-																</div> </button></div>
+																</div> </button>
 	                                            		</div>
 	                                            		
 	                                            	</tbody>
@@ -185,9 +187,11 @@
 					</wicket:fragment>   
 					        
                     </div>
-						
+
 				</fieldset>
 			</form>
 	</wicket:extend>
+	
+									
 </body>
 </html>
