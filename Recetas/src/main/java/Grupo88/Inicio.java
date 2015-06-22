@@ -28,6 +28,7 @@ import org.apache.wicket.markup.html.include.Include;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
@@ -70,7 +71,7 @@ public class Inicio extends MasterPage {
 			
 			public void onClick(){
 			//setResponsePage(GestionarRecetas.class);
-			Fragment fragment = new  FragmentoRecetasUsuario ("contentArea", "listaRecetas", frmInicio, "maria");
+			Fragment fragment = new  FragmentoRecetasUsuario ("contentArea", "listaRecetas", frmInicio, "jorge");
 			frmInicio.add(fragment);
 			}
 		});
@@ -94,7 +95,7 @@ public class Inicio extends MasterPage {
 			}
 		});
 
-		frmInicio.add(new Label("contentArea",""));
+		frmInicio.add(new EmptyPanel("contentArea"));
 		
 	}
 	
@@ -178,6 +179,22 @@ public class Inicio extends MasterPage {
 	
 	 }
 	 
+	 public class FragmentoRecetasBuscadas extends Fragment {
+	        public FragmentoRecetasBuscadas(String id, String markupId,MarkupContainer markupPorvider,MarkupContainer MarkupActual ) {
+	        	
+	        	super(id, markupId, markupPorvider);
+
+	        	Recetas recetas = Browser.cargarRecetasPopulares();	
+	    		
+	        	MarkupActual.remove(id);
+	        	
+	        	add(new Label("nombreGrilla"," Resultados"));
+	        	add(generarTabla(recetas));
+	            
+	        }
+	
+	 }
+	 
 	 public class FragmentoBuscarRecetas extends Fragment {
 	        public FragmentoBuscarRecetas(String id, String markupId,MarkupContainer markupPorvider) {
 	        	super(id, markupId, markupPorvider);
@@ -195,17 +212,22 @@ public class Inicio extends MasterPage {
 	        	add(new DropDownChoice("temporada",dropdownModeltemp, items.getTemporadas()));
 	        	add(new DropDownChoice("ingrediente",dropdownModelingr, items.getIngredientesPrincipales()));
 	        	
+	        	final FragmentoBuscarRecetas fragmentoActual = this;
+	        	
 	        	add(new Button("botonBuscar") {
-				
+	        		
 	        	public void onSubmit() {
 	        		
 	        		JOptionPane.showMessageDialog(null, "" + dropdownModeldif.getObject()+" "+
 	        											dropdownModeltemp.getObject()+" "+
 	        											dropdownModelingr.getObject());
+	        		
+	        		Fragment fragment = new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmInicio, fragmentoActual);
+	        		fragmentoActual.add(fragment);
 	        	}
 	        	});
 	        	
-	        	
+	        	add(new EmptyPanel("areaRecetas"));
 	        }
 	 }
 }

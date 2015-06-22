@@ -179,7 +179,7 @@ public class Factory {
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("select * from Grupo88.ingredientes");
+			CallableStatement cmd = con.prepareCall("select * from Grupo88.ingredientes order by nombre");
 			
 			rsDificultad = cmd.executeQuery();
 			
