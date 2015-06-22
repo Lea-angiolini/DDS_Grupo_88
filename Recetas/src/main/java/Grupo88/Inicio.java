@@ -47,6 +47,7 @@ import Grupo88.Login.FrmLogin;
 import ObjetosDB.Recetas;
 import ObjetosDB.Recetas.Receta;
 import ObjetosDB.itemBuscador;
+import ObjetosDB.itemsABuscar;
 
 public class Inicio extends MasterPage {
 
@@ -180,11 +181,11 @@ public class Inicio extends MasterPage {
 	 }
 	 
 	 public class FragmentoRecetasBuscadas extends Fragment {
-	        public FragmentoRecetasBuscadas(String id, String markupId,MarkupContainer markupPorvider,MarkupContainer MarkupActual ) {
+	        public FragmentoRecetasBuscadas(String id, String markupId,MarkupContainer markupPorvider,MarkupContainer MarkupActual, itemsABuscar queBuscar ) {
 	        	
 	        	super(id, markupId, markupPorvider);
 
-	        	Recetas recetas = Browser.cargarRecetasPopulares();	
+	        	Recetas recetas = Browser.cargarRecetasBuscadas(queBuscar);	
 	    		
 	        	MarkupActual.remove(id);
 	        	
@@ -218,12 +219,18 @@ public class Inicio extends MasterPage {
 	        		
 	        	public void onSubmit() {
 	        		
+	        		itemsABuscar queBuscar = new itemsABuscar();
+	        		
+	        		queBuscar.setDificultad(dropdownModeldif.getObject().toString());
+	        		queBuscar.setTemporada(dropdownModeltemp.getObject().toString());
+	        		queBuscar.setIngredientePrincipal(dropdownModelingr.getObject().toString());
+	        		
 	        		JOptionPane.showMessageDialog(null, "" + dropdownModeldif.getObject()+" "+
 	        											dropdownModeltemp.getObject()+" "+
 	        											dropdownModelingr.getObject());
 	        		
-	        		Fragment fragment = new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmInicio, fragmentoActual);
-	        		fragmentoActual.add(fragment);
+	        		fragmentoActual.add( new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmInicio, fragmentoActual, queBuscar));
+
 	        	}
 	        	});
 	        	

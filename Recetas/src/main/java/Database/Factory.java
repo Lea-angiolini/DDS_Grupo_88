@@ -157,18 +157,18 @@ public class Factory {
 	
 	public itemBuscador cargarItemBuscador(){
 		
-		ResultSet rsDificultad = null;
+		ResultSet rs = null;
 		itemBuscador items = new itemBuscador();
 		try
 		{
 			
 			CallableStatement cmd = con.prepareCall("select * from Grupo88.dificultad");
 			
-			rsDificultad = cmd.executeQuery();
+			rs = cmd.executeQuery();
 			
-			while (rsDificultad.next()){
+			while (rs.next()){
 				
-			items.setDificultad(rsDificultad.getString("descripcion"));
+			items.setDificultad(rs.getString("descripcion"));
 		
 			}
 		}
@@ -181,11 +181,11 @@ public class Factory {
 			
 			CallableStatement cmd = con.prepareCall("select * from Grupo88.ingredientes order by nombre");
 			
-			rsDificultad = cmd.executeQuery();
+			rs = cmd.executeQuery();
 			
-			while (rsDificultad.next()){
+			while (rs.next()){
 				
-			items.setIngredientesPrincipal(rsDificultad.getString("nombre"));
+			items.setIngredientesPrincipal(rs.getString("nombre"));
 		
 			}
 		}
@@ -198,11 +198,11 @@ public class Factory {
 			
 			CallableStatement cmd = con.prepareCall("select * from Grupo88.temporadas");
 			
-			rsDificultad = cmd.executeQuery();
+			rs = cmd.executeQuery();
 			
-			while (rsDificultad.next()){
+			while (rs.next()){
 				
-			items.setTemporada(rsDificultad.getString("nombreTemporada"));
+			items.setTemporada(rs.getString("nombreTemporada"));
 		
 			}
 		}
@@ -213,5 +213,37 @@ public class Factory {
 		return items;
 		
 	
+	}
+	
+	
+	public Recetas cargarRecetasBuscadas(itemsABuscar queBuscar){
+		
+		ResultSet rs = null;
+		Recetas recetas = new Recetas();
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("{call SP_BuscarRecetas(?,?,?)}");
+			
+			cmd.setString(1, queBuscar.getDificultad());
+			cmd.setString(2, queBuscar.getTemporada());
+			cmd.setString(3, queBuscar.getIngredientePrincipal());
+			
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				recetas.agregarNuevaReceta(rs.getString("nombre"), 
+						   rs.getString("creador"), 
+						   rs.getString("descripcion"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		return recetas;
 	}
 }

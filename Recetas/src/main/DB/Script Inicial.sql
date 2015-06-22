@@ -10,7 +10,11 @@ create table Grupo88.Recetas(
 	idReceta int(11) primary key auto_increment,
 	nombre varchar(45) not null,
 	creador  varchar(30) references Usuarios ,
-    idDificultad int references dificultad
+    idDificultad int references dificultad,
+    calorias int not null,
+    grupoAlimenticio varchar(30) not null,
+    temporada int references temporadas,
+    ingredientePrincipal int references ingredientes
     
 );
 
@@ -176,14 +180,14 @@ values('jorge','pass','Jorge','Gomez','M',170,null,null),
 	  ('maria','pass','Maria','Rodriguez','F',150,null,null),
       ('carlos', 'pass', 'Carlos', 'Batata','M', 160, null, null);
 
-insert into Grupo88.Recetas(nombre,creador,idDificultad)
-values('Pollo al horno','jorge',2),
-	  ('milanesas napolitana','maria',1),
-      ('Pulpo en su tinta',null,3),
-      ('Ñoquis','maria',2),
-      ('Pan con queso',null,1),
-      ('Pizza','jorge',1),
-      ('Asado','jorge',2);
+insert into Grupo88.Recetas(nombre,creador,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
+values('Pollo al horno','jorge',2,1000,'Definir',1,31),
+	  ('milanesas napolitana','maria',1,800,'Definir',3,34),
+      ('Pulpo en su tinta',null,3,1200,'Definir',5,35),
+      ('Ñoquis','maria',2,760,'Definir',4,3),
+      ('Pan con queso',null,1,1000,'Definir',1,29),
+      ('Pizza','jorge',1,1150,'Definir',2,3),
+      ('Asado','jorge',2,940,'Definir',2,32);
     
 
 insert into Grupo88.Historial(fecha,idReceta,usuario)
@@ -203,7 +207,7 @@ values ('Arroz',354,1), ('Avena',367,1),('Harina',150, 1), -- cereales y derivad
        ('Ciruela',44,6), ('Limon',39,6),('Manzana',52,6),('Pomelo',30,6), ('Banana',90,6), -- frutas
        ('Almendras',620,7),('Avellanas',675,7),('Mani',560,7), -- frutos secos
        ('Leche',68,8),('Queso cremoso',245,8),('Yogurt Natural',62,8), -- lacteos
-       ('Pollo',750, 9),('Vacio',1200, 9), ('Jamon Cocido',126,9), -- carnes
+       ('Pollo',750, 9),('Vacio',1200, 9), ('Jamon Cocido',126,9), ('Milanesa',690,9), -- carnes
 	   ('Pulpo',57, 10),('Anchoas',175,10),('Sardinas',151,10), -- pescados y mariscos
        ('Manteca',670,11 ), ('Aceite de girasol',900,11) -- aceites y grasas
        ;
@@ -270,5 +274,24 @@ BEGIN
     ON his.usuario = username
     WHERE rec.idReceta = his.idReceta
     LIMIT 10;
+END $$
+
+CREATE PROCEDURE SP_BuscarRecetas(
+in dificultadB varchar(30),
+in temporadaB varchar(30),
+in ingredienteB varchar(30)
+)
+BEGIN
+	SELECT rec.nombre, rec.creador, dif.descripcion 
+	FROM Grupo88.recetas rec
+	JOIN Grupo88.dificultad dif
+	ON rec.idDificultad = dif.idDificultad
+	JOIN Grupo88.temporadas temp
+	ON rec.temporada = temp.idTemporada
+	JOIN Grupo88.ingredientes ing
+	ON rec.ingredientePrincipal = ing.idIngrediente
+	WHERE dif.descripcion = dificultadB AND
+		  temp.nombreTemporada = temporadaB AND
+		  ing.nombre = ingredienteB;
 END $$
 DELIMITER ;

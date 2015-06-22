@@ -46,4 +46,10 @@ public class Browser {
 		return item;
 	
 	}
+	
+	public static Recetas cargarRecetasBuscadas(itemsABuscar queBuscar){
+		Factory f = new Factory();
+		Recetas recetas = f.cargarRecetasBuscadas(queBuscar);
+		return recetas;
+	}
 }
