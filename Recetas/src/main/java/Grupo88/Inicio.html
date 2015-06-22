@@ -22,7 +22,7 @@
 					
 					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
                                             <div >
-	                                            <div class="row" style="background:white;border-radius:2px; margin: 10px 0px;">
+	                                            <div class="row" style="background:transparent;border-radius:2px; margin: 10px 0px;">
 	                                                <p><strong>B</strong>ienvenido a su Menú de Inicio, eliga un opción o verifique su historial de recetas o las recetas más populares.</p>
 	                                            </div>
 					
@@ -52,9 +52,11 @@
 					               </div>  
 					        </div>
 					        		 
-		
+	<!-- Area para los idstintos fragements -->	
 		<div wicket:id="contentArea"></div>
-		     
+		
+		
+	<!-- Fragment dedicado a mosttra las recetas -->		     
 		<wicket:fragment wicket:id="listaRecetas"> 
 					        <div id="top-recetas" class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">                    
 					            <div class="panel panel-info">
@@ -62,28 +64,29 @@
 					                        <div class="panel-title"><span class="glyphicon glyphicon-th-list"></span><span wicket:id="nombreGrilla"></span></div>
 					                    </div>     
 					
-					                    <div class="panel-body" style="padding: 0px 20px 20px 20px;">
-                                            <div style="background:white;border-radius:2px; margin: 10px 0px;">
+					                    <div class="panel-body" style="padding: 10px 10px 10px 10px;">
+                                            <!--  <div style="background:white;border-radius:2px; margin: 10px 0px;">-->
 					
 	                                            <table class="table">
 
 	                                            	<tbody>
-	                                            		<div class="container" style="display: table-row;" wicket:id="tablaPopulares">
-	                                            			 <button type="button" style="display: table-cell; margin-left:auto; margin-right:auto; clear:both; weight=100%;"class="box" wicket:id="bt"> 
-	                                            			<ol class="list-inline">
-																 <li>Receta:</li><span wicket:id="campo1" style="padding-right: 100px;"></span>
-																 <li>Creador:</li><span wicket:id="campo2" style="padding-right: 100px;"></span>
-																 <li  style="padding-left: 150px;">Dificultad:</li><span wicket:id="campo3"></span><br>
+	                                            		<div wicket:id="tablaPopulares">
+	                                            		<div  class="col-md-12">
+	                                            			 <button type="button" class="box col-md-12" style="background-color: rgba(255, 255, 255, 0.8)" wicket:id="bt"> 
+	                                            			 <div class="row">
+																 <div class="col-md-4">Receta: <span wicket:id="campo1" style="padding-right: 100px;"></span></div>
+																 <div class="col-md-4">Creador:<span wicket:id="campo2" style="padding-right: 100px;"></span></div>
+																 <div class="col-md-4">Dificultad:<span wicket:id="campo3"></span></div><br>
 																 <dl class="dl-horizontal">
 																	  <dt>Descripcion:</dt>
 																	  <dd>Una receta de mierda para que te atragantes y te mueras</dd>
 																 </dl>																
-																</ol> </button>
+																</div> </button></div>
 	                                            		</div>
 	                                            		
 	                                            	</tbody>
 	                                            </table>
-					                        </div>
+					                        <!-- </div> -->
 					                   </div>                     
 					               </div>  
 					        </div>
@@ -95,7 +98,7 @@
 					        
 					        
 					        
-					      
+		<!-- Fragements dedicado a mostra el panel de filtros de recetas -->				      
 					<wicket:fragment wicket:id="buscarRecetas">
 					   
 					
@@ -178,7 +181,7 @@
 					               </div>  
 					        </div>
 
-
+					<div wicket:id="areaRecetas"></div>
 					</wicket:fragment>
 
 					        

@@ -2,6 +2,7 @@ drop database if exists Grupo88;
 Create database Grupo88;
 
 DROP USER 'llevaYtrae'@'localhost';
+
 CREATE USER 'llevaYtrae'@'localhost' identified by 'gil';
 GRANT SELECT, UPDATE, DELETE, INSERT, EXECUTE ON grupo88.* TO 'llevaYtrae'@'localhost';
 
@@ -272,5 +273,3 @@ BEGIN
     LIMIT 10;
 END $$
 DELIMITER ;
-
-call SP_RecetasUsuario('jorge');
