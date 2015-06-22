@@ -1,8 +1,13 @@
 package Grupo88;
 
+import objetosWicket.SesionUsuario;
+
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 
 /**
  * Application object for your web application.
@@ -28,8 +33,15 @@ public class WicketApplication extends WebApplication
 	public void init()
 	{
 		super.init();
+		
 
 		// add your configuration here
+	}
+	
+	@Override
+	public Session newSession(Request request, Response response) {
+		// TODO Auto-generated method stub
+		return new SesionUsuario(request);
 	}
 	
 }
