@@ -1,13 +1,18 @@
 package Grupo88;
 
 import master.MasterPage;
+import objetosWicket.ModelUsuario;
+import objetosWicket.SesionUsuario;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.protocol.http.WebSession;
 
 import Database.Browser;
 import ObjetosDB.Usuario;
@@ -28,6 +33,7 @@ public class Login extends MasterPage {
 	private FrmLogin frmLogin;
 	public Login(){
 		super();
+		
 		getMenuPanel().setVisible(false);
 			
 		add(frmLogin = new FrmLogin("FrmLogin"));
@@ -56,17 +62,21 @@ public class Login extends MasterPage {
 	public class FrmLogin extends Form {
 		
 		
-		private String username;
-		private String password;
+		//private String username;
+		//private String password;
+		private Usuario usuario;
 		private String lblError;
 		
 
 		public FrmLogin(String id) {
-			super(id);			
+			super(id);
+			usuario = new Usuario();
 			setDefaultModel(new CompoundPropertyModel(this));
 
-			add(new TextField("username"));
-			add(new PasswordTextField("password"));
+			//add(new TextField("username"));
+			//add(new PasswordTextField("password"));
+			add(new TextField<String>("username",new PropertyModel<String>(usuario, "username")));
+			add(new PasswordTextField("password",new PropertyModel<String>(usuario, "password")));
 			add(new Label("lblError"));
 			//add(new Button("registrarse"));
 			
@@ -83,9 +93,10 @@ public class Login extends MasterPage {
 		
 		public final void onSubmit() 
 		{
-			
-			if(Browser.Login(username, password)){
-				user = Browser.cargarUsuario(username);
+			SesionUsuario sesion = (SesionUsuario)getSession();
+			ModelUsuario mUsuario = new ModelUsuario(usuario);
+			if(sesion.loguearUsuario(mUsuario)){
+				sesion.setUsuario(mUsuario);
 				setResponsePage(Inicio.class);
 			}
 			else {
