@@ -1,6 +1,8 @@
 package Database;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -245,5 +247,109 @@ public class Factory {
 		}
 		
 		return recetas;
+	}
+	
+	public List<String> listaComplexiones(){
+		
+		ResultSet rs = null;
+		List<String> complexiones = new ArrayList<String>();
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select complexion from grupo88.complexion");
+					
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				complexiones.add(rs.getString("complexion"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return complexiones;
+	}
+	
+	public ArrayList<String> listaCondPreexistentes(){
+		
+		ResultSet rs = null;
+		ArrayList<String> condPreex = new ArrayList<String>();
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select condicion from grupo88.condiciones");
+					
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				condPreex.add(rs.getString("condicion"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return condPreex;
+	}
+	
+public ArrayList<String> listaDietas(){
+		
+		ResultSet rs = null;
+		ArrayList<String> dietas = new ArrayList<String>();
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select tipoDieta from grupo88.dietas");
+					
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				dietas.add(rs.getString("tipoDieta"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return dietas;
+	}
+
+	public ArrayList<String> listaRutinas(){
+	
+	ResultSet rs = null;
+	ArrayList<String> rutinas = new ArrayList<String>();
+	
+	try
+	{
+		
+		CallableStatement cmd = con.prepareCall("select rutina from grupo88.rutinas");
+				
+		rs = cmd.executeQuery();
+		
+		while (rs.next()){
+			
+			rutinas.add(rs.getString("rutina"));
+	
+		}
+	}
+	catch(SQLException ex){
+		JOptionPane.showMessageDialog(null, ex.getMessage());	
+	}
+	
+	
+	return rutinas;
 	}
 }

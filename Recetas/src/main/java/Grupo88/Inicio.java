@@ -204,7 +204,8 @@ public class Inicio extends MasterPage {
 	 }
 	 
 	 public class FragmentoBuscarRecetas extends Fragment {
-	        public FragmentoBuscarRecetas(String id, String markupId,MarkupContainer markupPorvider) {
+	        @SuppressWarnings("unchecked")
+			public FragmentoBuscarRecetas(String id, String markupId,MarkupContainer markupPorvider) {
 	        	super(id, markupId, markupPorvider);
 	        	
 	        	markupPorvider.remove(id);

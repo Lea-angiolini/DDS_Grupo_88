@@ -9,6 +9,7 @@ public class Usuario implements Serializable{
 
 	private String username;
 	private String password;
+	private String email;
 	private String nombre;
 	private String apellido;
 	private char sexo;
@@ -16,7 +17,7 @@ public class Usuario implements Serializable{
 	private String complexion;
 	private String rutina;
 	private List<String> condiciones;
-	private List<String> dietas;
+	private String dieta;
 	private List<Grupo> grupos;
 	
 	
@@ -112,17 +113,27 @@ public class Usuario implements Serializable{
 	public void setCondiciones(List<String> condiciones) {
 		this.condiciones = condiciones;
 	}
+	
 
+	public String getEmail() {
+		return email;
+	}
+	
 
-	public List<String> getDietas() {
-		return dietas;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+
+	public String getDieta() {
+		return dieta;
 	}
 
-
-	public void setDietas(List<String> dietas) {
-		this.dietas = dietas;
+	
+	public void setDieta(String dieta) {
+		this.dieta = dieta;
 	}
-
+	
 
 	public List<Grupo> getGrupos() {
 		return grupos;

@@ -4,6 +4,8 @@ import java.io.ObjectInputStream.GetField;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -51,5 +53,25 @@ public class Browser {
 		Factory f = new Factory();
 		Recetas recetas = f.cargarRecetasBuscadas(queBuscar);
 		return recetas;
+	}
+	
+	public static List<String> listaComplexiones(){
+		Factory f = new Factory();
+		return f.listaComplexiones();
+	}
+	
+	public static ArrayList<String> listaCondPreexistentes(){
+		Factory f = new Factory();
+		return f.listaCondPreexistentes();
+	}
+	
+	public static ArrayList<String> listaDietas(){
+		Factory f = new Factory();
+		return f.listaDietas();
+	}
+	
+	public static ArrayList<String> listaRutinas(){
+		Factory f = new Factory();
+		return f.listaRutinas();
 	}
 }

@@ -10,9 +10,9 @@
 			<form id="frmAltaUsuario" wicket:id="FrmAltaUsuario" method="post">
 				<fieldset id="altaUsuario" class="center">
 					<div id="signupbox" style="display:block; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-						<div class="panel panel-info">
+							<div class="panel panel-info">
 					    	<div class="panel-heading">
-					        	<div class="panel-title"><span class="glyphicon glyphicon-edit"></span>&nbsp;Registración</div>   
+					        	<div class="panel-title"><span class="glyphicon glyphicon-edit"></span>&nbsp;<span>Registración</span></div>   
 					        </div>  
 					        <div class="panel-body">
 					        	<form id="signupform" class="form-horizontal" role="form">
@@ -49,8 +49,8 @@
 					                	<!-- Button -->                                  
 					                    <div class="col-md-offset-7 col-md-5 text-right">
 					                    	<br>
-					                    	<button id="btnCancelar" type="button" class="btn btn-info" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
-					                    	<button id="btnConfirmar" type="button" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span>&nbsp;Confirmar</button>
+					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
+					                    	<button id="btnConfirmar" type="button" class="btn btn-info"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;Siguiente</button>
 					                    </div>
 					                </div>
 					        	</form>
@@ -59,6 +59,118 @@
 					</div>					
 				</fieldset>
 				<br>
+				
+				
+				
+				<fieldset id="DatosUsuario" class="center">
+					<div  style="display:block; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+						<div class="panel panel-info">
+					    	<div class="panel-heading">
+					        	<div class="panel-title"><span class="glyphicon glyphicon-edit"></span>&nbsp;Datos personales</div>   
+					        </div>  
+					        <div class="panel-body">
+					        	<form id="signupform" class="form-horizontal" role="form">
+					            	<div id="signupalert" style="display:none" class="alert alert-danger">
+					                	<p>Error:</p>
+						                <span></span>
+						            </div>
+						            
+						            <div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Nombre</label>
+					                    <div class="col-md-8">
+					                    	<input type="text" class="form-control" name="nombre" id="nombre"  wicket:id="nombre"  placeholder="Nombre">
+					                    </div>
+					                </div>
+					                
+					                 <div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Apellido</label>
+					                    <div class="col-md-8">
+					                    	<input type="text" class="form-control" name="apellido" id="apellido"  wicket:id="apellido"  placeholder="Apellido">
+					                    </div>
+					                </div>
+					                
+					                <div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Sexo</label>
+					                    <div class="col-md-8">
+					                    	<select class="form-control" name="sexo" id="sexo"  wicket:id="sexo"  placeholder="Sexo">
+					                    		<option disabled="disabled" selected="selected"></option>
+					                    	</select>
+					                    </div>
+					                </div>
+					                
+					                 <div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Fecha nacimiento</label>
+					                    <div class="col-md-8">
+					                    	<input type="date" class="form-control" name="fechaNac" id="fechaNac"  awicket:id="fechaNac"  placeholder="Fecha">
+					                    </div>
+					                </div>
+					                
+					                <div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Altura <sub>cm</sub></label>
+					                    <div class="col-md-8">
+					                    	<input type="number" class="form-control" name="altura" id="altura"  wicket:id="altura"  placeholder="Altura">
+					                    </div>
+					                </div>
+					                
+					                  <div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Complexíon</label>
+					                    <div class="col-md-8">
+					                    	<select class="form-control" name="complexion" id="complexion"  wicket:id="complexion"  placeholder="Complexion">
+					                   <option></option>
+					                    </select>
+					                    </div>
+					                </div>
+					                
+					                 <div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Preferencias alimenticias</label>
+					                    <div class="col-md-8">
+
+					                    </div>
+					                </div>
+					                
+					                <div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Condiciones Preexistentes</label>
+					                    <div class="col-md-8">
+					    
+					                    <label class="checkbox-inline" wicket:id="sup"><div wicket:id="listaCheckBox"></div>
+					                    </label>
+					                    </div>
+					                </div>
+					
+									<div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Dieta</label>
+					                    <div class="col-md-8">
+					                    	<select class="form-control" name="dieta" id="dieta"  wicket:id="dieta"  placeholder="dieta">
+					                    </select>
+					                    </div>
+					                </div>
+					                
+					                <div class="form-group">
+					                	<label align=left for="icode" class="col-md-4 control-label">Rutina</label>
+					                    <div class="col-md-8">
+					                    	<select class="form-control" name="rutina" id="rutina"  wicket:id="rutina"  placeholder="rutina">
+					                    </select>
+					                    </div>
+					                </div>
+					                <br>
+					                	<div class="col-md-offset-7 col-md-5 text-right">
+					                    	<br>
+					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar2"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
+					                    	<button id="btnConfirmar" type="button" class="btn btn-success" wicket:id="registrarse"><span class="glyphicon glyphicon-ok"></span>&nbsp;Registrarse</button>
+					                    </div>
+					            </form>
+					        </div>
+					    </div>
+					</div>				
+				</fieldset>
+				
+				<wicket:fragment wicket:id="CheckBoxFragment">
+					
+						<input class="" type="checkbox" name="condPreexistentes" id="condPreexistentes"  wicket:id="condPreexistentes">
+							<label wicket:id="labelCheck">algo</label>
+				
+				</wicket:fragment>
+				
 			</form>
 		</div>
 

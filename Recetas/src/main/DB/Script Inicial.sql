@@ -87,8 +87,8 @@ CREATE TABLE Grupo88.Usuarios(
 );
 
 CREATE TABLE Grupo88.Rutinas(
-	idRutina int,
-    descripcion varchar(45)
+	idRutina int auto_increment primary key,
+    rutina varchar(45) not null
 );
 
 CREATE TABLE Grupo88.Complexion(
@@ -143,7 +143,7 @@ CREATE TABLE Grupo88.Temporadas(
     nombreTemporada varchar(50) not null
 );
 
-insert into Grupo88.Rutinas (descripcion)
+insert into Grupo88.Rutinas (rutina)
 values ('Sedentaria con algo de ejercicio'),
 	   ('Sedentaria con nada de ejercicio'),
        ('Sedentaria con ejercicio'),
@@ -177,9 +177,9 @@ values ('Cereales y derivados'),('Legumbres'),('Huevos'),('Azucares y dulces'),(
        ('Aceites y grasas'), ('Otros');
 
 insert into Grupo88.usuarios
-values('jorge','pass','Jorge','Gomez','M',170,null,null),
-	  ('maria','pass','Maria','Rodriguez','F',150,null,null),
-      ('carlos', 'pass', 'Carlos', 'Batata','M', 160, null, null);
+values('jorge','pass','Jorge','Gomez','M',170,3,null),
+	  ('maria','pass','Maria','Rodriguez','F',150,1,null),
+      ('carlos', 'pass', 'Carlos', 'Batata','M', 160, 2, null);
 
 insert into Grupo88.Recetas(nombre,creador,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
 values('Pollo al horno','jorge',2,1000,'Definir',1,31),
@@ -213,6 +213,8 @@ values ('Arroz',354,1), ('Avena',367,1),('Harina',150, 1), -- cereales y derivad
        ('Manteca',670,11 ), ('Aceite de girasol',900,11) -- aceites y grasas
        ;
        
+insert into Grupo88.dietas(tipoDieta)
+values ('Normal'),('Ovolactovegetariano'),('Vegetariano'),('Vegano');
 
 
 
@@ -248,7 +250,10 @@ CREATE PROCEDURE SP_CargarUsuario(
 )
 BEGIN
 
-	SELECT * FROM usuarios where nombreUsuario = username;
+	SELECT us.*, com.complexion FROM usuarios us
+    JOIN complexion com 
+    ON us.idComplexion = com.idComplexion
+    where nombreUsuario = username;
 END $$
 
 CREATE PROCEDURE SP_RecetasPopulares(
