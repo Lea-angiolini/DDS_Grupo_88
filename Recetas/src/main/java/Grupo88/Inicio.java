@@ -235,7 +235,7 @@ public class Inicio extends MasterPage {
 	        		
 	        		JOptionPane.showMessageDialog(null, "" + dropdownModeldif.getObject()+" "+
 	        											dropdownModeltemp.getObject()+" "+
-	        											dropdownModelingr.getObject());
+	        											dropdownModelingr.toString());
 	        		
 	        		fragmentoActual.add( new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmInicio, fragmentoActual, queBuscar));
 

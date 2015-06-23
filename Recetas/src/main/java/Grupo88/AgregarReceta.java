@@ -91,6 +91,7 @@ public class AgregarReceta extends MasterPage {
 		protected void onSubmit() {
 		// Va a conectarse con BD y comprobar las validaciones
 		super.onSubmit();
+		
 		}
 	}
 }

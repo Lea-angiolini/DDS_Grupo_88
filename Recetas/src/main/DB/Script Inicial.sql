@@ -177,9 +177,9 @@ values ('Cereales y derivados'),('Legumbres'),('Huevos'),('Azucares y dulces'),(
        ('Aceites y grasas'), ('Otros');
 
 insert into Grupo88.usuarios
-values('jorge','pass','Jorge','Gomez','M',170,3,null),
-	  ('maria','pass','Maria','Rodriguez','F',150,1,null),
-      ('carlos', 'pass', 'Carlos', 'Batata','M', 160, 2, null);
+values('jorge','pass','Jorge','Gomez','M',170,3,1),
+	  ('maria','pass','Maria','Rodriguez','F',150,1,2),
+      ('carlos', 'pass', 'Carlos', 'Batata','M', 160, 2, 3);
 
 insert into Grupo88.Recetas(nombre,creador,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
 values('Pollo al horno','jorge',2,1000,'Definir',1,31),
@@ -250,9 +250,11 @@ CREATE PROCEDURE SP_CargarUsuario(
 )
 BEGIN
 
-	SELECT us.*, com.complexion FROM usuarios us
+	SELECT us.*, com.complexion, rut.rutina FROM usuarios us
     JOIN complexion com 
     ON us.idComplexion = com.idComplexion
+    JOIN rutinas rut
+    ON rut.idRutina = us.idRutina
     where nombreUsuario = username;
 END $$
 

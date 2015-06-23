@@ -6,6 +6,7 @@
 </head>
 <body>
 	<wicket:extend>
+	
 		<div>
 			<form id="frmAltaUsuario" wicket:id="FrmAltaUsuario" method="post">
 				<fieldset id="altaUsuario" class="center">
@@ -30,13 +31,13 @@
 					                <div class="form-group">
 					                	<label for="password" class="col-md-4 control-label">Contraseña</label>
 					                    <div class="col-md-8">
-					                    	<input type="password" class="form-control" name="password" id="password" wicket:id="password" placeholder="Contraseña">
+					                    	<input type="password" class="form-control" name="password" id="password" awicket:id="password" placeholder="Contraseña">
 					                    </div>
 					                </div>
 					                <div class="form-group">
 					                	<label for="repPassword" class="col-md-4 control-label">Repetir contraseña</label>
 					                	<div class="col-md-8">
-					                    	<input type="password" class="form-control" name="repPassword" id="repPassword" wicket:id="repPassword" placeholder="Repetir contraseña">
+					                    	<input type="password" class="form-control" name="repPassword" id="repPassword" awicket:id="repPassword" placeholder="Repetir contraseña">
 					                    </div>
 					                </div>					                                    
 					                <div class="form-group">
@@ -45,43 +46,14 @@
 					                    	<input type="email" class="form-control" name="email" id="email" wicket:id="email" placeholder="E-mail">
 					                    </div>
 					                </div>
-					                <div class="form-group">
-					                	<!-- Button -->                                  
-					                    <div class="col-md-offset-7 col-md-5 text-right">
-					                    	<br>
-					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
-					                    	<button id="btnConfirmar" type="button" class="btn btn-info"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;Siguiente</button>
-					                    </div>
-					                </div>
-					        	</form>
-					        </div>
-					    </div>
-					</div>					
-				</fieldset>
-				<br>
-				
-				
-				
-				<fieldset id="DatosUsuario" class="center">
-					<div  style="display:block; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-						<div class="panel panel-info">
-					    	<div class="panel-heading">
-					        	<div class="panel-title"><span class="glyphicon glyphicon-edit"></span>&nbsp;Datos personales</div>   
-					        </div>  
-					        <div class="panel-body">
-					        	<form id="signupform" class="form-horizontal" role="form">
-					            	<div id="signupalert" style="display:none" class="alert alert-danger">
-					                	<p>Error:</p>
-						                <span></span>
-						            </div>
-						            
+									&nbsp;
 						            <div class="form-group">
 					                	<label align=left for="icode" class="col-md-4 control-label">Nombre</label>
 					                    <div class="col-md-8">
 					                    	<input type="text" class="form-control" name="nombre" id="nombre"  wicket:id="nombre"  placeholder="Nombre">
 					                    </div>
 					                </div>
-					                
+					               
 					                 <div class="form-group">
 					                	<label align=left for="icode" class="col-md-4 control-label">Apellido</label>
 					                    <div class="col-md-8">
@@ -113,21 +85,22 @@
 					                </div>
 					                
 					                  <div class="form-group">
-					                	<label align=left for="icode" class="col-md-4 control-label">Complexíon</label>
+					                	<label align=left for="complexion" class="col-md-4 control-label">Complexíon</label>
 					                    <div class="col-md-8">
-					                    	<select class="form-control" name="complexion" id="complexion"  wicket:id="complexion"  placeholder="Complexion">
-					                   <option></option>
+					                    	<select class="form-control" id="complexion"  wicket:id="complexion"  placeholder="Complexion">
+					                   <option value="cargar"></option>
 					                    </select>
 					                    </div>
 					                </div>
 					                
 					                 <div class="form-group">
 					                	<label align=left for="icode" class="col-md-4 control-label">Preferencias alimenticias</label>
-					                    <div class="col-md-8">
-
+					                    <div class="col-md-8"><select class="form-control" id="complexion"  awicket:id="complexion"  placeholder="Complexion">
+					                   <option value="cargar">????</option>
+					                    </select>
 					                    </div>
 					                </div>
-					                
+					                &nbsp;
 					                <div class="form-group">
 					                	<label align=left for="icode" class="col-md-4 control-label">Condiciones Preexistentes</label>
 					                    <div class="col-md-8">
@@ -136,7 +109,7 @@
 					                    </label>
 					                    </div>
 					                </div>
-					
+									&nbsp;
 									<div class="form-group">
 					                	<label align=left for="icode" class="col-md-4 control-label">Dieta</label>
 					                    <div class="col-md-8">
@@ -155,8 +128,8 @@
 					                <br>
 					                	<div class="col-md-offset-7 col-md-5 text-right">
 					                    	<br>
-					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar2"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
-					                    	<button id="btnConfirmar" type="button" class="btn btn-success" wicket:id="registrarse"><span class="glyphicon glyphicon-ok"></span>&nbsp;Registrarse</button>
+					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
+					                    	<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Registrarse</button>
 					                    </div>
 					            </form>
 					        </div>

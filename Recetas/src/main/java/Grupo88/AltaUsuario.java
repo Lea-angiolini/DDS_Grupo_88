@@ -65,7 +65,7 @@ public class AltaUsuario extends MasterPage {
 			}
 		});
 		
-		frmAltaUsuario.add(new Link("cancelar2"){
+		/*frmAltaUsuario.add(new Link("cancelar2"){
 			
 			@Override
 			public void onClick() {
@@ -73,21 +73,11 @@ public class AltaUsuario extends MasterPage {
 				setResponsePage(Login.class);
 				
 			}
-		});
+		});*/
 		
-		frmAltaUsuario.add(new Link("registrarse"){
-			
-			@Override
-			public void onClick() {
-			
-				frmAltaUsuario.cargarDatosUsuario();
-				
-			}
-		});
 	}
 	
 	public class FrmAltaUsuario extends Form {
-		
 		
 		private String username;
 		private String password;
@@ -97,7 +87,7 @@ public class AltaUsuario extends MasterPage {
 		private String apellido;
 		private final IModel modelSexo = new Model<String>("");
 		private int altura;
-		private final IModel modelComplexion = new Model<String>("");
+		private final IModel<String> modelComplexion = new Model<String>("");
 		private final IModel modelCondPreex= new Model<String>("");
 		private final ArrayList<estadoCondPreex> estados = new ArrayList<estadoCondPreex>();
 		private final IModel modelDietas = new Model<String>("");
@@ -109,24 +99,24 @@ public class AltaUsuario extends MasterPage {
 			setDefaultModel(new CompoundPropertyModel(this));
 
 			add(new TextField("username"));
-			add(new PasswordTextField("password"));
-			add(new PasswordTextField("repPassword"));
+			//add(new PasswordTextField("password"));
+			//add(new PasswordTextField("repPassword"));
 			add(new EmailTextField("email"));
 			add(new TextField("nombre"));
 			add(new TextField("apellido"));
 			add(new DropDownChoice("sexo",modelSexo,Arrays.asList("Masculino", "Femenino")));
 			add(new NumberTextField("altura"));
-			add(new DropDownChoice("complexion",modelComplexion,Browser.listaComplexiones()));
-		    add(loopCheckBox());
+			add(new DropDownChoice("complexion",this.modelComplexion, Browser.listaComplexiones()));
+			add(loopCheckBox());
 		    add(new DropDownChoice("dieta",modelDietas,Browser.listaDietas()));
 		    add(new DropDownChoice("rutina",modelRutinas,Browser.listaRutinas()));
-			//add(new Button("registrarse"));
 			
 		}
 		
 		@Override
 		protected void onSubmit() {
 		super.onSubmit();
+		frmAltaUsuario.cargarDatosUsuario();
 		}
 		
 		private Usuario cargarDatosUsuario(){
@@ -139,7 +129,7 @@ public class AltaUsuario extends MasterPage {
 			usuario.setApellido(apellido);
 			usuario.setAltura(altura);
 			usuario.setSexo((modelSexo.getObject().toString() == "Masculino") ? 'M' : 'F' );
-			JOptionPane.showMessageDialog(null, modelComplexion.getObject().toString());
+			JOptionPane.showMessageDialog(null, ""+modelSexo.getObject().toString()+"    "+usuario.getSexo());
 			return usuario;
 			
 		}

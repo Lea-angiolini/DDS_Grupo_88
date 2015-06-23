@@ -89,7 +89,6 @@ public class Factory {
 				user.setRutina(rs.getString("rutina"));
 				user.setSexo(rs.getString("sexo").charAt(0));
 			}
-			JOptionPane.showMessageDialog(null, ""+user.getAltura()+" "+user.getNombre());
 			
 		}
 		catch(SQLException ex){
