@@ -75,6 +75,28 @@ public class Browser {
 		return f.listaRutinas();
 	}
 	
+	public static ArrayList<String> listaTemporadas(){
+		Factory f = new Factory();
+		return f.listaTemporadas();
+	}
+	
+	public static ArrayList<String> listaGruposAlim(){
+		Factory f = new Factory();
+		return f.listaGruposAlim();
+	}
+	
+	public static ArrayList<String> listaIngredientes(){
+		Factory f = new Factory();
+		return f.listaIngredientes();
+	}
+	
+	public static ArrayList<String> listaDificultades(){
+		Factory f = new Factory();
+		return f.listaDificultades();
+	}
+	
+	
+	
 	public static String registrarUsuario(Usuario nvoUsuario){
 		Factory f = new Factory();
 		return f.registrarUsuario(nvoUsuario);

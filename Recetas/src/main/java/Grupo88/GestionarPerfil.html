@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -9,23 +9,79 @@
 		<div>
 			<form id="frmGestionarPerfil" wicket:id="FrmGestionarPerfil" method="post">
 				<fieldset id="gestionarPerfil" class="center">
-					<legend>Gestionar Perfil</legend>
-	 						<span>Nombre: </span><input type="text" id="nombre" wicket:id="nombre"/><br><br> 
- 	  						<label>Sexo:</label><wicket:container wicket:id="sexo">
- 	  						<input type="radio" id="femenino" value="femenino"/>femenino
- 	  						<input type="radio" id="masculino" value="masculino"/>masculino</wicket:container><br><br>
-	 						<span>Edad:</span><input type="number" min="0" id="edad" wicket:id="edad"/><br><br> 
-	 						<span>Altura:</span><input type="number" min="0" id="altura" wicket:id="altura"><br><br> 
-	 						<span>Complexion:</span><select wicket:id="complexion" name="complexion">
-	 						<option value="cargar"></option></select><br><br>
- 	 						<span>Dieta:</span><select wicket:id="dieta" name="dieta">
- 	 						<option value="cargar"></option></select><br><br>  
- 	 						<label>Preferencias Alimenticias:</label><br>
- 	 						<span wicket:id="preferenciasAlimenticias"></span>
- 	 						<label>Condiciones Preexistentes:</label><br>
- 	 						<span wicket:id="condicionesPreexistentes"></span>
- 	 						<button type="button" name="btnGuardar">Guardar</button>
- 	 						<button type="button" name="btnCancelar" wicket:id="cancelar">Cancelar</button>
+				
+					<div id="gestionarPerfilBox" style="margin-top:20px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+						<div class="panel panel-info">
+					    	<div class="panel-heading">
+					        	<div class="panel-title"><span class="glyphicon glyphicon-edit"></span> Gestionar Perfil</div>
+					        </div>
+					        <div style="padding-top:30px" class="panel-body col-md-offset-1">
+
+					        	<form id="gestionarPerfilform" class="form-horizontal" role="form">
+					        		<div class="col-md-6">
+										<div class="form-group">
+						              		<label for="nombre" class="control-label">Nombre</label>
+											<input type="text" class="form-control" id="nombre" wicket:id="nombre"/>
+										</div>
+										<div class="form-group">
+											<label for="sexo" class="control-label" style="padding-right:10px;">Sexo:</label>
+											<wicket:container wicket:id="sexo">
+												<label class="radio-inline">
+													<input type="radio" name="sexo" id="femenino" value="femenino">Femenino
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="sexo" id="masculino" value="masculino">Masculino
+												</label>
+											</wicket:container>
+										</div>
+										<div class="form-horizontal">
+											<div class="form-group">
+							              		<label for="edad" class="col-md-2 control-label">Edad</label>
+							              		<div class="col-md-4">
+													<input type="number" class="form-control" min="0" id="edad" wicket:id="edad"/>
+												</div>
+											</div>
+											<div class="form-group">
+							              		<label for="altura" class="col-md-2 control-label">Altura</label>
+							              		<div class="col-md-4">
+													<input type="number" class="form-control" min="0" id="altura" wicket:id="altura"/>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+							            	<label for="complexion" class="control-label">Complexión</label>
+							                <select class="form-control" id="complexion" wicket:id="complexion" name="complexion">
+								           	  	<option value="cargar"></option>
+								           	</select>
+							            </div>
+							            <div class="form-group">
+							            	<label for="dieta" class="control-label">Dieta</label>
+							                <select class="form-control" id="dieta" wicket:id="dieta" name="dieta">
+								           	  	<option value="cargar"></option>
+								           	</select>
+							            </div>
+							            
+							            <div class="form-group">
+											<label for="sexo" class="control-label" style="padding-right:10px;">Preferencias Alimenticias:</label>
+											<br>
+											<span wicket:id="preferenciasAlimenticias"></span>
+										</div>
+										
+										<div class="form-group">
+											<label for="sexo" class="control-label" style="padding-right:10px;">Condiciones Preexistentes:</label>
+											<br>
+											<span wicket:id="condicionesPreexistentes"></span>
+										</div>
+ 
+
+			 	 						<button type="button" class="btn btn-success" name="btnGuardar"><span class="glyphicon glyphicon-floppy-disk"/>&nbsp;Guardar</button>
+			 	 						<button type="button" class="btn btn-danger" name="btnCancelar" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"/>&nbsp;Cancelar</button>
+ 	 								</div>
+ 	 							</form>
+ 	 						</div>
+ 	 					</div>
+ 	 				</div>
+ 
 				</fieldset>
 			</form>
 		</div>
