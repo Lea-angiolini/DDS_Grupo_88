@@ -68,15 +68,15 @@ public class Inicio extends MasterPage {
 		
 		frmInicio.add(new Link("misRecetas"){
 			
-			public void onClick(){
-			setResponsePage(GestionarRecetas.class);
+				public void onClick(){
+				setResponsePage(GestionarRecetas.class);
 			}
 		});
 		
 		frmInicio.add(new Link("salir"){
 			
-			public void onClick() {
-			setResponsePage(Login.class);
+				public void onClick() {
+				setResponsePage(Login.class);
 				
 			}
 		});
@@ -85,8 +85,8 @@ public class Inicio extends MasterPage {
 			
 			public void onClick(){
 			//setResponsePage(GestionarRecetas.class);
-			Fragment fragment = new  FragmentoRecetasUsuario ("contentArea", "listaRecetas", frmInicio, "jorge");
-			frmInicio.add(fragment);
+				Fragment fragment = new  FragmentoRecetasUsuario ("contentArea", "listaRecetas", frmInicio, "jorge");
+				frmInicio.add(fragment);
 			}
 		});
 		
@@ -125,8 +125,8 @@ public class Inicio extends MasterPage {
 		
 		@Override
 		protected void onSubmit() {
-		// Va a conectarse con BD y comprobar las validaciones
-		super.onSubmit();
+			// Va a conectarse con BD y comprobar las validaciones
+			super.onSubmit();
 		}
 	}
 	

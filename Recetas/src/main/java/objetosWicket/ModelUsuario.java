@@ -27,7 +27,7 @@ public class ModelUsuario extends LoadableDetachableModel<Usuario> {
 	}
 	
 	public void save(Usuario user){
-		//Browser.guardarUsuario(user);
+		Browser.registrarUsuario(user);
 		 
 	}
 }

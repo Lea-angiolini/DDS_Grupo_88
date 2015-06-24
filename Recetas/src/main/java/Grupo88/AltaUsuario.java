@@ -106,14 +106,14 @@ public class AltaUsuario extends MasterPage {
 		public FrmAltaUsuario(String id) {
 			super(id);			
 			//setDefaultModel(new CompoundPropertyModel(this));
-			//PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
-			//PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
+			PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
+			PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
 			
 			
 			add(new TextField("username", new PropertyModel<String>(usuario, "username")));
-			//add(password);
-			//add(repPassword);
-			//add(new EqualPasswordInputValidator(password, repPassword));
+			add(password);
+			add(repPassword);
+			add(new EqualPasswordInputValidator(password, repPassword));
 			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
 			add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
 			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));

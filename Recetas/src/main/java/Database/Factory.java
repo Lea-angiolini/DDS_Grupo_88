@@ -494,7 +494,7 @@ public ArrayList<String> listaDietas(){
 			CallableStatement cmd = con.prepareCall("{call SP_RegistrarUsuario(?,?,?,?,?,?,?,?,?,?,?,?)}");
 			
 			cmd.setString(1, nvoUsuario.getUsername());
-			cmd.setString(2, "pass"/*nvoUsuario.getPassword()*/);
+			cmd.setString(2, nvoUsuario.getPassword());
 			cmd.setString(3, nvoUsuario.getEmail());
 			cmd.setString(4, nvoUsuario.getNombre());
 			cmd.setString(5, nvoUsuario.getApellido());
