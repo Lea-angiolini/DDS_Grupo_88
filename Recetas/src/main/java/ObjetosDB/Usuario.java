@@ -1,6 +1,7 @@
 package ObjetosDB;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 import Database.Browser;
@@ -12,6 +13,7 @@ public class Usuario implements Serializable{
 	private String email;
 	private String nombre;
 	private String apellido;
+	private Date fechaNacimiento;
 	private char sexo;
 	private int altura;
 	private String complexion;
@@ -64,6 +66,13 @@ public class Usuario implements Serializable{
 		this.apellido = apellido;
 	}
 
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
 
 	public char getSexo() {
 		return sexo;

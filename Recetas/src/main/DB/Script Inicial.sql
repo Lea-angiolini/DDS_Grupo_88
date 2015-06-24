@@ -92,9 +92,12 @@ CREATE TABLE Grupo88.Usuarios(
 	clave varchar(120) not null,
     nombre varchar(30) not null,
     apellido varchar(30) not null,
+    mail varchar(60) not null,
+    fechaNac date,
     sexo char(1) not null,
     altura int not null,
     idComplexion int references Complexiones,
+    idDieta int references dietas,
     idRutina int references Rutinas
 );
 
@@ -198,9 +201,9 @@ values ('Grupo 1: Leche y Derivados'),
        ('Grupo 7: Grasas, Aceites y Mantequilla');
 
 insert into Grupo88.usuarios
-values('jorge','pass','Jorge','Gomez','M',170,3,1),
-	  ('maria','pass','Maria','Rodriguez','F',150,1,2),
-      ('carlos', 'pass', 'Carlos', 'Batata','M', 160, 2, 3);
+values('jorge','pass','Jorge','Gomez','',null,'M',170,3,2,1),
+	  ('maria','pass','Maria','Rodriguez','',null,'F',150,1,4,2),
+      ('carlos', 'pass', 'Carlos', 'Batata','@gmail.com',null,'M', 160, 2, 1, 3);
 
 insert into Grupo88.Recetas(nombre,creador,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
 values('Pollo al horno','jorge',2,1000,'Definir',1,31),
@@ -331,6 +334,7 @@ in pass_ varchar(30),
 in mail_ varchar(30),
 in nombre_ varchar(30),
 in apellido_ varchar(30),
+in fechaNac_ date,
 in sexo_ varchar(1),
 in altura_ int,
 in complexion_ varchar(30),
@@ -341,9 +345,11 @@ out respuesta varchar(90)
 BEGIN
  declare rutinaID int;
  declare complexionID int;
+ declare dietaID int;
  
 		set complexionID = (select  idComplexion from complexion where complexion = complexion_);
         set rutinaID = (select idRutina from rutinas where rutina = rutina_);
+        set dietaID = (select idDieta from dietas where tipoDieta = dieta_);
         
 		if exists (select nombreUsuario from usuarios us where us.nombreUsuario = username_)
 			THEN
@@ -352,8 +358,8 @@ BEGIN
 				END;
 			ELSE
 				BEGIN
-					INSERT INTO usuarios(nombreUsuario,clave,nombre,apellido,sexo,altura,idComplexion,idRutina)
-						VALUES(username_,pass_,nombre_,apellido_,sexo_,altura_,complexionID,rutinaID);
+					INSERT INTO usuarios(nombreUsuario,clave,mail,nombre,apellido,sexo,fechaNac,altura,idComplexion,idDieta,idRutina)
+						VALUES(username_,pass_,mail_,nombre_,apellido_,sexo_,fechaNac_,altura_,complexionID,dietaID,rutinaID);
                         
 					set respuesta = 'Usuario registrado exitosamente';
                 END;
