@@ -351,4 +351,33 @@ public ArrayList<String> listaDietas(){
 	
 	return rutinas;
 	}
+	
+	public String registrarUsuario(Usuario nvoUsuario){
+		
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("{call SP_RegistrarUsuario(?,?,?,?,?,?,?,?,?,?,?)}");
+			
+			cmd.setString(1, nvoUsuario.getUsername());
+			cmd.setString(2, "pass"/*nvoUsuario.getPassword()*/);
+			cmd.setString(3, nvoUsuario.getEmail());
+			cmd.setString(4, nvoUsuario.getNombre());
+			cmd.setString(5, nvoUsuario.getApellido());
+			cmd.setString(6, String.valueOf(nvoUsuario.getSexo()));
+			cmd.setInt(7, nvoUsuario.getAltura());
+			cmd.setString(8, nvoUsuario.getComplexion());
+			cmd.setString(9, nvoUsuario.getDieta());
+			cmd.setString(10, nvoUsuario.getRutina());
+			cmd.registerOutParameter(11, Types.VARCHAR);
+			
+			cmd.executeQuery();
+			return cmd.getString(11);
+		
+		}
+		catch(SQLException ex){
+			return ex.getMessage();
+		}
+	}
 }

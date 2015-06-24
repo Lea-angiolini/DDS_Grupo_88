@@ -74,4 +74,9 @@ public class Browser {
 		Factory f = new Factory();
 		return f.listaRutinas();
 	}
+	
+	public static String registrarUsuario(Usuario nvoUsuario){
+		Factory f = new Factory();
+		return f.registrarUsuario(nvoUsuario);
+	}
 }
