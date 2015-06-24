@@ -14,6 +14,7 @@ import master.MasterPage;
 import objetosWicket.ModelUsuario;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
@@ -120,8 +121,7 @@ public class AltaUsuario extends MasterPage {
 		    add(new DropDownChoice<String>("dieta", new PropertyModel<String>(usuario, "dieta"), Browser.listaDietas()));
 		    add(new DropDownChoice("rutina", new PropertyModel<String>(usuario, "rutina"),Browser.listaRutinas()));
 		    add(new EmptyPanel("lblError"));
-		    
-			
+		   
 		}
 		
 		@Override

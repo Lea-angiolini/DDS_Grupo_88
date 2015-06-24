@@ -197,7 +197,7 @@ public class Inicio extends MasterPage {
 	        public FragmentoRecetasBuscadas(String id, String markupId,MarkupContainer markupPorvider,MarkupContainer MarkupActual, itemsABuscar queBuscar ) {
 	        	
 	        	super(id, markupId, markupPorvider);
-
+	        	
 	        	Recetas recetas = Browser.cargarRecetasBuscadas(queBuscar);	
 	    		
 	        	MarkupActual.remove(id);
@@ -243,8 +243,8 @@ public class Inicio extends MasterPage {
 	        		queBuscar.setTemporada(dropdownModeltemp.getObject().toString());
 	        		queBuscar.setIngredientePrincipal(dropdownModelingr.getObject().toString());
 	        		queBuscar.setGrupoAlimenticio(dropdownModelgrupoAlim.getObject().toString());
-	        		queBuscar.setCalificacion( Integer.getInteger(dropdownModelcalificacion.getObject().toString()));
-	        		
+	        		queBuscar.setCalificacion( (Integer)dropdownModelcalificacion.getObject());
+	   
 	        		fragmentoActual.add( new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmInicio, fragmentoActual, queBuscar));
 
 	        	}
