@@ -48,12 +48,12 @@ public class BuscarReceta extends MasterPage {
 			}
 		});
 		
-		frmBuscarReceta.add(new Link("seleccionarReceta"){
+		/*frmBuscarReceta.add(new Link("seleccionarReceta"){
 			
 			public void onClick(){
 			setResponsePage(DetalleDeReceta.class);
 			}
-		});
+		});*/
 	}
 	
 	public class FrmBuscarReceta extends Form {

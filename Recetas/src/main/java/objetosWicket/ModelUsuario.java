@@ -10,6 +10,7 @@ public class ModelUsuario extends LoadableDetachableModel<Usuario> {
 	private String username;
 	private String password;
 	
+	
 	public ModelUsuario(Usuario user) {
 		// TODO Auto-generated constructor stub
 		this.username = user.getUsername();
@@ -23,5 +24,10 @@ public class ModelUsuario extends LoadableDetachableModel<Usuario> {
 		usuario.setUsername(username);
 		usuario.setPassword(password);
 		return usuario;
+	}
+	
+	public void save(Usuario user){
+		//Browser.guardarUsuario(user);
+		 
 	}
 }

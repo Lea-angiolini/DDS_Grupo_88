@@ -7,7 +7,7 @@
 <body>
 	<wicket:extend>
 		<div>
-			<form id="frmBuscarReceta" wicket:id="FrmBuscarReceta" method="post">
+			<form id="frmBuscarReceta" class="form-horizontal" wicket:id="FrmBuscarReceta" method="post">
 				<fieldset id="buscarReceta" class="center">
 					
 					<div id="buscarRecetaBox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
@@ -15,13 +15,13 @@
 					    	<div class="panel-heading">
 					        	<div class="panel-title"><span class="glyphicon glyphicon-search"></span> Buscar Receta</div>
 					        </div>
-					        <div style="padding-top:30px" class="panel-body">
+					        <div style="padding-top:30px" class="panel-body col-md-offset-2">
 
 					        	<form id="buscarRecetaform" class="form-horizontal" role="form">
-									<h3 style="margin-top:-20px">Filtros</h3>
+									<h3 style="margin-top:-20px; margin-left: 25px;">Filtros</h3>
 					                <div class="form-group">
-					              		<label for="temporada" class="col-md-2 control-label">Temporada</label>
-					                   	<div class="col-md-4">
+					              		<label for="temporada" class="col-md-3 control-label">Temporada</label>
+					                   	<div class="col-md-5">
 					                       	<select class="form-control" id="temporada" wicket:id="temporada" placeholder="Seleccione una temporada...">
 					                       		<option value="cargar"></option>
 					                       	</select>
@@ -29,15 +29,15 @@
 					                    <br>
 					                </div>
 					                <div class="form-group">
-					              		<label for="calorias" class="col-md-2 control-label">Calorías</label>
-					                   	<div class="col-md-4">
+					              		<label for="calorias" class="col-md-3 control-label">Calorías</label>
+					                   	<div class="col-md-5">
 					                       	<input type="number" class="form-control" id="calorias" wicket:id="calorias" placeholder="Ingrese un número...">
 					                    </div>
 					                    <br>
 					                </div>
 					                <div class="form-group">
-					              		<label for="grupoAlimenticio" class="col-md-2 control-label">Grupo Alimenticio</label>
-					                   	<div class="col-md-4">
+					              		<label for="grupoAlimenticio" class="col-md-3 control-label">Grupo Alimenticio</label>
+					                   	<div class="col-md-5">
 					                       	<select class="form-control" id="grupoAlimenticio" wicket:id="grupoAlimenticio" placeholder="Seleccione uno...">
 					                       		<option value="cargar"></option>
 					                       	</select>
@@ -45,8 +45,8 @@
 					                    <br>
 					                </div>
 					                <div class="form-group">
-					              		<label for="ingredientePrincipal" class="col-md-2 control-label">Ingrediente Principal</label>
-					                   	<div class="col-md-4">
+					              		<label for="ingredientePrincipal" class="col-md-3 control-label">Ingrediente Principal</label>
+					                   	<div class="col-md-5">
 					                       	<select class="form-control" id="ingredientePrincipal" wicket:id="ingredientePrincipal" placeholder="Seleccione uno...">
 					                       		<option value="cargar"></option>
 					                       	</select>
@@ -54,8 +54,8 @@
 					                    <br>
 					                </div>
 					                <div class="form-group">
-					              		<label for="dificultad" class="col-md-2 control-label">Dificultad</label>
-					                   	<div class="col-md-4">
+					              		<label for="dificultad" class="col-md-3 control-label">Dificultad</label>
+					                   	<div class="col-md-5">
 					                       	<select class="form-control" id="dificultad" wicket:id="dificultad" placeholder="Seleccione una...">
 					                       		<option value="cargar"></option>
 					                       	</select>
@@ -64,10 +64,10 @@
 					                </div>
 					                <div style="margin-top:10px" class="form-group">
 						                <!-- Button -->
-										<div class="col-sm-12 controls">
+										<div class="controls" style="float:right;padding-right: 35.4%;">
 											<br>
 											<button type="button" id="btnBuscarReceta" class="btn btn-warning" wicket:id="buscarReceta"><span class="glyphicon glyphicon-search"/> Buscar Receta</button>											
-											<button type="button" id="btnSeleccionarReceta" class="btn btn-success" wicket:id="seleccionarReceta"><span class="glyphicon glyphicon-check"/> Seleccionar receta</button>
+											<!--<button type="button" id="btnSeleccionarReceta" class="btn btn-success" wicket:id="seleccionarReceta"><span class="glyphicon glyphicon-check"/> Seleccionar receta</button>-->
 											<button type="submit" id="btnVolver" class="btn btn-info" wicket:id="volver"><span class="glyphicon glyphicon-share-alt"/>&nbsp;Volver</button>
 						                </div>
 					 				</div> 
@@ -78,6 +78,7 @@
 				</fieldset>
 			</form>
 		</div>
+		<script src="js/BuscarReceta.js"></script>
 	</wicket:extend>
 </body>
 </html>

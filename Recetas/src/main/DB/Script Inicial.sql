@@ -13,7 +13,7 @@ create table Grupo88.Recetas(
 	creador  varchar(30) references Usuarios ,
     idDificultad int references dificultad,
     calorias int not null,
-    grupoAlimenticio varchar(30) not null,
+    grupoAlimenticio varchar(50) not null,
     temporada int references temporadas,
     ingredientePrincipal int references ingredientes
     
@@ -23,6 +23,7 @@ CREATE TABLE Grupo88.dificultad(
 	idDificultad int auto_increment primary key,
     descripcion varchar(30) not null
 );
+
 
 CREATE TABLE Grupo88.relRecetCondimento(
 	idReceta int(11) references Recetas(idReceta),
@@ -42,10 +43,21 @@ CREATE TABLE Grupo88.relRecetaIngredientes(
     primary key(idReceta, idIngrediente)
 );
 
+CREATE TABLE Grupo88.relTipoIngGrupoAlim(
+	idTipoIngrediente int references idTipoIngrediente,
+	idGrupoAlim int references idGrupoAlim,
+    primary key (idTipoIngrediente, idGrupoAlim)
+);
+
 CREATE TABLE Grupo88.tipoIngrediente(
 	idTipoIngrediente int auto_increment primary key,
     descripcion varchar(30) not null
 );  
+
+CREATE TABLE grupo88.GrupoAlim(
+	idGrupoAlim int auto_increment primary key,
+    descripcion varchar (50) not null
+);
 
 CREATE TABLE Grupo88.Ingredientes(
 	idIngrediente int auto_increment primary key,
@@ -176,6 +188,15 @@ values ('Cereales y derivados'),('Legumbres'),('Huevos'),('Azucares y dulces'),(
 	   ('Frutas'),('Frutos Secos'),('Lacteos y derivados'),('Carnes'), ('Pescados y Mariscos'), 
        ('Aceites y grasas'), ('Otros');
 
+insert into grupo88.GrupoAlim (descripcion)
+values ('Grupo 1: Leche y Derivados'), 
+	   ('Grupo 2: Carnes, Huevos y Pescado'), 
+       ('Grupo 3: Papas, Legumbres, Frutos Secos'),
+       ('Grupo 4: Verduras y Hortalizas'),
+       ('Grupo 5: Frutas'),
+       ('Grupo 6: Harinas, Cereales, Dulces'),
+       ('Grupo 7: Grasas, Aceites y Mantequilla');
+
 insert into Grupo88.usuarios
 values('jorge','pass','Jorge','Gomez','M',170,3,1),
 	  ('maria','pass','Maria','Rodriguez','F',150,1,2),
@@ -301,5 +322,43 @@ BEGIN
 	WHERE dif.descripcion = dificultadB AND
 		  temp.nombreTemporada = temporadaB AND
 		  ing.nombre = ingredienteB;
+END $$
+
+
+CREATE PROCEDURE SP_RegistrarUsuario(
+in username_ varchar(30),
+in pass_ varchar(30),
+in mail_ varchar(30),
+in nombre_ varchar(30),
+in apellido_ varchar(30),
+in sexo_ varchar(1),
+in altura_ int,
+in complexion_ varchar(30),
+in dieta_ varchar(90),
+in rutina_ varchar(45),
+out respuesta varchar(90)
+)
+BEGIN
+ declare rutinaID int;
+ declare complexionID int;
+ 
+		set complexionID = (select  idComplexion from complexion where complexion = complexion_);
+        set rutinaID = (select idRutina from rutinas where rutina = rutina_);
+        
+		if exists (select nombreUsuario from usuarios us where us.nombreUsuario = username_)
+			THEN
+				BEGIN
+					set respuesta = 'El nombre de usuario ya existe. Intente otro';
+				END;
+			ELSE
+				BEGIN
+					INSERT INTO usuarios(nombreUsuario,clave,nombre,apellido,sexo,altura,idComplexion,idRutina)
+						VALUES(username_,pass_,nombre_,apellido_,sexo_,altura_,complexionID,rutinaID);
+                        
+					set respuesta = 'Usuario registrado exitosamente';
+                END;
+		END IF;
+	
+
 END $$
 DELIMITER ;

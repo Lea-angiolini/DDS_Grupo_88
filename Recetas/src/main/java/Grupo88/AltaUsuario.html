@@ -128,6 +128,7 @@
 					                <br>
 					                	<div class="col-md-offset-7 col-md-5 text-right">
 					                    	<br>
+					                    	<label style="color:red" wicket:id="lblError"></label>
 					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
 					                    	<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Registrarse</button>
 					                    </div>
@@ -137,6 +138,8 @@
 					</div>				
 				</fieldset>
 				
+				
+<!-- 				TODO: Sacar este fragment -->
 				<wicket:fragment wicket:id="CheckBoxFragment">
 					
 						<input class="" type="checkbox" name="condPreexistentes" id="condPreexistentes"  wicket:id="condPreexistentes">
@@ -146,7 +149,7 @@
 				
 			</form>
 		</div>
-
+		<script src="js/AltaUsuario.js"></script>
 	</wicket:extend>
 </body>
 </html>

@@ -96,4 +96,9 @@ public class Browser {
 	}
 	
 	
+	
+	public static String registrarUsuario(Usuario nvoUsuario){
+		Factory f = new Factory();
+		return f.registrarUsuario(nvoUsuario);
+	}
 }

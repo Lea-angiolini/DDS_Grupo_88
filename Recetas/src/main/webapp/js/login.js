@@ -1,3 +1,3 @@
-$("#btnRegistro").click(function() {
-	$("#loginbox").fadeOut("slow");
+$(".controls > button").click(function() {
+	$("#loginbox").fadeOut();
 });

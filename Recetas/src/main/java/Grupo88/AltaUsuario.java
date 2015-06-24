@@ -11,9 +11,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import master.MasterPage;
+import objetosWicket.ModelUsuario;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -27,15 +29,19 @@ import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.eclipse.jetty.server.Server;
 import org.apache.wicket.Session;
 
@@ -79,7 +85,7 @@ public class AltaUsuario extends MasterPage {
 	
 	public class FrmAltaUsuario extends Form {
 		
-		private String username;
+		/*private String username;
 		private String password;
 		private String repPassword;
 		private String email;
@@ -88,49 +94,60 @@ public class AltaUsuario extends MasterPage {
 		private final IModel modelSexo = new Model<String>("");
 		private int altura;
 		private final IModel<String> modelComplexion = new Model<String>("");
-		private final IModel modelCondPreex= new Model<String>("");
+		private final IModel modelCondPreex= new Model<String>("");*/
 		private final ArrayList<estadoCondPreex> estados = new ArrayList<estadoCondPreex>();
-		private final IModel modelDietas = new Model<String>("");
-		private final IModel modelRutinas = new Model<String>("");
+		/*private final IModel modelDietas = new Model<String>("");
+		private final IModel modelRutinas = new Model<String>("");*/
+		private Usuario usuario = new Usuario();
+		
 		
 		@SuppressWarnings("unchecked")
 		public FrmAltaUsuario(String id) {
 			super(id);			
-			setDefaultModel(new CompoundPropertyModel(this));
-
-			add(new TextField("username"));
-			//add(new PasswordTextField("password"));
-			//add(new PasswordTextField("repPassword"));
-			add(new EmailTextField("email"));
-			add(new TextField("nombre"));
-			add(new TextField("apellido"));
-			add(new DropDownChoice("sexo",modelSexo,Arrays.asList("Masculino", "Femenino")));
-			add(new NumberTextField("altura"));
-			add(new DropDownChoice("complexion",this.modelComplexion, Browser.listaComplexiones()));
+			//setDefaultModel(new CompoundPropertyModel(this));
+			//PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
+			//PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
+			
+			
+			add(new TextField("username", new PropertyModel<String>(usuario, "username")));
+			//add(password);
+			//add(repPassword);
+			//add(new EqualPasswordInputValidator(password, repPassword));
+			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
+			add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
+			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));
+			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
+			add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
+			add(new DropDownChoice<String>("complexion", new PropertyModel<String>(usuario, "complexion"), Browser.listaComplexiones()));
+			
+			
+			//TODO: Sacar el fragment y usar este iterador
+			//RepeatingView condiciones = new RepeatingView("condiciones"); 
+			//condiciones.add(condiciones.newChildId());
+			
 			add(loopCheckBox());
-		    add(new DropDownChoice("dieta",modelDietas,Browser.listaDietas()));
-		    add(new DropDownChoice("rutina",modelRutinas,Browser.listaRutinas()));
+			
+			
+			
+			
+		    add(new DropDownChoice<String>("dieta", new PropertyModel<String>(usuario, "dieta"), Browser.listaDietas()));
+		    add(new DropDownChoice("rutina", new PropertyModel<String>(usuario, "rutina"),Browser.listaRutinas()));
+		    add(new EmptyPanel("lblError"));
+		    
 			
 		}
 		
 		@Override
 		protected void onSubmit() {
 		super.onSubmit();
-		frmAltaUsuario.cargarDatosUsuario();
+			super.onSubmit();
+			this.cargarDatosUsuario();
+			addOrReplace(new Label("lblError",Browser.registrarUsuario(usuario)));
 		}
 		
-		private Usuario cargarDatosUsuario(){
-			Usuario usuario = new Usuario();
-			
-			usuario.setUsername(username);
-			usuario.setPassword(password);
-			usuario.setEmail(email);
-			usuario.setNombre(nombre);
-			usuario.setApellido(apellido);
-			usuario.setAltura(altura);
-			usuario.setSexo((modelSexo.getObject().toString() == "Masculino") ? 'M' : 'F' );
-			JOptionPane.showMessageDialog(null, ""+modelSexo.getObject().toString()+"    "+usuario.getSexo());
-			return usuario;
+		private void cargarDatosUsuario(){
+			ModelUsuario mUsuario = new ModelUsuario(usuario);
+			mUsuario.save(usuario);			
 			
 		}
 	}
