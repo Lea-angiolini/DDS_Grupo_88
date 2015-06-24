@@ -328,27 +328,139 @@ public ArrayList<String> listaDietas(){
 
 	public ArrayList<String> listaRutinas(){
 	
-	ResultSet rs = null;
-	ArrayList<String> rutinas = new ArrayList<String>();
-	
-	try
-	{
+		ResultSet rs = null;
+		ArrayList<String> rutinas = new ArrayList<String>();
 		
-		CallableStatement cmd = con.prepareCall("select rutina from grupo88.rutinas");
-				
-		rs = cmd.executeQuery();
-		
-		while (rs.next()){
+		try
+		{
 			
-			rutinas.add(rs.getString("rutina"));
-	
+			CallableStatement cmd = con.prepareCall("select rutina from grupo88.rutinas");
+					
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				rutinas.add(rs.getString("rutina"));
+		
+			}
 		}
-	}
-	catch(SQLException ex){
-		JOptionPane.showMessageDialog(null, ex.getMessage());	
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return rutinas;
 	}
 	
-	
-	return rutinas;
+	public ArrayList<String> listaTemporadas(){
+		
+		ResultSet rs = null;
+		ArrayList<String> temporadas = new ArrayList<String>();
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select nombreTemporada from grupo88.Temporadas");
+					
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				temporadas.add(rs.getString("nombreTemporada"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return temporadas;
 	}
+	
+	public ArrayList<String> listaGruposAlim(){
+		
+		ResultSet rs = null;
+		ArrayList<String> gruposAlim = new ArrayList<String>();
+		
+		//Eliminar cuando este la tabla
+		gruposAlim.add("Leche y derivados");
+		gruposAlim.add("Carnes, huevo y pescado");
+		gruposAlim.add("Grasas, aceite, manteca");
+		gruposAlim.add("Frutas");
+		gruposAlim.add("Verduras y hortalizas");
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select descripcion from grupo88.GrupoAlim");
+					
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				gruposAlim.add(rs.getString("descripcion"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return gruposAlim;
+	}
+	
+	public ArrayList<String> listaIngredientes(){
+		
+		ResultSet rs = null;
+		ArrayList<String> ingredientes = new ArrayList<String>();
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select nombre from Grupo88.ingredientes order by nombre");
+					
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				ingredientes.add(rs.getString("nombre"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return ingredientes;
+	}
+	
+	public ArrayList<String> listaDificultades(){
+		
+		ResultSet rs = null;
+		ArrayList<String> dificultades = new ArrayList<String>();
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select descripcion from Grupo88.dificultad");
+					
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				dificultades.add(rs.getString("descripcion"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return dificultades;
+	}
+	
 }
