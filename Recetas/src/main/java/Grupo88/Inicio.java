@@ -67,6 +67,13 @@ public class Inicio extends MasterPage {
 		
 		add(frmInicio = new FrmInicio("FrmInicio"));
 		
+		frmInicio.add(new Link("misRecetas"){
+			
+			public void onClick(){
+			setResponsePage(GestionarRecetas.class);
+			}
+		});
+		
 		frmInicio.add(new Link("salir"){
 			
 			public void onClick() {
