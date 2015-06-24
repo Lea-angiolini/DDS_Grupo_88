@@ -13,7 +13,7 @@ create table Grupo88.Recetas(
 	creador  varchar(30) references Usuarios ,
     idDificultad int references dificultad,
     calorias int not null,
-    grupoAlimenticio varchar(30) not null,
+    grupoAlimenticio varchar(50) not null,
     temporada int references temporadas,
     ingredientePrincipal int references ingredientes
     
@@ -23,6 +23,7 @@ CREATE TABLE Grupo88.dificultad(
 	idDificultad int auto_increment primary key,
     descripcion varchar(30) not null
 );
+
 
 CREATE TABLE Grupo88.relRecetCondimento(
 	idReceta int(11) references Recetas(idReceta),
@@ -42,10 +43,21 @@ CREATE TABLE Grupo88.relRecetaIngredientes(
     primary key(idReceta, idIngrediente)
 );
 
+CREATE TABLE Grupo88.relTipoIngGrupoAlim(
+	idTipoIngrediente int references idTipoIngrediente,
+	idGrupoAlim int references idGrupoAlim,
+    primary key (idTipoIngrediente, idGrupoAlim)
+);
+
 CREATE TABLE Grupo88.tipoIngrediente(
 	idTipoIngrediente int auto_increment primary key,
     descripcion varchar(30) not null
 );  
+
+CREATE TABLE grupo88.GrupoAlim(
+	idGrupoAlim int auto_increment primary key,
+    descripcion varchar (50) not null
+);
 
 CREATE TABLE Grupo88.Ingredientes(
 	idIngrediente int auto_increment primary key,
@@ -175,6 +187,15 @@ insert into grupo88.tipoingrediente(descripcion)
 values ('Cereales y derivados'),('Legumbres'),('Huevos'),('Azucares y dulces'),('Verduras y Hortalizas'),
 	   ('Frutas'),('Frutos Secos'),('Lacteos y derivados'),('Carnes'), ('Pescados y Mariscos'), 
        ('Aceites y grasas'), ('Otros');
+
+insert into grupo88.GrupoAlim (descripcion)
+values ('Grupo 1: Leche y Derivados'), 
+	   ('Grupo 2: Carnes, Huevos y Pescado'), 
+       ('Grupo 3: Papas, Legumbres, Frutos Secos'),
+       ('Grupo 4: Verduras y Hortalizas'),
+       ('Grupo 5: Frutas'),
+       ('Grupo 6: Harinas, Cereales, Dulces'),
+       ('Grupo 7: Grasas, Aceites y Mantequilla');
 
 insert into Grupo88.usuarios
 values('jorge','pass','Jorge','Gomez','M',170,3,1),
