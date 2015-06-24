@@ -18,6 +18,7 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Check;
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -31,6 +32,7 @@ import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -70,35 +72,11 @@ public class AltaUsuario extends MasterPage {
 				setResponsePage(Login.class);
 				
 			}
-		});
-		
-		/*frmAltaUsuario.add(new Link("cancelar2"){
-			
-			@Override
-			public void onClick() {
-			
-				setResponsePage(Login.class);
-				
-			}
-		});*/
-		
+		});	
 	}
 	
 	public class FrmAltaUsuario extends Form {
-		
-		/*private String username;
-		private String password;
-		private String repPassword;
-		private String email;
-		private String nombre;
-		private String apellido;
-		private final IModel modelSexo = new Model<String>("");
-		private int altura;
-		private final IModel<String> modelComplexion = new Model<String>("");
-		private final IModel modelCondPreex= new Model<String>("");*/
-		private final ArrayList<estadoCondPreex> estados = new ArrayList<estadoCondPreex>();
-		/*private final IModel modelDietas = new Model<String>("");
-		private final IModel modelRutinas = new Model<String>("");*/
+
 		private Usuario usuario = new Usuario();
 		
 		
@@ -121,15 +99,23 @@ public class AltaUsuario extends MasterPage {
 			add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
 			add(new DropDownChoice<String>("complexion", new PropertyModel<String>(usuario, "complexion"), Browser.listaComplexiones()));
 			
+			RepeatingView condiciones = new RepeatingView("grupoCheckBox");
+			ArrayList<String> condPrex = Browser.listaCondPreexistentes();
+			final ArrayList<estadoCondPreex> estados = new ArrayList<estadoCondPreex>();
 			
-			//TODO: Sacar el fragment y usar este iterador
-			//RepeatingView condiciones = new RepeatingView("condiciones"); 
-			//condiciones.add(new CheckBox(condiciones.newChildId(), );
-			
-			add(loopCheckBox());
-			
-			
-			
+			for (int i = 0 ; i < condPrex.size(); i++) {
+				
+				AbstractItem item = new AbstractItem(condiciones.newChildId());
+				
+				estadoCondPreex actual = new estadoCondPreex(condPrex.get(i),Model.of(Boolean.FALSE));
+				estados.add(actual);
+				
+				item.add(new Label("textoCheckBox", actual.cond));
+				item.add(new CheckBox("CheckBox", actual.modelCond));
+				condiciones.add(item);
+				
+			}
+			add(condiciones);	
 			
 		    add(new DropDownChoice<String>("dieta", new PropertyModel<String>(usuario, "dieta"), Browser.listaDietas()));
 		    add(new DropDownChoice("rutina", new PropertyModel<String>(usuario, "rutina"),Browser.listaRutinas()));
@@ -151,37 +137,6 @@ public class AltaUsuario extends MasterPage {
 			mUsuario.save(usuario);			
 			
 		}
-	}
-	
-	private class FragmentoCheckBox extends Fragment {
-        public FragmentoCheckBox(String id, String markupId,MarkupContainer markupPorvider, String condPreex) {
-        	
-        	super(id, markupId, markupPorvider);
-
-        	estadoCondPreex estadoActual = new estadoCondPreex(condPreex,Model.of(Boolean.FALSE));
-        	frmAltaUsuario.estados.add(estadoActual);
-        	
-        	CheckBox condPreexistentes = new CheckBox("condPreexistentes", estadoActual.modelCond);
-			add(condPreexistentes);
-            
-			add(new Label("labelCheck",condPreex));
-        }
-
-	}
-	
-	private Loop loopCheckBox(){
-		
-		final ArrayList<String> condPreex = Browser.listaCondPreexistentes();
-		
-		@SuppressWarnings("serial")
-		Loop loop = new Loop("sup", condPreex.size()) {
-	           protected void populateItem(LoopItem item) {
-	                
-	        	   FragmentoCheckBox fragmento = new FragmentoCheckBox("listaCheckBox", "CheckBoxFragment", frmAltaUsuario, condPreex.get(item.getIndex()));
-	                item.add(fragmento);
-	            }
-	        };
-	    return loop;
 	}
 	
 	private class estadoCondPreex{

@@ -104,9 +104,11 @@
 					                <div class="form-group">
 					                	<label align=left for="icode" class="col-md-4 control-label">Condiciones Preexistentes</label>
 					                    <div class="col-md-8">
-					    
-					                    <label class="checkbox-inline" wicket:id="sup"><div wicket:id="listaCheckBox"></div>
-					                    </label>
+					    				
+					    				<div wicket:id="grupoCheckBox">
+					    				<input type="checkBox" wicket:id="CheckBox">
+					    				<label wicket:id="textoCheckBox"></label>
+					                   </div>
 					                    </div>
 					                </div>
 									&nbsp;
@@ -136,17 +138,7 @@
 					        </div>
 					    </div>
 					</div>				
-				</fieldset>
-				
-				
-<!-- 				TODO: Sacar este fragment -->
-				<wicket:fragment wicket:id="CheckBoxFragment">
-					
-						<input class="" type="checkbox" name="condPreexistentes" id="condPreexistentes"  wicket:id="condPreexistentes">
-							<label wicket:id="labelCheck">algo</label>
-				
-				</wicket:fragment>
-				
+				</fieldset>				
 			</form>
 		</div>
 		<script src="js/AltaUsuario.js"></script>
