@@ -33,6 +33,7 @@ import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -104,14 +105,14 @@ public class AltaUsuario extends MasterPage {
 		public FrmAltaUsuario(String id) {
 			super(id);			
 			//setDefaultModel(new CompoundPropertyModel(this));
-			PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
-			PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
+			//PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
+			//PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
 			
 			
 			add(new TextField("username", new PropertyModel<String>(usuario, "username")));
-			add(password);
-			add(repPassword);
-			add(new EqualPasswordInputValidator(password, repPassword));
+			//add(password);
+			//add(repPassword);
+			//add(new EqualPasswordInputValidator(password, repPassword));
 			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
 			add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
 			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));
@@ -131,7 +132,7 @@ public class AltaUsuario extends MasterPage {
 			
 		    add(new DropDownChoice<String>("dieta", new PropertyModel<String>(usuario, "dieta"), Browser.listaDietas()));
 		    add(new DropDownChoice("rutina", new PropertyModel<String>(usuario, "rutina"),Browser.listaRutinas()));
-		    
+		    add(new EmptyPanel("lblError"));
 		    
 			
 		}
@@ -141,6 +142,7 @@ public class AltaUsuario extends MasterPage {
 		super.onSubmit();
 			super.onSubmit();
 			this.cargarDatosUsuario();
+			addOrReplace(new Label("lblError",Browser.registrarUsuario(usuario)));
 		}
 		
 		private void cargarDatosUsuario(){

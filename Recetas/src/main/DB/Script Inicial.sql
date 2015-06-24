@@ -323,4 +323,42 @@ BEGIN
 		  temp.nombreTemporada = temporadaB AND
 		  ing.nombre = ingredienteB;
 END $$
+
+
+CREATE PROCEDURE SP_RegistrarUsuario(
+in username_ varchar(30),
+in pass_ varchar(30),
+in mail_ varchar(30),
+in nombre_ varchar(30),
+in apellido_ varchar(30),
+in sexo_ varchar(1),
+in altura_ int,
+in complexion_ varchar(30),
+in dieta_ varchar(90),
+in rutina_ varchar(45),
+out respuesta varchar(90)
+)
+BEGIN
+ declare rutinaID int;
+ declare complexionID int;
+ 
+		set complexionID = (select  idComplexion from complexion where complexion = complexion_);
+        set rutinaID = (select idRutina from rutinas where rutina = rutina_);
+        
+		if exists (select nombreUsuario from usuarios us where us.nombreUsuario = username_)
+			THEN
+				BEGIN
+					set respuesta = 'El nombre de usuario ya existe. Intente otro';
+				END;
+			ELSE
+				BEGIN
+					INSERT INTO usuarios(nombreUsuario,clave,nombre,apellido,sexo,altura,idComplexion,idRutina)
+						VALUES(username_,pass_,nombre_,apellido_,sexo_,altura_,complexionID,rutinaID);
+                        
+					set respuesta = 'Usuario registrado exitosamente';
+                END;
+		END IF;
+	
+
+END $$
 DELIMITER ;

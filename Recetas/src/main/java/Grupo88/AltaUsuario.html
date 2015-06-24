@@ -31,13 +31,13 @@
 					                <div class="form-group">
 					                	<label for="password" class="col-md-4 control-label">Contraseña</label>
 					                    <div class="col-md-8">
-					                    	<input type="password" class="form-control" name="password" id="password" wicket:id="password" placeholder="Contraseña">
+					                    	<input type="password" class="form-control" name="password" id="password" awicket:id="password" placeholder="Contraseña">
 					                    </div>
 					                </div>
 					                <div class="form-group">
 					                	<label for="repPassword" class="col-md-4 control-label">Repetir contraseña</label>
 					                	<div class="col-md-8">
-					                    	<input type="password" class="form-control" name="repPassword" id="repPassword" wicket:id="repPassword" placeholder="Repetir contraseña">
+					                    	<input type="password" class="form-control" name="repPassword" id="repPassword" awicket:id="repPassword" placeholder="Repetir contraseña">
 					                    </div>
 					                </div>					                                    
 					                <div class="form-group">
@@ -128,6 +128,7 @@
 					                <br>
 					                	<div class="col-md-offset-7 col-md-5 text-right">
 					                    	<br>
+					                    	<label style="color:red" wicket:id="lblError"></label>
 					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
 					                    	<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Registrarse</button>
 					                    </div>
