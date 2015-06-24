@@ -99,6 +99,7 @@ public class BuscarReceta extends MasterPage {
 			
 			//frmBuscarReceta.add();
 			
+			
 		}
 		
 		@SuppressWarnings("unchecked")

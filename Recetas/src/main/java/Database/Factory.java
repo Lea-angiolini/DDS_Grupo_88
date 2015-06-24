@@ -444,7 +444,7 @@ public ArrayList<String> listaDietas(){
 		
 		try
 		{
-			
+		
 			CallableStatement cmd = con.prepareCall("select descripcion from Grupo88.dificultad");
 					
 			rs = cmd.executeQuery();
