@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 
-import javax.swing.JOptionPane;
-
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
 

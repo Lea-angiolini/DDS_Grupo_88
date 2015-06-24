@@ -4,9 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.text.TableView;
 
 import ObjetosDB.*;
 
@@ -41,7 +38,7 @@ public class Factory {
 		    
 		} catch (SQLException ex) {
 	
-			JOptionPane.showMessageDialog(null, ex, "Error al conectar"+ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+			//JOptionPane.showMessageDialog(null, ex, "Error al conectar"+ex.getMessage(), JOptionPane.ERROR_MESSAGE);
 			//ex.printStackTrace();
 		}
 		
@@ -67,7 +64,7 @@ public class Factory {
 		}
 		catch(Exception ex){
 			
-			JOptionPane.showMessageDialog(null, ex.getMessage());
+			//JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 		return resp;
 	}
@@ -92,7 +89,7 @@ public class Factory {
 			
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());
+			//JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 		return user;
 		
@@ -174,7 +171,7 @@ public class Factory {
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		try
@@ -191,7 +188,7 @@ public class Factory {
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		try
@@ -208,7 +205,7 @@ public class Factory {
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		try
@@ -225,7 +222,7 @@ public class Factory {
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		return items;
@@ -263,7 +260,7 @@ public class Factory {
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		return recetas;
@@ -288,7 +285,7 @@ public class Factory {
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		
@@ -314,7 +311,7 @@ public class Factory {
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		
@@ -340,7 +337,7 @@ public ArrayList<String> listaDietas(){
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		
@@ -366,7 +363,7 @@ public ArrayList<String> listaDietas(){
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		
@@ -392,7 +389,7 @@ public ArrayList<String> listaDietas(){
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		
@@ -425,7 +422,7 @@ public ArrayList<String> listaDietas(){
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		
@@ -451,7 +448,7 @@ public ArrayList<String> listaDietas(){
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		
@@ -477,7 +474,7 @@ public ArrayList<String> listaDietas(){
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		
