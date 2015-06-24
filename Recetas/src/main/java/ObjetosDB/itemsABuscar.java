@@ -9,8 +9,15 @@ public class itemsABuscar {
 	private String ingredientePrincipal;
 	private String temporada;
 	private String dificultad;
+	private int calificacion;
 	
 	
+	public int getCalificacion() {
+		return calificacion;
+	}
+	public void setCalificacion(int calificacion) {
+		this.calificacion = calificacion;
+	}
 	public int getCaloriasMin() {
 		return caloriasMin;
 	}

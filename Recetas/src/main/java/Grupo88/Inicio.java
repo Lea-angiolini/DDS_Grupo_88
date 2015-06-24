@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
@@ -223,11 +222,15 @@ public class Inicio extends MasterPage {
 	        	final IModel dropdownModeldif = new Model<String>("");
 	        	final IModel dropdownModeltemp = new Model<String>("");
 	        	final IModel dropdownModelingr = new Model<String>("");
+	        	final IModel dropdownModelgrupoAlim = new Model<String>("");
+	        	final IModel dropdownModelcalificacion = new Model<Integer>(0);
 	        	
 	        	add(new DropDownChoice("dificultad",dropdownModeldif, items.getDificultades()));
 	        	add(new DropDownChoice("temporada",dropdownModeltemp, items.getTemporadas()));
 	        	add(new DropDownChoice("ingrediente",dropdownModelingr, items.getIngredientesPrincipales()));
-	        	
+	        	add(new DropDownChoice("grupoAlim",dropdownModelgrupoAlim, items.getGruposAlimenticios()));
+	        	add(new DropDownChoice("calificaciones",dropdownModelcalificacion, Arrays.asList(1,2,3,4,5)));
+		        
 	        	final FragmentoBuscarRecetas fragmentoActual = this;
 	        	
 	        	add(new Button("botonBuscar") {
@@ -239,10 +242,8 @@ public class Inicio extends MasterPage {
 	        		queBuscar.setDificultad(dropdownModeldif.getObject().toString());
 	        		queBuscar.setTemporada(dropdownModeltemp.getObject().toString());
 	        		queBuscar.setIngredientePrincipal(dropdownModelingr.getObject().toString());
-	        		
-	        		JOptionPane.showMessageDialog(null, "" + dropdownModeldif.getObject()+" "+
-	        											dropdownModeltemp.getObject()+" "+
-	        											dropdownModelingr.toString());
+	        		queBuscar.setGrupoAlimenticio(dropdownModelgrupoAlim.getObject().toString());
+	        		queBuscar.setCalificacion( Integer.getInteger(dropdownModelcalificacion.getObject().toString()));
 	        		
 	        		fragmentoActual.add( new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmInicio, fragmentoActual, queBuscar));
 

@@ -33,7 +33,7 @@
 	                                                    <button type="button" name="btnBuscarReceta" wicket:id="buscarReceta" class="menu-button btn btn-success">
 	                                                    <span class="glyphicon glyphicon-search"></span> Buscar Receta</button>
 	                                                </div>
-	                                                <div class="col-md-3">
+	                                                <div class="col-md-2">
 	                                                    <button type="button" name="btnGestionarReceta" wicket:id="historial" class="menu-button btn btn-default">
 	                                                    <span class="glyphicon glyphicon-book"></span> Historial</button>
 	                                                </div>
@@ -41,14 +41,14 @@
 	                                                    <button id="botonMenu" type="button" name="btnGestionarPerfil" wicket:id="recetasPopulares" class="menu-button btn btn-danger">
 	                                                    <span class="glyphicon glyphicon-thumbs-up"></span> Recetas Populares</button>
 	                                                </div>
-	                                                <div class="col-md-3">
-	                                                    <button type="button" name="btnSalir" wicket:id="salir" class="menu-button btn btn-warning">
-	                                                    <span class="glyphicon glyphicon-log-out"></span> Salir</button>
-	                                                </div>
-	                                                <div class="col-md-3">
+	                                                <div class="col-md-2">
 	                                                	<button type="button" name="btnMisRecetas" wicket:id="misRecetas" class="menu-button btn btn-info">
 	                                                	<span class="glyphicon glyphicon-star"></span>Mis Recetas</button>
 	                                                </div>
+	                                                <div class="col-md-2">
+	                                                    <button type="button" name="btnSalir" wicket:id="salir" class="menu-button btn btn-warning">
+	                                                    <span class="glyphicon glyphicon-log-out"></span> Salir</button>
+	                                                </div> 
 	                                            </div>
 					                        </div>
 					                   </div>                     
@@ -128,7 +128,7 @@
 									<div class="col-md-4"><div class="form-group">
 					              		<label for="grupoAlimenticio" class="control-label">Grupo Alimenticio</label>
 					                   	<div>
-					                       	<select class="form-control" id="grupoAlimenticio" placeholder="Seleccione uno...">
+					                       	<select class="form-control" id="grupoAlimenticio" wicket:id="grupoAlim" placeholder="Seleccione uno...">
 					                       		<option value="cargar"></option>
 					                       	</select>
 					                    </div>
@@ -137,7 +137,7 @@
 									<div class="col-md-4"><div class="form-group">
 					              		<label for="calificacion" class="control-label">Calificacion de usuarios</label>
 					                   	<div>
-					                       	<select class="form-control" id="calificacion" placeholder="Seleccione una calificacion...">
+					                       	<select class="form-control" id="calificacion" wicket:id="calificaciones" placeholder="Seleccione una calificacion...">
 					                       		<option value="cargar"></option>
 					                       	</select>
 					                    </div>

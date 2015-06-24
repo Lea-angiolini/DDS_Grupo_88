@@ -311,7 +311,11 @@ END $$
 CREATE PROCEDURE SP_BuscarRecetas(
 in dificultadB varchar(30),
 in temporadaB varchar(30),
-in ingredienteB varchar(30)
+in ingredienteB varchar(30),
+in grupoAlim varchar(50),
+in calificacion int,
+in caloriasMax int,
+in caloriasMin int
 )
 BEGIN
 	SELECT rec.nombre, rec.creador, dif.descripcion 

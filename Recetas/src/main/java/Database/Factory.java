@@ -211,6 +211,23 @@ public class Factory {
 			JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select * from grupo88.grupoalim");
+			
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+			items.setGrupoAlimenticio(rs.getString("descripcion"));
+		
+			}
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
 		return items;
 		
 	
@@ -225,11 +242,15 @@ public class Factory {
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("{call SP_BuscarRecetas(?,?,?)}");
+			CallableStatement cmd = con.prepareCall("{call SP_BuscarRecetas(?,?,?,?,?,?,?)}");
 			
 			cmd.setString(1, queBuscar.getDificultad());
 			cmd.setString(2, queBuscar.getTemporada());
 			cmd.setString(3, queBuscar.getIngredientePrincipal());
+			cmd.setString(4, queBuscar.getGrupoAlimenticio());
+			cmd.setInt(5, queBuscar.getCalificacion());
+			cmd.setInt(6, queBuscar.getCaloriasMax());
+			cmd.setInt(7, queBuscar.getCaloriasMin());
 			
 			rs = cmd.executeQuery();
 			

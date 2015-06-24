@@ -36,6 +36,7 @@ import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -123,7 +124,7 @@ public class AltaUsuario extends MasterPage {
 			
 			//TODO: Sacar el fragment y usar este iterador
 			//RepeatingView condiciones = new RepeatingView("condiciones"); 
-			//condiciones.add(condiciones.newChildId());
+			//condiciones.add(new CheckBox(condiciones.newChildId(), );
 			
 			add(loopCheckBox());
 			
