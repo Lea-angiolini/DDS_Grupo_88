@@ -1,18 +1,14 @@
 package objetosWicket;
 
-import java.io.ObjectInputStream.GetField;
-
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
-import org.apache.wicket.authorization.*;
-
 import Database.Browser;
 import ObjetosDB.Usuario;
 
 public class SesionUsuario extends WebSession {
 	
-	Usuario usuario;
+	ModelUsuario usuario;
 	
 	public SesionUsuario(Request request) {
 		super(request);
@@ -25,7 +21,7 @@ public class SesionUsuario extends WebSession {
 	public boolean loguearUsuario(ModelUsuario user){
 		if (usuario == null){
 			if (Browser.Login(user.getObject().getUsername(), user.getObject().getPassword())){
-				this.usuario = user.getObject();
+				this.usuario = user;
 			}
 		}
 		return usuario != null;

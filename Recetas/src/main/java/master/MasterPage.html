@@ -21,13 +21,23 @@
 	    <![endif]-->
 		
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	 
+	    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  		<script>
+	  		$("#loginBox").click(function(e) {
+	        	e.preventDefault();
+	        	$("#leftMenu").toggleClass("toggled");
+	    	});
+  		</script>
 	</head>
 	<body>
 		<div id="header" wicket:id="header" >header</div>
-		<div id="body">
-			<div id="left" wicket:id="menu">menu</div>
-			<wicket:child/>
+		<div id="masterBody">
+			<div id="leftMenu" wicket:id="menu">menu</div>
+			<div id="masterContent">
+				<wicket:child/>
+			</div>
 		</div>		
 		<div id="footer" wicket:id="footer">footer</div>
 		

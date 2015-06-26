@@ -34,7 +34,7 @@ public class Login extends MasterPage {
 	public Login(){
 		super();
 		
-		getMenuPanel().setVisible(false);
+		//getMenuPanel().setVisible(false);
 			
 		add(frmLogin = new FrmLogin("FrmLogin"));
 		
@@ -71,7 +71,7 @@ public class Login extends MasterPage {
 		public FrmLogin(String id) {
 			super(id);
 			usuario = new Usuario();
-			setDefaultModel(new CompoundPropertyModel(this));
+			//setDefaultModel(new CompoundPropertyModel(this));
 
 			//add(new TextField("username"));
 			//add(new PasswordTextField("password"));

@@ -495,7 +495,7 @@ public ArrayList<String> listaDietas(){
 			cmd.setString(3, nvoUsuario.getEmail());
 			cmd.setString(4, nvoUsuario.getNombre());
 			cmd.setString(5, nvoUsuario.getApellido());
-			cmd.setString(6, "2000-05-23"/*nvoUsuario.getFechaNacimiento()*/);
+			cmd.setDate(6, nvoUsuario.getFechaNacimiento());
 			cmd.setString(7, String.valueOf(nvoUsuario.getSexo()));
 			cmd.setInt(8, nvoUsuario.getAltura());
 			cmd.setString(9, nvoUsuario.getComplexion());

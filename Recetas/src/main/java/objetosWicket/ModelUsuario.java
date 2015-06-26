@@ -1,5 +1,7 @@
 package objetosWicket;
 
+import java.io.ObjectInputStream.GetField;
+
 import org.apache.wicket.model.LoadableDetachableModel;
 
 import Database.Browser;
@@ -26,8 +28,8 @@ public class ModelUsuario extends LoadableDetachableModel<Usuario> {
 		return usuario;
 	}
 	
-	public void save(Usuario user){
-		Browser.registrarUsuario(user);
+	public String save(Usuario user){
+		return Browser.registrarUsuario(user);
 		 
 	}
 }

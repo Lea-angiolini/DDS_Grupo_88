@@ -20,3 +20,49 @@ body{
 	font-size: 30px;
 	display:block;
 }
+
+#masterBody {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#masterBody.toggled {
+    padding-left: 250px;
+}
+
+#leftMenu {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+
+#masterBody.toggled #leftMenu{
+    width: 250px;
+}
+
+#masterContent {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+
+
+#masterBody.toggled #masterContent{
+    position: absolute;
+    margin-right: -250px;
+}
+
