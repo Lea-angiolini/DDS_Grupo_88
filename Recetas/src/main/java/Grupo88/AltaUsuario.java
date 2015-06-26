@@ -1,6 +1,7 @@
 package Grupo88;
 
 import java.lang.reflect.Array;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -79,7 +80,7 @@ public class AltaUsuario extends MasterPage {
 	public class FrmAltaUsuario extends Form {
 
 		private Usuario usuario = new Usuario();
-		
+		private final ArrayList<estadoCondPreex> estados;
 		
 		@SuppressWarnings("unchecked")
 		public FrmAltaUsuario(String id) {
@@ -97,18 +98,19 @@ public class AltaUsuario extends MasterPage {
 			add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
 			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));
 			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
+			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
 			add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
 			add(new DropDownChoice<String>("complexion", new PropertyModel<String>(usuario, "complexion"), Browser.listaComplexiones()));
 			
 			RepeatingView condiciones = new RepeatingView("grupoCheckBox");
 			ArrayList<String> condPrex = Browser.listaCondPreexistentes();
-			final ArrayList<estadoCondPreex> estados = new ArrayList<estadoCondPreex>();
+			estados = new ArrayList<estadoCondPreex>();
 			
 			for (int i = 0 ; i < condPrex.size(); i++) {
 				
 				AbstractItem item = new AbstractItem(condiciones.newChildId());
 				
-				estadoCondPreex actual = new estadoCondPreex(condPrex.get(i),Model.of(Boolean.FALSE));
+				estadoCondPreex actual = new estadoCondPreex(condPrex.get(i),new Model<Boolean>(false));
 				estados.add(actual);
 				
 				item.add(new Label("textoCheckBox", actual.cond));
@@ -126,15 +128,22 @@ public class AltaUsuario extends MasterPage {
 		
 		@Override
 		protected void onSubmit() {
-		super.onSubmit();
 			super.onSubmit();
-			this.cargarDatosUsuario();
-			addOrReplace(new Label("lblError",Browser.registrarUsuario(usuario)));
+			
+			addOrReplace(new Label("lblError",this.cargarDatosUsuario()));
 		}
 		
-		private void cargarDatosUsuario(){
+		private String cargarDatosUsuario(){
+			
+			for (estadoCondPreex estado : estados) {
+				if(estado.modelCond.getObject())
+				{
+					usuario.setCondicion(estado.cond);
+				}
+			}
+
 			ModelUsuario mUsuario = new ModelUsuario(usuario);
-			mUsuario.save(usuario);			
+			return mUsuario.save(usuario);			
 			
 		}
 	}

@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 
 import ObjetosDB.*;
 
@@ -495,7 +496,7 @@ public ArrayList<String> listaDietas(){
 			cmd.setString(3, nvoUsuario.getEmail());
 			cmd.setString(4, nvoUsuario.getNombre());
 			cmd.setString(5, nvoUsuario.getApellido());
-			cmd.setDate(6, nvoUsuario.getFechaNacimiento());
+			cmd.setString(6, nvoUsuario.getFechaNacimiento());
 			cmd.setString(7, String.valueOf(nvoUsuario.getSexo()));
 			cmd.setInt(8, nvoUsuario.getAltura());
 			cmd.setString(9, nvoUsuario.getComplexion());
@@ -504,6 +505,23 @@ public ArrayList<String> listaDietas(){
 			cmd.registerOutParameter(12, Types.VARCHAR);
 			
 			cmd.executeQuery();
+			
+			try
+			{
+				
+				CallableStatement cmdCondPreex = con.prepareCall("{call SP_RegistrarCondPreexUsuario(?,?)}");
+				cmdCondPreex.setString(1, nvoUsuario.getUsername());
+				
+				for (String condPreex : nvoUsuario.getCondiciones()) 
+				{	
+					cmdCondPreex.setString(2, condPreex);
+					cmdCondPreex.executeQuery();
+				}
+				
+			}
+			catch(SQLException ex){
+				return ex.getMessage();
+			}
 			return cmd.getString(12);
 		
 		}

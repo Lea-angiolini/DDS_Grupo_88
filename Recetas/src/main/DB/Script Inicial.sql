@@ -371,4 +371,15 @@ BEGIN
 	
 
 END $$
+
+CREATE PROCEDURE SP_RegistrarCondPreexUsuario(
+in username varchar(30),
+in condPreex varchar(30)
+)
+BEGIN
+	 INSERT INTO relusuariocondicion
+		VALUES (username,(select idCondicion 
+							from condiciones 
+                            where condicion = condPreex));
+END $$
 DELIMITER ;

@@ -2,6 +2,7 @@ package ObjetosDB;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import Database.Browser;
@@ -13,7 +14,7 @@ public class Usuario implements Serializable{
 	private String email;
 	private String nombre;
 	private String apellido;
-	private Date fechaNacimiento;
+	private String fechaNacimiento;
 	private char sexo;
 	private int altura;
 	private String complexion;
@@ -24,6 +25,7 @@ public class Usuario implements Serializable{
 	
 	
 	public Usuario(){
+		this.condiciones = new ArrayList<String>();
 		
 	}
 
@@ -66,11 +68,11 @@ public class Usuario implements Serializable{
 		this.apellido = apellido;
 	}
 
-	public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
@@ -121,6 +123,11 @@ public class Usuario implements Serializable{
 
 	public void setCondiciones(List<String> condiciones) {
 		this.condiciones = condiciones;
+	}
+	
+	
+	public void setCondicion(String condicion) {
+		this.condiciones.add(condicion);
 	}
 	
 
