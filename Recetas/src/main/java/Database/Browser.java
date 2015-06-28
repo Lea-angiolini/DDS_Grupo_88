@@ -40,13 +40,6 @@ public class Browser {
 		return recetas;
 	}
 	
-	public static itemBuscador cargarItemBuscador(){
-		Factory f = new Factory();
-		itemBuscador item = f.cargarItemBuscador();
-		return item;
-	
-	}
-	
 	public static Recetas cargarRecetasBuscadas(itemsABuscar queBuscar){
 		Factory f = new Factory();
 		Recetas recetas = f.cargarRecetasBuscadas(queBuscar);
@@ -73,22 +66,22 @@ public class Browser {
 		return f.listaRutinas();
 	}
 	
-	public static ArrayList<String> listaTemporadas(){
+	public static ArrayList<Temporadas> listaTemporadas(){
 		Factory f = new Factory();
 		return f.listaTemporadas();
 	}
 	
-	public static ArrayList<String> listaGruposAlim(){
+	public static ArrayList<GruposAlimenticios> listaGruposAlim(){
 		Factory f = new Factory();
 		return f.listaGruposAlim();
 	}
 	
-	public static ArrayList<String> listaIngredientes(){
+	public static ArrayList<Ingredientes> listaIngredientes(){
 		Factory f = new Factory();
 		return f.listaIngredientes();
 	}
 	
-	public static ArrayList<String> listaDificultades(){
+	public static ArrayList<Dificultades> listaDificultades(){
 		Factory f = new Factory();
 		return f.listaDificultades();
 	}

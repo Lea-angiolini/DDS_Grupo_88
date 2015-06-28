@@ -10,10 +10,10 @@ GRANT SELECT, UPDATE, DELETE, INSERT, EXECUTE ON grupo88.* TO 'llevaYtrae'@'loca
 create table Grupo88.Recetas(
 	idReceta int(11) primary key auto_increment,
 	nombre varchar(45) not null,
-	creador  varchar(30) references Usuarios ,
+	creador  varchar(30) references Usuarios,
     idDificultad int references dificultad,
     calorias int not null,
-    grupoAlimenticio varchar(50) not null,
+    grupoAlimenticio int references grupoalim,
     temporada int references temporadas,
     ingredientePrincipal int references ingredientes
     
@@ -206,13 +206,13 @@ values('jorge','pass','Jorge','Gomez','',null,'M',170,3,2,1),
       ('carlos', 'pass', 'Carlos', 'Batata','@gmail.com',null,'M', 160, 2, 1, 3);
 
 insert into Grupo88.Recetas(nombre,creador,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
-values('Pollo al horno','jorge',2,1000,'Definir',1,31),
-	  ('milanesas napolitana','maria',1,800,'Definir',3,34),
-      ('Pulpo en su tinta',null,3,1200,'Definir',5,35),
-      ('Ñoquis','maria',2,760,'Definir',4,3),
-      ('Pan con queso',null,1,1000,'Definir',1,29),
-      ('Pizza','jorge',1,1150,'Definir',2,3),
-      ('Asado','jorge',2,940,'Definir',2,32);
+values('Pollo al horno','jorge',2,1000,2,1,31),
+	  ('milanesas napolitana','maria',1,800,2,3,34),
+      ('Pulpo en su tinta',null,3,1200,2,5,35),
+      ('Ñoquis','maria',2,760,6,4,3),
+      ('Pan con queso',null,1,1000,1,1,29),
+      ('Pizza','jorge',1,1150,6,2,3),
+      ('Asado','jorge',2,940,2,2,32);
     
 
 insert into Grupo88.Historial(fecha,idReceta,usuario)
@@ -320,10 +320,10 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_BuscarRecetas(
-in dificultadB varchar(30),
-in temporadaB varchar(30),
-in ingredienteB varchar(30),
-in grupoAlim varchar(50),
+in dificultadB int,
+in temporadaB int,
+in ingredienteB int,
+in grupoAlim int,
 in calificacion int,
 in caloriasMax int,
 in caloriasMin int
@@ -331,15 +331,14 @@ in caloriasMin int
 BEGIN
 	SELECT rec.nombre, rec.creador, dif.descripcion 
 	FROM Grupo88.recetas rec
-	JOIN Grupo88.dificultad dif
-		ON rec.idDificultad = dif.idDificultad
-	JOIN Grupo88.temporadas temp
-		ON rec.temporada = temp.idTemporada
-	JOIN Grupo88.ingredientes ing
-		ON rec.ingredientePrincipal = ing.idIngrediente
-	WHERE dif.descripcion = dificultadB AND
-		  temp.nombreTemporada = temporadaB AND
-		  ing.nombre = ingredienteB;
+    JOIN Grupo88.dificultad dif
+    ON dif.idDificultad = dificultadB
+	WHERE rec.idDificultad = dificultadB AND
+		  rec.temporada = temporadaB AND
+          rec.ingredientePrincipal = ingredienteB AND
+          rec.grupoAlimenticio = grupoAlim AND
+          rec.calorias < caloriasMax AND
+          rec.calorias > caloriasMin;
 END $$
 
 

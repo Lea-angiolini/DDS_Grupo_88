@@ -87,13 +87,13 @@ public class BuscarReceta extends MasterPage {
 		// Va a conectarse con BD y comprobar las validaciones
 			super.onSubmit();
 			
-			abuscar.setTemporada(modelTemporadas.getObject().toString());
+			/*abuscar.setTemporada(modelTemporadas.getObject().toString());
 			abuscar.setDificultad(modelDificultad.getObject().toString());
 			abuscar.setGrupoAlimenticio(modelGrupoAlim.getObject().toString());
 			abuscar.setCaloriasMax(Integer.parseInt(calorias));
 			abuscar.setIngredientePrincipal(modelIngredientes.getObject().toString());
 			
-			recetas = Browser.cargarRecetasBuscadas(abuscar);
+			recetas = Browser.cargarRecetasBuscadas(abuscar);*/
 			
 			//Fragment fragment = new  FragmentoRecetasUsuario ("contentArea", "listaRecetas", frmInicio, "jorge");
 			

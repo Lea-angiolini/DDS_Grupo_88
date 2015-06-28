@@ -154,85 +154,7 @@ public class Factory {
 		
 		return recetas;
 	}
-	
-	
-	public itemBuscador cargarItemBuscador(){
 		
-		ResultSet rs = null;
-		itemBuscador items = new itemBuscador();
-		try
-		{
-			
-			CallableStatement cmd = con.prepareCall("select * from Grupo88.dificultad");
-			
-			rs = cmd.executeQuery();
-			
-			while (rs.next()){
-				
-			items.setDificultad(rs.getString("descripcion"));
-		
-			}
-		}
-		catch(SQLException ex){
-			//JOptionPane.showMessageDialog(null, ex.getMessage());	
-		}
-		
-		try
-		{
-			
-			CallableStatement cmd = con.prepareCall("select * from Grupo88.ingredientes order by nombre");
-			
-			rs = cmd.executeQuery();
-			
-			while (rs.next()){
-				
-			items.setIngredientesPrincipal(rs.getString("nombre"));
-		
-			}
-		}
-		catch(SQLException ex){
-			//JOptionPane.showMessageDialog(null, ex.getMessage());	
-		}
-		
-		try
-		{
-			
-			CallableStatement cmd = con.prepareCall("select * from Grupo88.temporadas");
-			
-			rs = cmd.executeQuery();
-			
-			while (rs.next()){
-				
-			items.setTemporada(rs.getString("nombreTemporada"));
-		
-			}
-		}
-		catch(SQLException ex){
-			//JOptionPane.showMessageDialog(null, ex.getMessage());	
-		}
-		
-		try
-		{
-			
-			CallableStatement cmd = con.prepareCall("select * from grupo88.grupoalim");
-			
-			rs = cmd.executeQuery();
-			
-			while (rs.next()){
-				
-			items.setGrupoAlimenticio(rs.getString("descripcion"));
-		
-			}
-		}
-		catch(SQLException ex){
-			//JOptionPane.showMessageDialog(null, ex.getMessage());	
-		}
-		
-		return items;
-		
-	
-	}
-	
 	
 	public Recetas cargarRecetasBuscadas(itemsABuscar queBuscar){
 		
@@ -244,14 +166,14 @@ public class Factory {
 			
 			CallableStatement cmd = con.prepareCall("{call SP_BuscarRecetas(?,?,?,?,?,?,?)}");
 			
-			cmd.setString(1, queBuscar.getDificultad());
-			cmd.setString(2, queBuscar.getTemporada());
-			cmd.setString(3, queBuscar.getIngredientePrincipal());
-			cmd.setString(4, queBuscar.getGrupoAlimenticio());
+			cmd.setInt(1, (queBuscar.getDificultad()).getIdDificultad());
+			cmd.setInt(2, (queBuscar.getTemporada()).getIdTemporada());
+			cmd.setInt(3, (queBuscar.getIngredientePrincipal()).getIdIngrediente());
+			cmd.setInt(4, (queBuscar.getGrupoAlimenticio()).getIdGrupoAlim());
 			cmd.setInt(5, queBuscar.getCalificacion());
 			cmd.setInt(6, queBuscar.getCaloriasMax());
 			cmd.setInt(7, queBuscar.getCaloriasMin());
-			
+
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
@@ -373,21 +295,21 @@ public class Factory {
 		return rutinas;
 	}
 	
-	public ArrayList<String> listaTemporadas(){
+	public ArrayList<Temporadas> listaTemporadas(){
 		
 		ResultSet rs = null;
-		ArrayList<String> temporadas = new ArrayList<String>();
+		ArrayList<Temporadas> temporadas = new ArrayList<Temporadas>();
 		
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("select nombreTemporada from grupo88.Temporadas");
+			CallableStatement cmd = con.prepareCall("select * from grupo88.Temporadas");
 					
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
 				
-				temporadas.add(rs.getString("nombreTemporada"));
+				temporadas.add(new Temporadas(rs.getInt("idTemporada"),rs.getString("nombreTemporada")));
 		
 			}
 		}
@@ -399,28 +321,21 @@ public class Factory {
 		return temporadas;
 	}
 	
-	public ArrayList<String> listaGruposAlim(){
+	public ArrayList<GruposAlimenticios> listaGruposAlim(){
 		
 		ResultSet rs = null;
-		ArrayList<String> gruposAlim = new ArrayList<String>();
-		
-		//Eliminar cuando este la tabla
-		gruposAlim.add("Leche y derivados");
-		gruposAlim.add("Carnes, huevo y pescado");
-		gruposAlim.add("Grasas, aceite, manteca");
-		gruposAlim.add("Frutas");
-		gruposAlim.add("Verduras y hortalizas");
-		
+		ArrayList<GruposAlimenticios> gruposAlim = new ArrayList<GruposAlimenticios>();
+				
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("select descripcion from grupo88.GrupoAlim");
+			CallableStatement cmd = con.prepareCall("select * from grupo88.GrupoAlim");
 					
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
 				
-				gruposAlim.add(rs.getString("descripcion"));
+				gruposAlim.add(new GruposAlimenticios(rs.getInt("idGrupoAlim"),rs.getString("descripcion")));
 		
 			}
 		}
@@ -432,21 +347,21 @@ public class Factory {
 		return gruposAlim;
 	}
 	
-	public ArrayList<String> listaIngredientes(){
+	public ArrayList<Ingredientes> listaIngredientes(){
 		
 		ResultSet rs = null;
-		ArrayList<String> ingredientes = new ArrayList<String>();
+		ArrayList<Ingredientes> ingredientes = new ArrayList<Ingredientes>();
 		
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("select nombre from Grupo88.ingredientes order by nombre");
+			CallableStatement cmd = con.prepareCall("select * from Grupo88.ingredientes order by nombre");
 					
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
 				
-				ingredientes.add(rs.getString("nombre"));
+				ingredientes.add(new Ingredientes(rs.getInt("idIngrediente"), rs.getString("nombre"), rs.getInt("caloriasPorcion"), rs.getInt("tipoIngrediente")));
 		
 			}
 		}
@@ -458,21 +373,21 @@ public class Factory {
 		return ingredientes;
 	}
 	
-	public ArrayList<String> listaDificultades(){
+	public ArrayList<Dificultades> listaDificultades(){
 		
 		ResultSet rs = null;
-		ArrayList<String> dificultades = new ArrayList<String>();
+		ArrayList<Dificultades> dificultades = new ArrayList<Dificultades>();
 		
 		try
 		{
 		
-			CallableStatement cmd = con.prepareCall("select descripcion from Grupo88.dificultad");
+			CallableStatement cmd = con.prepareCall("select * from Grupo88.dificultad");
 					
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
 				
-				dificultades.add(rs.getString("descripcion"));
+				dificultades.add(new Dificultades(rs.getInt("idDificultad"), rs.getString("descripcion")));
 		
 			}
 		}

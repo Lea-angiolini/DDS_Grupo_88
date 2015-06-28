@@ -5,10 +5,11 @@ public class itemsABuscar {
 	private int caloriasMin;
 	private int caloriasMax;
 	
-	private String grupoAlimenticio;
-	private String ingredientePrincipal;
-	private String temporada;
-	private String dificultad;
+	private GruposAlimenticios grupoAlimenticio;
+	private Ingredientes ingredientePrincipal;
+	private Temporadas temporada;
+	private Dificultades dificultad;
+	
 	private int calificacion;
 	
 	
@@ -30,29 +31,30 @@ public class itemsABuscar {
 	public void setCaloriasMax(int caloriasMax) {
 		this.caloriasMax = caloriasMax;
 	}
-	public String getGrupoAlimenticio() {
+	public GruposAlimenticios getGrupoAlimenticio() {
 		return grupoAlimenticio;
 	}
-	public void setGrupoAlimenticio(String grupoAlimenticio) {
+	public void setGrupoAlimenticio(GruposAlimenticios grupoAlimenticio) {
 		this.grupoAlimenticio = grupoAlimenticio;
 	}
-	public String getIngredientePrincipal() {
+	public Ingredientes getIngredientePrincipal() {
 		return ingredientePrincipal;
 	}
-	public void setIngredientePrincipal(String ingredientePrincipal) {
+	public void setIngredientePrincipal(Ingredientes ingredientePrincipal) {
 		this.ingredientePrincipal = ingredientePrincipal;
 	}
-	public String getTemporada() {
+	public Temporadas getTemporada() {
 		return temporada;
 	}
-	public void setTemporada(String temporada) {
+	public void setTemporada(Temporadas temporada) {
 		this.temporada = temporada;
 	}
-	public String getDificultad() {
+	public Dificultades getDificultad() {
 		return dificultad;
 	}
-	public void setDificultad(String dificultad) {
+	public void setDificultad(Dificultades dificultad) {
 		this.dificultad = dificultad;
 	}
+
 
 }

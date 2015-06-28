@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 
+import javax.swing.JOptionPane;
+
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
 
@@ -15,10 +17,12 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.ListChoice;
+import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
@@ -44,7 +48,10 @@ import Grupo88.AltaUsuario.FrmAltaUsuario;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.Recetas;
 import ObjetosDB.Recetas.Receta;
-import ObjetosDB.itemBuscador;
+import ObjetosDB.Dificultades;
+import ObjetosDB.GruposAlimenticios;
+import ObjetosDB.Ingredientes;
+import ObjetosDB.Temporadas;
 import ObjetosDB.itemsABuscar;
 
 public class Inicio extends MasterPage {
@@ -215,19 +222,15 @@ public class Inicio extends MasterPage {
 	        	markupPorvider.remove(id);
 	        	add(new Label("nombreGrilla"," Buscar Receta"));
 	        	
-	        	itemBuscador items = Browser.cargarItemBuscador();
-	        	
-	        	final IModel dropdownModeldif = new Model<String>("");
-	        	final IModel dropdownModeltemp = new Model<String>("");
-	        	final IModel dropdownModelingr = new Model<String>("");
-	        	final IModel dropdownModelgrupoAlim = new Model<String>("");
-	        	final IModel dropdownModelcalificacion = new Model<Integer>(0);
-	        	
-	        	add(new DropDownChoice("dificultad",dropdownModeldif, items.getDificultades()));
-	        	add(new DropDownChoice("temporada",dropdownModeltemp, items.getTemporadas()));
-	        	add(new DropDownChoice("ingrediente",dropdownModelingr, items.getIngredientesPrincipales()));
-	        	add(new DropDownChoice("grupoAlim",dropdownModelgrupoAlim, items.getGruposAlimenticios()));
-	        	add(new DropDownChoice("calificaciones",dropdownModelcalificacion, Arrays.asList(1,2,3,4,5)));
+	        	final itemsABuscar items = new itemsABuscar();
+	        		        	
+	        	add(new DropDownChoice<Dificultades>("dificultad",new PropertyModel<Dificultades>(items,"dificultad"), Browser.listaDificultades(),new ChoiceRenderer("dificultad","idDificultad")));
+	        	add(new DropDownChoice<Temporadas>("temporada",new PropertyModel<Temporadas>(items,"temporada"), Browser.listaTemporadas(),new ChoiceRenderer("temporada","idTemporada")));
+	        	add(new DropDownChoice<Ingredientes>("ingrediente",new PropertyModel<Ingredientes>(items,"ingredientePrincipal"), Browser.listaIngredientes(),new ChoiceRenderer("ingrediente","idIngrediente")));
+	        	add(new DropDownChoice<GruposAlimenticios>("grupoAlim",new PropertyModel<GruposAlimenticios>(items,"grupoAlimenticio"), Browser.listaGruposAlim(),new ChoiceRenderer("grupoAlim","idGrupoAlim")));
+	        	add(new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), Arrays.asList(1,2,3,4,5)));
+	        	add(new NumberTextField<Integer>("caloriasMin", new PropertyModel<Integer>(items, "caloriasMin"), Integer.class));
+	        	add(new NumberTextField<Integer>("caloriasMax", new PropertyModel<Integer>(items, "caloriasMax"), Integer.class));
 		        
 	        	final FragmentoBuscarRecetas fragmentoActual = this;
 	        	
@@ -235,15 +238,7 @@ public class Inicio extends MasterPage {
 	        		
 	        	public void onSubmit() {
 	        		
-	        		itemsABuscar queBuscar = new itemsABuscar();
-	        		
-	        		queBuscar.setDificultad(dropdownModeldif.getObject().toString());
-	        		queBuscar.setTemporada(dropdownModeltemp.getObject().toString());
-	        		queBuscar.setIngredientePrincipal(dropdownModelingr.getObject().toString());
-	        		queBuscar.setGrupoAlimenticio(dropdownModelgrupoAlim.getObject().toString());
-	        		queBuscar.setCalificacion( (Integer)dropdownModelcalificacion.getObject());
-	   
-	        		fragmentoActual.add( new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmInicio, fragmentoActual, queBuscar));
+	        		fragmentoActual.add( new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmInicio, fragmentoActual, items));
 
 	        	}
 	        	});
