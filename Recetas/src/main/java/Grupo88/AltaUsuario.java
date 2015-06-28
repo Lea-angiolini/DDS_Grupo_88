@@ -25,9 +25,11 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Check;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.SubmitLink;
@@ -52,7 +54,10 @@ import org.apache.wicket.Session;
 
 import Database.Browser;
 import Grupo88.Login.FrmLogin;
+import ObjetosDB.Complexiones;
+import ObjetosDB.Dietas;
 import ObjetosDB.Recetas;
+import ObjetosDB.Rutinas;
 import ObjetosDB.Usuario;
 
 public class AltaUsuario extends MasterPage {	
@@ -75,6 +80,8 @@ public class AltaUsuario extends MasterPage {
 				
 			}
 		});	
+		
+
 	}
 	
 	public class FrmAltaUsuario extends Form {
@@ -100,7 +107,7 @@ public class AltaUsuario extends MasterPage {
 			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
 			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
 			add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
-			add(new DropDownChoice<String>("complexion", new PropertyModel<String>(usuario, "complexion"), Browser.listaComplexiones()));
+			add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), Browser.listaComplexiones(), new ChoiceRenderer("complexion","idComplexion")));		
 			
 			RepeatingView condiciones = new RepeatingView("grupoCheckBox");
 			ArrayList<String> condPrex = Browser.listaCondPreexistentes();
@@ -120,8 +127,8 @@ public class AltaUsuario extends MasterPage {
 			}
 			add(condiciones);	
 			
-		    add(new DropDownChoice<String>("dieta", new PropertyModel<String>(usuario, "dieta"), Browser.listaDietas()));
-		    add(new DropDownChoice("rutina", new PropertyModel<String>(usuario, "rutina"),Browser.listaRutinas()));
+		    add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), Browser.listaDietas(), new ChoiceRenderer("dieta","idDieta")));
+		    add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),Browser.listaRutinas(), new ChoiceRenderer("rutina","idRutina")));
 		    add(new EmptyPanel("lblError"));
 		   
 		}

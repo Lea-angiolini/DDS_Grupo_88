@@ -17,10 +17,10 @@ public class Usuario implements Serializable{
 	private String fechaNacimiento;
 	private char sexo;
 	private int altura;
-	private String complexion;
-	private String rutina;
+	private Complexiones complexion;
+	private Rutinas rutina;
 	private List<String> condiciones;
-	private String dieta;
+	private Dietas dieta;
 	private List<Grupo> grupos;
 	
 	
@@ -96,22 +96,22 @@ public class Usuario implements Serializable{
 	}
 
 
-	public String getComplexion() {
+	public Complexiones getComplexion() {
 		return complexion;
 	}
 
 
-	public void setComplexion(String complexion) {
+	public void setComplexion(Complexiones complexion) {
 		this.complexion = complexion;
 	}
 
 
-	public String getRutina() {
+	public Rutinas getRutina() {
 		return rutina;
 	}
 
 
-	public void setRutina(String rutina) {
+	public void setRutina(Rutinas rutina) {
 		this.rutina = rutina;
 	}
 
@@ -141,12 +141,12 @@ public class Usuario implements Serializable{
 	}
 	
 
-	public String getDieta() {
+	public Dietas getDieta() {
 		return dieta;
 	}
 
 	
-	public void setDieta(String dieta) {
+	public void setDieta(Dietas dieta) {
 		this.dieta = dieta;
 	}
 	

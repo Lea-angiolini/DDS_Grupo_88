@@ -352,9 +352,9 @@ in apellido_ varchar(30),
 in fechaNac_ date,
 in sexo_ varchar(1),
 in altura_ int,
-in complexion_ varchar(30),
-in dieta_ varchar(90),
-in rutina_ varchar(45),
+in idComplexion int,
+in idDieta int,
+in IdRutina int,
 out respuesta varchar(90)
 )
 BEGIN
@@ -363,30 +363,12 @@ BEGIN
 
 
 	declare rutinaID int;
-	declare complexionID int;
-	declare dietaID int;
     
     
 	DECLARE exit HANDLER FOR SQLSTATE '23000' call raise_error('El usuario ingresado ya existe');
- 
-		SET complexionID = (select  idComplexion 
-							from complexion 
-							where complexion = complexion_);
-        
-        
-        set rutinaID = (select idRutina 
-						from rutinas 
-						where rutina = rutina_);
-        
-        
-        set dietaID = (select idDieta 
-						from dietas 
-						where tipoDieta = dieta_);
-        
-        
-        
+
 		INSERT INTO usuarios(nombreUsuario,clave,mail,nombre,apellido,sexo,fechaNac,altura,idComplexion,idDieta,idRutina)
-			VALUES(username_,pass_,mail_,nombre_,apellido_,sexo_,fechaNac_,altura_,complexionID,dietaID,rutinaID);
+			VALUES(username_,pass_,mail_,nombre_,apellido_,sexo_,fechaNac_,altura_,idComplexion ,idDieta,idRutina);
 END $$
 
 CREATE PROCEDURE SP_RegistrarCondPreexUsuario(

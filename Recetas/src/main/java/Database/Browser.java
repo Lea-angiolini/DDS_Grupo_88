@@ -53,7 +53,7 @@ public class Browser {
 		return recetas;
 	}
 	
-	public static List<String> listaComplexiones(){
+	public static List<Complexiones> listaComplexiones(){
 		Factory f = new Factory();
 		return  f.listaComplexiones();
 	}
@@ -63,12 +63,12 @@ public class Browser {
 		return f.listaCondPreexistentes();
 	}
 	
-	public static ArrayList<String> listaDietas(){
+	public static ArrayList<Dietas> listaDietas(){
 		Factory f = new Factory();
 		return f.listaDietas();
 	}
 	
-	public static ArrayList<String> listaRutinas(){
+	public static ArrayList<Rutinas> listaRutinas(){
 		Factory f = new Factory();
 		return f.listaRutinas();
 	}

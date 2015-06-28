@@ -85,8 +85,8 @@ public class Factory {
 				user.setAltura(rs.getInt("altura"));
 				user.setNombre(rs.getString("nombre"));
 				user.setApellido(rs.getString("apellido"));
-				user.setComplexion(rs.getString("complexion"));
-				user.setRutina(rs.getString("rutina"));
+				//user.setComplexion(rs.getString("complexion"));
+				//user.setRutina(rs.getString("rutina"));
 				user.setSexo(rs.getString("sexo").charAt(0));
 			}
 			
@@ -269,21 +269,21 @@ public class Factory {
 		return recetas;
 	}
 	
-	public List<String> listaComplexiones(){
+	public List<Complexiones> listaComplexiones(){
 		
 		ResultSet rs = null;
-		List<String> complexiones = new ArrayList<String>();
+		List<Complexiones> complexiones = new ArrayList<Complexiones>();
 		
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("select complexion from grupo88.complexion");
+			CallableStatement cmd = con.prepareCall("select * from grupo88.complexion");
 					
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
 				
-				complexiones.add(rs.getString("complexion"));
+				complexiones.add(new Complexiones(rs.getInt("idComplexion"),rs.getString("complexion")));
 		
 			}
 		}
@@ -321,21 +321,21 @@ public class Factory {
 		return condPreex;
 	}
 	
-	public ArrayList<String> listaDietas(){
+	public ArrayList<Dietas> listaDietas(){
 		
 		ResultSet rs = null;
-		ArrayList<String> dietas = new ArrayList<String>();
+		ArrayList<Dietas> dietas = new ArrayList<Dietas>();
 		
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("select tipoDieta from grupo88.dietas");
+			CallableStatement cmd = con.prepareCall("select * from grupo88.dietas");
 					
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
 				
-				dietas.add(rs.getString("tipoDieta"));
+				dietas.add(new Dietas(rs.getInt("idDieta"),rs.getString("tipoDieta")));
 		
 			}
 		}
@@ -347,21 +347,21 @@ public class Factory {
 		return dietas;
 	}
 
-	public ArrayList<String> listaRutinas(){
+	public ArrayList<Rutinas> listaRutinas(){
 	
 		ResultSet rs = null;
-		ArrayList<String> rutinas = new ArrayList<String>();
+		ArrayList<Rutinas> rutinas = new ArrayList<Rutinas>();
 		
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("select rutina from grupo88.rutinas");
+			CallableStatement cmd = con.prepareCall("select * from grupo88.rutinas");
 					
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
 				
-				rutinas.add(rs.getString("rutina"));
+				rutinas.add(new Rutinas(rs.getInt("idRutina"),rs.getString("rutina")));
 		
 			}
 		}
@@ -501,9 +501,9 @@ public class Factory {
 			cmd.setString(6, nvoUsuario.getFechaNacimiento());
 			cmd.setString(7, String.valueOf(nvoUsuario.getSexo()));
 			cmd.setInt(8, nvoUsuario.getAltura());
-			cmd.setString(9, nvoUsuario.getComplexion());
-			cmd.setString(10, nvoUsuario.getDieta());
-			cmd.setString(11, nvoUsuario.getRutina());
+			cmd.setInt(9, (nvoUsuario.getComplexion()).getIdComplexion());
+			cmd.setInt(10, (nvoUsuario.getDieta()).getIdDietas());
+			cmd.setInt(11, (nvoUsuario.getRutina()).getIdRutina());
 			cmd.registerOutParameter(12, Types.VARCHAR);
 			
 			cmd.executeQuery();
