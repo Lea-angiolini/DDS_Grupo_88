@@ -58,7 +58,7 @@ public class Browser {
 		return  f.listaComplexiones();
 	}
 	
-	public static ArrayList<String> listaCondPreexistentes(){
+	public static ArrayList<CondicionesPreexistentes> listaCondPreexistentes(){
 		Factory f = new Factory();
 		return f.listaCondPreexistentes();
 	}

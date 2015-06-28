@@ -295,21 +295,21 @@ public class Factory {
 		return complexiones;
 	}
 	
-	public ArrayList<String> listaCondPreexistentes(){
+	public ArrayList<CondicionesPreexistentes> listaCondPreexistentes(){
 		
 		ResultSet rs = null;
-		ArrayList<String> condPreex = new ArrayList<String>();
+		ArrayList<CondicionesPreexistentes> condPreex = new ArrayList<CondicionesPreexistentes>();
 		
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("select condicion from grupo88.condiciones");
+			CallableStatement cmd = con.prepareCall("select * from grupo88.condiciones");
 					
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
 				
-				condPreex.add(rs.getString("condicion"));
+				condPreex.add(new CondicionesPreexistentes(rs.getInt("idCondicion"), rs.getString("condicion")));
 		
 			}
 		}
@@ -512,9 +512,9 @@ public class Factory {
 			CallableStatement cmdCondPreex = con.prepareCall("{call SP_RegistrarCondPreexUsuario(?,?)}");
 			cmdCondPreex.setString(1, nvoUsuario.getUsername());
 				
-			for (String condPreex : nvoUsuario.getCondiciones()) 
+			for (CondicionesPreexistentes condPreex : nvoUsuario.getCondiciones()) 
 			{	
-				cmdCondPreex.setString(2, condPreex);
+				cmdCondPreex.setInt(2, condPreex.getIdCondPreex());
 				cmdCondPreex.executeQuery();
 			}	
 			

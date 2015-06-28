@@ -55,6 +55,7 @@ import org.apache.wicket.Session;
 import Database.Browser;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.Complexiones;
+import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
 import ObjetosDB.Recetas;
 import ObjetosDB.Rutinas;
@@ -110,17 +111,17 @@ public class AltaUsuario extends MasterPage {
 			add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), Browser.listaComplexiones(), new ChoiceRenderer("complexion","idComplexion")));		
 			
 			RepeatingView condiciones = new RepeatingView("grupoCheckBox");
-			ArrayList<String> condPrex = Browser.listaCondPreexistentes();
+			ArrayList<CondicionesPreexistentes> listaCondPreexistentes = Browser.listaCondPreexistentes();
 			estados = new ArrayList<estadoCondPreex>();
 			
-			for (int i = 0 ; i < condPrex.size(); i++) {
+			for (CondicionesPreexistentes condPreex : listaCondPreexistentes) {
 				
 				AbstractItem item = new AbstractItem(condiciones.newChildId());
 				
-				estadoCondPreex actual = new estadoCondPreex(condPrex.get(i),new Model<Boolean>(false));
+				estadoCondPreex actual = new estadoCondPreex(condPreex,new Model<Boolean>(false));
 				estados.add(actual);
 				
-				item.add(new Label("textoCheckBox", actual.cond));
+				item.add(new Label("textoCheckBox", actual.cond.getCondPreex()));
 				item.add(new CheckBox("CheckBox", actual.modelCond));
 				condiciones.add(item);
 				
@@ -156,12 +157,12 @@ public class AltaUsuario extends MasterPage {
 	}
 	
 	private class estadoCondPreex{
-		estadoCondPreex(String cond, IModel<Boolean> modelCond){
+		estadoCondPreex(CondicionesPreexistentes cond, IModel<Boolean> modelCond){
 			this.cond = cond;
 			this.modelCond = modelCond;
 		}
 		
-		public String cond;
+		public CondicionesPreexistentes cond;
 		public IModel<Boolean> modelCond;
 
 		

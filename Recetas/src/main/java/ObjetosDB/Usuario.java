@@ -19,13 +19,13 @@ public class Usuario implements Serializable{
 	private int altura;
 	private Complexiones complexion;
 	private Rutinas rutina;
-	private List<String> condiciones;
+	private List<CondicionesPreexistentes> condiciones;
 	private Dietas dieta;
 	private List<Grupo> grupos;
 	
 	
 	public Usuario(){
-		this.condiciones = new ArrayList<String>();
+		this.condiciones = new ArrayList<CondicionesPreexistentes>();
 		
 	}
 
@@ -116,17 +116,17 @@ public class Usuario implements Serializable{
 	}
 
 
-	public List<String> getCondiciones() {
+	public List<CondicionesPreexistentes> getCondiciones() {
 		return condiciones;
 	}
 
 
-	public void setCondiciones(List<String> condiciones) {
+	public void setCondiciones(List<CondicionesPreexistentes> condiciones) {
 		this.condiciones = condiciones;
 	}
 	
 	
-	public void setCondicion(String condicion) {
+	public void setCondicion(CondicionesPreexistentes condicion) {
 		this.condiciones.add(condicion);
 	}
 	
