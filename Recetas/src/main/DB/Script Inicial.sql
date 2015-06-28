@@ -1,5 +1,5 @@
 drop database if exists Grupo88;
-Create database Grupo88;
+Create database Grupo88 character set utf8 collate utf8_bin;
 
 DROP USER 'llevaYtrae'@'localhost';
 
@@ -369,22 +369,19 @@ BEGIN
     
 	DECLARE exit HANDLER FOR SQLSTATE '23000' call raise_error('El usuario ingresado ya existe');
  
-		select  idComplexion 
-        into complexionID 
-        from complexion 
-        where complexion = complexion_;
+		SET complexionID = (select  idComplexion 
+							from complexion 
+							where complexion = complexion_);
         
         
-        select idRutina 
-        into rutinaID 
-        from rutinas 
-        where rutina = rutina_;
+        set rutinaID = (select idRutina 
+						from rutinas 
+						where rutina = rutina_);
         
         
-        select idDieta 
-        into dietaID 
-        from dietas 
-        where tipoDieta = dieta_;
+        set dietaID = (select idDieta 
+						from dietas 
+						where tipoDieta = dieta_);
         
         
         
@@ -406,5 +403,3 @@ END $$
 
 
 DELIMITER ;
-
-
