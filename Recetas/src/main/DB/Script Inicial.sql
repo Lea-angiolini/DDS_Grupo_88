@@ -244,6 +244,19 @@ values ('Normal'),('Ovolactovegetariano'),('Vegetariano'),('Vegano');
 
 DELIMITER $$
 USE `Grupo88` $$
+
+
+CREATE PROCEDURE raise_error(
+    in mensaje varchar(500)
+)
+BEGIN
+
+	SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensaje;
+END $$
+
+
+
+
 CREATE PROCEDURE `ObtenerRecetas` (in nombreBuscar varchar(45))
 BEGIN
     select *
@@ -258,15 +271,13 @@ CREATE PROCEDURE `SP_Login`(
     out bResp boolean
 )
 BEGIN
-	
-    IF EXISTS( SELECT 1 FROM usuarios 
-				WHERE nombreUsuario = username AND
-				clave = pass)
-	THEN
-		SET bResp = true;
-	ELSE
-		SET bResp = false;
-	END IF;
+	SET bResp = false;
+    
+    SELECT true
+    into bResp
+    FROM usuarios 
+	WHERE nombreUsuario like username AND
+		  clave like pass;
 END $$
 
 CREATE PROCEDURE SP_CargarUsuario(
@@ -276,9 +287,9 @@ BEGIN
 
 	SELECT us.*, com.complexion, rut.rutina FROM usuarios us
     JOIN complexion com 
-    ON us.idComplexion = com.idComplexion
+		ON us.idComplexion = com.idComplexion
     JOIN rutinas rut
-    ON rut.idRutina = us.idRutina
+		ON rut.idRutina = us.idRutina
     where nombreUsuario = username;
 END $$
 
@@ -321,11 +332,11 @@ BEGIN
 	SELECT rec.nombre, rec.creador, dif.descripcion 
 	FROM Grupo88.recetas rec
 	JOIN Grupo88.dificultad dif
-	ON rec.idDificultad = dif.idDificultad
+		ON rec.idDificultad = dif.idDificultad
 	JOIN Grupo88.temporadas temp
-	ON rec.temporada = temp.idTemporada
+		ON rec.temporada = temp.idTemporada
 	JOIN Grupo88.ingredientes ing
-	ON rec.ingredientePrincipal = ing.idIngrediente
+		ON rec.ingredientePrincipal = ing.idIngrediente
 	WHERE dif.descripcion = dificultadB AND
 		  temp.nombreTemporada = temporadaB AND
 		  ing.nombre = ingredienteB;
@@ -347,29 +358,38 @@ in rutina_ varchar(45),
 out respuesta varchar(90)
 )
 BEGIN
- declare rutinaID int;
- declare complexionID int;
- declare dietaID int;
- 
-		set complexionID = (select  idComplexion from complexion where complexion = complexion_);
-        set rutinaID = (select idRutina from rutinas where rutina = rutina_);
-        set dietaID = (select idDieta from dietas where tipoDieta = dieta_);
-        
-		if exists (select nombreUsuario from usuarios us where us.nombreUsuario = username_)
-			THEN
-				BEGIN
-					set respuesta = 'El nombre de usuario ya existe. Intente otro';
-				END;
-			ELSE
-				BEGIN
-					INSERT INTO usuarios(nombreUsuario,clave,mail,nombre,apellido,sexo,fechaNac,altura,idComplexion,idDieta,idRutina)
-						VALUES(username_,pass_,mail_,nombre_,apellido_,sexo_,fechaNac_,altura_,complexionID,dietaID,rutinaID);
-                        
-					set respuesta = 'Usuario registrado exitosamente';
-                END;
-		END IF;
 	
+   
 
+
+	declare rutinaID int;
+	declare complexionID int;
+	declare dietaID int;
+    
+    
+	DECLARE exit HANDLER FOR SQLSTATE '23000' call raise_error('El usuario ingresado ya existe');
+ 
+		select  idComplexion 
+        into complexionID 
+        from complexion 
+        where complexion = complexion_;
+        
+        
+        select idRutina 
+        into rutinaID 
+        from rutinas 
+        where rutina = rutina_;
+        
+        
+        select idDieta 
+        into dietaID 
+        from dietas 
+        where tipoDieta = dieta_;
+        
+        
+        
+		INSERT INTO usuarios(nombreUsuario,clave,mail,nombre,apellido,sexo,fechaNac,altura,idComplexion,idDieta,idRutina)
+			VALUES(username_,pass_,mail_,nombre_,apellido_,sexo_,fechaNac_,altura_,complexionID,dietaID,rutinaID);
 END $$
 
 CREATE PROCEDURE SP_RegistrarCondPreexUsuario(
@@ -378,8 +398,13 @@ in condPreex varchar(30)
 )
 BEGIN
 	 INSERT INTO relusuariocondicion
-		VALUES (username,(select idCondicion 
-							from condiciones 
-                            where condicion = condPreex));
+		VALUES (username, (select idCondicion 
+						   from condiciones 
+                           where condicion = condPreex)
+				);
 END $$
+
+
 DELIMITER ;
+
+

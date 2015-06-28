@@ -41,7 +41,7 @@ body{
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #000;
+    background: transparent;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -66,3 +66,31 @@ body{
     margin-right: -250px;
 }
 
+
+@media(min-width:768px) {
+    #masterBody {
+        padding-left: 250px;
+    }
+
+    #masterBody.toggled {
+        padding-left: 0;
+    }
+
+    #leftMenu {
+        width: 250px;
+    }
+
+    #masterBody.toggled #leftMenu {
+        width: 0;
+    }
+
+    #masterContent {
+        padding: 20px;
+        position: relative;
+    }
+
+    #masterBody.toggled #masterContent {
+        position: relative;
+        margin-right: 0;
+    }
+}

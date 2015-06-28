@@ -37,6 +37,8 @@ public class Factory {
 		    	throw new SQLException("No se pudo abrir la conexion.");
 		    //JOptionPane.showMessageDialog(null,"conectado exitoso");
 		    
+		    
+		    
 		} catch (SQLException ex) {
 	
 			//JOptionPane.showMessageDialog(null, ex, "Error al conectar"+ex.getMessage(), JOptionPane.ERROR_MESSAGE);
@@ -319,7 +321,7 @@ public class Factory {
 		return condPreex;
 	}
 	
-public ArrayList<String> listaDietas(){
+	public ArrayList<String> listaDietas(){
 		
 		ResultSet rs = null;
 		ArrayList<String> dietas = new ArrayList<String>();
@@ -506,22 +508,16 @@ public ArrayList<String> listaDietas(){
 			
 			cmd.executeQuery();
 			
-			try
-			{
+			
+			CallableStatement cmdCondPreex = con.prepareCall("{call SP_RegistrarCondPreexUsuario(?,?)}");
+			cmdCondPreex.setString(1, nvoUsuario.getUsername());
 				
-				CallableStatement cmdCondPreex = con.prepareCall("{call SP_RegistrarCondPreexUsuario(?,?)}");
-				cmdCondPreex.setString(1, nvoUsuario.getUsername());
-				
-				for (String condPreex : nvoUsuario.getCondiciones()) 
-				{	
-					cmdCondPreex.setString(2, condPreex);
-					cmdCondPreex.executeQuery();
-				}
-				
-			}
-			catch(SQLException ex){
-				return ex.getMessage();
-			}
+			for (String condPreex : nvoUsuario.getCondiciones()) 
+			{	
+				cmdCondPreex.setString(2, condPreex);
+				cmdCondPreex.executeQuery();
+			}	
+			
 			return cmd.getString(12);
 		
 		}
