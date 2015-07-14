@@ -242,8 +242,8 @@ values ('Normal'),('Ovolactovegetariano'),('Vegetariano'),('Vegano');
 
 insert into  Grupo88.pasos(idReceta,numeroPaso,descripcion)
 values (1,1,'Descongelar el pollo'),(1,2,'Sacarle lo que no sirve'),
-		(1,3,'Mandarlo al horno'),(1,4,'Agregar papa si se quiere')
-        (1,5,'Disfrutar del pollo')
+		(1,3,'Mandarlo al horno'),(1,4,'Agregar papa si se quiere'),
+        (1,5,'Disfrutar del pollo');
 
 DELIMITER $$
 USE `Grupo88` $$
