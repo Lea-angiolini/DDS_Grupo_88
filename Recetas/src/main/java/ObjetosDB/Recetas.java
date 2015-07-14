@@ -15,8 +15,8 @@ public class Recetas implements Serializable{
 		coleccionRecetas = new ArrayList<Receta>();
 	}
 	
-	public void agregarNuevaReceta(String nom, String crea, String difi){
-		agregarReceta(new Receta(nom,crea,difi));
+	public void agregarNuevaReceta(int id, String nom, String crea, String difi){
+		agregarReceta(new Receta(id,nom,crea,difi));
 	}
 	
 	public void agregarReceta(Receta rec){
@@ -30,16 +30,24 @@ public class Recetas implements Serializable{
 	
 	public class Receta implements Serializable{
 		
+		private int idreceta;
 		private String nombre;
 		private String creador;
 		private String dificultad;
 
-		public Receta(String nom, String crea, String difi){
+		public Receta(int id, String nom, String crea, String difi){
+			setIdreceta(id);
 			setNombre(nom);
 			setCreador(crea);
 			setDificultad(difi);
 		}
 		
+		public int getIdreceta() {
+			return idreceta;
+		}
+		public void setIdreceta(int idreceta) {
+			this.idreceta = idreceta;
+		}
 		
 		public String getNombre() {
 			return nombre;

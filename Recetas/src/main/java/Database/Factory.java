@@ -6,7 +6,10 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.eclipse.jetty.util.StringUtil;
+
 import ObjetosDB.*;
+import ObjetosDB.Recetas.Receta;
 
 
 public class Factory {
@@ -112,7 +115,8 @@ public class Factory {
 			
 			while (rs.next()){
 				
-				recetas.agregarNuevaReceta(rs.getString("nombre"), 
+				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
+										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
 										   rs.getString("descripcion"));
 				
@@ -141,7 +145,8 @@ public class Factory {
 			
 			while (rs.next()){
 				
-				recetas.agregarNuevaReceta(rs.getString("nombre"), 
+				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
+										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
 										   rs.getString("descripcion"));
 				
@@ -178,9 +183,10 @@ public class Factory {
 			
 			while (rs.next()){
 				
-				recetas.agregarNuevaReceta(rs.getString("nombre"), 
-						   rs.getString("creador"), 
-						   rs.getString("descripcion"));
+				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
+										   rs.getString("nombre"), 
+										   rs.getString("creador"), 
+										   rs.getString("descripcion"));
 		
 			}
 		}
@@ -307,6 +313,8 @@ public class Factory {
 					
 			rs = cmd.executeQuery();
 			
+			temporadas.add(new Temporadas(-1,"Todas"));
+			
 			while (rs.next()){
 				
 				temporadas.add(new Temporadas(rs.getInt("idTemporada"),rs.getString("nombreTemporada")));
@@ -332,6 +340,8 @@ public class Factory {
 			CallableStatement cmd = con.prepareCall("select * from grupo88.GrupoAlim");
 					
 			rs = cmd.executeQuery();
+			
+			gruposAlim.add(new GruposAlimenticios(-1,"Todos"));
 			
 			while (rs.next()){
 				
@@ -359,6 +369,8 @@ public class Factory {
 					
 			rs = cmd.executeQuery();
 			
+			ingredientes.add(new Ingredientes(-1, "Todos", 0,0));
+			
 			while (rs.next()){
 				
 				ingredientes.add(new Ingredientes(rs.getInt("idIngrediente"), rs.getString("nombre"), rs.getInt("caloriasPorcion"), rs.getInt("tipoIngrediente")));
@@ -384,6 +396,8 @@ public class Factory {
 			CallableStatement cmd = con.prepareCall("select * from Grupo88.dificultad");
 					
 			rs = cmd.executeQuery();
+			
+			dificultades.add(new Dificultades(-1, "Todas"));
 			
 			while (rs.next()){
 				
@@ -439,5 +453,61 @@ public class Factory {
 		catch(SQLException ex){
 			return ex.getMessage();
 		}
+	}
+	
+	public RecetaU cargarReceta(int idReceta){
+		
+		ResultSet rs = null;
+		RecetaU receta;
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("{call SP_ObtenerReceta(?)}");
+			
+			cmd.setInt(1,idReceta);
+
+			rs = cmd.executeQuery();			
+			
+			if (rs.next()){
+				
+				receta = new RecetaU(rs.getInt("idReceta"),
+										   rs.getString("nombre"), 
+										   rs.getString("creador"), 
+										   rs.getString("dificultad"),
+										   rs.getString("nombreTemporada"),
+										   rs.getString("ingPrincipal"));
+		
+			}else{ receta = new RecetaU(-1, "Error en el if", "", "","","");}
+			
+			cmd = con.prepareCall("{call SP_ObtenerIngredientesReceta(?)}");
+			cmd.setInt(1,idReceta);
+			rs = cmd.executeQuery();
+			
+			while(rs.next()){
+				receta.agregarIngrediente(rs.getString("cantidad")+" "+rs.getString("ingrediente"));
+			}
+			
+			cmd = con.prepareCall("{call SP_ObtenerCondimentosReceta(?)}");
+			cmd.setInt(1,idReceta);
+			rs = cmd.executeQuery();
+			
+			while(rs.next()){
+				receta.agregarCondimento(rs.getString("condimento"));
+			}
+			
+			cmd = con.prepareCall("{call SP_ObtenerPasosReceta(?)}");
+			cmd.setInt(1,idReceta);
+			rs = cmd.executeQuery();
+			
+			while(rs.next()){
+				receta.agregarPaso(rs.getString("descripcion"));
+			}
+		}
+		catch(SQLException ex){
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
+			receta = new RecetaU(-1, ex.getMessage(), "", "","","");
+		}
+		return receta;
 	}
 }

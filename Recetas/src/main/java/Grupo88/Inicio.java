@@ -40,6 +40,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.eclipse.jetty.server.Server;
 import org.apache.wicket.Session;
 
@@ -143,16 +144,21 @@ public class Inicio extends MasterPage {
 			protected void populateItem(Item item) {
 				// TODO Auto-generated method stub
 				
+				final Receta recetas= (Receta) item.getModelObject();
+				
+				final PageParameters pars = new PageParameters();
+				pars.add("idReceta",recetas.getIdreceta());
+				
 				Link bton = new Link("bt"){
 					@Override
 					public void onClick() {
 						// TODO Auto-generated method stub
-						setResponsePage(DetalleDeReceta.class);
+						setResponsePage(DetalleDeReceta.class,pars);
 					}
 					
 				};
 				
-				final Receta recetas= (Receta) item.getModelObject();
+				
 				//item.addOrReplace(new Label("indice",item.getIndex()));
 				
 				bton.addOrReplace(new Label("campo1",recetas.getNombre()));

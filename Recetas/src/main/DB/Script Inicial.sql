@@ -240,7 +240,10 @@ values ('Arroz',354,1), ('Avena',367,1),('Harina',150, 1), -- cereales y derivad
 insert into Grupo88.dietas(tipoDieta)
 values ('Normal'),('Ovolactovegetariano'),('Vegetariano'),('Vegano');
 
-
+insert into  Grupo88.pasos(idReceta,numeroPaso,descripcion)
+values (1,1,'Descongelar el pollo'),(1,2,'Sacarle lo que no sirve'),
+		(1,3,'Mandarlo al horno'),(1,4,'Agregar papa si se quiere')
+        (1,5,'Disfrutar del pollo')
 
 DELIMITER $$
 USE `Grupo88` $$
@@ -297,7 +300,7 @@ CREATE PROCEDURE SP_RecetasPopulares(
 )
 BEGIN
 
-	SELECT rec.nombre, rec.creador, dif.descripcion 
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion 
     FROM recetas rec 
     JOIN dificultad dif
     ON rec.idDificultad = dif.idDificultad
@@ -309,7 +312,7 @@ in username varchar(30)
 )
 BEGIN
 
-	SELECT rec.nombre, rec.creador, dif.descripcion 
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion 
     FROM recetas rec 
     JOIN dificultad dif
     ON rec.idDificultad = dif.idDificultad
@@ -329,14 +332,14 @@ in caloriasMax int,
 in caloriasMin int
 )
 BEGIN
-	SELECT rec.nombre, rec.creador, dif.descripcion 
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion 
 	FROM Grupo88.recetas rec
     JOIN Grupo88.dificultad dif
-    ON dif.idDificultad = dificultadB
-	WHERE rec.idDificultad = dificultadB AND
-		  rec.temporada = temporadaB AND
-          rec.ingredientePrincipal = ingredienteB AND
-          rec.grupoAlimenticio = grupoAlim AND
+    ON dif.idDificultad = rec.idDificultad
+	WHERE (dificultadB = -1 or rec.idDificultad = dificultadB) AND
+		  (temporadaB = -1 or rec.temporada = temporadaB) AND
+          (ingredienteB = -1 or rec.ingredientePrincipal = ingredienteB) AND
+          (grupoAlim = -1 or rec.grupoAlimenticio = grupoAlim) AND
           rec.calorias < caloriasMax AND
           rec.calorias > caloriasMin;
 END $$
@@ -379,5 +382,56 @@ BEGIN
 		VALUES (username, idCondPreex);
 END $$
 
+CREATE PROCEDURE SP_ObtenerReceta(
+	IN idReceta int
+)
+BEGIN
 
+	 SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', grupoalim.descripcion as 'grpAlim',
+			tem.nombreTemporada, ing.nombre as 'IngPrincipal'
+     FROM recetas rec
+     JOIN dificultad dif
+     ON dif.idDificultad = rec.idDificultad 
+     JOIN grupoalim
+     ON rec.grupoAlimenticio = grupoalim.idGrupoAlim
+     JOIN temporadas tem
+     ON tem.idTemporada = rec.temporada
+     JOIN ingredientes ing
+     ON ing.idIngrediente = rec.ingredientePrincipal
+	 WHERE rec.idReceta = idReceta;
+     
+END $$
+
+CREATE PROCEDURE SP_ObtenerIngredientesReceta(
+	IN idReceta int
+)
+BEGIN
+
+	SELECT ing.nombre as 'ingrediente', rel.cantidad FROM relrecetaingredientes rel
+     JOIN ingredientes ing
+     ON rel.idIngrediente = ing.idIngrediente
+     WHERE rel.idReceta = idReceta;
+     
+END $$
+
+CREATE PROCEDURE SP_ObtenerCondimentosReceta(
+	IN idReceta int
+)
+BEGIN
+	SELECT cond.nombre as 'condimento' FROM relrecetcondimento rel
+     JOIN condimento cond
+     ON rel.idCondimento = cond.idCondimento
+     WHERE rel.idReceta = idReceta;
+     
+END $$
+
+CREATE PROCEDURE SP_ObtenerPasosReceta(
+	IN idReceta int
+)
+BEGIN
+
+	SELECT * FROM pasos pa 
+    WHERE pa.idReceta = idReceta;
+    
+END $$
 DELIMITER ;

@@ -86,10 +86,13 @@ public class Browser {
 		return f.listaDificultades();
 	}
 	
-	
-	
 	public static String registrarUsuario(Usuario nvoUsuario){
 		Factory f = new Factory();
 		return f.registrarUsuario(nvoUsuario);
+	}
+	
+	public static RecetaU cargarReceta(int idReceta){
+		Factory f = new Factory();
+		return f.cargarReceta(idReceta);
 	}
 }

@@ -9,9 +9,40 @@
 		<div>
 			<form id="frmDetalleDeReceta" wicket:id="FrmDetalleDeReceta" method="post">
 				<fieldset id="detalleReceta" class="center">
-					<legend>Detalle de Receta</legend>	
+				<div  class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" style="background-color:rgba(255,255,255,0.6)">
+					<h1 wicket:id="Nombre">Detalle de Receta</h1>	
+					
+					<h3>Dificultad <label wicket:id="dif"></label></h3>
+					<h3>Temporada <label wicket:id="tem"></label></h3>
+					<h3>Calorias</h3>
+					<br>
+					<div class="container">
+					 <div class="row">
+						<div class="col-md-6">
+						<div wicket:id="pasos">
+						<h3 wicket:id="nro">Paso </h3>
+						<p wicket:id="paso"></p><br>
+						</div>
+						</div>
+					
+						<div class="col-md-4" style="background:#FFF7AE; height:100%">
+						<label>Ingredientes</label>
+						<ul wicket:id="listaIngredientes">
+						<li wicket:id="unIngrediente"></li>
+						</ul>
+						<br>
+						<label>Condimentos</label>
+						<ul wicket:id="listaCondimentos">
+						<li wicket:id="unCondimento"></li>
+						</ul>
+						</div>
+						</div>
+					</div>
+					
+					
 					<button type="button" name="btnConfirmar" wicket:id="confirmar">Confirmar</button>		
 					<button type="button" name="btnCompartir" wicket:id="compartir">Compartir</button>	
+				</div>
 				</fieldset>
 			</form>
 		</div>
