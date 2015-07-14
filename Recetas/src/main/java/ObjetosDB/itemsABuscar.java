@@ -2,6 +2,15 @@ package ObjetosDB;
 
 public class itemsABuscar {
 	
+	public itemsABuscar() {
+		calificacion = 5;
+		grupoAlimenticio = new GruposAlimenticios(-1, "");
+		ingredientePrincipal = new Ingredientes(-1, "", 0, 0);
+		temporada = new Temporadas(-1, "");
+		dificultad = new Dificultades(-1, "");
+		caloriasMax = 3000;
+		
+	}
 	private int caloriasMin;
 	private int caloriasMax;
 	
