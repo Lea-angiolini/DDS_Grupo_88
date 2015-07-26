@@ -62,7 +62,7 @@ public class Inicio extends MasterPage {
 	@SuppressWarnings("unchecked")
 	public Inicio(){
 		super();
-		getMenuPanel().setVisible(false);
+		//getMenuPanel().setVisible(false);
 		
 		if(!((SesionUsuario)getSession()).estaLogueado())
 		{

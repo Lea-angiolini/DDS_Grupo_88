@@ -3,7 +3,9 @@ package master;
 
 
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.html.link.Link;
 
+import Grupo88.BuscarReceta;
 import Grupo88.PanelLogin;
 
 public class MenuPanel extends Panel {
@@ -16,5 +18,12 @@ public class MenuPanel extends Panel {
 	public MenuPanel(String id) {
 		super(id);
 		add(new PanelLogin("loginPanel"));
+		add(new Link("recetas"){
+			
+			public void onClick() {
+				
+				setResponsePage(BuscarReceta.class);
+			}
+		});
 	}
 }

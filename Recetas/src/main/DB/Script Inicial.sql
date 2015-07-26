@@ -158,6 +158,13 @@ CREATE TABLE Grupo88.Temporadas(
     nombreTemporada varchar(50) not null
 );
 
+CREATE TABLE Grupo88.amigos(
+	nombreUsuario1 int references Usuarios,
+    nombreUsuario2 int references Usuarios,
+    PRIMARY KEY(nombreUsuario1,nombreUsuario2),
+    check(nombreUsuario1 <> nombreUsuario2)
+);
+
 insert into Grupo88.Rutinas (rutina)
 values ('Sedentaria con algo de ejercicio'),
 	   ('Sedentaria con nada de ejercicio'),
