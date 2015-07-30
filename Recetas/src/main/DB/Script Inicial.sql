@@ -295,11 +295,13 @@ CREATE PROCEDURE SP_CargarUsuario(
 )
 BEGIN
 
-	SELECT us.*, com.complexion, rut.rutina FROM usuarios us
+	SELECT us.*, com.complexion, rut.rutina, die.tipoDieta FROM usuarios us
     JOIN complexion com 
 		ON us.idComplexion = com.idComplexion
     JOIN rutinas rut
 		ON rut.idRutina = us.idRutina
+	JOIN dietas die
+		ON us.idDieta = die.idDieta
     where nombreUsuario = username;
 END $$
 

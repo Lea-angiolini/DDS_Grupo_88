@@ -85,12 +85,17 @@ public class Factory {
 			//cmd.registerOutParameter(2, Types.REF_CURSOR);
 			rs = cmd.executeQuery();
 			if(rs.next()){
-				user.setAltura(rs.getInt("altura"));
 				user.setNombre(rs.getString("nombre"));
 				user.setApellido(rs.getString("apellido"));
-				//user.setComplexion(rs.getString("complexion"));
-				//user.setRutina(rs.getString("rutina"));
 				user.setSexo(rs.getString("sexo").charAt(0));
+				user.setAltura(rs.getInt("altura"));
+				user.setEmail(rs.getString("mail"));
+				user.setComplexion(new Complexiones(rs.getInt("idComplexion"), rs.getString("complexion")));
+				user.setDieta(new Dietas(rs.getInt("idDieta"), rs.getString("tipoDieta")));
+				user.setRutina(new Rutinas(rs.getInt("idRutina"), rs.getString("rutina")));
+				
+				
+				
 			}
 			
 		}
