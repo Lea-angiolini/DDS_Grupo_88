@@ -120,7 +120,7 @@ public class GestionarPerfil extends MasterPage {
 				
 				item.add(new Label("textoCheckBox", actual.cond.getCondPreex()));
 				CheckBox check = new CheckBox("CheckBox", actual.modelCond);
-				check.setModelObject(usuario.getCondiciones().contains(condPreex));
+				check.setModelObject(usuario.tineCondPreex(condPreex));
 				item.add(check);
 				condiciones.add(item);
 				

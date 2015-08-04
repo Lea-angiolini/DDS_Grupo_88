@@ -94,8 +94,14 @@ public class Factory {
 				user.setDieta(new Dietas(rs.getInt("idDieta"), rs.getString("tipoDieta")));
 				user.setRutina(new Rutinas(rs.getInt("idRutina"), rs.getString("rutina")));
 				
+				cmd = con.prepareCall("{call SP_CargarCondPreexUsuario(?)}");
 				
+				cmd.setString(1, nombreUsuario);
+				rs = cmd.executeQuery();
 				
+				while(rs.next()){
+				user.setCondicion(new CondicionesPreexistentes(rs.getInt("idCondicion"), rs.getString("condicion")));
+				}
 			}
 			
 		}

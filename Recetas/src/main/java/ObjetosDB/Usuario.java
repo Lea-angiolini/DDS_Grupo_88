@@ -160,6 +160,18 @@ public class Usuario implements Serializable{
 		this.grupos = grupos;
 	}
 	
+	public boolean tineCondPreex(CondicionesPreexistentes cond){
+		
+		for(CondicionesPreexistentes condPreex : condiciones ){
+			
+			if(condPreex.getIdCondPreex() == cond.getIdCondPreex()){
+				return true;
+			}
+		}
+
+		return false;
+		
+	}
 	
 	
 }

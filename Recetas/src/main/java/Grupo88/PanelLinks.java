@@ -57,6 +57,14 @@ public class PanelLinks extends Panel {
 					setResponsePage(GestionarPerfil.class);
 				}
 			});
+			
+			add(new Link("grupos"){
+				
+				public void onClick() {
+					
+					//setResponsePage(GestionarGrupos.class);
+				}
+			});
 
 		}
 		

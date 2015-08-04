@@ -251,6 +251,11 @@ insert into  Grupo88.pasos(idReceta,numeroPaso,descripcion)
 values (1,1,'Descongelar el pollo'),(1,2,'Sacarle lo que no sirve'),
 		(1,3,'Mandarlo al horno'),(1,4,'Agregar papa si se quiere'),
         (1,5,'Disfrutar del pollo');
+        
+        
+        
+insert into Grupo88.relusuariocondicion()
+values ('jorge',1),('jorge',3);
 
 DELIMITER $$
 USE `Grupo88` $$
@@ -304,6 +309,21 @@ BEGIN
 		ON us.idDieta = die.idDieta
     where nombreUsuario = username;
 END $$
+
+
+CREATE PROCEDURE SP_CargarCondPreexUsuario(
+	IN username varchar(30)
+)
+BEGIN
+
+	SELECT cond.idCondicion, cond.condicion
+    FROM relusuariocondicion rel
+    JOIN condiciones cond
+    ON cond.idCondicion = rel.idCondicion
+    WHERE rel.nombreUsuario = username;
+    
+END $$
+
 
 CREATE PROCEDURE SP_RecetasPopulares(
 )
