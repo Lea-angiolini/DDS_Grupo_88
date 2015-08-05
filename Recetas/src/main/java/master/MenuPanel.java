@@ -2,6 +2,9 @@ package master;
 
 
 
+import objetosWicket.SesionUsuario;
+
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.html.link.Link;
 
@@ -19,6 +22,13 @@ public class MenuPanel extends Panel {
 	public MenuPanel(String id) {
 		super(id);
 		//add(new PanelLogin("loginPanel"));
-		add(new PanelLinks("linkPanel"));
+		
+		if(((SesionUsuario)getSession()).estaLogueado()){
+			add(new PanelLinks("linkPanel"));
+		}
+		else
+		{
+			add(new EmptyPanel("linkPanel"));
+		}
 	}
 }

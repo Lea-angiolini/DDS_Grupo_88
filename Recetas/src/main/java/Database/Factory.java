@@ -466,7 +466,7 @@ public class Factory {
 		}
 	}
 	
-	public RecetaU cargarReceta(int idReceta){
+	public RecetaU cargarReceta(int idReceta, Usuario user){
 		
 		ResultSet rs = null;
 		RecetaU receta;
@@ -474,9 +474,10 @@ public class Factory {
 		try
 		{
 			
-			CallableStatement cmd = con.prepareCall("{call SP_ObtenerReceta(?)}");
+			CallableStatement cmd = con.prepareCall("{call SP_ObtenerReceta(?,?)}");
 			
 			cmd.setInt(1,idReceta);
+			cmd.setString(2, user.getUsername());
 
 			rs = cmd.executeQuery();			
 			
@@ -487,9 +488,10 @@ public class Factory {
 										   rs.getString("creador"), 
 										   rs.getString("dificultad"),
 										   rs.getString("nombreTemporada"),
-										   rs.getString("ingPrincipal"));
+										   rs.getString("ingPrincipal"),
+										   rs.getInt("calificacion"));
 		
-			}else{ receta = new RecetaU(-1, "Error en el if", "", "","","");}
+			}else{ receta = new RecetaU(-1, "Error en el if", "", "","","",0);}
 			
 			cmd = con.prepareCall("{call SP_ObtenerIngredientesReceta(?)}");
 			cmd.setInt(1,idReceta);
@@ -517,8 +519,49 @@ public class Factory {
 		}
 		catch(SQLException ex){
 			//JOptionPane.showMessageDialog(null, ex.getMessage());	
-			receta = new RecetaU(-1, ex.getMessage(), "", "","","");
+			receta = new RecetaU(-1, ex.getMessage(), "", "","","",0);
 		}
 		return receta;
+	}
+	
+	public boolean agregarAHistorial(int idReceta, Usuario user){
+		
+		ResultSet rs = null;
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("{call SP_agregarAHistorial(?,?)}");
+			cmd.setInt(1,idReceta);
+			cmd.setString(2, user.getUsername());
+			
+			cmd.executeQuery();
+			return true;
+		}
+		catch(SQLException ex){
+			//JOptionPane.showMessageDialog(null, ex.getMessage());
+			return false;}
+		
+	}
+	
+	public boolean calUltimaConfirmacion(int idReceta, Usuario user, int calificacion){
+		
+ResultSet rs = null;
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("{call SP_calUltimaConfirmacion(?,?,?)}");
+			cmd.setInt(1,idReceta);
+			cmd.setString(2, user.getUsername());
+			cmd.setInt(3, calificacion);
+			
+			cmd.executeQuery();
+			return true;
+		}
+		catch(SQLException ex){
+			//JOptionPane.showMessageDialog(null, ex.getMessage());
+			return false;}
+		
 	}
 }

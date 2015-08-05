@@ -13,8 +13,10 @@ public class RecetaU {
 	private ArrayList<String> ingredientes;
 	private ArrayList<String> condimentos;
 	private ArrayList<String> pasos;
+	private int calificacion;
 
-	public RecetaU(int id, String nom, String crea, String difi, String temp, String ingPrin){
+
+	public RecetaU(int id, String nom, String crea, String difi, String temp, String ingPrin, int calif){
 		setIdreceta(id);
 		setNombre(nom);
 		setCreador(crea);
@@ -24,6 +26,7 @@ public class RecetaU {
 		ingredientes = new ArrayList<String>();
 		condimentos = new ArrayList<String>();
 		pasos = new ArrayList<String>();
+		setCalificacion(calif);
 	}
 	
 	public int getIdreceta() {
@@ -106,6 +109,14 @@ public class RecetaU {
 	
 	public void agregarPaso(String paso){
 		pasos.add(paso);
+	}
+	
+	public int getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(int calificacion) {
+		this.calificacion = calificacion;
 	}
 }
 

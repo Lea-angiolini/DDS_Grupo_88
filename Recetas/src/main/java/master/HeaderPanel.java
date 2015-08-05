@@ -5,10 +5,13 @@ package master;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
+import Grupo88.Inicio;
 import ObjetosDB.Usuario;
 
 public class HeaderPanel extends Panel {
@@ -32,9 +35,19 @@ public class HeaderPanel extends Panel {
 					
 				}
 			}));
+			
+			addOrReplace(new Link("cerrarSesion"){
+				@Override
+				public void onClick() {
+					// TODO Auto-generated method stub
+					getSession().replaceSession();
+					setResponsePage(Inicio.class);
+				}
+			});
 		}
 		else {
 			addOrReplace(new Label("saludo", Model.of("")));
+			addOrReplace(new EmptyPanel("cerrarSesion"));
 		}
 	}
 }

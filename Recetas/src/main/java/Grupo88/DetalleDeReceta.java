@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 
 import master.MasterPage;
+import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebPage;
@@ -18,11 +19,13 @@ import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -39,6 +42,7 @@ import Grupo88.Inicio.FrmInicio;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.RecetaU;
+import ObjetosDB.Usuario;
 
 public class DetalleDeReceta extends MasterPage {
 
@@ -49,21 +53,41 @@ public class DetalleDeReceta extends MasterPage {
 	
 	public DetalleDeReceta(final PageParameters parameters){
 		super();
-		getMenuPanel().setVisible(false);
+		//getMenuPanel().setVisible(false);
 		
-		StringValue idReceta;
-		RecetaU receta;
+		final Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
+		final StringValue idReceta;
+		final RecetaU receta;
 		
 		if(parameters.getNamedKeys().contains("idReceta")){
 			idReceta = parameters.get("idReceta");
-			receta = Browser.cargarReceta(idReceta.toInt());
+			receta = Browser.cargarReceta(idReceta.toInt(), user);
 		
 		
-		
-		
+		//final List SITES = Arrays.asList(new String[] { "The Server Side", "Java Lobby", "Java.Net" });
+	
 		add(frmDetalleDeReceta = new FrmDetalleDeReceta("FrmDetalleDeReceta"));
 		
 		frmDetalleDeReceta.add(new Label("Nombre",receta.getNombre()));
+		EmptyPanel botonCal;
+		if(receta.getCalificacion() == -1){
+			frmDetalleDeReceta.add(new EmptyPanel("calificacion"));
+			frmDetalleDeReceta.add(botonCal = new EmptyPanel("confCalificacion"));
+			botonCal.setVisible(false);
+		}
+		else{
+		frmDetalleDeReceta.add(new RadioChoice<Integer>("calificacion",new PropertyModel<Integer>(receta,"calificacion"),Arrays.asList(1,2,3,4,5)));
+		
+		frmDetalleDeReceta.add(new Button("confCalificacion"){
+			@Override
+			public void onSubmit() {
+				// TODO Auto-generated method stub
+				super.onSubmit();
+				Browser.calUltimaConfirmacion(idReceta.toInt(),user,receta.getCalificacion());
+			}
+		});
+		}
+		
 		frmDetalleDeReceta.add(new Label("dif",receta.getDificultad()));
 		frmDetalleDeReceta.add(new Label("tem",receta.getTemporada()));
 		
@@ -111,8 +135,10 @@ public class DetalleDeReceta extends MasterPage {
 		frmDetalleDeReceta.add(new Link("confirmar"){
 			
 			public void onClick() {
-				
-				setResponsePage(Login.class);
+				final PageParameters pars = new PageParameters();
+				pars.add("idReceta",idReceta);
+				Browser.agregarAHistorial(idReceta.toInt(),user);
+				setResponsePage(DetalleDeReceta.class,pars);
 			}
 		});
 		

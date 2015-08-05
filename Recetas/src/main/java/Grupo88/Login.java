@@ -102,7 +102,6 @@ public class Login extends MasterPage {
 			else {
 				lblError = "Usuario incorrecto";
 			}
-				
 		}
 		
 	}

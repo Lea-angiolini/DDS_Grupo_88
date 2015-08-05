@@ -27,7 +27,11 @@ public class SesionUsuario extends WebSession {
 		return usuario != null;
 	}
 
-
+	
+	public void desloguearUsuario(){
+		
+	}
+	
 	public ModelUsuario getUsuario() {
 		return (ModelUsuario)getAttribute("usuario");
 	}

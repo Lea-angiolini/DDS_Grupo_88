@@ -91,8 +91,18 @@ public class Browser {
 		return f.registrarUsuario(nvoUsuario);
 	}
 	
-	public static RecetaU cargarReceta(int idReceta){
+	public static RecetaU cargarReceta(int idReceta, Usuario user){
 		Factory f = new Factory();
-		return f.cargarReceta(idReceta);
+		return f.cargarReceta(idReceta, user);
+	}
+	
+	public static boolean agregarAHistorial(int idReceta ,Usuario user){
+		Factory f = new Factory();
+		return f.agregarAHistorial(idReceta, user);	
+	}
+	
+	public static boolean calUltimaConfirmacion(int idReceta,Usuario user, int calificacion){
+		Factory f = new Factory();
+		return f.calUltimaConfirmacion(idReceta, user, calificacion);
 	}
 }

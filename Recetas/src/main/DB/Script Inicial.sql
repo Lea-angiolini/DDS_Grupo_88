@@ -15,7 +15,9 @@ create table Grupo88.Recetas(
     calorias int not null,
     grupoAlimenticio int references grupoalim,
     temporada int references temporadas,
-    ingredientePrincipal int references ingredientes
+    ingredientePrincipal int references ingredientes,
+    puntajeTotal int default 0,
+    vecesCalificada int default 0
     
 );
 
@@ -147,10 +149,11 @@ CREATE TABLE Grupo88.PreferenciasAlimenticias(
 
 CREATE TABLE Grupo88.Historial(
 	idHistorial int auto_increment primary key,
-    fecha date not null,
+    fecha datetime not null,
     idReceta int not null,
     usuario varchar(30),
-    cantVecesUsada int
+    -- cantVecesUsada int
+    calificacionUsuario int default 0
 );
 
 CREATE TABLE Grupo88.Temporadas(
@@ -412,12 +415,20 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_ObtenerReceta(
-	IN idReceta int
+	IN idReceta int,
+    IN username varchar(30)
 )
 BEGIN
+	declare calificacion int;
+    
+    set calificacion = (select his.calificacionUsuario from Grupo88.historial his
+    where his.idReceta = idReceta
+    and	his.usuario = username
+	order by his.fecha desc
+    limit 1);
 
 	 SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', grupoalim.descripcion as 'grpAlim',
-			tem.nombreTemporada, ing.nombre as 'IngPrincipal'
+			tem.nombreTemporada, ing.nombre as 'IngPrincipal', IFNULL(calificacion,-1) as 'calificacion'
      FROM recetas rec
      JOIN dificultad dif
      ON dif.idDificultad = rec.idDificultad 
@@ -461,6 +472,59 @@ BEGIN
 
 	SELECT * FROM pasos pa 
     WHERE pa.idReceta = idReceta;
+    
+END $$
+
+CREATE PROCEDURE SP_agregarAHistorial(
+	IN idReceta int, 
+    IN username varchar(30)
+)
+BEGIN
+
+	
+    INSERT INTO grupo88.historial (fecha, idReceta, usuario)
+    VALUES (current_date(), idReceta, username);
+    
+    
+END $$
+
+CREATE PROCEDURE SP_calUltimaConfirmacion(
+	IN idReceta int, 
+    IN username varchar(30),
+    IN calificacion int
+)
+BEGIN
+	declare ultCal int;
+    set ultCal = (select calificacionUsuario 
+		  from Grupo88.historial his
+          WHERE his.idReceta = idReceta and
+		  his.usuario = username
+		  ORDER BY his.fecha, his.idHistorial desc
+		  LIMIT 1);
+          
+	if ( ultCal = 0 )
+		then
+			BEGIN
+			UPDATE Grupo88.recetas rec
+            SET puntajeTotal = puntajeTotal + calificacion,
+				vecesCalificada = vecesCalificada + 1
+			WHERE rec.idReceta = idReceta;
+            END;
+		else
+			BEGIN
+			UPDATE Grupo88.recetas rec
+            SET puntajeTotal = puntajeTotal + calificacion - ultCal
+			WHERE rec.idReceta = idReceta;
+            END;
+	end if;
+    
+    UPDATE grupo88.historial his
+    SET calificacionUsuario = calificacion
+    WHERE his.idReceta = idReceta and
+		  his.usuario = username
+	ORDER BY his.fecha, his.idHistorial desc
+    LIMIT 1;
+    
     
 END $$
 DELIMITER ;
