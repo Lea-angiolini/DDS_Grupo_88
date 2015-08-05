@@ -62,7 +62,7 @@ public class PanelLinks extends Panel {
 				
 				public void onClick() {
 					
-					//setResponsePage(GestionarGrupos.class);
+					setResponsePage(GestionarGrupos.class);
 				}
 			});
 

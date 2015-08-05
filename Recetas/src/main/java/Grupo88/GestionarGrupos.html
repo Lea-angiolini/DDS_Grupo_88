@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Perfil</title>
+</head>
+<body>
+	<wicket:extend>
+	
+		<div>
+			<form id="frmGestionarGrupos" wicket:id="frmGestionarGrupos" method="post">
+				<fieldset id="gestionarGrupos" class="center">
+				<div id="signupbox" style="display:block; margin-top:50px" class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+							<div class="panel panel-info">
+					    	<div class="panel-heading">
+					        	<div class="panel-title"><span class="glyphicon glyphicon-edit"></span>&nbsp;<span>Grupos</span></div>   
+					        </div>  
+					        
+					<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-lock"></span>&nbsp;Buscar grupo</button>
+					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;Mis grupos</button>        
+					        
+					   <input type="text"> </input>   <br>  
+					<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>			
+				</div>
+				</div>
+				</fieldset>		
+			</form>
+		</div>
+	<!-- 	<script src="js/AltaUsuario.js"></script> -->
+	</wicket:extend>
+</body>
+</html>
