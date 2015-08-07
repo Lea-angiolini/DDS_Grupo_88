@@ -6,41 +6,91 @@
 </head>
 <body>
 	<wicket:extend>
-	
+
 		<div>
-			<form id="frmGestionarGrupos" wicket:id="frmGestionarGrupos" method="post">
+			<form id="frmGestionarGrupos" wicket:id="frmGestionarGrupos"
+				method="post">
 				<fieldset id="gestionarGrupos" class="center">
-				<div id="signupbox" style="display:block; margin-top:50px" class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-							<div class="panel panel-info">
-					    	<div class="panel-heading">
-					        	<div class="panel-title"><span class="glyphicon glyphicon-edit"></span>&nbsp;<span>Grupos</span></div>   
-					        </div>  
-					        
-					<button type="button" class="btn btn-success"><span class="glyphicon"></span>&nbsp;Todos/MisGrupos</button>
-<!-- 					<button type="button" class="btn btn-primary"><span class="glyphicon"></span>&nbsp;Mis grupos</button>         -->
-					    <br><br><br>    
-					   <div class="form-group">
-												<label for="calorias" class="control-label col-md-2">Nombre grupo</label>
-												<div class="col-md-9">
-													<input type="text" class="form-control" id="caloriasMin"
-														aawicket:id="caloriasMin">
-												</div>
+					<div id="signupbox" style="display: block; margin-top: 50px"
+						class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<div class="panel-title">
+									<span class="glyphicon glyphicon-edit"></span>&nbsp;<span>Grupos</span>
+								</div>
+							</div>
+
+							<button type="button" class="btn btn-success" wicket:id="todosGrupos">
+								<span class="glyphicon"></span>&nbsp;Todos
+							</button>
+							<button type="button" class="btn btn-success" wicket:id="btnMisGrupos">
+								<span class="glyphicon"></span>&nbsp;MisGrupos
+							</button>
+							<!-- 					<button type="button" class="btn btn-primary"><span class="glyphicon"></span>&nbsp;Mis grupos</button>         -->
+							<br>
+							<br>
+							<br>
+							<div class="form-group">
+								<label for="calorias" class="control-label col-md-2">Nombre
+									grupo</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="caloriasMin"
+										aawicket:id="caloriasMin">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="calorias" class="control-label col-md-2">Creador</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="caloriasMax"
+										awicket:id="caloriasMax">
+								</div>
+								<br>
+							</div>
+							<br>
+							
+							
+							<div wicket:id="areaGrupos"></div>
+							
+							
+							<button id="btnCancelar" type="button" class="btn btn-danger"
+								wicket:id="cancelar">
+								<span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar
+							</button>
 						</div>
-						<div class="form-group">
-												<label for="calorias" class="control-label col-md-2">Creador</label>
-												<div class="col-md-9">	
-													<input type="text" class="form-control" id="caloriasMax"
-														awicket:id="caloriasMax">
-												</div>
-												<br>
-											</div>   <br>  
-					<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>			
-				</div>
-				</div>
-				</fieldset>		
+					</div>
+				</fieldset>
+				
+				<wicket:fragment wicket:id="fragmentGrupos">
+		
+			<div wicket:id="iterGrupos">
+
+												<button type="button" class="box col-md-12"
+													style="background-color: rgba(255, 255, 255, 0.8)">
+													<div class="row" ALIGN=left>
+														<div class="col-md-7">
+															Nombre grupo: <span wicket:id="nombre"
+																style="padding-right: 100px;"></span>
+														</div>
+														<div class="col-md-3">
+															Creador:<span wicket:id="creador"
+																style="padding-right: 100px;"></span>
+														</div>
+														<div><a class="clo-md-2 btn btn-success" wicket:id="entrar/salir"><span id="" wicket:id="textoEntrar/salir">Adherirse</span></a></div>
+														<br> <br>
+														<dl class="dl-horizontal">
+															<dt>Descripción:</dt>
+															<dd wicket:id="detalle">Una breve descripción de la receta</dd>
+														</dl>
+													</div>
+														
+												</button>
+											</div>
+		
+		</wicket:fragment>
 			</form>
 		</div>
-	<!-- 	<script src="js/AltaUsuario.js"></script> -->
+		
+				<!-- 	<script src="js/AltaUsuario.js"></script> -->
 	</wicket:extend>
 </body>
 </html>

@@ -173,5 +173,19 @@ public class Usuario implements Serializable{
 		
 	}
 	
+	public void cargarGrupos(){
+		setGrupos(Browser.cargarGrupos(username));
+	}
+	
+	public boolean estaEnGrupo(Grupo unGrupo){
+		
+		for(Grupo grupo : grupos){
+			if (grupo.getIdGrupo() == unGrupo.getIdGrupo()){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 }

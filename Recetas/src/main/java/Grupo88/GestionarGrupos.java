@@ -18,6 +18,9 @@ import objetosWicket.SesionUsuario;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -58,20 +61,25 @@ import Grupo88.Login.FrmLogin;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
+import ObjetosDB.Grupo;
 import ObjetosDB.Recetas;
 import ObjetosDB.Rutinas;
 import ObjetosDB.Usuario;
+import ObjetosDB.itemsABuscar;
 
 public class GestionarGrupos extends MasterPage {	
 	
 	private FrmGestionarGrupos frmGestionarGrupos;
 	private SesionUsuario sesion = (SesionUsuario)getSession();
+	private Usuario user = sesion.getUsuario().getObject();
 	
 	public GestionarGrupos(){
 		super();
 		//getMenuPanel().setVisible(false);
 		
 		add(frmGestionarGrupos = new FrmGestionarGrupos("frmGestionarGrupos"));
+		
+		frmGestionarGrupos.add(new EmptyPanel("areaGrupos"));
 		
 		frmGestionarGrupos.add(new Link("cancelar"){
 			
@@ -82,6 +90,41 @@ public class GestionarGrupos extends MasterPage {
 				
 			}
 		});	
+		
+		frmGestionarGrupos.add(new Link("todosGrupos"){
+			@Override
+			public void onClick() {
+				// TODO Auto-generated method stub
+				
+	        	//user.cargarGrupos();
+	        	List<Grupo> todosGrupos = Browser.cargarGrupos("");
+	        	if (!todosGrupos.isEmpty())
+	        	{
+	        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, todosGrupos));
+	        	}
+	        	else
+	        	{
+	        		frmGestionarGrupos.addOrReplace(new Label("areaGrupos","No existen grupos"));
+	        	}
+	        }
+		});
+		
+		frmGestionarGrupos.add(new Link("btnMisGrupos"){
+			@Override
+			public void onClick() {
+				// TODO Auto-generated method stub
+				
+	        	user.cargarGrupos();
+	        	if (!user.getGrupos().isEmpty())
+	        	{
+	        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, user.getGrupos()));
+	        	}
+	        	else
+	        	{
+	        		frmGestionarGrupos.addOrReplace(new Label("areaGrupos","Usteded no tiene grupos"));
+	        	}
+	        }
+		});
 		
 
 	}
@@ -100,4 +143,89 @@ public class GestionarGrupos extends MasterPage {
 		}
 	}
 	
+	public class FragmentoMisGrupos extends Fragment {
+        public FragmentoMisGrupos(String id, String markupId, MarkupContainer markupPorvider, List<Grupo> grupos) {
+        	
+        	super(id, markupId, markupPorvider);
+    		
+        	//markupPorvider.remove(id);
+        	
+        	RepeatingView iterGrupos = new RepeatingView("iterGrupos");
+        	
+				for (int i = 0; i< grupos.size(); i++) {
+					
+					AbstractItem item = new AbstractItem(iterGrupos.newChildId());
+					
+					final Grupo grupoActual = grupos.get(i);
+					final String actual = "btn"+i;
+					final Model modeloBtn = new Model( new Model());
+					AjaxLink entrarsalir = new AjaxLink("entrar/salir") {
+						protected void actualizar(){
+							
+							String clase;
+							String texto;
+							
+							if(esta = user.estaEnGrupo(grupoActual)){
+								clase="btn btn-danger";
+								texto="Salir";
+								modeloBtn.setObject("document.getElementById('"+actual+"').innerHTML = Salir;");
+							}
+							else
+							{
+								clase="btn btn-primary";
+								texto="Adherirse";
+								modeloBtn.setObject("document.getElementById('"+actual+"').innerHTML = Unirse;");
+							}
+							
+							//add(new AttributeAppender("onclick", new Model("document.getElementById('"+actual+"').innerHTML = 'Heddfllo' +'Dolly.';")));
+							//add(new AttributeAppender("id",new Model(actual), " "));
+							//addOrReplace(new Label("textoEntrar/salir",texto));
+							
+						}
+						
+						boolean esta;
+						@Override
+						protected void onBeforeRender() {
+							// TODO Auto-generated method stub
+							super.onBeforeRender();
+							actualizar();
+							
+						}
+						
+						@Override
+						public void onClick(AjaxRequestTarget target) {
+							// TODO Auto-generated method stub
+							//target.appendJavaScript( "document.getElementById('algo').text = 'newtext';" );
+				            
+							if(esta){
+								grupoActual.sacarUsuario(user);
+							}
+							else{
+								grupoActual.agregarUsuario(user);
+							}
+							//add(new AttributeAppender("onclick", ));
+							
+							actualizar();
+							//render();
+						}
+					};
+					
+					entrarsalir.add(new AttributeAppender("onclick", modeloBtn));
+					Label texto = new Label("textoEntrar/salir","dfgdf");
+					texto.add(new AttributeAppender("id",actual));
+					 entrarsalir.add(texto);
+					item.add(new Label("nombre", grupoActual.getNombre()));
+					item.add(new Label("creador", grupoActual.getCreador()));
+					item.add(new Label("detalle", grupoActual.getDetalle()));
+					item.add(entrarsalir);
+					iterGrupos.add(item);
+					
+					
+				}
+				add(iterGrupos);
+        	}
+        	
+            
+        
+	}
 }

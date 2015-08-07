@@ -546,7 +546,7 @@ public class Factory {
 	
 	public boolean calUltimaConfirmacion(int idReceta, Usuario user, int calificacion){
 		
-ResultSet rs = null;
+		ResultSet rs = null;
 		
 		try
 		{
@@ -563,5 +563,78 @@ ResultSet rs = null;
 			//JOptionPane.showMessageDialog(null, ex.getMessage());
 			return false;}
 		
+	}
+	
+	public List<Grupo> cargarGrupos(String username){
+		
+		ResultSet rs = null;
+		List<Grupo> grupos = new ArrayList<Grupo>();
+		CallableStatement cmd;
+		
+		try
+		{
+			if(username != "")
+			{
+				cmd = con.prepareCall("{call SP_cargarGruposUsuario(?)}");
+				cmd.setString(1,username);
+			}
+			else
+			{
+				cmd = con.prepareCall("{call SP_cargarGrupos()}");
+			}
+			
+			rs = cmd.executeQuery();
+			while(rs.next()){
+				grupos.add(new Grupo(rs.getInt("idGrupo"),rs.getString("nombreGrupo"),rs.getString("creador"),rs.getString("detalle")));
+				
+			}
+			
+		
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+			}
+		
+		return grupos;
+	}
+	
+	public boolean entrarGrupo (String username, int idGrupo){
+		
+		CallableStatement cmd;
+		
+		try
+		{
+				cmd = con.prepareCall("{call SP_entrarGrupo(?,?)}");
+				cmd.setString(1,username);
+				cmd.setInt(2,idGrupo);
+				cmd.executeQuery();
+		
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+			return false;
+			}
+		
+		return true;
+	}
+	
+public boolean salirGrupo (String username, int idGrupo){
+		
+		CallableStatement cmd;
+		
+		try
+		{
+				cmd = con.prepareCall("{call SP_salirGrupo(?,?)}");
+				cmd.setString(1,username);
+				cmd.setInt(2,idGrupo);
+				cmd.executeQuery();
+		
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+			return false;
+			}
+		
+		return true;
 	}
 }

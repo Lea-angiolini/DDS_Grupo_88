@@ -105,4 +105,20 @@ public class Browser {
 		Factory f = new Factory();
 		return f.calUltimaConfirmacion(idReceta, user, calificacion);
 	}
+	
+	public static List<Grupo> cargarGrupos(String username){
+		Factory f = new Factory();
+		return f.cargarGrupos(username);
+		
+	}
+	
+	public static boolean entrarGrupo (String username, int idGrupo){
+		Factory f = new Factory();
+		return f.entrarGrupo(username, idGrupo);
+	}
+	
+	public static boolean salirGrupo (String username, int idGrupo){
+		Factory f = new Factory();
+		return f.salirGrupo(username, idGrupo);
+	}
 }

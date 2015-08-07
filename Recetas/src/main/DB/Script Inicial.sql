@@ -86,6 +86,7 @@ CREATE TABLE Grupo88.relUsuarioGrupo(
 CREATE TABLE Grupo88.Grupos(
 	idGrupo int auto_increment primary key,
     nombreGrupo varchar(30),
+    detalle varchar(255),
     creador varchar(30) references Usuarios
 );
 
@@ -255,10 +256,15 @@ values (1,1,'Descongelar el pollo'),(1,2,'Sacarle lo que no sirve'),
 		(1,3,'Mandarlo al horno'),(1,4,'Agregar papa si se quiere'),
         (1,5,'Disfrutar del pollo');
         
-        
+ insert into Grupo88.grupos(nombreGrupo,creador,detalle)
+ values('Locomia','jorge','Aca se come de todo'),
+		('Putos','carlos','cualquier cosa ponele');
         
 insert into Grupo88.relusuariocondicion()
 values ('jorge',1),('jorge',3);
+
+insert into Grupo88.relusuariogrupo()
+values ('maria',1),('carlos',1),('carlos',2);
 
 DELIMITER $$
 USE `Grupo88` $$
@@ -527,4 +533,43 @@ BEGIN
     
     
 END $$
+
+CREATE PROCEDURE SP_cargarGruposUsuario(
+	IN username varchar(30))
+BEGIN
+
+	SELECT * from Grupo88.grupos gr
+    JOIN relusuariogrupo rel
+    ON rel.nombreUsuario = username
+    WHERE rel.idGrupo = gr.idGrupo;
+    
+END$$
+
+CREATE PROCEDURE SP_cargarGrupos()
+BEGIN
+
+	SELECT * from Grupo88.grupos;
+    
+END$$
+
+CREATE PROCEDURE SP_salirGrupo(
+IN username varchar(30),
+IN idGrupoIN int)
+BEGIN
+	
+    DELETE FROM relusuariogrupo 
+    WHERE nombreUsuario = username and
+		  idGrupo = idGrupoIN;
+    
+END$$
+
+CREATE PROCEDURE SP_entrarGrupo(
+IN username varchar(30),
+IN idGrupoIN int)
+BEGIN
+	
+    INSERT INTO relusuariogrupo 
+    VALUES(username,idGrupoIN);
+    
+END$$
 DELIMITER ;
