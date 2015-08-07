@@ -160,6 +160,18 @@ public class Usuario implements Serializable{
 		this.grupos = grupos;
 	}
 	
+	public void agregarGrupo(Grupo grupo){
+		grupos.add(grupo);
+	}
+	
+	public void eliminarGrupo(Grupo grupoSacar){
+		for (Grupo grupo : grupos){
+			if (grupo.getIdGrupo() == grupoSacar.getIdGrupo()){
+				grupos.remove(grupo);
+				return;
+			}
+		}
+	}
 	public boolean tineCondPreex(CondicionesPreexistentes cond){
 		
 		for(CondicionesPreexistentes condPreex : condiciones ){

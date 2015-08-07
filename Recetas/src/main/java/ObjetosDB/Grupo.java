@@ -44,10 +44,18 @@ public class Grupo {
 	}
 	
 	public boolean agregarUsuario(Usuario user){
-		return Browser.entrarGrupo(user.getUsername(), idGrupo);
+		if( Browser.entrarGrupo(user.getUsername(), idGrupo)){
+			user.agregarGrupo(this);
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean sacarUsuario(Usuario user){
-		return Browser.salirGrupo(user.getUsername(), idGrupo);
+		if(Browser.salirGrupo(user.getUsername(), idGrupo)){
+			user.eliminarGrupo(this);
+			return true;
+		}
+		return false;
 	}
 }

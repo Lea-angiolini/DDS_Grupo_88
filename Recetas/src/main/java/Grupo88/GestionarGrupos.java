@@ -1,5 +1,6 @@
 package Grupo88;
 
+import java.lang.ref.Reference;
 import java.lang.reflect.Array;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import objetosWicket.SesionUsuario;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -51,6 +53,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.Response;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.eclipse.jetty.server.Server;
@@ -157,10 +160,12 @@ public class GestionarGrupos extends MasterPage {
 					AbstractItem item = new AbstractItem(iterGrupos.newChildId());
 					
 					final Grupo grupoActual = grupos.get(i);
-					final String actual = "btn"+i;
-					final Model modeloBtn = new Model( new Model());
+					final String btnActual = "btn"+i;
+					final String labelActual = "label"+i;
 					AjaxLink entrarsalir = new AjaxLink("entrar/salir") {
-						protected void actualizar(){
+						
+						
+						protected String actualizar(){
 							
 							String clase;
 							String texto;
@@ -168,34 +173,47 @@ public class GestionarGrupos extends MasterPage {
 							if(esta = user.estaEnGrupo(grupoActual)){
 								clase="btn btn-danger";
 								texto="Salir";
-								modeloBtn.setObject("document.getElementById('"+actual+"').innerHTML = Salir;");
 							}
 							else
 							{
-								clase="btn btn-primary";
+								clase="btn btn-success";
 								texto="Adherirse";
-								modeloBtn.setObject("document.getElementById('"+actual+"').innerHTML = Unirse;");
+								//modeloBtn.setObject("document.getElementById('"+actual+"').innerHTML = Unirse;");
 							}
-							
-							//add(new AttributeAppender("onclick", new Model("document.getElementById('"+actual+"').innerHTML = 'Heddfllo' +'Dolly.';")));
-							//add(new AttributeAppender("id",new Model(actual), " "));
-							//addOrReplace(new Label("textoEntrar/salir",texto));
-							
+					
+							// "document.getElementById('"+actual+"').innerHTML = '"+texto+"';" +
+							return "document.getElementById("+labelActual+").className = '"+clase+"';";
 						}
 						
 						boolean esta;
+						
 						@Override
 						protected void onBeforeRender() {
 							// TODO Auto-generated method stub
 							super.onBeforeRender();
-							actualizar();
 							
+							String clase;
+							String texto;
+							
+							if(esta = user.estaEnGrupo(grupoActual)){
+								clase="btn btn-danger";
+								texto="Salir";
+							}
+							else
+							{
+								clase="btn btn-success";
+								texto="Adherirse";	
+							}
+							
+							Label label = new Label("textoEntrar/salir",texto);
+							label.add(new AttributeAppender("id",labelActual));
+							label.add(new AttributeAppender("class",clase));
+							add(label);
 						}
 						
 						@Override
 						public void onClick(AjaxRequestTarget target) {
 							// TODO Auto-generated method stub
-							//target.appendJavaScript( "document.getElementById('algo').text = 'newtext';" );
 				            
 							if(esta){
 								grupoActual.sacarUsuario(user);
@@ -205,18 +223,15 @@ public class GestionarGrupos extends MasterPage {
 							}
 							//add(new AttributeAppender("onclick", ));
 							
-							actualizar();
+							target.appendJavaScript(actualizar());
 							//render();
 						}
 					};
 					
-					entrarsalir.add(new AttributeAppender("onclick", modeloBtn));
-					Label texto = new Label("textoEntrar/salir","dfgdf");
-					texto.add(new AttributeAppender("id",actual));
-					 entrarsalir.add(texto);
 					item.add(new Label("nombre", grupoActual.getNombre()));
 					item.add(new Label("creador", grupoActual.getCreador()));
 					item.add(new Label("detalle", grupoActual.getDetalle()));
+					entrarsalir.add(new AttributeAppender("id",btnActual));
 					item.add(entrarsalir);
 					iterGrupos.add(item);
 					
