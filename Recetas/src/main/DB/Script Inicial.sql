@@ -169,6 +169,13 @@ CREATE TABLE Grupo88.amigos(
     check(nombreUsuario1 <> nombreUsuario2)
 );
 
+CREATE TABLE Grupo88.historicoConsultas(
+	idHistorico int auto_increment PRIMARY KEY,
+	idReceta int references recetas,
+    username varchar(30) references Usuarios,
+    fecha date
+);
+
 insert into Grupo88.Rutinas (rutina)
 values ('Sedentaria con algo de ejercicio'),
 	   ('Sedentaria con nada de ejercicio'),
@@ -598,5 +605,15 @@ BEGIN
 	select idGrupo from grupos
     where nombreGrupo = nombre;
 
+END$$
+
+CREATE PROCEDURE SP_agregarHistorico(
+IN username varchar(30),
+IN idReceta int)
+BEGIN
+
+	INSERT INTO historicoConsultas(username,idReceta,fecha)
+    VALUES(username,idReceta,current_date());
+    
 END$$
 DELIMITER ;
