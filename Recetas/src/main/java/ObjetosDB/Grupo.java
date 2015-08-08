@@ -58,4 +58,14 @@ public class Grupo {
 		}
 		return false;
 	}
+	
+	public int agregarGrupo() {
+		int dev = Browser.agregarNuevoGrupo(this);
+		if(dev > 0){
+			this.setIdGrupo(dev);
+			Browser.entrarGrupo(getCreador(), getIdGrupo());
+		}
+		return dev;
+		
+	}
 }

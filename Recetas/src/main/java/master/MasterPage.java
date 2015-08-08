@@ -1,10 +1,13 @@
 package master;
 
+import objetosWicket.SesionUsuario;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.*;
 import org.omg.CORBA.PRIVATE_MEMBER;
+
+import ObjetosDB.Usuario;
 
 public class MasterPage extends WebPage {
 	private static final long serialVersionUID = 1L;
@@ -14,6 +17,7 @@ public class MasterPage extends WebPage {
 	private Component headerPanel;
 	private Component menuPanel;
 	private Component footerPanel;
+	//private Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
 	
 
 	

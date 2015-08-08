@@ -85,8 +85,8 @@ CREATE TABLE Grupo88.relUsuarioGrupo(
 
 CREATE TABLE Grupo88.Grupos(
 	idGrupo int auto_increment primary key,
-    nombreGrupo varchar(30),
-    detalle varchar(255),
+    nombreGrupo varchar(30) unique,
+    detalle varchar(255) not null,
     creador varchar(30) references Usuarios
 );
 
@@ -345,7 +345,7 @@ BEGIN
     LIMIT 10;
 END $$
 
-CREATE PROCEDURE SP_RecetasUsuario(
+CREATE PROCEDURE SP_HistorialUsuario(
 in username varchar(30) 
 )
 BEGIN
@@ -358,6 +358,18 @@ BEGIN
     ON his.usuario = username
     WHERE rec.idReceta = his.idReceta
     LIMIT 10;
+END $$
+
+CREATE PROCEDURE SP_RecetasUsuario(
+in username varchar(30) 
+)
+BEGIN
+
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion 
+    FROM recetas rec 
+    JOIN dificultad dif
+    ON rec.idDificultad = dif.idDificultad
+    WHERE rec.creador = username;
 END $$
 
 CREATE PROCEDURE SP_BuscarRecetas(
@@ -571,5 +583,20 @@ BEGIN
     INSERT INTO relusuariogrupo 
     VALUES(username,idGrupoIN);
     
+END$$
+
+CREATE PROCEDURE SP_agregarNuevoGrupo(
+IN nombre varchar(30),
+IN creador varchar(30),
+IN detalle varchar (255))
+
+BEGIN
+
+	INSERT INTO grupos(nombreGrupo,detalle,creador)
+    VALUES (nombre,detalle,creador);
+    
+	select idGrupo from grupos
+    where nombreGrupo = nombre;
+
 END$$
 DELIMITER ;

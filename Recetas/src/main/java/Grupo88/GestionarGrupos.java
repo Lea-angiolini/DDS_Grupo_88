@@ -89,7 +89,7 @@ public class GestionarGrupos extends MasterPage {
 			@Override
 			public void onClick() {
 			
-				setResponsePage(Login.class);
+				setResponsePage(Inicio.class);
 				
 			}
 		});	
@@ -99,7 +99,7 @@ public class GestionarGrupos extends MasterPage {
 			public void onClick() {
 				// TODO Auto-generated method stub
 				
-	        	//user.cargarGrupos();
+	        	user.cargarGrupos();
 	        	List<Grupo> todosGrupos = Browser.cargarGrupos("");
 	        	if (!todosGrupos.isEmpty())
 	        	{
@@ -127,6 +127,13 @@ public class GestionarGrupos extends MasterPage {
 	        		frmGestionarGrupos.addOrReplace(new Label("areaGrupos","Usteded no tiene grupos"));
 	        	}
 	        }
+		});
+		
+		frmGestionarGrupos.add(new Link("btnCrearGrupo"){
+			@Override
+			public void onClick() {
+				frmGestionarGrupos.addOrReplace(new FragmentoGrupoNuevo ("areaGrupos", "fragmentCrearGrupo", frmGestionarGrupos));
+			}
 		});
 		
 
@@ -160,7 +167,7 @@ public class GestionarGrupos extends MasterPage {
 					AbstractItem item = new AbstractItem(iterGrupos.newChildId());
 					
 					final Grupo grupoActual = grupos.get(i);
-					final String btnActual = "btn"+i;
+					//final String btnActual = "btn"+i;
 					final String labelActual = "label"+i;
 					AjaxLink entrarsalir = new AjaxLink("entrar/salir") {
 						
@@ -181,8 +188,8 @@ public class GestionarGrupos extends MasterPage {
 								//modeloBtn.setObject("document.getElementById('"+actual+"').innerHTML = Unirse;");
 							}
 					
-							// "document.getElementById('"+actual+"').innerHTML = '"+texto+"';" +
-							return "document.getElementById("+labelActual+").className = '"+clase+"';";
+							return "document.getElementById('"+labelActual+"').innerHTML = '"+texto+"';" +
+							 "document.getElementById('"+labelActual+"').className = '"+clase+"';";
 						}
 						
 						boolean esta;
@@ -231,7 +238,7 @@ public class GestionarGrupos extends MasterPage {
 					item.add(new Label("nombre", grupoActual.getNombre()));
 					item.add(new Label("creador", grupoActual.getCreador()));
 					item.add(new Label("detalle", grupoActual.getDetalle()));
-					entrarsalir.add(new AttributeAppender("id",btnActual));
+					//entrarsalir.add(new AttributeAppender("id",btnActual));
 					item.add(entrarsalir);
 					iterGrupos.add(item);
 					
@@ -242,5 +249,33 @@ public class GestionarGrupos extends MasterPage {
         	
             
         
+	}
+	
+	public class FragmentoGrupoNuevo extends Fragment {
+		public FragmentoGrupoNuevo (String id, String markupId, MarkupContainer markupPorvider){
+			super (id, markupId, markupPorvider);
+			
+			final FragmentoGrupoNuevo esteFrag = this;
+			final Grupo nuevoGrupo = new Grupo(0,"",user.getUsername(),"");
+			add(new TextField<String>("nombreGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "nombre")));
+			add(new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
+			add(new EmptyPanel("etiquetaConf"));
+			add(new Button("btnConfirmarNvoGrupo") {
+				@Override
+				public void onSubmit() {
+					// TODO Auto-generated method stub
+					String msg;
+					if (nuevoGrupo.agregarGrupo() > 0){
+						msg = "Su grupo ha sido creado!";
+					}
+					else{
+						msg = "Opss, parece que hubo un problema!";
+					}
+					esteFrag.addOrReplace(new Label("etiquetaConf", msg ) );
+
+				}
+				
+			});
+		}
 	}
 }

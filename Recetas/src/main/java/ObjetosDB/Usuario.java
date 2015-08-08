@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Database.Browser;
+import ObjetosDB.Recetas.Receta;
 
 public class Usuario implements Serializable{
 
@@ -200,4 +201,8 @@ public class Usuario implements Serializable{
 		return false;
 	}
 	
+	public Recetas cargarMisRecetas(){
+		return Browser.cargarRecetasUsuario(username);
+		
+	}
 }

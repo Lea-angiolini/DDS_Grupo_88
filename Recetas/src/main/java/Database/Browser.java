@@ -121,4 +121,9 @@ public class Browser {
 		Factory f = new Factory();
 		return f.salirGrupo(username, idGrupo);
 	}
+	
+	public static int agregarNuevoGrupo (Grupo grupo){
+		Factory f = new Factory();
+		return f.agregarNuevoGrupo(grupo);
+	}
 }

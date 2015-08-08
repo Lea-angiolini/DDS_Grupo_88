@@ -65,6 +65,14 @@ public class PanelLinks extends Panel {
 					setResponsePage(GestionarGrupos.class);
 				}
 			});
+			
+			add(new Link("misRecetas"){
+				
+				public void onClick() {
+					
+					setResponsePage(MisRecetas.class);
+				}
+			});
 
 		}
 		

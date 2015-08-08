@@ -637,4 +637,28 @@ public boolean salirGrupo (String username, int idGrupo){
 		
 		return true;
 	}
+
+public int agregarNuevoGrupo (Grupo grupo){
+	CallableStatement cmd;
+	ResultSet rs = null;
+	
+	try
+		{
+		cmd = con.prepareCall("{call SP_agregarNuevoGrupo(?,?,?)}");
+		cmd.setString(1,grupo.getNombre());
+		cmd.setString(2,grupo.getCreador());
+		cmd.setString(3,grupo.getDetalle());
+		rs = cmd.executeQuery();
+		
+		if(rs.next()){
+
+			return rs.getInt("idGrupo");
+			}
+		}
+	catch(SQLException ex){
+		//JOptionPane.showMessageDialog(null, ex.getMessage());
+		return -1;
+		}
+	return -1;
+	}
 }
