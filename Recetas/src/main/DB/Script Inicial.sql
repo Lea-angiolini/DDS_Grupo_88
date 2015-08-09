@@ -176,6 +176,12 @@ CREATE TABLE Grupo88.historicoConsultas(
     fecha date
 );
 
+CREATE TABLE Grupo88.relgruporeceta(
+	idGrupo int references grupos,
+	idReceta int references recetas,
+	PRIMARY KEY(idGrupo,idReceta)
+);
+
 insert into Grupo88.Rutinas (rutina)
 values ('Sedentaria con algo de ejercicio'),
 	   ('Sedentaria con nada de ejercicio'),
@@ -272,6 +278,9 @@ values ('jorge',1),('jorge',3);
 
 insert into Grupo88.relusuariogrupo()
 values ('maria',1),('carlos',1),('carlos',2);
+
+insert into Grupo88.relgruporeceta()
+values (1,1);
 
 DELIMITER $$
 USE `Grupo88` $$
@@ -616,4 +625,16 @@ BEGIN
     VALUES(username,idReceta,current_date());
     
 END$$
+
+CREATE PROCEDURE SP_grupoTieneReceta(
+IN idGrupo int,
+IN idReceta int)
+BEGIN
+
+	select * from relgruporeceta rel
+    where rel.idGrupo = idGrupo and
+			rel.idReceta = idReceta;
+    
+END$$
+
 DELIMITER ;

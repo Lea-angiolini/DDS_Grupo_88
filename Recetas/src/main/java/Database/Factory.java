@@ -661,4 +661,27 @@ public int agregarNuevoGrupo (Grupo grupo){
 		}
 	return -1;
 	}
+
+public boolean grupoTieneReceta(int idGrupo,int idReceta){
+	CallableStatement cmd;
+	ResultSet rs = null;
+	
+	try
+		{
+		cmd = con.prepareCall("{call SP_grupoTieneReceta(?,?)}");
+		cmd.setInt(1,idGrupo);
+		cmd.setInt(2,idReceta);
+		rs = cmd.executeQuery();
+		
+		if(rs.next()){
+
+			return true;
+			}
+		return false;
+		}
+	catch(SQLException ex){
+		//JOptionPane.showMessageDialog(null, ex.getMessage());
+		return false;
+		}
+}
 }
