@@ -2,33 +2,44 @@ package Grupo88;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
+
+import javax.swing.JOptionPane;
 
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.link.PopupSettings;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -41,16 +52,17 @@ import Grupo88.AltaUsuario.FrmAltaUsuario;
 import Grupo88.Inicio.FrmInicio;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.CondicionesPreexistentes;
+import ObjetosDB.Grupo;
 import ObjetosDB.RecetaU;
 import ObjetosDB.Usuario;
 
 public class DetalleDeReceta extends MasterPage {
 
-//	private TextField<String> txtUsuario;
-//	private PasswordTextField txtPassword;
-//	
+	// private TextField<String> txtUsuario;
+	// private PasswordTextField txtPassword;
+	//
 	private FrmDetalleDeReceta frmDetalleDeReceta;
-	
+
 	public DetalleDeReceta(final PageParameters parameters){
 		super();
 		//getMenuPanel().setVisible(false);
@@ -63,11 +75,12 @@ public class DetalleDeReceta extends MasterPage {
 			idReceta = parameters.get("idReceta");
 			receta = Browser.cargarReceta(idReceta.toInt(), user);
 		
+		user.cargarGrupos();
 		
-		//final List SITES = Arrays.asList(new String[] { "The Server Side", "Java Lobby", "Java.Net" });
-	
+		add(generar(user,idReceta.toInt()));
+		
 		add(frmDetalleDeReceta = new FrmDetalleDeReceta("FrmDetalleDeReceta"));
-		
+		//new CheckBoxMultipleChoice
 		frmDetalleDeReceta.add(new Label("Nombre",receta.getNombre()));
 		EmptyPanel botonCal;
 		if(receta.getCalificacion() == -1){
@@ -142,31 +155,66 @@ public class DetalleDeReceta extends MasterPage {
 			}
 		});
 		
-		frmDetalleDeReceta.add(new Link("compartir"){
+		frmDetalleDeReceta.add(new AjaxLink("compartir"){
 			
-			public void onClick() {
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				// TODO Auto-generated method stub
 				
-				setResponsePage(Login.class);
+				target.appendJavaScript("abrirDialogo();");
 			}
 		});
 		}
-		
-		
 	}
 	
-	public class FrmDetalleDeReceta extends Form {
+	public RepeatingView generar(Usuario user, int idReceta){
+		RepeatingView condiciones = new RepeatingView("iterador");
 		
-
-		public FrmDetalleDeReceta(String id) {
-			super(id);			
-			setDefaultModel(new CompoundPropertyModel(this));
+		for (Grupo grupo : user.getGrupos()){
+			AbstractItem item = new AbstractItem(condiciones.newChildId());
 			
+			item.add(new Label("nombre",grupo.getNombre()));
+			AjaxLink btnCompGrupo = new AjaxLink("bton") {
+				public void onClick(AjaxRequestTarget target) {
+					
+					target.appendJavaScript("cerrarDialogo()");
+				};
+			};
+			
+			
+			btnCompGrupo.add(new Label("textBton", grupo.tieneReceta(idReceta)));
+			item.add(btnCompGrupo);
+			condiciones.add(item);
 		}
 		
+		return condiciones;
+	}
+
+	public class GruposElegidos{
+		private Collection<Grupo> gruposelegidos;
+		
+		public void setGruposelegidos(List<Grupo> gruposelegidos) {
+			this.gruposelegidos = gruposelegidos;
+		}
+		public Collection<Grupo> getGruposelegidos() {
+			return gruposelegidos;
+		}
+		public GruposElegidos() {
+			gruposelegidos = new ArrayList<Grupo>();
+		}
+	}
+	public class FrmDetalleDeReceta extends Form {
+
+		public FrmDetalleDeReceta(String id) {
+			super(id);
+			setDefaultModel(new CompoundPropertyModel(this));
+
+		}
+
 		@Override
 		protected void onSubmit() {
-		// Va a conectarse con BD y comprobar las validaciones
-		super.onSubmit();
+			// Va a conectarse con BD y comprobar las validaciones
+			super.onSubmit();
 		}
 	}
 }

@@ -6,11 +6,40 @@
 </head>
 <body>
 	<wicket:extend>
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+ <script>
+ 
+ function abrirDialogo(){
+   $(document).ready(function(){
+	    	 $( "#dialog" ).dialog();
+	}) ;};
+	
+ function cerrarDialogo(){
+	$(document).ready(function(){
+	    	 $( "#dialog" ).dialog("close");
+	}) ;};
+	
+  </script>
+
+<div id="dialog" title="Compartir" style="display: none;">
+		<div wicket:id="iterador">
+			<div id="grupo">
+				<label wicket:id="nombre">Grupo</label>
+				<a id="compGrupo" wicket:id="bton" type="button" class="btn btn-primary"><label wicket:id="textBton"></label></a>
+			</div>
+		</div>
+	</div>
+
+
 		<div>
 			<form id="frmDetalleDeReceta" wicket:id="FrmDetalleDeReceta" method="post">
 				<fieldset id="detalleReceta" class="center">
 				<div  class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" style="background-color:rgba(255,255,255,0.6)">
-					<h1 wicket:id="Nombre">Detalle de Receta</h1>	
+					<h1 wicket:id="Nombre">Detalle de Receta</h1>								
 					
 					<div valign="top" wicket:id="calificacion"></div><button wicket:id="confCalificacion">¡Calificar!</button>
 					<h3>Dificultad <label wicket:id="dif"></label></h3>
@@ -42,7 +71,7 @@
 					
 					
 					<button type="button" name="btnConfirmar" wicket:id="confirmar">Confirmar</button>		
-					<button type="button" name="btnCompartir" wicket:id="compartir">Compartir</button>	
+					<button type="button" id="p" name="btnCompartir" wicket:id="compartir">Compartir</button>	
 				</div>
 				</fieldset>
 			</form>
