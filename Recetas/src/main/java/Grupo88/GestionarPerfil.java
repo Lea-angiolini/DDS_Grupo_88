@@ -1,5 +1,6 @@
 package Grupo88;
 
+import java.awt.FlowLayout;
 import java.lang.reflect.Array;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 
 import javax.jws.WebParam.Mode;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -79,13 +81,13 @@ public class GestionarPerfil extends MasterPage {
 			@Override
 			public void onClick() {
 			
-				setResponsePage(Login.class);
+				setResponsePage(Inicio.class);
 				
 			}
 		});	
-		
 
 	}
+	
 	
 	public class FrmAltaUsuario extends Form {
 
@@ -97,8 +99,6 @@ public class GestionarPerfil extends MasterPage {
 			super(id);			
 			//setDefaultModel(new CompoundPropertyModel(this));
 		
-			
-			add(new TextField("username", new PropertyModel<String>(usuario, "username")));
 			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
 			add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
 			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));
@@ -138,6 +138,7 @@ public class GestionarPerfil extends MasterPage {
 			super.onSubmit();
 			
 			addOrReplace(new Label("lblError",this.cargarDatosUsuario()));
+			setResponsePage(Inicio.class);
 		}
 		
 		private String cargarDatosUsuario(){
