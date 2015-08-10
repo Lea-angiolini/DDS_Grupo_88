@@ -12,8 +12,11 @@ import master.MasterPage;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -169,22 +172,46 @@ public class DetalleDeReceta extends MasterPage {
 	
 	public RepeatingView generar(Usuario user, int idReceta){
 		RepeatingView condiciones = new RepeatingView("iterador");
-		
+		int i = 0;
 		for (Grupo grupo : user.getGrupos()){
-			AbstractItem item = new AbstractItem(condiciones.newChildId());
+
+			final AbstractItem item = new AbstractItem(condiciones.newChildId());
 			
 			item.add(new Label("nombre",grupo.getNombre()));
-			AjaxLink btnCompGrupo = new AjaxLink("bton") {
-				public void onClick(AjaxRequestTarget target) {
-					
-					target.appendJavaScript("cerrarDialogo()");
+			
+			if(grupo.tieneReceta(idReceta)){
+				final AbstractItem btnCompGrupo = new AbstractItem("bton");
+				btnCompGrupo.add(new AttributeModifier("class", "btn btn-success"));
+				btnCompGrupo.add(new AttributeAppender("id", i));
+				btnCompGrupo.add(new Label("textBton", "Compartido").add(new AttributeAppender("id", i)));
+				item.add(btnCompGrupo);
+			}
+			else{
+				final int it = i;
+				 final AjaxLink btnCompGrupo = new AjaxLink("bton") {
+					@Override
+					public void onClick(AjaxRequestTarget target) {
+						// TODO Auto-generated method stub
+						
+					}
+					@Override
+					protected void onBeforeRender() {
+						// TODO Auto-generated method stub
+						super.onBeforeRender();
+						this.add(new AttributeAppender("id", it));
+					}
 				};
-			};
+				btnCompGrupo.add(new AttributeModifier("onclick", "cambiarTexto("+i+")"));
+				btnCompGrupo.add(new AttributeModifier("class", "btn btn-primary"));
+				btnCompGrupo.add(new Label("textBton", "Compartir").add(new AttributeAppender("id", i)));
+				item.add(btnCompGrupo);
+				
+			}
+				
 			
 			
-			btnCompGrupo.add(new Label("textBton", grupo.tieneReceta(idReceta)));
-			item.add(btnCompGrupo);
 			condiciones.add(item);
+			i++;
 		}
 		
 		return condiciones;
