@@ -23,13 +23,18 @@
 	    	 $( "#dialog" ).dialog("close");
 	}) ;};
 	
+function cambiarTexto(a){
+	document.getElementById("textBton"+a).innerHTML = "Compartido";
+	document.getElementById("compGrupo"+a).className = "btn btn-success";
+};
+	
   </script>
 
 <div id="dialog" title="Compartir" style="display: none;">
 		<div wicket:id="iterador">
 			<div id="grupo">
 				<label wicket:id="nombre">Grupo</label>
-				<a id="compGrupo" wicket:id="bton" type="button" class="btn btn-primary"><label wicket:id="textBton"></label></a>
+				<a id="compGrupo" wicket:id="bton"><label id="textBton" wicket:id="textBton"></label></a>
 			</div>
 		</div>
 	</div>
