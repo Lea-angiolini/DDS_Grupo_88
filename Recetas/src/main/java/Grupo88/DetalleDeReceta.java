@@ -170,10 +170,10 @@ public class DetalleDeReceta extends MasterPage {
 		}
 	}
 	
-	public RepeatingView generar(Usuario user, int idReceta){
+	public RepeatingView generar(Usuario user, final int idReceta){
 		RepeatingView condiciones = new RepeatingView("iterador");
-		int i = 0;
-		for (Grupo grupo : user.getGrupos()){
+		int i = 1;
+		for (final Grupo grupo : user.getGrupos()){
 
 			final AbstractItem item = new AbstractItem(condiciones.newChildId());
 			
@@ -181,7 +181,7 @@ public class DetalleDeReceta extends MasterPage {
 			
 			if(grupo.tieneReceta(idReceta)){
 				final AbstractItem btnCompGrupo = new AbstractItem("bton");
-				btnCompGrupo.add(new AttributeModifier("class", "btn btn-success"));
+				btnCompGrupo.add(new AttributeModifier("class", "btn btn-success disabled"));
 				btnCompGrupo.add(new AttributeAppender("id", i));
 				btnCompGrupo.add(new Label("textBton", "Compartido").add(new AttributeAppender("id", i)));
 				item.add(btnCompGrupo);
@@ -192,16 +192,21 @@ public class DetalleDeReceta extends MasterPage {
 					@Override
 					public void onClick(AjaxRequestTarget target) {
 						// TODO Auto-generated method stub
-						
+						if(grupo.agregarReceta(idReceta))
+						{
+						target.prependJavaScript("cambiarClase('"+target.getLastFocusedElementId()+"');");
+						target.prependJavaScript("cambiarTexto("+it+");");
+						//this.onComponentTag(tag);
+						}
 					}
 					@Override
 					protected void onBeforeRender() {
 						// TODO Auto-generated method stub
 						super.onBeforeRender();
-						this.add(new AttributeAppender("id", it));
+						//this.add(new AttributeAppender("id", it));
 					}
 				};
-				btnCompGrupo.add(new AttributeModifier("onclick", "cambiarTexto("+i+")"));
+				//btnCompGrupo.add(new AttributeModifier("onclick", "cambiarTexto("+i+")"));
 				btnCompGrupo.add(new AttributeModifier("class", "btn btn-primary"));
 				btnCompGrupo.add(new Label("textBton", "Compartir").add(new AttributeAppender("id", i)));
 				item.add(btnCompGrupo);

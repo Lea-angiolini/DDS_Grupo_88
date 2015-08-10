@@ -136,4 +136,9 @@ public class Browser {
 		Factory f = new Factory();
 		return f.grupoTieneReceta(idGrupo,idReceta);
 	}
+	
+	public static boolean agregarRecetaGrupo(int idGrupo, int idReceta){
+		Factory f = new Factory();
+		return f.agregarRecetaGrupo(idGrupo, idReceta);
+	}
 }

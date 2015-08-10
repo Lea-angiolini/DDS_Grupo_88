@@ -25,16 +25,20 @@
 	
 function cambiarTexto(a){
 	document.getElementById("textBton"+a).innerHTML = "Compartido";
-	document.getElementById("compGrupo"+a).className = "btn btn-success";
 };
-	
+
+
+function cambiarClase(a){
+	document.getElementById(a).className = "btn btn-success disabled";
+};
+
   </script>
 
 <div id="dialog" title="Compartir" style="display: none;">
 		<div wicket:id="iterador">
 			<div id="grupo">
 				<label wicket:id="nombre">Grupo</label>
-				<a id="compGrupo" wicket:id="bton"><label id="textBton" wicket:id="textBton"></label></a>
+				<a  wicket:id="bton" class="btn btn-primary"><label id="textBton" wicket:id="textBton"></label></a>
 			</div>
 		</div>
 	</div>

@@ -725,4 +725,21 @@ public boolean grupoTieneReceta(int idGrupo,int idReceta){
 		return false;
 		}
 }
+
+public boolean agregarRecetaGrupo(int idGrupo, int idReceta){
+	CallableStatement cmd;
+	try
+	{
+		cmd=con.prepareCall("{Call SP_agregarRecetaGrupo(?,?)}");
+		cmd.setInt(1, idGrupo);
+		cmd.setInt(2, idReceta);
+		cmd.executeQuery();
+		
+		return true;
+	}
+	catch(SQLException ex)
+	{
+		return false;
+	}
+	}
 }

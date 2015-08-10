@@ -8,7 +8,7 @@ GRANT SELECT, UPDATE, DELETE, INSERT, EXECUTE ON grupo88.* TO 'llevaYtrae'@'loca
 
 
 create table Grupo88.Recetas(
-	idReceta int(11) primary key auto_increment,
+	idReceta int primary key auto_increment,
 	nombre varchar(45) not null,
 	creador  varchar(30) references Usuarios,
     idDificultad int references dificultad,
@@ -178,7 +178,7 @@ CREATE TABLE Grupo88.historicoConsultas(
 
 CREATE TABLE Grupo88.relgruporeceta(
 	idGrupo int references grupos,
-	idReceta int references recetas,
+	idReceta int references Recetas,
 	PRIMARY KEY(idGrupo,idReceta)
 );
 
@@ -659,5 +659,16 @@ BEGIN
 			rel.idReceta = idReceta;
     
 END$$
+
+CREATE PROCEDURE SP_agregarRecetaGrupo(
+IN idGrupo int,
+IN idReceta int)
+BEGIN
+	INSERT INTO relgruporeceta(idGrupo,idReceta)
+    VALUES (idGrupo,idReceta);
+END$$
+    
+    
+
 
 DELIMITER ;
