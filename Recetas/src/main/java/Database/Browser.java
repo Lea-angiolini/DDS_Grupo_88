@@ -91,6 +91,11 @@ public class Browser {
 		return f.registrarUsuario(nvoUsuario);
 	}
 	
+	public static String modificarPerfil(Usuario user){
+		Factory f = new Factory();
+		return f.modificarPerfil(user);
+	}
+	
 	public static RecetaU cargarReceta(int idReceta, Usuario user){
 		Factory f = new Factory();
 		return f.cargarReceta(idReceta, user);

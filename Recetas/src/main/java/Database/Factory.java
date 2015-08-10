@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.protocol.http.documentvalidation.TextContent;
 import org.eclipse.jetty.util.StringUtil;
 
 import ObjetosDB.*;
@@ -426,8 +428,7 @@ public class Factory {
 	
 	
 	public String registrarUsuario(Usuario nvoUsuario){
-		
-		
+
 		try
 		{
 			
@@ -465,6 +466,46 @@ public class Factory {
 			return ex.getMessage();
 		}
 	}
+	
+	
+	public String modificarPerfil(Usuario user){
+		try
+		{
+			CallableStatement cmd=con.prepareCall("{call SP_modificarPerfil(?,?,?,?,?,?,?,?,?,?,?)}");
+			cmd.setString(1, user.getUsername());
+			cmd.setString(2, user.getPassword());
+			cmd.setString(3, user.getNombre());
+			cmd.setString(4, user.getApellido());
+			cmd.setString(5, user.getEmail());
+			cmd.setString(6, user.getFechaNacimiento());
+			cmd.setString(7, String.valueOf(user.getSexo()));
+			cmd.setInt(8, user.getAltura());
+			cmd.setInt(9, (user.getComplexion()).getIdComplexion());
+			cmd.setInt(10, (user.getDieta()).getIdDietas());
+			cmd.setInt(11, (user.getRutina()).getIdRutina());
+//			cmd.registerOutParameter(12, Types.VARCHAR);
+			
+			cmd.executeQuery();
+			
+			CallableStatement cmdCondPreex = con.prepareCall("{call SP_RegistrarCondPreexUsuario(?,?)}");
+			cmdCondPreex.setString(1, user.getUsername());
+				
+			for (CondicionesPreexistentes condPreex : user.getCondiciones()) 
+			{	
+				cmdCondPreex.setInt(2, condPreex.getIdCondPreex());
+				cmdCondPreex.executeQuery();
+			}	
+			
+			//return cmd.getString(12);
+		return "Los cambios han sido actualizados";
+		}
+		catch(SQLException ex){
+			return ex.getMessage();
+		
+		}
+		
+	};
+	
 	
 	public RecetaU cargarReceta(int idReceta, Usuario user){
 		

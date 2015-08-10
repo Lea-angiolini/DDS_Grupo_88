@@ -427,9 +427,6 @@ out respuesta varchar(90)
 )
 BEGIN
 	
-   
-
-
 	declare rutinaID int;
     
     
@@ -438,6 +435,32 @@ BEGIN
 		INSERT INTO usuarios(nombreUsuario,clave,mail,nombre,apellido,sexo,fechaNac,altura,idComplexion,idDieta,idRutina)
 			VALUES(username_,pass_,mail_,nombre_,apellido_,sexo_,fechaNac_,altura_,idComplexion ,idDieta,idRutina);
 END $$
+
+CREATE PROCEDURE SP_modificarPerfil(
+in username_ varchar(30),
+in pass_ varchar(30),
+in nombre_ varchar(30),
+in apellido_ varchar(30),
+in mail_ varchar(30),
+in fechaNac_ date,
+in sexo_ varchar(1),
+in altura_ int,
+in idComplexion int,
+in idDieta int,
+in IdRutina int
+
+)
+BEGIN
+
+	UPDATE usuarios usu
+	SET usu.clave=pass_, usu.nombre= nombre_, usu.apellido = apellido_, usu.mail=mail_, usu.fechaNac = fechaNac_, usu.sexo = sexo_, 
+		usu.altura=altura_,	usu.idComplexion = idComplexion, usu.idDieta = idDieta, usu.idRutina = idRutina
+    WHERE usu.nombreUsuario=username_;
+    
+    
+END$$
+
+
 
 CREATE PROCEDURE SP_RegistrarCondPreexUsuario(
 in username varchar(30),

@@ -8,8 +8,8 @@
 	<wicket:extend>
 	
 		<div>
-			<form id="frmAltaUsuario" wicket:id="FrmAltaUsuario" method="post">
-				<fieldset id="altaUsuario" class="center">
+			<form id="frmModifUsuario" wicket:id="FrmModifUsuario" method="post">
+				<fieldset id="modifPerfil" class="center">
 					<div id="signupbox" style="display:block; margin-top:50px" class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
 							<div class="panel panel-info">
 					    	<div class="panel-heading">
@@ -40,6 +40,13 @@
 					                	<label align=left for="icode" class="col-md-4 control-label">Apellido</label>
 					                    <div class="col-md-8">
 					                    	<input type="text" class="form-control" name="apellido" id="apellido"  wicket:id="apellido"  placeholder="Apellido">
+					                    </div>
+					                </div>
+					                
+					                <div class="form-group">
+					                	<label for="icode" class="col-md-4 control-label">Contraseña</label>
+					                    <div class="col-md-8">
+					                    	<input type="text" class="form-control" name="password" id="password" wicket:id="password" placeholder="Contraseña">
 					                    </div>
 					                </div>
 					                
@@ -113,7 +120,7 @@
 					                	<div class="col-md-offset-7 col-md-5 text-right">
 					                    	<br>
 					                    	<label style="color:red" wicket:id="lblError"></label>
-					                    	<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-lock"></span>&nbsp;Cambiar Contraseña</button>
+					                    	<!-- lo comente para probar algo <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-lock"></span>&nbsp;Cambiar Contraseña</button> -->
 					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
 					                    	<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;Aceptar Cambios</button>
 					                    </div>

@@ -66,7 +66,7 @@ import ObjetosDB.Usuario;
 
 public class GestionarPerfil extends MasterPage {	
 	
-	private FrmAltaUsuario frmAltaUsuario;
+	private FrmModifUsuario frmModifUsuario;
 	public Object estados;
 	private SesionUsuario sesion = (SesionUsuario)getSession();
 	
@@ -74,9 +74,9 @@ public class GestionarPerfil extends MasterPage {
 		super();
 		getMenuPanel().setVisible(false);
 		
-		add(frmAltaUsuario = new FrmAltaUsuario("FrmAltaUsuario"));
+		add(frmModifUsuario = new FrmModifUsuario("FrmModifUsuario"));
 		
-		frmAltaUsuario.add(new Link("cancelar"){
+		frmModifUsuario.add(new Link("cancelar"){
 			
 			@Override
 			public void onClick() {
@@ -89,19 +89,20 @@ public class GestionarPerfil extends MasterPage {
 	}
 	
 	
-	public class FrmAltaUsuario extends Form {
+	public class FrmModifUsuario extends Form {
 
 		private Usuario usuario = sesion.getUsuario().getObject();
 		private final ArrayList<estadoCondPreex> estados;
 		
 		@SuppressWarnings("unchecked")
-		public FrmAltaUsuario(String id) {
+		public FrmModifUsuario(String id) {
 			super(id);			
 			//setDefaultModel(new CompoundPropertyModel(this));
 		
 			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
 			add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
 			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));
+			add(new TextField("password", new PropertyModel<String>(usuario, "password")));
 			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
 			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
 			add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
@@ -137,8 +138,8 @@ public class GestionarPerfil extends MasterPage {
 		protected void onSubmit() {
 			super.onSubmit();
 			
-			addOrReplace(new Label("lblError",this.cargarDatosUsuario()));
-			setResponsePage(Inicio.class);
+			addOrReplace(new Label("lblError",usuario.modificarPerfil()));
+			//setResponsePage(Inicio.class);
 		}
 		
 		private String cargarDatosUsuario(){
