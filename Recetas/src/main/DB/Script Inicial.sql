@@ -398,7 +398,7 @@ in caloriasMax int,
 in caloriasMin int
 )
 BEGIN
-	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion 
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad
 	FROM Grupo88.recetas rec
     JOIN Grupo88.dificultad dif
     ON dif.idDificultad = rec.idDificultad
@@ -484,8 +484,8 @@ BEGIN
 	order by his.fecha desc
     limit 1);
 
-	 SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', grupoalim.descripcion as 'grpAlim',
-			tem.nombreTemporada, ing.nombre as 'IngPrincipal', IFNULL(calificacion,-1) as 'calificacion'
+	 SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad, grupoalim.descripcion as 'grpAlim',
+			tem.nombreTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente, IFNULL(calificacion,-1) as 'calificacion'
      FROM recetas rec
      JOIN dificultad dif
      ON dif.idDificultad = rec.idDificultad 

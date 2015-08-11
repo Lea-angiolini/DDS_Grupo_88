@@ -17,9 +17,11 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RadioGroup;
@@ -39,9 +41,14 @@ import org.eclipse.jetty.server.Server;
 import org.omg.CORBA.NVList;
 import org.apache.wicket.Session;
 
+import Database.Browser;
 import Grupo88.AltaUsuario.FrmAltaUsuario;
 import Grupo88.Login.FrmLogin;
+import ObjetosDB.Dificultades;
+import ObjetosDB.Ingredientes;
+import ObjetosDB.Pasos;
 import ObjetosDB.RecetaU;
+import ObjetosDB.Temporadas;
 import ObjetosDB.Usuario;
 import ObjetosDB.Recetas.Receta;
 
@@ -49,14 +56,20 @@ public class AgregarReceta extends MasterPage {
    
 	private SesionUsuario sesion = (SesionUsuario)getSession();
 	private Usuario user = sesion.getUsuario().getObject();
-	private Fragmento frmAgregarReceta;
-	private final RecetaU nuevareceta = new RecetaU(-1, "", "", "", "", "", 0);
+	private final RecetaU nuevareceta = new RecetaU(-1, "", user.getUsername(), null, null, null, 0);
+	private List<Fragmento> fragmentos = new ArrayList<Fragmento>();
+	//private Fragmento frm
 	
 	public AgregarReceta(){
 		super();
 		//getMenuPanel().setVisible(false);
-		
-		add(frmAgregarReceta = new Fragmento("areaForms","fragmentoInicial",this,new FrmDatosReceta("frmDatosBasicos")));
+
+		fragmentos.add(new Fragmento("areaForms","fragmentoInicial",this,new FrmDatosReceta("frmDatosBasicos")));
+		for(int i = 1; i<= 5; i++){
+			nuevareceta.agregarPaso(new Pasos(i, ""));
+			fragmentos.add(new Fragmento("areaForms","fragmentoPaso",pagina(), new FrmPaso("frmPasos",i)));
+		}
+		add(fragmentos.get(0));
 	}
 	
 	protected AgregarReceta pagina(){
@@ -81,29 +94,43 @@ public class AgregarReceta extends MasterPage {
 		public FrmDatosReceta(String id) {
 			super(id);
 			// TODO Auto-generated constructor stub
-			
-		final TextField<String> nombre;
-		add(nombre = new TextField<String>("nombreReceta", new PropertyModel<String>(nuevareceta, "nombre")));
-		add(new TextArea<String>("descripcion", algo));
+		//final TextField<String> nombre;
+		add(new TextField<String>("nombreReceta", new PropertyModel<String>(nuevareceta, "nombre")));
+		add(new TextArea<String>("descripcion", new PropertyModel<String>(nuevareceta, "detalle")));
+		add(new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), Browser.listaTemporadas(), new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
+		add(new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"), Browser.listaDificultades(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
+		add(new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), Browser.listaIngredientes(), new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
+		
 		}
 		
 		@Override
 		protected void onSubmit() {
 		// Va a conectarse con BD y comprobar las validaciones
 		super.onSubmit();
-		pagina().addOrReplace(new Fragmento("areaForms","fragmentoPaso",pagina(), new FrmPaso("frmPasos")));
+		pagina().addOrReplace(fragmentos.get(1));
 		
 		
 		}
 	}
 	
 	public class FrmPaso extends Form {
-
-		public FrmPaso(String id) {
+		
+		private int idFrmPaso;
+		public FrmPaso(String id, int idPaso) {
 			super(id);
 			// TODO Auto-generated constructor stub
+			idFrmPaso = idPaso;
 			
-	
+			add(new Label("numPaso",idPaso));
+			add(new TextArea<String>("paso", new PropertyModel<String>(nuevareceta.getPasos().get(idPaso-1), "descripcionPaso")));
+			
+			add(new Link("pasoAnt"){
+				@Override
+				public void onClick() {
+					// TODO Auto-generated method stub
+					pagina().addOrReplace(fragmentos.get(idFrmPaso-1));
+				}
+			});
 		}
 		
 		
@@ -111,8 +138,13 @@ public class AgregarReceta extends MasterPage {
 		protected void onSubmit() {
 		// Va a conectarse con BD y comprobar las validaciones
 		super.onSubmit();
-		JOptionPane.showMessageDialog(null, nuevareceta.getNombre());
-		//JOptionPane.showMessageDialog(null, algo.getObject());	
+		
+		if(idFrmPaso <= fragmentos.size()-1){
+		pagina().addOrReplace(fragmentos.get(idFrmPaso+1));	
+		}
+		else{
+			//llamar DB
+			}
 		}
 	}
 }

@@ -131,7 +131,8 @@ public class Factory {
 				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
-										   rs.getString("descripcion"));
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+											new Ingredientes(0, "", 0, 0));
 				
 				
 		}
@@ -161,7 +162,8 @@ public class Factory {
 				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
-										   rs.getString("descripcion"));
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+										   new Ingredientes(0, "", 0, 0));
 				
 				
 		}
@@ -198,8 +200,10 @@ public class Factory {
 				
 				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
-										   rs.getString("creador"), 
-										   rs.getString("descripcion"));
+										   rs.getString("creador"),
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+										   new Ingredientes(0, "", 0, 0)
+										   );
 		
 			}
 		}
@@ -527,12 +531,12 @@ public class Factory {
 				receta = new RecetaU(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
-										   rs.getString("dificultad"),
-										   rs.getString("nombreTemporada"),
-										   rs.getString("ingPrincipal"),
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+										   new Temporadas(rs.getInt("idTemporada"), rs.getString("nombreTemporada")),
+										   new Ingredientes(rs.getInt("idIngrediente"), rs.getString("IngPrincipal"),rs.getInt("calorias"),rs.getInt("tipoIngrediente")),
 										   rs.getInt("calificacion"));
 		
-			}else{ receta = new RecetaU(-1, "Error en el if", "", "","","",0);}
+			}else{ receta = new RecetaU(-1, "Error en el if", "", null,null,null,0);}
 			
 			cmd = con.prepareCall("{call SP_ObtenerIngredientesReceta(?)}");
 			cmd.setInt(1,idReceta);
@@ -555,12 +559,12 @@ public class Factory {
 			rs = cmd.executeQuery();
 			
 			while(rs.next()){
-				receta.agregarPaso(rs.getString("descripcion"));
+				receta.agregarPaso(new Pasos(rs.getInt("numeroPaso") ,rs.getString("descripcion")));
 			}
 		}
 		catch(SQLException ex){
 			//JOptionPane.showMessageDialog(null, ex.getMessage());	
-			receta = new RecetaU(-1, ex.getMessage(), "", "","","",0);
+			receta = new RecetaU(-1, ex.getMessage(), "", null,null,null,0);
 		}
 		return receta;
 	}

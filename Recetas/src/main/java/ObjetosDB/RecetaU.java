@@ -2,21 +2,24 @@ package ObjetosDB;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class RecetaU {
 	
 	private int idreceta;
 	private String nombre;
 	private String creador;
-	private String dificultad;
-	private String temporada;
-	private String ingredientePrincipal;
+	private String detalle;
+	private Dificultades dificultad;
+	private Temporadas temporada;
+	private Ingredientes ingredientePrincipal;
 	private ArrayList<String> ingredientes;
 	private ArrayList<String> condimentos;
-	private ArrayList<String> pasos;
+	private ArrayList<Pasos> pasos;
 	private int calificacion;
 
 
-	public RecetaU(int id, String nom, String crea, String difi, String temp, String ingPrin, int calif){
+	public RecetaU(int id, String nom, String crea, Dificultades difi, Temporadas temp, Ingredientes ingPrin, int calif){
 		setIdreceta(id);
 		setNombre(nom);
 		setCreador(crea);
@@ -25,7 +28,7 @@ public class RecetaU {
 		setIngredientePrincipal(ingPrin);
 		ingredientes = new ArrayList<String>();
 		condimentos = new ArrayList<String>();
-		pasos = new ArrayList<String>();
+		pasos = new ArrayList<Pasos>();
 		setCalificacion(calif);
 	}
 	
@@ -52,27 +55,35 @@ public class RecetaU {
 	}
 	
 	
-	public String getDificultad() {
+	public String getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(String detalle) {
+		this.detalle = detalle;
+	}
+
+	public Dificultades getDificultad() {
 		return dificultad;
 	}
-	public void setDificultad(String dificultad) {
+	public void setDificultad(Dificultades dificultad) {
 		this.dificultad = dificultad;
 	}
 	
-	public String getTemporada() {
+	public Temporadas getTemporada() {
 		return temporada;
 	}
 
-	public void setTemporada(String temporada) {
-		temporada = temporada;
+	public void setTemporada(Temporadas temporada) {
+		this.temporada = temporada;
 	}
 	
-	public String getIngredientePrincipal() {
+	public Ingredientes getIngredientePrincipal() {
 		return ingredientePrincipal;
 	}
 
-	public void setIngredientePrincipal(String ingredientePrincipal) {
-		ingredientePrincipal = ingredientePrincipal;
+	public void setIngredientePrincipal(Ingredientes ingredientePrincipal) {
+		this.ingredientePrincipal = ingredientePrincipal;
 	}
 	
 	public ArrayList<String> getIngredientes() {
@@ -80,7 +91,7 @@ public class RecetaU {
 	}
 
 	public void setIngredientes(ArrayList<String> ingredientes) {
-		ingredientes = ingredientes;
+		this.ingredientes = ingredientes;
 	}
 
 	public ArrayList<String> getCondimentos() {
@@ -88,7 +99,7 @@ public class RecetaU {
 	}
 
 	public void setCondimentos(ArrayList<String> condimentos) {
-		condimentos = condimentos;
+		this.condimentos = condimentos;
 	}
 	
 	public void agregarIngrediente(String ingrediente){
@@ -99,16 +110,16 @@ public class RecetaU {
 		condimentos.add(condimento);
 	}
 	
-	public ArrayList<String> getPasos() {
+	public ArrayList<Pasos> getPasos() {
 		return pasos;
 	}
 
-	public void setPasos(ArrayList<String> pasos) {
+	public void setPasos(ArrayList<Pasos> pasos) {
 		this.pasos = pasos;
 	}
 	
-	public void agregarPaso(String paso){
-		pasos.add(paso);
+	public void agregarPaso(Pasos paso){
+		this.pasos.add(paso);
 	}
 	
 	public int getCalificacion() {

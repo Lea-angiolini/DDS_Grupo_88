@@ -163,7 +163,7 @@ public class Inicio extends MasterPage {
 				
 				bton.addOrReplace(new Label("campo1",recetas.getNombre()));
 				bton.addOrReplace(new Label("campo2",recetas.getCreador()));
-				bton.addOrReplace(new Label("campo3",recetas.getDificultad()));
+				bton.addOrReplace(new Label("campo3",recetas.getDificultad().getDificultad()));
 				
 				item.add(bton);
 				

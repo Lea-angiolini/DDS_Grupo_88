@@ -56,6 +56,7 @@ import Grupo88.Inicio.FrmInicio;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Grupo;
+import ObjetosDB.Pasos;
 import ObjetosDB.RecetaU;
 import ObjetosDB.Usuario;
 
@@ -104,8 +105,8 @@ public class DetalleDeReceta extends MasterPage {
 		});
 		}
 		
-		frmDetalleDeReceta.add(new Label("dif",receta.getDificultad()));
-		frmDetalleDeReceta.add(new Label("tem",receta.getTemporada()));
+		frmDetalleDeReceta.add(new Label("dif",receta.getDificultad().getDificultad()));
+		frmDetalleDeReceta.add(new Label("tem",receta.getTemporada().getTemporada()));
 		
 		RepeatingView ingredientes = new RepeatingView("listaIngredientes");
 		
@@ -136,12 +137,12 @@ public class DetalleDeReceta extends MasterPage {
 		RepeatingView pasos = new RepeatingView("pasos");
 		
 		int i = 0;
-		for (String paso : receta.getPasos()) {
+		for (Pasos paso : receta.getPasos()) {
 			
 			AbstractItem item = new AbstractItem(pasos.newChildId());
 			i++;
 			item.add(new Label("nro","Paso "+i+":"));		
-			item.add(new Label("paso", paso));
+			item.add(new Label("paso", paso.getDescripcionPaso()));
 			pasos.add(item);
 			
 		}
