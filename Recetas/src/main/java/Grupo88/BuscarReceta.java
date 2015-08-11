@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import master.MasterPage;
+import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -34,11 +35,13 @@ import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
 import ObjetosDB.Recetas;
 import ObjetosDB.Temporadas;
+import ObjetosDB.Usuario;
 import ObjetosDB.itemsABuscar;
 import ObjetosDB.Recetas.Receta;
 
 public class BuscarReceta extends MasterPage {
-
+	
+	final Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
 	private FrmBuscarReceta frmBuscarReceta;
 	
 	public BuscarReceta(){
@@ -110,6 +113,7 @@ public class BuscarReceta extends MasterPage {
 					public void onClick() {
 						// TODO Auto-generated method stub
 						setResponsePage(DetalleDeReceta.class,pars);
+						Browser.agregarHistConsultas(recetas.getIdreceta(),user.getUsername());
 					}
 					
 				};

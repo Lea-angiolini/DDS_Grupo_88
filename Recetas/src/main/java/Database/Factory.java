@@ -742,4 +742,23 @@ public boolean agregarRecetaGrupo(int idGrupo, int idReceta){
 		return false;
 	}
 	}
+
+public boolean agregarHistConsultas(int idReceta, String username){
+	CallableStatement cmd;
+	try
+	{
+		cmd=con.prepareCall("{Call SP_agregarHistorico(?,?)}");
+		cmd.setString(1, username);
+		cmd.setInt(2, idReceta);
+		cmd.executeQuery();
+		
+		return true;
+	}
+	
+	catch(SQLException ex)
+	{
+		return false;
+	}
+	}
+
 }

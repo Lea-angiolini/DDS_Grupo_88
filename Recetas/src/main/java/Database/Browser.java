@@ -141,4 +141,9 @@ public class Browser {
 		Factory f = new Factory();
 		return f.agregarRecetaGrupo(idGrupo, idReceta);
 	}
+	
+	public static boolean agregarHistConsultas(int idReceta, String username){
+		Factory f = new Factory();
+		return f.agregarHistConsultas(idReceta, username);
+	}
 }
