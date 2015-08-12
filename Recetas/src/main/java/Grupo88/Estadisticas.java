@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.form.Form;
 import Database.Browser;
 
 public class Estadisticas extends MasterPage{
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	//private Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
 	
 	public Estadisticas(){
@@ -33,18 +33,21 @@ public class Estadisticas extends MasterPage{
 			}
 			add(new Label("TOPHtipos", html).setEscapeModelStrings(false));
 			
+			html = "";
 			top = est.getTopRecetasMujer();
 			for(String receta : top){
 				html += createDynamicHtml(receta);
 			}
 			add(new Label("TOPMtipos", html).setEscapeModelStrings(false));
 			
+			html = "";
 			top = est.getTopDificultad();
 			for(String receta : top){
 				html += createDynamicHtml(receta);
 			}
 			add(new Label("TOPdificultad", html).setEscapeModelStrings(false));
 			
+			html = "";
 			top = est.getTopRecetas();
 			for(String receta : top){
 				html += createDynamicHtml(receta);

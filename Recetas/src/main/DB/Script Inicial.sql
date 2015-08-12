@@ -668,7 +668,7 @@ BEGIN
     VALUES (idGrupo,idReceta);
 END$$
     
-CREATE PROCEDURE SP_TOPHrecetas
+CREATE PROCEDURE SP_TOPHrecetas()
 BEGIN
 	SELECT R.nombre AS nombreReceta, count(*) AS cantidad 
     FROM Historial AS H 
@@ -678,7 +678,7 @@ BEGIN
     GROUP BY R.nombre ORDER BY cantidad DESC;
 END$$
 
-CREATE PROCEDURE SP_TOPMrecetas
+CREATE PROCEDURE SP_TOPMrecetas()
 BEGIN
 	SELECT R.nombre AS nombreReceta, count(*) AS cantidad 
     FROM Historial AS H 
@@ -688,7 +688,7 @@ BEGIN
     GROUP BY R.nombre ORDER BY cantidad DESC;
 END$$
 
-CREATE PROCEDURE SP_TOPdificultad
+CREATE PROCEDURE SP_TOPdificultad()
 BEGIN
 	SELECT D.descripcion AS dificultad, count(*) AS cantidad 
     FROM Historial AS H 
@@ -697,7 +697,7 @@ BEGIN
     GROUP BY D.descripcion ORDER BY cantidad DESC;
 END$$
 
-CREATE PROCEDURE SP_TOPrecetas
+CREATE PROCEDURE SP_TOPrecetas()
 BEGIN
 	SELECT R.nombre AS nombreReceta, count(*) AS cantidad 
     FROM Historial AS H 
