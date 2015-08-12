@@ -663,7 +663,7 @@ public class Factory {
 		return true;
 	}
 	
-public boolean salirGrupo (String username, int idGrupo){
+	public boolean salirGrupo (String username, int idGrupo){
 		
 		CallableStatement cmd;
 		
@@ -712,39 +712,35 @@ public boolean salirGrupo (String username, int idGrupo){
 		
 		try{
 			//Se obtienen top Consultas Hombre
-			cmd = con.prepareCall("select nombre_receta, count(*) as cantidad from grupo88.historial "
-					+ "group by nombre_receta order by cantidad desc");
+			cmd = con.prepareCall("{Call SP_TOPHrecetas}");
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
-				est.agregarTopRecetasHombre(rs.getString("id_receta"));
+				est.agregarTopRecetasHombre(rs.getString("nombreReceta"));
 			}
 			
 			//Se obtienen top Consultas mujer
-			cmd = con.prepareCall("select nombre_receta, count(*) as cantidad from grupo88.historial "
-					+ "group by nombre_receta order by cantidad desc");
+			cmd = con.prepareCall("{Call SP_TOPMrecetas}");
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
-				est.agregarTopRecetasMujer(rs.getString("id_receta"));
+				est.agregarTopRecetasMujer(rs.getString("nombreReceta"));
 			}
 			
 			//Se obtienen top Dificultad
-			cmd = con.prepareCall("select nombre_receta, count(*) as cantidad from grupo88.historial "
-					+ "group by nombre_receta order by cantidad desc");
+			cmd = con.prepareCall("{Call SP_TOPdificultad}");
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
-				est.agregarTopDificultad(rs.getString("id_receta"));
+				est.agregarTopDificultad(rs.getString("dificultad"));
 			}
 			
 			//Se obtienen top Recetas
-			cmd = con.prepareCall("select nombre_receta, count(*) as cantidad from grupo88.historial "
-					+ "group by nombre_receta order by cantidad desc");
+			cmd = con.prepareCall("{Call SP_TOPrecetas}");
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
-				est.agregarTopRecetas(rs.getString("id_receta"));
+				est.agregarTopRecetas(rs.getString("nombreReceta"));
 			}
 		}
 		catch(SQLException ex){
@@ -755,7 +751,7 @@ public boolean salirGrupo (String username, int idGrupo){
 		return est;
 	}
 
-public boolean grupoTieneReceta(int idGrupo,int idReceta){
+	public boolean grupoTieneReceta(int idGrupo,int idReceta){
 	CallableStatement cmd;
 	ResultSet rs = null;
 	
@@ -778,39 +774,32 @@ public boolean grupoTieneReceta(int idGrupo,int idReceta){
 		}
 }
 
-public boolean agregarRecetaGrupo(int idGrupo, int idReceta){
+	public boolean agregarRecetaGrupo(int idGrupo, int idReceta){
 	CallableStatement cmd;
-	try
-	{
+	try{
 		cmd=con.prepareCall("{Call SP_agregarRecetaGrupo(?,?)}");
 		cmd.setInt(1, idGrupo);
 		cmd.setInt(2, idReceta);
 		cmd.executeQuery();
 		
 		return true;
-	}
-	catch(SQLException ex)
-	{
+	}catch(SQLException ex){
 		return false;
 	}
 	}
 
-public boolean agregarHistConsultas(int idReceta, String username){
-	CallableStatement cmd;
-	try
-	{
-		cmd=con.prepareCall("{Call SP_agregarHistorico(?,?)}");
-		cmd.setString(1, username);
-		cmd.setInt(2, idReceta);
-		cmd.executeQuery();
-		
-		return true;
-	}
-	
-	catch(SQLException ex)
-	{
-		return false;
-	}
+	public boolean agregarHistConsultas(int idReceta, String username){
+		CallableStatement cmd;
+		try{
+			cmd=con.prepareCall("{Call SP_agregarHistorico(?,?)}");
+			cmd.setString(1, username);
+			cmd.setInt(2, idReceta);
+			cmd.executeQuery();
+			
+			return true;
+		}catch(SQLException ex){
+			return false;
+		}
 	}
 
 }
