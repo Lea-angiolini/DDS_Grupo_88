@@ -8,21 +8,25 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 
 import Database.Browser;
+import Grupo88.Login.FrmLogin;
 
 public class Estadisticas extends MasterPage{
 	//private static final long serialVersionUID = 1L;
 	//private Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
+	private FrmEstadisticas frmEstadisticas;
 	
 	public Estadisticas(){
 		super();
 		getMenuPanel().setVisible(false);
 		
-		add(new FrmEstadisticas("frmEstadisticas"));
+		add(frmEstadisticas = new FrmEstadisticas("frmEstadisticas"));
+
 	}
 	
 	public class FrmEstadisticas extends Form{
 		public FrmEstadisticas(String id) {
 			super(id);
+			
 			ObjetosDB.Estadisticas est = Browser.obtenerEstadisticas();
 			ArrayList<String> top;
 			String html = "";
@@ -53,7 +57,6 @@ public class Estadisticas extends MasterPage{
 				html += createDynamicHtml(receta);
 			}
 			add(new Label("TOPrecetas", html).setEscapeModelStrings(false));
-			
 		}
 	}
 		
