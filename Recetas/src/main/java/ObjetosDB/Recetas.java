@@ -1,3 +1,4 @@
+
 package ObjetosDB;
 
 import java.io.Serializable;
@@ -88,12 +89,5 @@ public class Recetas implements Serializable{
 			Browser.agregarHistConsultas(getIdreceta(),user.getUsername());
 		}
 		
-	}
-	
-	
-	
+	}	
 }
-
-
-
-

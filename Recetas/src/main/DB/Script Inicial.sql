@@ -682,5 +682,41 @@ BEGIN
     VALUES (creador,nombreReceta,dificultad,calorias,grpAlim,temporada,ingPrinc);
 END$$    
 
+CREATE PROCEDURE SP_TOPHrecetas()
+BEGIN
+	SELECT R.nombre AS nombreReceta, count(*) AS cantidad 
+    FROM Historial AS H 
+    JOIN Usuarios AS U ON H.usuario = U.nombreUsuario 
+    JOIN Recetas AS R ON H.idReceta = R.idReceta 
+    WHERE U.sexo = 'H'
+    GROUP BY R.nombre ORDER BY cantidad DESC;
+END$$
+
+CREATE PROCEDURE SP_TOPMrecetas()
+BEGIN
+	SELECT R.nombre AS nombreReceta, count(*) AS cantidad 
+    FROM Historial AS H 
+    JOIN Usuarios AS U ON H.usuario = U.nombreUsuario 
+    JOIN Recetas AS R ON H.idReceta = R.idReceta 
+    WHERE U.sexo = 'M'
+    GROUP BY R.nombre ORDER BY cantidad DESC;
+END$$
+
+CREATE PROCEDURE SP_TOPdificultad()
+BEGIN
+	SELECT D.descripcion AS dificultad, count(*) AS cantidad 
+    FROM Historial AS H 
+    JOIN Recetas AS R ON H.idReceta = R.idReceta 
+    JOIN dificultad AS D ON R.idDificultad = D.idDificultad
+    GROUP BY D.descripcion ORDER BY cantidad DESC;
+END$$
+
+CREATE PROCEDURE SP_TOPrecetas()
+BEGIN
+	SELECT R.nombre AS nombreReceta, count(*) AS cantidad 
+    FROM Historial AS H 
+    JOIN Recetas AS R ON H.idReceta = R.idReceta 
+    GROUP BY R.nombre ORDER BY cantidad DESC;
+END$$
 
 DELIMITER ;

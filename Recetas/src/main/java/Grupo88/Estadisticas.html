@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<style>
+</style>
+<body>
+	<wicket:extend>
+		<div>
+			<form id="frmEstadisticas" wicket:id="frmEstadisticas" method="get">
+				<fieldset id="misRecetas" class="center">
+					<div class="container">    
+						<div id="menu-inicio" class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">                    
+					    	<div class="panel panel-info">
+					        	<div class="panel-heading">
+					            	<div class="panel-title"><span class="glyphicon glyphicon-home"></span> Estadísticas</div>
+					            </div>     
+								<div class="panel-body" style="padding: 0px 20px 20px 20px;">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="TOPH">
+												<h3>Tipos de Recetas más consultadas por Hombres:</h3>
+												<div wicket:id="TOPHtipos"></div>
+											</div>
+											<div class="TOPM">
+												<h3>Tipos de Recetas más consultadas por Mujeres:</h3>
+												<div wicket:id="TOPHtipos"></div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="TOP">
+												<h3>Recetas mas consultadas según dificultad:</h3>
+												<div wicket:id="TOPdificultad"></div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="TOP">
+												<h3>Recetas más consultadas:</h3>
+												<div wicket:id="TOPrecetas"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</fieldset>
+				</form>
+			</div>
+	</wicket:extend>
+</body>
+</html>
