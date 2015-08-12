@@ -5,93 +5,146 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 
+import javax.swing.JOptionPane;
+
 import master.MasterPage;
+import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.eclipse.jetty.server.Server;
+import org.omg.CORBA.NVList;
 import org.apache.wicket.Session;
 
+import Database.Browser;
 import Grupo88.AltaUsuario.FrmAltaUsuario;
 import Grupo88.Login.FrmLogin;
+import ObjetosDB.Dificultades;
+import ObjetosDB.Ingredientes;
+import ObjetosDB.Pasos;
+import ObjetosDB.RecetaU;
+import ObjetosDB.Temporadas;
+import ObjetosDB.Usuario;
+import ObjetosDB.Recetas.Receta;
 
 public class AgregarReceta extends MasterPage {
-
-	private FrmAgregarReceta frmAgregarReceta;
+   
+	private SesionUsuario sesion = (SesionUsuario)getSession();
+	private Usuario user = sesion.getUsuario().getObject();
+	private final RecetaU nuevareceta = new RecetaU(-1, "", user.getUsername(), null, null, null, 0);
+	private List<Fragmento> fragmentos = new ArrayList<Fragmento>();
+	//private Fragmento frm
 	
 	public AgregarReceta(){
 		super();
-		getMenuPanel().setVisible(false);
-		
-		add(frmAgregarReceta = new FrmAgregarReceta("FrmAgregarReceta"));
-		
-		frmAgregarReceta.add(new Link("cancelar"){
-			
-			public void onClick(){
-			setResponsePage(GestionarRecetas.class);
-			}
-		});
-		
+		//getMenuPanel().setVisible(false);
+
+		fragmentos.add(new Fragmento("areaForms","fragmentoInicial",this,new FrmDatosReceta("frmDatosBasicos")));
+		for(int i = 1; i<= 5; i++){
+			nuevareceta.agregarPaso(new Pasos(i, ""));
+			fragmentos.add(new Fragmento("areaForms","fragmentoPaso",pagina(), new FrmPaso("frmPasos",i)));
+		}
+		add(fragmentos.get(0));
+	}
+	
+	protected AgregarReceta pagina(){
+		return this;
+	}
+	
+	public class Fragmento extends Fragment{
+
+		public Fragmento(String id, String markupId, MarkupContainer markupProvider, Form form) {
+			super(id, markupId, markupProvider);
+			// TODO Auto-generated constructor stub
+			add(form);
+		}
 		
 	}
 	
-	public class FrmAgregarReceta extends Form {
+	
+	
+	public class FrmDatosReceta extends Form {
+		Model algo = new Model("");
 		
-		private String nombreReceta;
-		private String ingrediente;
-		private String nuevoIngrediente;
-		private String condimento;
-		private String nuevoCondimento;
-		private String calorias;
-		private String tipoCondimento;
-		private DropDownChoice temporada;
-		private String caloriasTotales;
-		private List<String> clasificacion = Arrays.asList(new String[] {
-				"desayuno", "amuerzo", "merienda", "cena"});
-		private ArrayList<String> clasificacionesSeleccionadas = new ArrayList<String>();
-		private DropDownChoice grupoAlimenticio;
-
-		public FrmAgregarReceta(String id) {
-			super(id);			
-			setDefaultModel(new CompoundPropertyModel(this));
-			
-			
-		add(new TextField("nombreReceta"));
-		add(new TextField("ingrediente"));
-		add(new TextField("nuevoIngrediente"));
-		add(new TextField("condimento"));
-		add(new TextField("nuevoCondimento"));
-		add(new NumberTextField("calorias"));
-		add(new TextField("tipoCondimento"));
-		add(new RadioGroup("dificultad"));
-		add(new DropDownChoice("temporada"));
-		add(new NumberTextField("caloriasTotales"));
-		add(new CheckBoxMultipleChoice<String>("clasificacion", new Model(clasificacionesSeleccionadas),clasificacion));
-		add(new RadioGroup("calificacion"));
-		add(new DropDownChoice("grupoAlimenticio"));
+		public FrmDatosReceta(String id) {
+			super(id);
+			// TODO Auto-generated constructor stub
+		//final TextField<String> nombre;
+		add(new TextField<String>("nombreReceta", new PropertyModel<String>(nuevareceta, "nombre")));
+		add(new TextArea<String>("descripcion", new PropertyModel<String>(nuevareceta, "detalle")));
+		add(new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), Browser.listaTemporadas(), new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
+		add(new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"), Browser.listaDificultades(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
+		add(new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), Browser.listaIngredientes(), new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
+		
 		}
 		
 		@Override
 		protected void onSubmit() {
 		// Va a conectarse con BD y comprobar las validaciones
 		super.onSubmit();
+		pagina().addOrReplace(fragmentos.get(1));
 		
+		
+		}
+	}
+	
+	public class FrmPaso extends Form {
+		
+		private int idFrmPaso;
+		public FrmPaso(String id, int idPaso) {
+			super(id);
+			// TODO Auto-generated constructor stub
+			idFrmPaso = idPaso;
+			
+			add(new Label("numPaso",idPaso));
+			add(new TextArea<String>("paso", new PropertyModel<String>(nuevareceta.getPasos().get(idPaso-1), "descripcionPaso")));
+			
+			add(new Link("pasoAnt"){
+				@Override
+				public void onClick() {
+					// TODO Auto-generated method stub
+					pagina().addOrReplace(fragmentos.get(idFrmPaso-1));
+				}
+			});
+		}
+		
+		
+		@Override
+		protected void onSubmit() {
+		// Va a conectarse con BD y comprobar las validaciones
+		super.onSubmit();
+		
+		if(idFrmPaso <= fragmentos.size()-1){
+		pagina().addOrReplace(fragmentos.get(idFrmPaso+1));	
+		}
+		else{
+			//llamar DB
+			}
 		}
 	}
 }

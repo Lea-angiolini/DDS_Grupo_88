@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import master.MasterPage;
+import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -34,11 +35,13 @@ import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
 import ObjetosDB.Recetas;
 import ObjetosDB.Temporadas;
+import ObjetosDB.Usuario;
 import ObjetosDB.itemsABuscar;
 import ObjetosDB.Recetas.Receta;
 
 public class BuscarReceta extends MasterPage {
-
+	
+	final Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
 	private FrmBuscarReceta frmBuscarReceta;
 	
 	public BuscarReceta(){
@@ -109,7 +112,9 @@ public class BuscarReceta extends MasterPage {
 					@Override
 					public void onClick() {
 						// TODO Auto-generated method stub
+						recetas.consulta(user);
 						setResponsePage(DetalleDeReceta.class,pars);
+						
 					}
 					
 				};
@@ -119,7 +124,7 @@ public class BuscarReceta extends MasterPage {
 				
 				bton.addOrReplace(new Label("campo1",recetas.getNombre()));
 				bton.addOrReplace(new Label("campo2",recetas.getCreador()));
-				bton.addOrReplace(new Label("campo3",recetas.getDificultad()));
+				bton.addOrReplace(new Label("campo3",recetas.getDificultad().getDificultad()));
 				
 				item.add(bton);
 				

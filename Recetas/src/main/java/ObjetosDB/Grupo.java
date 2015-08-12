@@ -68,4 +68,13 @@ public class Grupo {
 		return dev;
 		
 	}
+	
+	public boolean tieneReceta(int idReceta){
+		return Browser.grupoTieneReceta(getIdGrupo(),idReceta);
+	}
+	
+	public boolean agregarReceta(int idReceta){
+		return Browser.agregarRecetaGrupo(getIdGrupo(),idReceta);
+		
+	}
 }

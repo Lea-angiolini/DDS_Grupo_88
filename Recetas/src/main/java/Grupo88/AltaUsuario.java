@@ -81,7 +81,6 @@ public class AltaUsuario extends MasterPage {
 				
 			}
 		});	
-		
 
 	}
 	
@@ -139,6 +138,7 @@ public class AltaUsuario extends MasterPage {
 			super.onSubmit();
 			
 			addOrReplace(new Label("lblError",this.cargarDatosUsuario()));
+			setResponsePage(Login.class);
 		}
 		
 		private String cargarDatosUsuario(){

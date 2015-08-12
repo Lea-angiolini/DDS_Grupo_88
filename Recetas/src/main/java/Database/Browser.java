@@ -91,6 +91,11 @@ public class Browser {
 		return f.registrarUsuario(nvoUsuario);
 	}
 	
+	public static String modificarPerfil(Usuario user){
+		Factory f = new Factory();
+		return f.modificarPerfil(user);
+	}
+	
 	public static RecetaU cargarReceta(int idReceta, Usuario user){
 		Factory f = new Factory();
 		return f.cargarReceta(idReceta, user);
@@ -125,5 +130,20 @@ public class Browser {
 	public static int agregarNuevoGrupo (Grupo grupo){
 		Factory f = new Factory();
 		return f.agregarNuevoGrupo(grupo);
+	}
+	
+	public static boolean grupoTieneReceta(int idGrupo ,int idReceta){
+		Factory f = new Factory();
+		return f.grupoTieneReceta(idGrupo,idReceta);
+	}
+	
+	public static boolean agregarRecetaGrupo(int idGrupo, int idReceta){
+		Factory f = new Factory();
+		return f.agregarRecetaGrupo(idGrupo, idReceta);
+	}
+	
+	public static boolean agregarHistConsultas(int idReceta, String username){
+		Factory f = new Factory();
+		return f.agregarHistConsultas(idReceta, username);
 	}
 }

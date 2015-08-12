@@ -1,3 +1,4 @@
+
 package ObjetosDB;
 
 import java.io.Serializable;
@@ -5,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+
+import Database.Browser;
 
 
 public class Recetas implements Serializable{
@@ -15,8 +18,8 @@ public class Recetas implements Serializable{
 		coleccionRecetas = new ArrayList<Receta>();
 	}
 	
-	public void agregarNuevaReceta(int id, String nom, String crea, String difi){
-		agregarReceta(new Receta(id,nom,crea,difi));
+	public void agregarNuevaReceta(int id, String nom, String crea, Dificultades difi, Ingredientes ingPrinc){
+		agregarReceta(new Receta(id,nom,crea,difi,ingPrinc));
 	}
 	
 	public void agregarReceta(Receta rec){
@@ -27,18 +30,21 @@ public class Recetas implements Serializable{
 		return coleccionRecetas;
 	}
 	
+	
 	public class Receta implements Serializable{
 		
 		private int idreceta;
 		private String nombre;
 		private String creador;
-		private String dificultad;
+		private Dificultades dificultad;
+		private Ingredientes ingredientePrincipal;
 
-		public Receta(int id, String nom, String crea, String difi){
+		public Receta(int id, String nom, String crea, Dificultades difi, Ingredientes IngPrinc){
 			setIdreceta(id);
 			setNombre(nom);
 			setCreador(crea);
 			setDificultad(difi);
+			setIngredientePrincipal(IngPrinc);
 		}
 		
 		public int getIdreceta() {
@@ -64,11 +70,23 @@ public class Recetas implements Serializable{
 		}
 		
 		
-		public String getDificultad() {
+		public Dificultades getDificultad() {
 			return dificultad;
 		}
-		public void setDificultad(String dificultad) {
+		public void setDificultad(Dificultades dificultad) {
 			this.dificultad = dificultad;
+		}
+		
+		public Ingredientes getIngredientePrincipal() {
+			return ingredientePrincipal;
+		}
+
+		public void setIngredientePrincipal(Ingredientes ingredientePrincipal) {
+			this.ingredientePrincipal = ingredientePrincipal;
+		}
+
+		public void consulta(Usuario user){
+			Browser.agregarHistConsultas(getIdreceta(),user.getUsername());
 		}
 		
 	}	

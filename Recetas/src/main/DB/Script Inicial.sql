@@ -8,7 +8,7 @@ GRANT SELECT, UPDATE, DELETE, INSERT, EXECUTE ON grupo88.* TO 'llevaYtrae'@'loca
 
 
 create table Grupo88.Recetas(
-	idReceta int(11) primary key auto_increment,
+	idReceta int primary key auto_increment,
 	nombre varchar(45) not null,
 	creador  varchar(30) references Usuarios,
     idDificultad int references dificultad,
@@ -169,6 +169,19 @@ CREATE TABLE Grupo88.amigos(
     check(nombreUsuario1 <> nombreUsuario2)
 );
 
+CREATE TABLE Grupo88.historicoConsultas(
+	idHistorico int auto_increment PRIMARY KEY,
+	idReceta int references recetas,
+    username varchar(30) references Usuarios,
+    fecha date
+);
+
+CREATE TABLE Grupo88.relgruporeceta(
+	idGrupo int references grupos,
+	idReceta int references Recetas,
+	PRIMARY KEY(idGrupo,idReceta)
+);
+
 insert into Grupo88.Rutinas (rutina)
 values ('Sedentaria con algo de ejercicio'),
 	   ('Sedentaria con nada de ejercicio'),
@@ -265,6 +278,9 @@ values ('jorge',1),('jorge',3);
 
 insert into Grupo88.relusuariogrupo()
 values ('maria',1),('carlos',1),('carlos',2);
+
+insert into Grupo88.relgruporeceta()
+values (1,1);
 
 DELIMITER $$
 USE `Grupo88` $$
@@ -382,7 +398,7 @@ in caloriasMax int,
 in caloriasMin int
 )
 BEGIN
-	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion 
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad
 	FROM Grupo88.recetas rec
     JOIN Grupo88.dificultad dif
     ON dif.idDificultad = rec.idDificultad
@@ -411,9 +427,6 @@ out respuesta varchar(90)
 )
 BEGIN
 	
-   
-
-
 	declare rutinaID int;
     
     
@@ -422,6 +435,32 @@ BEGIN
 		INSERT INTO usuarios(nombreUsuario,clave,mail,nombre,apellido,sexo,fechaNac,altura,idComplexion,idDieta,idRutina)
 			VALUES(username_,pass_,mail_,nombre_,apellido_,sexo_,fechaNac_,altura_,idComplexion ,idDieta,idRutina);
 END $$
+
+CREATE PROCEDURE SP_modificarPerfil(
+in username_ varchar(30),
+in pass_ varchar(30),
+in nombre_ varchar(30),
+in apellido_ varchar(30),
+in mail_ varchar(30),
+in fechaNac_ date,
+in sexo_ varchar(1),
+in altura_ int,
+in idComplexion int,
+in idDieta int,
+in IdRutina int
+
+)
+BEGIN
+
+	UPDATE usuarios usu
+	SET usu.clave=pass_, usu.nombre= nombre_, usu.apellido = apellido_, usu.mail=mail_, usu.fechaNac = fechaNac_, usu.sexo = sexo_, 
+		usu.altura=altura_,	usu.idComplexion = idComplexion, usu.idDieta = idDieta, usu.idRutina = idRutina
+    WHERE usu.nombreUsuario=username_;
+    
+    
+END$$
+
+
 
 CREATE PROCEDURE SP_RegistrarCondPreexUsuario(
 in username varchar(30),
@@ -445,8 +484,8 @@ BEGIN
 	order by his.fecha desc
     limit 1);
 
-	 SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', grupoalim.descripcion as 'grpAlim',
-			tem.nombreTemporada, ing.nombre as 'IngPrincipal', IFNULL(calificacion,-1) as 'calificacion'
+	 SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad, grupoalim.descripcion as 'grpAlim',
+			tem.nombreTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente, IFNULL(calificacion,-1) as 'calificacion'
      FROM recetas rec
      JOIN dificultad dif
      ON dif.idDificultad = rec.idDificultad 
@@ -599,4 +638,37 @@ BEGIN
     where nombreGrupo = nombre;
 
 END$$
+
+CREATE PROCEDURE SP_agregarHistorico(
+IN username varchar(30),
+IN idReceta int)
+BEGIN
+
+	INSERT INTO historicoConsultas(username,idReceta,fecha)
+    VALUES(username,idReceta,current_date());
+    
+END$$
+
+CREATE PROCEDURE SP_grupoTieneReceta(
+IN idGrupo int,
+IN idReceta int)
+BEGIN
+
+	select * from relgruporeceta rel
+    where rel.idGrupo = idGrupo and
+			rel.idReceta = idReceta;
+    
+END$$
+
+CREATE PROCEDURE SP_agregarRecetaGrupo(
+IN idGrupo int,
+IN idReceta int)
+BEGIN
+	INSERT INTO relgruporeceta(idGrupo,idReceta)
+    VALUES (idGrupo,idReceta);
+END$$
+    
+    
+
+
 DELIMITER ;

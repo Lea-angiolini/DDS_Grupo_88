@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.protocol.http.documentvalidation.TextContent;
 import org.eclipse.jetty.util.StringUtil;
 
 import ObjetosDB.*;
@@ -129,7 +131,8 @@ public class Factory {
 				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
-										   rs.getString("descripcion"));
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+											new Ingredientes(0, "", 0, 0));
 				
 				
 		}
@@ -159,7 +162,8 @@ public class Factory {
 				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
-										   rs.getString("descripcion"));
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+										   new Ingredientes(0, "", 0, 0));
 				
 				
 		}
@@ -196,8 +200,10 @@ public class Factory {
 				
 				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
-										   rs.getString("creador"), 
-										   rs.getString("descripcion"));
+										   rs.getString("creador"),
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+										   new Ingredientes(0, "", 0, 0)
+										   );
 		
 			}
 		}
@@ -426,8 +432,7 @@ public class Factory {
 	
 	
 	public String registrarUsuario(Usuario nvoUsuario){
-		
-		
+
 		try
 		{
 			
@@ -466,6 +471,46 @@ public class Factory {
 		}
 	}
 	
+	
+	public String modificarPerfil(Usuario user){
+		try
+		{
+			CallableStatement cmd=con.prepareCall("{call SP_modificarPerfil(?,?,?,?,?,?,?,?,?,?,?)}");
+			cmd.setString(1, user.getUsername());
+			cmd.setString(2, user.getPassword());
+			cmd.setString(3, user.getNombre());
+			cmd.setString(4, user.getApellido());
+			cmd.setString(5, user.getEmail());
+			cmd.setString(6, user.getFechaNacimiento());
+			cmd.setString(7, String.valueOf(user.getSexo()));
+			cmd.setInt(8, user.getAltura());
+			cmd.setInt(9, (user.getComplexion()).getIdComplexion());
+			cmd.setInt(10, (user.getDieta()).getIdDietas());
+			cmd.setInt(11, (user.getRutina()).getIdRutina());
+//			cmd.registerOutParameter(12, Types.VARCHAR);
+			
+			cmd.executeQuery();
+			
+			CallableStatement cmdCondPreex = con.prepareCall("{call SP_RegistrarCondPreexUsuario(?,?)}");
+			cmdCondPreex.setString(1, user.getUsername());
+				
+			for (CondicionesPreexistentes condPreex : user.getCondiciones()) 
+			{	
+				cmdCondPreex.setInt(2, condPreex.getIdCondPreex());
+				cmdCondPreex.executeQuery();
+			}	
+			
+			//return cmd.getString(12);
+		return "Los cambios han sido actualizados";
+		}
+		catch(SQLException ex){
+			return ex.getMessage();
+		
+		}
+		
+	};
+	
+	
 	public RecetaU cargarReceta(int idReceta, Usuario user){
 		
 		ResultSet rs = null;
@@ -486,12 +531,12 @@ public class Factory {
 				receta = new RecetaU(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
-										   rs.getString("dificultad"),
-										   rs.getString("nombreTemporada"),
-										   rs.getString("ingPrincipal"),
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+										   new Temporadas(rs.getInt("idTemporada"), rs.getString("nombreTemporada")),
+										   new Ingredientes(rs.getInt("idIngrediente"), rs.getString("IngPrincipal"),rs.getInt("calorias"),rs.getInt("tipoIngrediente")),
 										   rs.getInt("calificacion"));
 		
-			}else{ receta = new RecetaU(-1, "Error en el if", "", "","","",0);}
+			}else{ receta = new RecetaU(-1, "Error en el if", "", null,null,null,0);}
 			
 			cmd = con.prepareCall("{call SP_ObtenerIngredientesReceta(?)}");
 			cmd.setInt(1,idReceta);
@@ -514,12 +559,12 @@ public class Factory {
 			rs = cmd.executeQuery();
 			
 			while(rs.next()){
-				receta.agregarPaso(rs.getString("descripcion"));
+				receta.agregarPaso(new Pasos(rs.getInt("numeroPaso") ,rs.getString("descripcion")));
 			}
 		}
 		catch(SQLException ex){
 			//JOptionPane.showMessageDialog(null, ex.getMessage());	
-			receta = new RecetaU(-1, ex.getMessage(), "", "","","",0);
+			receta = new RecetaU(-1, ex.getMessage(), "", null,null,null,0);
 		}
 		return receta;
 	}
@@ -709,6 +754,65 @@ public boolean salirGrupo (String username, int idGrupo){
 		
 		return est;
 	}
+
+public boolean grupoTieneReceta(int idGrupo,int idReceta){
+	CallableStatement cmd;
+	ResultSet rs = null;
+	
+	try
+		{
+		cmd = con.prepareCall("{call SP_grupoTieneReceta(?,?)}");
+		cmd.setInt(1,idGrupo);
+		cmd.setInt(2,idReceta);
+		rs = cmd.executeQuery();
+		
+		if(rs.next()){
+
+			return true;
+			}
+		return false;
+		}
+	catch(SQLException ex){
+		//JOptionPane.showMessageDialog(null, ex.getMessage());
+		return false;
+		}
+}
+
+public boolean agregarRecetaGrupo(int idGrupo, int idReceta){
+	CallableStatement cmd;
+	try
+	{
+		cmd=con.prepareCall("{Call SP_agregarRecetaGrupo(?,?)}");
+		cmd.setInt(1, idGrupo);
+		cmd.setInt(2, idReceta);
+		cmd.executeQuery();
+		
+		return true;
+	}
+	catch(SQLException ex)
+	{
+		return false;
+	}
+	}
+
+public boolean agregarHistConsultas(int idReceta, String username){
+	CallableStatement cmd;
+	try
+	{
+		cmd=con.prepareCall("{Call SP_agregarHistorico(?,?)}");
+		cmd.setString(1, username);
+		cmd.setInt(2, idReceta);
+		cmd.executeQuery();
+		
+		return true;
+	}
+	
+	catch(SQLException ex)
+	{
+		return false;
+	}
+	}
+
 }
 
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Database.Browser;
+import Grupo88.GestionarPerfil;
 import ObjetosDB.Recetas.Receta;
 
 public class Usuario implements Serializable{
@@ -204,5 +205,10 @@ public class Usuario implements Serializable{
 	public Recetas cargarMisRecetas(){
 		return Browser.cargarRecetasUsuario(username);
 		
+	}
+	
+	
+	public String modificarPerfil(){
+		return Browser.modificarPerfil(this);
 	}
 }
