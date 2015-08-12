@@ -53,21 +53,16 @@ public class MisRecetas extends MasterPage {
 		add(frmMisRecetas = new FrmMisRecetas("frmMisRecetas"));
 		
 		frmMisRecetas.add(new Link("cancelar"){
-			
 			public void onClick(){
-			setResponsePage(Inicio.class);
+				setResponsePage(Inicio.class);
 			}
 		});
 		
-		
 		frmMisRecetas.add(new Link("nvaReceta"){
-			
 			public void onClick(){
 			setResponsePage(AgregarReceta.class);
 			}
-		});
-		
-		
+		});	
 	}
 	
 	public class FrmMisRecetas extends Form{

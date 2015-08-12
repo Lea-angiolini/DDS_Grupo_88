@@ -27,7 +27,6 @@ public class Recetas implements Serializable{
 		return coleccionRecetas;
 	}
 	
-	
 	public class Receta implements Serializable{
 		
 		private int idreceta;
@@ -72,12 +71,5 @@ public class Recetas implements Serializable{
 			this.dificultad = dificultad;
 		}
 		
-	}
-	
-	
-	
+	}	
 }
-
-
-
-

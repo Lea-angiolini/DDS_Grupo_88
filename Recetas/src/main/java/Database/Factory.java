@@ -638,27 +638,77 @@ public boolean salirGrupo (String username, int idGrupo){
 		return true;
 	}
 
-public int agregarNuevoGrupo (Grupo grupo){
-	CallableStatement cmd;
-	ResultSet rs = null;
+	public int agregarNuevoGrupo (Grupo grupo){
+		CallableStatement cmd;
+		ResultSet rs = null;
 	
-	try
-		{
-		cmd = con.prepareCall("{call SP_agregarNuevoGrupo(?,?,?)}");
-		cmd.setString(1,grupo.getNombre());
-		cmd.setString(2,grupo.getCreador());
-		cmd.setString(3,grupo.getDetalle());
-		rs = cmd.executeQuery();
+		try{
+			cmd = con.prepareCall("{call SP_agregarNuevoGrupo(?,?,?)}");
+			cmd.setString(1,grupo.getNombre());
+			cmd.setString(2,grupo.getCreador());
+			cmd.setString(3,grupo.getDetalle());
+			rs = cmd.executeQuery();
 		
-		if(rs.next()){
-
-			return rs.getInt("idGrupo");
+			if(rs.next()){
+				return rs.getInt("idGrupo");
+			}
+		}catch(SQLException ex){
+			//JOptionPane.showMessageDialog(null, ex.getMessage());
+			return -1;
+		}
+		return -1;
+	}
+	
+	public Estadisticas obtenerEstadisticas(){
+		
+		ResultSet rs = null;
+		Estadisticas est = new Estadisticas();
+		CallableStatement cmd;
+		
+		try{
+			//Se obtienen top Consultas Hombre
+			cmd = con.prepareCall("select nombre_receta, count(*) as cantidad from grupo88.historial "
+					+ "group by nombre_receta order by cantidad desc");
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				est.agregarTopRecetasHombre(rs.getString("id_receta"));
+			}
+			
+			//Se obtienen top Consultas mujer
+			cmd = con.prepareCall("select nombre_receta, count(*) as cantidad from grupo88.historial "
+					+ "group by nombre_receta order by cantidad desc");
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				est.agregarTopRecetasMujer(rs.getString("id_receta"));
+			}
+			
+			//Se obtienen top Dificultad
+			cmd = con.prepareCall("select nombre_receta, count(*) as cantidad from grupo88.historial "
+					+ "group by nombre_receta order by cantidad desc");
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				est.agregarTopDificultad(rs.getString("id_receta"));
+			}
+			
+			//Se obtienen top Recetas
+			cmd = con.prepareCall("select nombre_receta, count(*) as cantidad from grupo88.historial "
+					+ "group by nombre_receta order by cantidad desc");
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				est.agregarTopRecetas(rs.getString("id_receta"));
 			}
 		}
-	catch(SQLException ex){
-		//JOptionPane.showMessageDialog(null, ex.getMessage());
-		return -1;
+		catch(SQLException ex){
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
-	return -1;
+		
+		
+		return est;
 	}
 }
+
+
