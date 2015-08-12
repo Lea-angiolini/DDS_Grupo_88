@@ -78,7 +78,7 @@ public class DetalleDeReceta extends MasterPage {
 		if(parameters.getNamedKeys().contains("idReceta")){
 			idReceta = parameters.get("idReceta");
 			receta = Browser.cargarReceta(idReceta.toInt(), user);
-		
+			
 		user.cargarGrupos();
 		
 		add(generar(user,idReceta.toInt()));

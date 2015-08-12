@@ -21,7 +21,7 @@ public class MenuPanel extends Panel {
 
 	public MenuPanel(String id) {
 		super(id);
-		//add(new PanelLogin("loginPanel"));
+		add(new PanelLogin("loginPanel"));
 		
 		if(((SesionUsuario)getSession()).estaLogueado()){
 			add(new PanelLinks("linkPanel"));

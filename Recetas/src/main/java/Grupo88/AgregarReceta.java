@@ -89,7 +89,6 @@ public class AgregarReceta extends MasterPage {
 	
 	
 	public class FrmDatosReceta extends Form {
-		Model algo = new Model("");
 		
 		public FrmDatosReceta(String id) {
 			super(id);
@@ -139,11 +138,12 @@ public class AgregarReceta extends MasterPage {
 		// Va a conectarse con BD y comprobar las validaciones
 		super.onSubmit();
 		
-		if(idFrmPaso <= fragmentos.size()-1){
+		if(idFrmPaso < fragmentos.size()-1){
 		pagina().addOrReplace(fragmentos.get(idFrmPaso+1));	
 		}
 		else{
-			//llamar DB
+			nuevareceta.guardarReceta();
+			setResponsePage(AgregarReceta.class);
 			}
 		}
 	}

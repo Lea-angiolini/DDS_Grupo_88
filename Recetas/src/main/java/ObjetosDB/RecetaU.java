@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import Database.Browser;
+
 public class RecetaU {
 	
 	private int idreceta;
@@ -128,6 +130,10 @@ public class RecetaU {
 
 	public void setCalificacion(int calificacion) {
 		this.calificacion = calificacion;
+	}
+	
+	public boolean guardarReceta(){
+		return Browser.agregarReceta(this);
 	}
 }
 

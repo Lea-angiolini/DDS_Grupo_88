@@ -485,7 +485,7 @@ BEGIN
     limit 1);
 
 	 SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad, grupoalim.descripcion as 'grpAlim',
-			tem.nombreTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente, IFNULL(calificacion,-1) as 'calificacion'
+			tem.nombreTemporada, tem.idTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente, IFNULL(calificacion,-1) as 'calificacion'
      FROM recetas rec
      JOIN dificultad dif
      ON dif.idDificultad = rec.idDificultad 
@@ -668,7 +668,19 @@ BEGIN
     VALUES (idGrupo,idReceta);
 END$$
     
-    
+CREATE PROCEDURE SP_agregarReceta(
+IN creador varchar(30),
+IN nombreReceta varchar(30),
+IN dificultad int,
+IN calorias int,
+IN grpAlim int,
+IN temporada int,
+IN ingPrinc int
+)
+BEGIN
+	INSERT INTO recetas(creador,nombre,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
+    VALUES (creador,nombreReceta,dificultad,calorias,grpAlim,temporada,ingPrinc);
+END$$    
 
 
 DELIMITER ;

@@ -533,9 +533,9 @@ public class Factory {
 										   rs.getString("creador"), 
 										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
 										   new Temporadas(rs.getInt("idTemporada"), rs.getString("nombreTemporada")),
-										   new Ingredientes(rs.getInt("idIngrediente"), rs.getString("IngPrincipal"),rs.getInt("calorias"),rs.getInt("tipoIngrediente")),
+										   new Ingredientes(rs.getInt("idIngrediente"), rs.getString("IngPrincipal"),rs.getInt("caloriasPorcion"),rs.getInt("tipoIngrediente")),
 										   rs.getInt("calificacion"));
-		
+	
 			}else{ receta = new RecetaU(-1, "Error en el if", "", null,null,null,0);}
 			
 			cmd = con.prepareCall("{call SP_ObtenerIngredientesReceta(?)}");
@@ -765,4 +765,26 @@ public boolean agregarHistConsultas(int idReceta, String username){
 	}
 	}
 
+public boolean agregarReceta(RecetaU receta){
+	CallableStatement cmd;
+	try
+	{
+		cmd=con.prepareCall("{Call SP_agregarReceta(?,?,?,?,?,?,?)}");
+		cmd.setString(1, receta.getCreador());
+		cmd.setString(2, receta.getNombre());
+		cmd.setInt(3, receta.getDificultad().getIdDificultad());
+		cmd.setInt(4, 0);
+		cmd.setInt(5, 1);
+		cmd.setInt(6, receta.getTemporada().getIdTemporada());
+		cmd.setInt(7, receta.getIngredientePrincipal().getIdIngrediente());
+		cmd.executeQuery();
+		
+		return true;
+	}
+	
+	catch(SQLException ex)
+	{	JOptionPane.showMessageDialog(null, ex.getMessage());
+		return false;
+	}
+}
 }
