@@ -21,6 +21,7 @@ public class Usuario implements Serializable{
 	private int altura;
 	private Complexiones complexion;
 	private Rutinas rutina;
+	private PreferenciasAlimenticias preferencia;
 	private List<CondicionesPreexistentes> condiciones;
 	private Dietas dieta;
 	private List<Grupo> grupos;
@@ -107,6 +108,13 @@ public class Usuario implements Serializable{
 		this.complexion = complexion;
 	}
 
+	public PreferenciasAlimenticias getPreferencia() {
+		return preferencia;
+	}
+
+	public void setPreferencia(PreferenciasAlimenticias preferencia) {
+		this.preferencia = preferencia;
+	}
 
 	public Rutinas getRutina() {
 		return rutina;

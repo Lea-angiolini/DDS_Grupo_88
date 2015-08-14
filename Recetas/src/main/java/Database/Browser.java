@@ -51,6 +51,11 @@ public class Browser {
 		return  f.listaComplexiones();
 	}
 	
+	public static List<PreferenciasAlimenticias> listaPreferenciasAlimenticias(){
+		Factory f = new Factory();
+		return  f.listaPreferenciasAlimenticias();
+	}
+	
 	public static ArrayList<CondicionesPreexistentes> listaCondPreexistentes(){
 		Factory f = new Factory();
 		return f.listaCondPreexistentes();

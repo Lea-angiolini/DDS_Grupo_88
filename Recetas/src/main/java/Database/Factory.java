@@ -240,6 +240,33 @@ public class Factory {
 		return complexiones;
 	}
 	
+  public List<PreferenciasAlimenticias> listaPreferenciasAlimenticias(){
+		
+		ResultSet rs = null;
+		List<PreferenciasAlimenticias> preferenciasAlimenticias = new ArrayList<PreferenciasAlimenticias>();
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select * from grupo88.preferenciasAlimenticias");
+					
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				
+				preferenciasAlimenticias.add(new PreferenciasAlimenticias(rs.getInt("idPreferencia"),rs.getString("preferencia")));
+		
+			}
+		}
+		catch(SQLException ex){
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return preferenciasAlimenticias;
+	}
+	
+	
 	public ArrayList<CondicionesPreexistentes> listaCondPreexistentes(){
 		
 		ResultSet rs = null;

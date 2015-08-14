@@ -55,6 +55,7 @@ import org.apache.wicket.Session;
 import Database.Browser;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.Complexiones;
+import ObjetosDB.PreferenciasAlimenticias;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
 import ObjetosDB.Recetas;
@@ -108,7 +109,7 @@ public class AltaUsuario extends MasterPage {
 			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
 			add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
 			add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), Browser.listaComplexiones(), new ChoiceRenderer("complexion","idComplexion")));		
-			
+			add(new DropDownChoice<PreferenciasAlimenticias>("preferencia", new PropertyModel<PreferenciasAlimenticias>(usuario, "preferencia"), Browser.listaPreferenciasAlimenticias(), new ChoiceRenderer("preferencia","idPreferencia")));
 			RepeatingView condiciones = new RepeatingView("grupoCheckBox");
 			ArrayList<CondicionesPreexistentes> listaCondPreexistentes = Browser.listaCondPreexistentes();
 			estados = new ArrayList<estadoCondPreex>();
