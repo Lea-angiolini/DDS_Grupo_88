@@ -54,6 +54,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.eclipse.jetty.server.Server;
@@ -103,14 +104,14 @@ public class GestionarGrupos extends MasterPage {
 	        	List<Grupo> todosGrupos = Browser.cargarGrupos("");
 	        	if (!todosGrupos.isEmpty())
 	        	{
-	        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, todosGrupos));
+	        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, todosGrupos).setOutputMarkupId(true));
 	        	}
 	        	else
 	        	{
 	        		frmGestionarGrupos.addOrReplace(new Label("areaGrupos","No existen grupos"));
 	        	}
 	        }
-		});
+		}.setOutputMarkupId(true));
 		
 		frmGestionarGrupos.add(new Link("btnMisGrupos"){
 			@Override
@@ -120,7 +121,7 @@ public class GestionarGrupos extends MasterPage {
 	        	user.cargarGrupos();
 	        	if (!user.getGrupos().isEmpty())
 	        	{
-	        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, user.getGrupos()));
+	        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, user.getGrupos()).setOutputMarkupId(true));
 	        	}
 	        	else
 	        	{
@@ -145,7 +146,8 @@ public class GestionarGrupos extends MasterPage {
 		
 		@SuppressWarnings("unchecked")
 		public FrmGestionarGrupos(String id) {
-			super(id);			
+			super(id);		
+			setOutputMarkupId(true);
 			//setDefaultModel(new CompoundPropertyModel(this));
 		
 			
@@ -169,6 +171,17 @@ public class GestionarGrupos extends MasterPage {
 					final Grupo grupoActual = grupos.get(i);
 					//final String btnActual = "btn"+i;
 					final String labelActual = "label"+i;
+					final String verActual = "verGrupo"+i;
+					final Link verGrupo = new Link("verGrupo") {
+						@Override
+						public void onClick() {
+							final PageParameters pars = new PageParameters();
+							pars.add("idGrupo",grupoActual.getIdGrupo());
+							// TODO Auto-generated method stub
+							setResponsePage(DetalleGrupo.class,pars);
+						}
+					};
+					verGrupo.setOutputMarkupId(true);
 					AjaxLink entrarsalir = new AjaxLink("entrar/salir") {
 						
 						
@@ -176,20 +189,24 @@ public class GestionarGrupos extends MasterPage {
 							
 							String clase;
 							String texto;
+							String styleVer;
 							
 							if(esta = user.estaEnGrupo(grupoActual)){
 								clase="btn btn-danger";
 								texto="Salir";
+								styleVer="visible";
 							}
 							else
 							{
 								clase="btn btn-success";
 								texto="Adherirse";
+								styleVer="hidden";
 								//modeloBtn.setObject("document.getElementById('"+actual+"').innerHTML = Unirse;");
 							}
 					
 							return "document.getElementById('"+labelActual+"').innerHTML = '"+texto+"';" +
-							 "document.getElementById('"+labelActual+"').className = '"+clase+"';";
+							 "document.getElementById('"+labelActual+"').className = '"+clase+"';" +
+							 "document.getElementById('"+verActual+"').style.visibility = '"+styleVer+"';";
 						}
 						
 						boolean esta;
@@ -201,20 +218,25 @@ public class GestionarGrupos extends MasterPage {
 							
 							String clase;
 							String texto;
+							String styleVer;
 							
 							if(esta = user.estaEnGrupo(grupoActual)){
 								clase="btn btn-danger";
 								texto="Salir";
+								styleVer="visibility: visible";
 							}
 							else
 							{
 								clase="btn btn-success";
 								texto="Adherirse";	
+								styleVer="visibility: hidden";
 							}
 							
 							Label label = new Label("textoEntrar/salir",texto);
 							label.add(new AttributeAppender("id",labelActual));
 							label.add(new AttributeAppender("class",clase));
+							verGrupo.add(new AttributeAppender("style", styleVer));
+							verGrupo.add(new AttributeModifier("id",verActual));
 							add(label);
 						}
 						
@@ -239,6 +261,7 @@ public class GestionarGrupos extends MasterPage {
 					item.add(new Label("creador", grupoActual.getCreador()));
 					item.add(new Label("detalle", grupoActual.getDetalle()));
 					//entrarsalir.add(new AttributeAppender("id",btnActual));
+					item.add(verGrupo);
 					item.add(entrarsalir);
 					iterGrupos.add(item);
 					

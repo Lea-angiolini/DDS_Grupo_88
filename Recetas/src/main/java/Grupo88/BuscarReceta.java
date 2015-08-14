@@ -95,43 +95,6 @@ public class BuscarReceta extends MasterPage {
 		
 	}
 	
-	
-	private DataView generarTabla(Recetas recetas){
-		
-		return (new DataView("tablaPopulares",  new ListDataProvider(recetas.ObtenerColeccionRecetas())){
-			@Override
-			protected void populateItem(Item item) {
-				// TODO Auto-generated method stub
-				
-				final Receta recetas= (Receta) item.getModelObject();
-				
-				final PageParameters pars = new PageParameters();
-				pars.add("idReceta",recetas.getIdreceta());
-				
-				Link bton = new Link("bt"){
-					@Override
-					public void onClick() {
-						// TODO Auto-generated method stub
-						recetas.consulta(user);
-						setResponsePage(DetalleDeReceta.class,pars);
-						
-					}
-					
-				};
-				
-				
-				//item.addOrReplace(new Label("indice",item.getIndex()));
-				
-				bton.addOrReplace(new Label("campo1",recetas.getNombre()));
-				bton.addOrReplace(new Label("campo2",recetas.getCreador()));
-				bton.addOrReplace(new Label("campo3",recetas.getDificultad().getDificultad()));
-				
-				item.add(bton);
-				
-			}
-		});
-	}
-	
 	public class FragmentoRecetasBuscadas extends Fragment {
         public FragmentoRecetasBuscadas(String id, String markupId, MarkupContainer markupPorvider, itemsABuscar queBuscar ) {
         	
@@ -142,7 +105,7 @@ public class BuscarReceta extends MasterPage {
         	markupPorvider.remove(id);
         	
         	add(new Label("nombreGrilla"," Resultados"));
-        	add(generarTabla(recetas));
+        	add(new ListaDeRecetas("listaRecetas", recetas.ObtenerColeccionRecetas(), user));
             
         }
 	}

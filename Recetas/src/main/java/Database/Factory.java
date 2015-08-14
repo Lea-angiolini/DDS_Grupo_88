@@ -851,6 +851,51 @@ public boolean agregarReceta(RecetaU receta){
 		return false;
 	}
 }
+
+public Grupo obtenerGrupo(int idGrupo){
+	CallableStatement cmd;
+	ResultSet rs;
+	try
+	{
+		cmd=con.prepareCall("{Call SP_obtenerGrupo(?)}");
+		cmd.setInt(1, idGrupo);
+		rs = cmd.executeQuery();
+		
+		rs.next();
+		return new Grupo(rs.getInt("idGrupo"), rs.getString("nombreGrupo"), rs.getString("creador"), rs.getString("detalle"));
+	}
+	
+	catch(SQLException ex)
+	{	//JOptionPane.showMessageDialog(null, ex.getMessage());
+		return new Grupo(0,"error",ex.getMessage(),"");
+	}
+
+}
+
+public ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
+	CallableStatement cmd;
+	ResultSet rs;
+	ArrayList<Receta> recetas = new ArrayList<Recetas.Receta>();
+	try
+	{
+		cmd=con.prepareCall("{Call SP_obtenerRecetasGrupo(?)}");
+		cmd.setInt(1, idGrupo);
+		rs = cmd.executeQuery();
+		
+		while(rs.next()){
+			recetas.add(new Receta(rs.getInt("idReceta"), rs.getString("nombre"), rs.getString("creador"), new Dificultades( rs.getInt("idDificultad"), rs.getString("dificultad")),new Ingredientes(rs.getInt("idIngrediente"),  rs.getString("IngPrincipal"), rs.getInt("caloriasPorcion"), rs.getInt("tipoIngrediente"))));
+		}
+			
+		return recetas;
+		}
+	
+	catch(SQLException ex)
+	{	//JOptionPane.showMessageDialog(null, ex.getMessage());
+		return recetas;
+	}
+
+}
+
 }
 
 

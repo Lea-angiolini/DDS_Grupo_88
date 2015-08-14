@@ -31,7 +31,7 @@ public class Recetas implements Serializable{
 	}
 	
 	
-	public class Receta implements Serializable{
+	public static class Receta implements Serializable{
 		
 		private int idreceta;
 		private String nombre;

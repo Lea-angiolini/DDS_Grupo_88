@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<wicket:extend>
+
+
+		<div>
+			<form id="frmDetalleGrupo" wicket:id="frmDetalleGrupo" method="post">
+				<fieldset id="detalleGrupo" class="center">
+				<div  class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" style="background-color:rgba(255,255,255,0.6)">
+							<h1>Nombre:<span wicket:id="nombreGrupo"></span></h1>
+							<h3>Recetas del grupo</h3>
+							<div wicket:id="listaRecetas"></div>
+					<button type="button" id="p" name="btnCompartir" awicket:id="compartir">Compartir</button>	
+				</div>
+				</fieldset>
+			</form>
+		</div>
+	</wicket:extend>
+</body>
+</html>

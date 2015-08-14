@@ -11,6 +11,7 @@ import org.apache.log4j.chainsaw.Main;
 
 import Database.Factory;
 import ObjetosDB.*;
+import ObjetosDB.Recetas.Receta;
 
 public class Browser {
 	
@@ -157,8 +158,18 @@ public class Browser {
 		return f.agregarReceta(receta);	
 	}
 	
-		public static Estadisticas obtenerEstadisticas(){
+	public static Estadisticas obtenerEstadisticas(){
 		Factory f = new Factory();
 		return f.obtenerEstadisticas();
+	}
+		
+	public static Grupo obtenerGrupo(int idGrupo){
+		Factory f = new Factory();
+		return f.obtenerGrupo(idGrupo);
+	}
+	
+	public static ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
+		Factory f = new Factory();
+		return f.obtenerRecetasGrupo(idGrupo);
 	}
 }

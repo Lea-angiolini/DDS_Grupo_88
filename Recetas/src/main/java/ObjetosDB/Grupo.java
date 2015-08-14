@@ -1,8 +1,11 @@
 package ObjetosDB;
 
+import java.util.ArrayList;
+
 import org.eclipse.jetty.server.Authentication.User;
 
 import Database.Browser;
+import ObjetosDB.Recetas.Receta;
 
 public class Grupo {
 	
@@ -76,5 +79,9 @@ public class Grupo {
 	public boolean agregarReceta(int idReceta){
 		return Browser.agregarRecetaGrupo(getIdGrupo(),idReceta);
 		
+	}
+	
+	public ArrayList<Receta> obtenerRecetas(){
+		return Browser.obtenerRecetasGrupo(idGrupo);
 	}
 }

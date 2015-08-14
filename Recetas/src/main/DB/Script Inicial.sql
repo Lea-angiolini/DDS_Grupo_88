@@ -719,4 +719,29 @@ BEGIN
     GROUP BY R.nombre ORDER BY cantidad DESC;
 END$$
 
+CREATE PROCEDURE SP_obtenerGrupo(
+IN idGrupo int)
+BEGIN
+	SELECT * FROM grupos gr
+    WHERE gr.idGrupo = idGrupo;
+END$$
+
+CREATE PROCEDURE SP_obtenerRecetasGrupo(
+IN idGrupo int)
+BEGIN
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad, grupoalim.descripcion as 'grpAlim',
+			tem.nombreTemporada, tem.idTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente
+     FROM recetas rec
+     JOIN dificultad dif
+     ON dif.idDificultad = rec.idDificultad 
+     JOIN grupoalim
+     ON rec.grupoAlimenticio = grupoalim.idGrupoAlim
+     JOIN temporadas tem
+     ON tem.idTemporada = rec.temporada
+     JOIN ingredientes ing
+     ON ing.idIngrediente = rec.ingredientePrincipal
+     JOIN relgruporeceta rel
+     ON rel.idGrupo = idGrupo
+	 WHERE rec.idReceta = rel.idReceta;
+END$$
 DELIMITER ;
