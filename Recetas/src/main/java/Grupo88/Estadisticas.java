@@ -3,6 +3,7 @@ package Grupo88;
 import java.util.ArrayList;
 
 import master.MasterPage;
+import master.RegisteredPage;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -10,7 +11,7 @@ import org.apache.wicket.markup.html.form.Form;
 import Database.Browser;
 import Grupo88.Login.FrmLogin;
 
-public class Estadisticas extends MasterPage{
+public class Estadisticas extends RegisteredPage{
 	//private static final long serialVersionUID = 1L;
 	//private Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
 	private FrmEstadisticas frmEstadisticas;

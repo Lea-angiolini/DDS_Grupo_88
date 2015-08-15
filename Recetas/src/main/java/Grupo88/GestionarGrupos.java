@@ -74,8 +74,6 @@ import ObjetosDB.itemsABuscar;
 public class GestionarGrupos extends MasterPage {	
 	
 	private FrmGestionarGrupos frmGestionarGrupos;
-	private SesionUsuario sesion = (SesionUsuario)getSession();
-	private Usuario user = sesion.getUsuario().getObject();
 	
 	public GestionarGrupos(){
 		super();
@@ -100,7 +98,7 @@ public class GestionarGrupos extends MasterPage {
 			public void onClick() {
 				// TODO Auto-generated method stub
 				
-	        	user.cargarGrupos();
+	        	getUsuarioActual().cargarGrupos();
 	        	List<Grupo> todosGrupos = Browser.cargarGrupos("");
 	        	if (!todosGrupos.isEmpty())
 	        	{
@@ -118,10 +116,10 @@ public class GestionarGrupos extends MasterPage {
 			public void onClick() {
 				// TODO Auto-generated method stub
 				
-	        	user.cargarGrupos();
-	        	if (!user.getGrupos().isEmpty())
+				getUsuarioActual().cargarGrupos();
+	        	if (!getUsuarioActual().getGrupos().isEmpty())
 	        	{
-	        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, user.getGrupos()).setOutputMarkupId(true));
+	        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, getUsuarioActual().getGrupos()).setOutputMarkupId(true));
 	        	}
 	        	else
 	        	{
@@ -141,8 +139,6 @@ public class GestionarGrupos extends MasterPage {
 	}
 	
 	public class FrmGestionarGrupos extends Form {
-
-		private Usuario usuario = sesion.getUsuario().getObject();
 		
 		@SuppressWarnings("unchecked")
 		public FrmGestionarGrupos(String id) {
@@ -191,7 +187,7 @@ public class GestionarGrupos extends MasterPage {
 							String texto;
 							String styleVer;
 							
-							if(esta = user.estaEnGrupo(grupoActual)){
+							if(esta = getUsuarioActual().estaEnGrupo(grupoActual)){
 								clase="btn btn-danger";
 								texto="Salir";
 								styleVer="visible";
@@ -220,7 +216,7 @@ public class GestionarGrupos extends MasterPage {
 							String texto;
 							String styleVer;
 							
-							if(esta = user.estaEnGrupo(grupoActual)){
+							if(esta = getUsuarioActual().estaEnGrupo(grupoActual)){
 								clase="btn btn-danger";
 								texto="Salir";
 								styleVer="visibility: visible";
@@ -245,10 +241,11 @@ public class GestionarGrupos extends MasterPage {
 							// TODO Auto-generated method stub
 				            
 							if(esta){
-								grupoActual.sacarUsuario(user);
+								grupoActual.sacarUsuario(getUsuarioActual());
 							}
 							else{
-								grupoActual.agregarUsuario(user);
+								grupoActual.agregarUsuario(getUsuarioActual());
+								
 							}
 							//add(new AttributeAppender("onclick", ));
 							
@@ -279,7 +276,7 @@ public class GestionarGrupos extends MasterPage {
 			super (id, markupId, markupPorvider);
 			
 			final FragmentoGrupoNuevo esteFrag = this;
-			final Grupo nuevoGrupo = new Grupo(0,"",user.getUsername(),"");
+			final Grupo nuevoGrupo = new Grupo(0,"",getUsuarioActual().getUsername(),"");
 			add(new TextField<String>("nombreGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "nombre")));
 			add(new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
 			add(new EmptyPanel("etiquetaConf"));

@@ -157,7 +157,7 @@ public class DetalleDeReceta extends MasterPage {
 				Browser.agregarAHistorial(idReceta.toInt(),user);
 				setResponsePage(DetalleDeReceta.class,pars);
 			}
-		});
+		}.setVisible(SesionUsuario.get().estaLogueado()));
 		
 		frmDetalleDeReceta.add(new AjaxLink("compartir"){
 			
@@ -167,7 +167,7 @@ public class DetalleDeReceta extends MasterPage {
 				
 				target.appendJavaScript("abrirDialogo();");
 			}
-		});
+		}.setVisible(SesionUsuario.get().estaLogueado()));
 		}
 	}
 	

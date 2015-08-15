@@ -162,14 +162,14 @@ public class Factory {
 				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
-										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("descripcion")),
 										   new Ingredientes(0, "", 0, 0));
 				
 				
 		}
 		}
 		catch(SQLException ex){
-			
+			//JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 		
 		return recetas;

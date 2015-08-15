@@ -40,7 +40,7 @@ public class HeaderPanel extends Panel {
 				@Override
 				public void onClick() {
 					// TODO Auto-generated method stub
-					getSession().replaceSession();
+					SesionUsuario.get().desloguearUsuario();
 					setResponsePage(Inicio.class);
 				}
 			});

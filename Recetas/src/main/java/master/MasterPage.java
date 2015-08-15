@@ -17,9 +17,11 @@ public class MasterPage extends WebPage {
 	private Component headerPanel;
 	private Component menuPanel;
 	private Component footerPanel;
-	//private Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
+	private Usuario user = ((SesionUsuario)getSession()).getUsuarioActual();
 	
-
+	public Usuario getUsuarioActual(){
+		return user;
+	}
 	
 	public MasterPage() {
 		add(headerPanel = new HeaderPanel("header"));

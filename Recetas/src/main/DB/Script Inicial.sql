@@ -152,9 +152,11 @@ CREATE TABLE Grupo88.Historial(
 	idHistorial int auto_increment primary key,
     fecha datetime not null,
     idReceta int not null,
-    usuario varchar(30),
+    usuario varchar(30) references usuarios,
     -- cantVecesUsada int
     calificacionUsuario int default 0
+    -- foreign key (usuario)
+    -- references Grupo88.usuarios(nombreUsuario)
 );
 
 CREATE TABLE Grupo88.Temporadas(
@@ -381,7 +383,7 @@ in username varchar(30)
 )
 BEGIN
 
-	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion 
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion, dif.idDificultad
     FROM recetas rec 
     JOIN dificultad dif
     ON rec.idDificultad = dif.idDificultad
@@ -546,7 +548,7 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_calUltimaConfirmacion(
-	IN idReceta int, 
+	IN idRec int, 
     IN username varchar(30),
     IN calificacion int
 )
@@ -554,7 +556,7 @@ BEGIN
 	declare ultCal int;
     set ultCal = (select calificacionUsuario 
 		  from Grupo88.historial his
-          WHERE his.idReceta = idReceta and
+          WHERE his.idReceta =  idRec and
 		  his.usuario = username
 		  ORDER BY his.fecha, his.idHistorial desc
 		  LIMIT 1);
@@ -565,19 +567,19 @@ BEGIN
 			UPDATE Grupo88.recetas rec
             SET puntajeTotal = puntajeTotal + calificacion,
 				vecesCalificada = vecesCalificada + 1
-			WHERE rec.idReceta = idReceta;
+			WHERE rec.idReceta = idRec;
             END;
 		else
 			BEGIN
 			UPDATE Grupo88.recetas rec
             SET puntajeTotal = puntajeTotal + calificacion - ultCal
-			WHERE rec.idReceta = idReceta;
+			WHERE rec.idReceta = idRec;
             END;
 	end if;
     
     UPDATE grupo88.historial his
     SET calificacionUsuario = calificacion
-    WHERE his.idReceta = idReceta and
+    WHERE his.idReceta = idRec and
 		  his.usuario = username
 	ORDER BY his.fecha, his.idHistorial desc
     LIMIT 1;

@@ -9,6 +9,7 @@ import java.util.prefs.BackingStoreException;
 import javax.swing.JOptionPane;
 
 import master.MasterPage;
+import master.RegisteredPage;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.AttributeModifier;
@@ -60,7 +61,7 @@ import ObjetosDB.Pasos;
 import ObjetosDB.RecetaU;
 import ObjetosDB.Usuario;
 
-public class DetalleGrupo extends MasterPage {
+public class DetalleGrupo extends RegisteredPage {
 
 	// private TextField<String> txtUsuario;
 	// private PasswordTextField txtPassword;

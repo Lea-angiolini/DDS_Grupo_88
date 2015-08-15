@@ -3,6 +3,7 @@ package Grupo88;
 import java.util.prefs.BackingStoreException;
 
 import master.MasterPage;
+import master.RegisteredPage;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebPage;
@@ -23,7 +24,7 @@ import org.apache.wicket.Session;
 
 import Grupo88.Login.FrmLogin;
 
-public class GestionarRecetas extends MasterPage {	
+public class GestionarRecetas extends RegisteredPage {	
 	
 	private FrmGestionarRecetas frmGestionarRecetas;
 	

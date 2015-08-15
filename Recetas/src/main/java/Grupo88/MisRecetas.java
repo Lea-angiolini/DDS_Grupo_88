@@ -1,6 +1,11 @@
 package Grupo88;
 
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import master.MasterPage;
+import master.RegisteredPage;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -16,7 +21,7 @@ import ObjetosDB.Recetas;
 import ObjetosDB.Recetas.Receta;
 import ObjetosDB.Usuario;
 
-public class MisRecetas extends MasterPage {
+public class MisRecetas extends RegisteredPage {
 
 	private FrmMisRecetas frmMisRecetas;
 	private Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
@@ -47,7 +52,7 @@ public class MisRecetas extends MasterPage {
 			
 			Recetas recetas;
 			
-			add(generarTabla());
+			add(new ListaDeRecetas("listaMisRecetas", getUsuarioActual().cargarMisRecetas().ObtenerColeccionRecetas() , user));
 	}
 }
 	

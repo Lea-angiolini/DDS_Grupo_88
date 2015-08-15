@@ -10,8 +10,12 @@ public class SesionUsuario extends WebSession {
 	
 	ModelUsuario usuario;
 	
+	
 	public SesionUsuario(Request request) {
 		super(request);
+		ModelUsuario invitado = new ModelUsuario(new Usuario());
+		invitado.getObject().setUsername("Invitado");
+		setAttribute("usuario", invitado);
 	}
 	
 	public static SesionUsuario get(){
@@ -29,19 +33,24 @@ public class SesionUsuario extends WebSession {
 
 	
 	public void desloguearUsuario(){
-		
+		ModelUsuario invitado = new ModelUsuario(new Usuario());
+		invitado.getObject().setUsername("Invitado");
+		setAttribute("usuario", invitado);
 	}
 	
 	public ModelUsuario getUsuario() {
 		return (ModelUsuario)getAttribute("usuario");
 	}
-
+	
+	public Usuario getUsuarioActual(){
+		return getUsuario().getObject();
+	}
 
 	public void setUsuario(ModelUsuario usuario) {
 		setAttribute("usuario", usuario);
 	}
 	
 	public boolean estaLogueado(){
-		return getUsuario() != null;
+		return getUsuario().getObject().getUsername() != "Invitado";
 	}
 }

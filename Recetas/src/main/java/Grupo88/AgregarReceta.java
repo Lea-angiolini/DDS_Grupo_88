@@ -8,6 +8,7 @@ import java.util.prefs.BackingStoreException;
 import javax.swing.JOptionPane;
 
 import master.MasterPage;
+import master.RegisteredPage;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.AttributeModifier;
@@ -52,7 +53,7 @@ import ObjetosDB.Temporadas;
 import ObjetosDB.Usuario;
 import ObjetosDB.Recetas.Receta;
 
-public class AgregarReceta extends MasterPage {
+public class AgregarReceta extends RegisteredPage {
    
 	private SesionUsuario sesion = (SesionUsuario)getSession();
 	private Usuario user = sesion.getUsuario().getObject();
@@ -143,7 +144,7 @@ public class AgregarReceta extends MasterPage {
 		}
 		else{
 			nuevareceta.guardarReceta();
-			setResponsePage(AgregarReceta.class);
+			setResponsePage(MisRecetas.class);
 			}
 		}
 	}

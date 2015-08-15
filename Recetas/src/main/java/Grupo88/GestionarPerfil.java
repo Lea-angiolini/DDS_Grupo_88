@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import master.MasterPage;
+import master.RegisteredPage;
 import objetosWicket.ModelUsuario;
 import objetosWicket.SesionUsuario;
 
@@ -64,7 +65,7 @@ import ObjetosDB.Recetas;
 import ObjetosDB.Rutinas;
 import ObjetosDB.Usuario;
 
-public class GestionarPerfil extends MasterPage {	
+public class GestionarPerfil extends RegisteredPage {	
 	
 	private FrmModifUsuario frmModifUsuario;
 	public Object estados;
