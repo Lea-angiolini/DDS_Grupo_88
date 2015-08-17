@@ -30,7 +30,6 @@ public class GestionarRecetas extends RegisteredPage {
 	
 	public GestionarRecetas(){
 		super();
-		getMenuPanel().setVisible(false);
 		
 		add(frmGestionarRecetas = new FrmGestionarRecetas("FrmGestionarRecetas"));
 		
