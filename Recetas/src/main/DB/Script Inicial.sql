@@ -11,6 +11,7 @@ create table Grupo88.Recetas(
 	idReceta int primary key auto_increment,
 	nombre varchar(45) not null,
 	creador  varchar(30) references Usuarios,
+    descripcion varchar(200),
     idDificultad int references dificultad,
     calorias int not null,
     grupoAlimenticio int references grupoalim,
@@ -673,15 +674,24 @@ END$$
 CREATE PROCEDURE SP_agregarReceta(
 IN creador varchar(30),
 IN nombreReceta varchar(30),
+IN descripcion varchar(200),
 IN dificultad int,
 IN calorias int,
 IN grpAlim int,
 IN temporada int,
-IN ingPrinc int
+IN ingPrinc int,
+OUT idReceta int
 )
 BEGIN
-	INSERT INTO recetas(creador,nombre,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
-    VALUES (creador,nombreReceta,dificultad,calorias,grpAlim,temporada,ingPrinc);
+
+	START TRANSACTION;
+	INSERT INTO recetas(creador,nombre, descripcion, idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
+    VALUES (creador,nombreReceta, descripcion, dificultad,calorias,grpAlim,temporada,ingPrinc);
+    
+    SET idReceta = (SELECT last_insert_id() FROM recetas limit 1);
+    
+	COMMIT;
+    
 END$$    
 
 CREATE PROCEDURE SP_TOPHrecetas()
@@ -745,5 +755,18 @@ BEGIN
      JOIN relgruporeceta rel
      ON rel.idGrupo = idGrupo
 	 WHERE rec.idReceta = rel.idReceta;
+END$$
+
+CREATE PROCEDURE SP_agregarPasoAReceta(
+IN idRecetaNva int,
+IN nroPaso int,
+IN descrip varchar(2000))
+-- IN fotoPaso blob)
+
+
+BEGIN
+	 INSERT INTO pasos (idReceta, numeroPaso,descripcion)
+		VALUES (IdRecetaNva,nroPaso, descrip ); -- FALTA LA FOTO
+
 END$$
 DELIMITER ;

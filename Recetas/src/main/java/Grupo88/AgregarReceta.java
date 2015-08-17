@@ -122,7 +122,7 @@ public class AgregarReceta extends RegisteredPage {
 			
 			add(new Label("numPaso",idPaso));
 			add(new TextArea<String>("paso", new PropertyModel<String>(nuevareceta.getPasos().get(idPaso-1), "descripcionPaso")));
-			
+			add(new Label ("sigPaso", (idPaso<5) ? "Siguiente Paso" : "Finalizar"));
 			add(new Link("pasoAnt"){
 				@Override
 				public void onClick() {
