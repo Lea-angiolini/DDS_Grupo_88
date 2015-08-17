@@ -4,21 +4,20 @@ import java.util.ArrayList;
 
 public class Estadisticas {
 
-	private ArrayList<String> topRecetasHombre;
+	private ArrayList<String> topRecetasHombreSemana;
+	private ArrayList<String> topRecetasHombreMes;
 	private ArrayList<String> topRecetasMujer;
 	private ArrayList<String> topDificultad;
 	private ArrayList<String> topRecetas;
 	
 	public Estadisticas(){
-		topRecetasHombre = new ArrayList<String>();
+		topRecetasHombreSemana = new ArrayList<String>();
+		topRecetasHombreMes = new ArrayList<String>();
 		topRecetasMujer  = new ArrayList<String>();
 		topDificultad 	 = new ArrayList<String>();
 		topRecetas 		 = new ArrayList<String>();
 	}
 	
-	public ArrayList<String> getTopRecetasHombre(){
-		return topRecetasHombre;
-	}
 	
 	public ArrayList<String> getTopRecetasMujer(){
 		return topRecetasMujer;
@@ -32,10 +31,6 @@ public class Estadisticas {
 		return topRecetas;
 	}
 	
-	public void agregarTopRecetasHombre(String receta){
-		topRecetasHombre.add(receta);
-	}
-	
 	public void agregarTopRecetasMujer(String receta){
 		topRecetasMujer.add(receta);
 	}
@@ -47,4 +42,32 @@ public class Estadisticas {
 	public void agregarTopRecetas(String receta){
 		topRecetas.add(receta);
 	}
+	
+	public void agregarTopRecetasHombreSemana(String receta){
+		topRecetasHombreSemana.add(receta);
+	}
+	
+	public ArrayList<String> getTopRecetasHombreSemana() {
+		return topRecetasHombreSemana;
+	}
+
+	public void setTopRecetasHombreSemana(ArrayList<String> topRecetasHombreSemana) {
+		this.topRecetasHombreSemana = topRecetasHombreSemana;
+	}
+
+
+	public ArrayList<String> getTopRecetasHombreMes() {
+		return topRecetasHombreMes;
+	}
+
+
+	public void setTopRecetasHombreMes(ArrayList<String> topRecetasHombreMes) {
+		this.topRecetasHombreMes = topRecetasHombreMes;
+	}
+	
+	public void agregarTopRecetasHombreMes(String receta){
+		topRecetasHombreMes.add(receta);
+	}
+	
+	
 }

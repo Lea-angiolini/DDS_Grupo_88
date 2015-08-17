@@ -738,40 +738,29 @@ public class Factory {
 		CallableStatement cmd;
 		
 		try{
-			//Se obtienen top Consultas Hombre
-			cmd = con.prepareCall("{Call SP_TOPHrecetas}");
+			//Se obtienen top Consultas Hombre Semanal
+			cmd = con.prepareCall("{Call SP_TOPRecetas(?,?)}");
+			cmd.setString(1, "M");
+			cmd.setInt(2, 7);
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
-				est.agregarTopRecetasHombre(rs.getString("nombreReceta"));
+				est.agregarTopRecetasHombreSemana(rs.getString("nombre"));
 			}
-			
-			//Se obtienen top Consultas mujer
-			cmd = con.prepareCall("{Call SP_TOPMrecetas}");
+			cmd.close();
+			//Se obtienen top Consultas Hombre Mes
+			cmd = con.prepareCall("{Call SP_TOPRecetas(?,?)}");
+			cmd.setString(1, "M");
+			cmd.setInt(2, 31);
 			rs = cmd.executeQuery();
 			
 			while (rs.next()){
-				est.agregarTopRecetasMujer(rs.getString("nombreReceta"));
+				est.agregarTopRecetasHombreMes(rs.getString("nombre"));
 			}
 			
-			//Se obtienen top Dificultad
-			cmd = con.prepareCall("{Call SP_TOPdificultad}");
-			rs = cmd.executeQuery();
-			
-			while (rs.next()){
-				est.agregarTopDificultad(rs.getString("dificultad"));
-			}
-			
-			//Se obtienen top Recetas
-			cmd = con.prepareCall("{Call SP_TOPrecetas}");
-			rs = cmd.executeQuery();
-			
-			while (rs.next()){
-				est.agregarTopRecetas(rs.getString("nombreReceta"));
-			}
 		}
 		catch(SQLException ex){
-			//JOptionPane.showMessageDialog(null, ex.getMessage());	
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		
@@ -896,6 +885,32 @@ public ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
 
 }
 
+public static ArrayList<Usuario> obtenerUsuariosGrupo(Grupo grupo){
+	CallableStatement cmd;
+	ResultSet rs;
+	ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+	try
+	{
+		cmd=con.prepareCall("{Call SP_obtenerUsuariosGrupo(?)}");
+		cmd.setInt(1, grupo.getIdGrupo());
+		rs = cmd.executeQuery();
+		
+		while(rs.next()){
+			Usuario usuarioObtenido;
+			usuarios.add(usuarioObtenido = new Usuario());
+			usuarioObtenido.setUsername(rs.getString("nombreUsuario"));
+			JOptionPane.showMessageDialog(null, usuarioObtenido.getUsername());
+		}
+			
+		return usuarios;
+		}
+	
+	catch(SQLException ex)
+	{	JOptionPane.showMessageDialog(null, ex.getMessage());
+		return usuarios;
+	}
+
+}
 }
 
 

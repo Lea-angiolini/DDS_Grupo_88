@@ -88,8 +88,20 @@ public class DetalleGrupo extends RegisteredPage {
 			super(id);
 			
 			add(new Label("nombreGrupo", grupo.getNombre()));
-			add(new ListaDeRecetas("listaRecetas",grupo.obtenerRecetas(),((SesionUsuario)getSession()).getUsuario().getObject()));
+			add(new ListaDeRecetas("listaRecetas",grupo.obtenerRecetas(),getUsuarioActual()));
 			
+			RepeatingView usuariosGrupo = new RepeatingView("listaUsuarios");
+			
+			for (Usuario usuario : grupo.obtenerUsuarios()){
+				
+				AbstractItem item = new AbstractItem(usuariosGrupo.newChildId());
+				
+				item.add(new Label("unUsuario",usuario.getUsername()));
+				
+				usuariosGrupo.add(item);
+			}
+			
+			add(usuariosGrupo);
 		}
 	
 	}

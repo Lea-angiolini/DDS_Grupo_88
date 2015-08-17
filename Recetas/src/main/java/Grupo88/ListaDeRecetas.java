@@ -46,7 +46,7 @@ public ListaDeRecetas(String id, ArrayList<Receta> recetas, final Usuario user) 
 			bton.addOrReplace(new Label("campo1",recetas.getNombre()));
 			bton.addOrReplace(new Label("campo2",recetas.getCreador()));
 			bton.addOrReplace(new Label("campo3",recetas.getDificultad().getDificultad()));
-			
+			bton.addOrReplace(new Label("descripcion","Arreglar recetas hdp"));
 			item.add(bton);
 			
 		}

@@ -17,31 +17,63 @@
 					        	<div class="panel-heading">
 					            	<div class="panel-title"><span class="glyphicon glyphicon-home"></span> Estadísticas</div>
 					            </div>     
-								<div class="panel-body" style="padding: 0px 20px 20px 20px;">
-									<div class="row">
-										<div class="col-md-4">
-											<div class="TOPH">
-												<h3>Tipos de Recetas más consultadas por Hombres:</h3>
-												<div wicket:id="TOPHtipos"></div>
-											</div>
-											<div class="TOPM">
-												<h3>Tipos de Recetas más consultadas por Mujeres:</h3>
-												<div wicket:id="TOPHtipos"></div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="TOP">
-												<h3>Recetas mas consultadas según dificultad:</h3>
-												<div wicket:id="TOPdificultad"></div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="TOP">
-												<h3>Recetas más consultadas:</h3>
-												<div wicket:id="TOPrecetas"></div>
-											</div>
-										</div>
-									</div>
+								<div class="panel-body" style="padding: 20px 20px 20px 20px;">
+								
+								
+								<div class="row">
+								<a class="btn">Hombres</a><br>
+								<div class="container col-md-6" style="width: 450px">    
+						<div id="menu-inicio">                    
+					    	<div class="panel panel-info">
+					        	<div class="panel-heading">
+					            	<div class="panel-title"><span class="glyphicon glyphicon-home"></span> Ultima semana</div>
+					            </div>     
+								<div class="panel-body" style="padding: 20px 0px 0px 20px;">
+								<ol>
+								<li wicket:id="ultSem"><a wicket:id="nombreReceta"></a></li>
+								</ol>
+								</div></div></div></div>
+								
+								<div class="container col-md-6" style="width: 450px">    
+						<div id="menu-inicio">                    
+					    	<div class="panel panel-info">
+					        	<div class="panel-heading">
+					            	<div class="panel-title"><span class="glyphicon glyphicon-home"></span> Ultimo mes</div>
+					            </div>     
+								<div class="panel-body" style="padding: 20px 0px 0px 20px;">
+								<ol>
+								<li wicket:id="ultMes"><a wicket:id="nombreReceta"></a></li>
+								</ol>
+								
+								</div></div></div></div>
+								
+								</div>
+								
+								
+<!-- 									<div class="row"> -->
+<!-- 										<div class="col-md-4"> -->
+<!-- 											<div class="TOPH"> -->
+<!-- 												<h3>Tipos de Recetas más consultadas por Hombres:</h3> -->
+<!-- 												<div wicket:id="TOPHtipos"></div> -->
+<!-- 											</div> -->
+<!-- 											<div class="TOPM"> -->
+<!-- 												<h3>Tipos de Recetas más consultadas por Mujeres:</h3> -->
+<!-- 												<div wicket:id="TOPMtipos"></div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="col-md-4"> -->
+<!-- 											<div class="TOP"> -->
+<!-- 												<h3>Recetas mas consultadas según dificultad:</h3> -->
+<!-- 												<div wicket:id="TOPdificultad"></div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="col-md-4"> -->
+<!-- 											<div class="TOP"> -->
+<!-- 												<h3>Recetas más consultadas:</h3> -->
+<!-- 												<div wicket:id="TOPrecetas"></div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
 								</div>
 							</div>
 						</div>

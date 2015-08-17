@@ -684,26 +684,23 @@ BEGIN
     VALUES (creador,nombreReceta,dificultad,calorias,grpAlim,temporada,ingPrinc);
 END$$    
 
-CREATE PROCEDURE SP_TOPHrecetas()
+CREATE PROCEDURE SP_TOPRecetas(
+IN sexo char,
+IN dias int)
 BEGIN
-	SELECT R.nombre AS nombreReceta, count(*) AS cantidad 
-    FROM Historial AS H 
-    JOIN Usuarios AS U ON H.usuario = U.nombreUsuario 
-    JOIN Recetas AS R ON H.idReceta = R.idReceta 
-    WHERE U.sexo = 'H'
-    GROUP BY R.nombre ORDER BY cantidad DESC;
-END$$
+		select his.idReceta, rec.nombre, us.sexo, count(*) as cantidad from historicoconsultas his
+	JOIN usuarios us
+	on us.nombreUsuario = his.username
+	JOIN recetas rec
+	on rec.idReceta = his.idReceta
+	WHERE DATE_SUB(CURDATE(),INTERVAL dias DAY) <= fecha and
+			us.sexo = sexo
+	group by his.idReceta, us.sexo
+	ORDER BY count(*) desc
+	LIMIT 10;
 
-CREATE PROCEDURE SP_TOPMrecetas()
-BEGIN
-	SELECT R.nombre AS nombreReceta, count(*) AS cantidad 
-    FROM Historial AS H 
-    JOIN Usuarios AS U ON H.usuario = U.nombreUsuario 
-    JOIN Recetas AS R ON H.idReceta = R.idReceta 
-    WHERE U.sexo = 'M'
-    GROUP BY R.nombre ORDER BY cantidad DESC;
 END$$
-
+/*
 CREATE PROCEDURE SP_TOPdificultad()
 BEGIN
 	SELECT D.descripcion AS dificultad, count(*) AS cantidad 
@@ -720,7 +717,7 @@ BEGIN
     JOIN Recetas AS R ON H.idReceta = R.idReceta 
     GROUP BY R.nombre ORDER BY cantidad DESC;
 END$$
-
+*/
 CREATE PROCEDURE SP_obtenerGrupo(
 IN idGrupo int)
 BEGIN
@@ -745,5 +742,22 @@ BEGIN
      JOIN relgruporeceta rel
      ON rel.idGrupo = idGrupo
 	 WHERE rec.idReceta = rel.idReceta;
+END$$
+
+CREATE PROCEDURE SP_obtenerUsuariosGrupo(
+IN idGrupo int)
+BEGIN
+	
+    SELECT us.*, com.complexion, rut.rutina, die.tipoDieta FROM relusuariogrupo rel
+    JOIN usuarios us
+		ON us.nombreUsuario = rel.nombreUsuario
+    JOIN complexion com 
+		ON us.idComplexion = com.idComplexion
+    JOIN rutinas rut
+		ON rut.idRutina = us.idRutina
+	JOIN dietas die
+		ON us.idDieta = die.idDieta
+    where rel.idGrupo = idGrupo;
+    
 END$$
 DELIMITER ;

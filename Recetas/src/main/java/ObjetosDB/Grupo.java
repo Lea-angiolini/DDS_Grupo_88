@@ -84,4 +84,8 @@ public class Grupo {
 	public ArrayList<Receta> obtenerRecetas(){
 		return Browser.obtenerRecetasGrupo(idGrupo);
 	}
+	
+	public ArrayList<Usuario> obtenerUsuarios(){
+		return Browser.obtenerUsuariosGrupo(this);
+	}
 }

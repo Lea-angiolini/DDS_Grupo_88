@@ -172,4 +172,9 @@ public class Browser {
 		Factory f = new Factory();
 		return f.obtenerRecetasGrupo(idGrupo);
 	}
+	
+	public static ArrayList<Usuario> obtenerUsuariosGrupo(Grupo grupo){
+		Factory f = new Factory();
+		return f.obtenerUsuariosGrupo(grupo);
+	}
 }

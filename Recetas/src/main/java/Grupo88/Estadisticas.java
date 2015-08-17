@@ -2,11 +2,15 @@ package Grupo88;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import master.MasterPage;
 import master.RegisteredPage;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.repeater.RepeatingView;
 
 import Database.Browser;
 import Grupo88.Login.FrmLogin;
@@ -18,7 +22,7 @@ public class Estadisticas extends RegisteredPage{
 	
 	public Estadisticas(){
 		super();
-		getMenuPanel().setVisible(false);
+		//getMenuPanel().setVisible(false);
 		
 		add(frmEstadisticas = new FrmEstadisticas("frmEstadisticas"));
 
@@ -28,46 +32,24 @@ public class Estadisticas extends RegisteredPage{
 		public FrmEstadisticas(String id) {
 			super(id);
 			
-			ObjetosDB.Estadisticas est = Browser.obtenerEstadisticas();
-			ArrayList<String> top;
-			String html = "";
+			ObjetosDB.Estadisticas est = Browser.obtenerEstadisticas();			
 			
-			top = est.getTopRecetasHombre();
-			for(String receta : top){
-				html += createDynamicHtml(receta);
-			}
-			add(new Label("TOPHtipos", html).setEscapeModelStrings(false));
+			add(generarLista("ultSem", est.getTopRecetasHombreSemana()));
+			add(generarLista("ultMes", est.getTopRecetasHombreMes()));
 			
-			html = "";
-			top = est.getTopRecetasMujer();
-			for(String receta : top){
-				html += createDynamicHtml(receta);
-			}
-			add(new Label("TOPMtipos", html).setEscapeModelStrings(false));
-			
-			html = "";
-			top = est.getTopDificultad();
-			for(String receta : top){
-				html += createDynamicHtml(receta);
-			}
-			add(new Label("TOPdificultad", html).setEscapeModelStrings(false));
-			
-			html = "";
-			top = est.getTopRecetas();
-			for(String receta : top){
-				html += createDynamicHtml(receta);
-			}
-			add(new Label("TOPrecetas", html).setEscapeModelStrings(false));
-		}
 	}
+	}
+	
+	private RepeatingView generarLista(String id, ArrayList<String> listaRecetas){
 		
-	public String createDynamicHtml(String contenido) {
-		StringBuilder divSB = new StringBuilder(512);
-
-		divSB.append("<div>");
-		divSB.append(contenido);
-		divSB.append("</div>");
-
-		return divSB.toString();
+		RepeatingView lista = new RepeatingView(id);
+		
+		for (String receta : listaRecetas){
+			AbstractItem item = new AbstractItem(lista.newChildId());
+			
+			item.add(new Label("nombreReceta",receta));
+			lista.add(item);
+		}
+		return lista;
 	}
 }
