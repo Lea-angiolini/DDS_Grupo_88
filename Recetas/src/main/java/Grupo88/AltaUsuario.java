@@ -65,35 +65,24 @@ import ObjetosDB.Usuario;
 public class AltaUsuario extends MasterPage {	
 	
 	private FrmAltaUsuario frmAltaUsuario;
-	public Object estados;
 	
 	public AltaUsuario(){
 		super();
-		getMenuPanel().setVisible(false);
 		
 		add(frmAltaUsuario = new FrmAltaUsuario("FrmAltaUsuario"));
-		
-		frmAltaUsuario.add(new Link("cancelar"){
-			
-			@Override
-			public void onClick() {
-			
-				setResponsePage(Login.class);
-				
-			}
-		});	
-
+	
 	}
 	
-	public class FrmAltaUsuario extends Form {
+	private class FrmAltaUsuario extends Form {
 
 		private Usuario usuario = new Usuario();
 		private final ArrayList<estadoCondPreex> estados;
+		private Label lblError;
 		
 		@SuppressWarnings("unchecked")
 		public FrmAltaUsuario(String id) {
 			super(id);			
-			//setDefaultModel(new CompoundPropertyModel(this));
+			
 			PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
 			PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
 			
@@ -130,16 +119,29 @@ public class AltaUsuario extends MasterPage {
 			
 		    add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), Browser.listaDietas(), new ChoiceRenderer("dieta","idDieta")));
 		    add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),Browser.listaRutinas(), new ChoiceRenderer("rutina","idRutina")));
-		    add(new EmptyPanel("lblError"));
+		    add(lblError = new Label("lblError",""));
+		    lblError.setOutputMarkupId(true);
 		   
+		    
+		    add(new Link("cancelar"){
+				
+				@Override
+				public void onClick() {
+				
+					setResponsePage(Login.class);
+					
+				}
+			});	
+
 		}
 		
 		@Override
 		protected void onSubmit() {
 			super.onSubmit();
 			
-			addOrReplace(new Label("lblError",this.cargarDatosUsuario()));
+			lblError.setDefaultModelObject(this.cargarDatosUsuario());
 			setResponsePage(Login.class);
+			
 		}
 		
 		private String cargarDatosUsuario(){

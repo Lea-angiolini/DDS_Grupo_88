@@ -45,7 +45,6 @@ import org.eclipse.jetty.server.Server;
 import org.apache.wicket.Session;
 
 import Database.Browser;
-import Grupo88.AltaUsuario.FrmAltaUsuario;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.Recetas;
 import ObjetosDB.Recetas.Receta;

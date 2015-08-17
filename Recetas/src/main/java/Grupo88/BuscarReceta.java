@@ -41,61 +41,44 @@ import ObjetosDB.Recetas.Receta;
 
 public class BuscarReceta extends MasterPage {
 	
-	final Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
 	private FrmBuscarReceta frmBuscarReceta;
 	
 	public BuscarReceta(){
 		super();
-		//getMenuPanel().setVisible(false);
 		
 		add(frmBuscarReceta = new FrmBuscarReceta("FrmBuscarReceta"));
 		
-		final itemsABuscar items = new itemsABuscar();
-    	
-		frmBuscarReceta.add(new DropDownChoice<Dificultades>("dificultad",new PropertyModel<Dificultades>(items,"dificultad"), Browser.listaDificultades(),new ChoiceRenderer("dificultad","idDificultad")));
-		frmBuscarReceta.add(new DropDownChoice<Temporadas>("temporada",new PropertyModel<Temporadas>(items,"temporada"), Browser.listaTemporadas(),new ChoiceRenderer("temporada","idTemporada")));
-    	frmBuscarReceta.add(new DropDownChoice<Ingredientes>("ingrediente",new PropertyModel<Ingredientes>(items,"ingredientePrincipal"), Browser.listaIngredientes(),new ChoiceRenderer("ingrediente","idIngrediente")));
-    	frmBuscarReceta.add(new DropDownChoice<GruposAlimenticios>("grupoAlim",new PropertyModel<GruposAlimenticios>(items,"grupoAlimenticio"), Browser.listaGruposAlim(),new ChoiceRenderer("grupoAlim","idGrupoAlim")));
-    	frmBuscarReceta.add(new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), Arrays.asList(1,2,3,4,5)));
-    	frmBuscarReceta.add(new NumberTextField<Integer>("caloriasMin", new PropertyModel<Integer>(items, "caloriasMin"), Integer.class));
-    	frmBuscarReceta.add(new NumberTextField<Integer>("caloriasMax", new PropertyModel<Integer>(items, "caloriasMax"), Integer.class));
-        
-    	//final FrmBuscarReceta fragmentoActual = this;
-    	
-    	frmBuscarReceta.add(new Button("botonBuscar") {
-    		
-    	public void onSubmit() {
-    		
-    		Fragment fragment = new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmBuscarReceta, items);
-    		frmBuscarReceta.add(fragment);
-    	}
-    	});
-    	
-    	frmBuscarReceta.add(new EmptyPanel("areaRecetas"));
-
-	}
+		}
 	
-	public class FrmBuscarReceta extends Form {
+	private class FrmBuscarReceta extends Form {
 		
 		
 		public FrmBuscarReceta(String id) {
 			super(id);			
-			setDefaultModel(new CompoundPropertyModel(this));
+			
+    		final itemsABuscar items = new itemsABuscar();
+        	
+    		add(new DropDownChoice<Dificultades>("dificultad",new PropertyModel<Dificultades>(items,"dificultad"), Browser.listaDificultades(),new ChoiceRenderer("dificultad","idDificultad")));
+    		add(new DropDownChoice<Temporadas>("temporada",new PropertyModel<Temporadas>(items,"temporada"), Browser.listaTemporadas(),new ChoiceRenderer("temporada","idTemporada")));
+        	add(new DropDownChoice<Ingredientes>("ingrediente",new PropertyModel<Ingredientes>(items,"ingredientePrincipal"), Browser.listaIngredientes(),new ChoiceRenderer("ingrediente","idIngrediente")));
+        	add(new DropDownChoice<GruposAlimenticios>("grupoAlim",new PropertyModel<GruposAlimenticios>(items,"grupoAlimenticio"), Browser.listaGruposAlim(),new ChoiceRenderer("grupoAlim","idGrupoAlim")));
+        	add(new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), Arrays.asList(1,2,3,4,5)));
+        	add(new NumberTextField<Integer>("caloriasMin", new PropertyModel<Integer>(items, "caloriasMin"), Integer.class));
+        	add(new NumberTextField<Integer>("caloriasMax", new PropertyModel<Integer>(items, "caloriasMax"), Integer.class));
+    		
+        	add(new Button("botonBuscar") {
+        		public void onSubmit() {
+    		Fragment fragment = new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmBuscarReceta, items);
+    		frmBuscarReceta.add(fragment);
+        		}
+        	});
+			
+			add(new EmptyPanel("areaRecetas"));
 			
 		}
-		
-		@Override
-		protected void onSubmit() {
-		// Va a conectarse con BD y comprobar las validaciones
-			super.onSubmit();
-			
-			
-		}
-
-		
 	}
 	
-	public class FragmentoRecetasBuscadas extends Fragment {
+	private class FragmentoRecetasBuscadas extends Fragment {
         public FragmentoRecetasBuscadas(String id, String markupId, MarkupContainer markupPorvider, itemsABuscar queBuscar ) {
         	
         	super(id, markupId, markupPorvider);
@@ -105,7 +88,7 @@ public class BuscarReceta extends MasterPage {
         	markupPorvider.remove(id);
         	
         	add(new Label("nombreGrilla"," Resultados"));
-        	add(new ListaDeRecetas("listaRecetas", recetas.ObtenerColeccionRecetas(), user));
+        	add(new ListaDeRecetas("listaRecetas", recetas.ObtenerColeccionRecetas(), getUsuarioActual()));
             
         }
 	}

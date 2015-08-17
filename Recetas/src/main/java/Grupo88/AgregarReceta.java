@@ -43,7 +43,6 @@ import org.omg.CORBA.NVList;
 import org.apache.wicket.Session;
 
 import Database.Browser;
-import Grupo88.AltaUsuario.FrmAltaUsuario;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.Dificultades;
 import ObjetosDB.Ingredientes;
