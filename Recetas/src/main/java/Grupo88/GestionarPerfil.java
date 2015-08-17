@@ -69,30 +69,17 @@ public class GestionarPerfil extends RegisteredPage {
 	
 	private FrmModifUsuario frmModifUsuario;
 	public Object estados;
-	private SesionUsuario sesion = (SesionUsuario)getSession();
 	
 	public GestionarPerfil(){
 		super();
-		getMenuPanel().setVisible(false);
 		
 		add(frmModifUsuario = new FrmModifUsuario("FrmModifUsuario"));
-		
-		frmModifUsuario.add(new Link("cancelar"){
-			
-			@Override
-			public void onClick() {
-			
-				setResponsePage(Inicio.class);
-				
-			}
-		});	
-
 	}
 	
 	
 	public class FrmModifUsuario extends Form {
 
-		private Usuario usuario = sesion.getUsuario().getObject();
+		private Usuario usuario = getUsuarioActual();
 		private final ArrayList<estadoCondPreex> estados;
 		
 		@SuppressWarnings("unchecked")
@@ -101,13 +88,13 @@ public class GestionarPerfil extends RegisteredPage {
 			//setDefaultModel(new CompoundPropertyModel(this));
 		
 			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
-			add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
-			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));
-			add(new TextField("password", new PropertyModel<String>(usuario, "password")));
+			add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
+			add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));
+			add(new TextField<String>("password", new PropertyModel<String>(usuario, "password")));
 			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
 			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
-			add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
-			add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), Browser.listaComplexiones(), new ChoiceRenderer("complexion","idComplexion")));		
+			add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
+			add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), Browser.listaComplexiones(), new ChoiceRenderer<Complexiones>("complexion","idComplexion")));		
 			
 			RepeatingView condiciones = new RepeatingView("grupoCheckBox");
 			ArrayList<CondicionesPreexistentes> listaCondPreexistentes = Browser.listaCondPreexistentes();
@@ -129,9 +116,19 @@ public class GestionarPerfil extends RegisteredPage {
 			}
 			add(condiciones);	
 			
-		    add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), Browser.listaDietas(), new ChoiceRenderer("dieta","idDieta")));
-		    add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),Browser.listaRutinas(), new ChoiceRenderer("rutina","idRutina")));
+		    add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), Browser.listaDietas(), new ChoiceRenderer<Dietas>("dieta","idDieta")));
+		    add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),Browser.listaRutinas(), new ChoiceRenderer<Rutinas>("rutina","idRutina")));
 		    add(new EmptyPanel("lblError"));
+		    
+		    add(new Link("cancelar"){
+				
+				@Override
+				public void onClick() {
+				
+					setResponsePage(Inicio.class);
+					
+				}
+			});	
 		   
 		}
 		
@@ -141,20 +138,6 @@ public class GestionarPerfil extends RegisteredPage {
 			
 			addOrReplace(new Label("lblError",usuario.modificarPerfil()));
 			//setResponsePage(Inicio.class);
-		}
-		
-		private String cargarDatosUsuario(){
-			
-			for (estadoCondPreex estado : estados) {
-				if(estado.modelCond.getObject())
-				{
-					usuario.setCondicion(estado.cond);
-				}
-			}
-
-			ModelUsuario mUsuario = new ModelUsuario(usuario);
-			return mUsuario.save(usuario);			
-			
 		}
 	}
 	
