@@ -1,224 +1,222 @@
-drop database if exists Grupo88;
-Create database Grupo88 character set utf8 collate utf8_bin;
+DROP DATABASE IF EXISTS Grupo88;
+CREATE DATABASE Grupo88 CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP USER 'llevaYtrae'@'localhost';
 
-CREATE USER 'llevaYtrae'@'localhost' identified by 'gil';
+CREATE USER 'llevaYtrae'@'localhost' IDENTIFIED BY 'gil';
 GRANT SELECT, UPDATE, DELETE, INSERT, EXECUTE ON grupo88.* TO 'llevaYtrae'@'localhost';
 
+-- ----------------------------------  CREACION DE TABLAS
 
-create table Grupo88.Recetas(
-	idReceta int primary key auto_increment,
-	nombre varchar(45) not null,
-	creador  varchar(30) references Usuarios,
-    idDificultad int references dificultad,
-    calorias int not null,
-    grupoAlimenticio int references grupoalim,
-    temporada int references temporadas,
-    ingredientePrincipal int references ingredientes,
-    puntajeTotal int default 0,
-    vecesCalificada int default 0
+CREATE TABLE Grupo88.dificultad(
+	idDificultad INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Grupo88.tipoIngrediente(
+	idTipoIngrediente INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(30) NOT NULL
+);  
+
+CREATE TABLE Grupo88.Condimento(
+	idCondimento INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Grupo88.GrupoAlim(
+	idGrupoAlim INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR (50) NOT NULL
+);
+
+CREATE TABLE Grupo88.Ingredientes(
+	idIngrediente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL,
+    caloriasPorcion INT NOT NULL,
+    tipoIngrediente INT NOT NULL
+);
+
+CREATE TABLE Grupo88.Temporadas(
+	idTemporada INT AUTO_INCREMENT PRIMARY KEY,
+    nombreTemporada VARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE Grupo88.Condiciones(
+	idCondicion INT AUTO_INCREMENT PRIMARY KEY,
+    condicion VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Grupo88.PreferenciasAlimenticias(
+	idPreferencia INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(120) NOT NULL
+);
+
+CREATE TABLE Grupo88.Complexion(
+	idComplexion INT AUTO_INCREMENT PRIMARY KEY,
+    complexion VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Grupo88.Rutinas(
+	idRutina INT AUTO_INCREMENT PRIMARY KEY,
+    rutina VARCHAR(45) NOT NULL
+);
+
+CREATE TABLE Grupo88.Dietas(
+	idDieta INT AUTO_INCREMENT PRIMARY KEY,
+    tipoDieta VARCHAR(30) NOT NULL
+);
+
+
+CREATE TABLE Grupo88.Usuarios(
+	nombreUsuario VARCHAR(30) PRIMARY KEY,
+	clave VARCHAR(120) NOT NULL,
+    nombre VARCHAR(30) NOT NULL,
+    apellido VARCHAR(30) NOT NULL,
+    mail VARCHAR(60) NOT NULL,
+    fechaNac DATE,
+    sexo CHAR(1) NOT NULL,
+    altura INT NOT NULL,
+    idComplexion INT, -- REFERENCES Complexiones,
+    idDieta INT, -- REFERENCES dietas,
+    idRutina INT, -- REFERENCES Rutinas
+    FOREIGN KEY (idComplexion) REFERENCES Grupo88.Complexion(idComplexion),
+    FOREIGN KEY (idDieta) REFERENCES Grupo88.dietas(idDieta),
+    FOREIGN KEY (idRutina) REFERENCES Grupo88.rutinas(idRutina)
+);
+
+CREATE TABLE Grupo88.Recetas(
+	idReceta INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(45) NOT NULL,
+	creador  VARCHAR(30), -- REFERENCES Usuarios,
+    descripcion VARCHAR(200),
+    idDificultad INT, -- REFERENCES dificultad,
+    calorias INT NOT NULL,
+    grupoAlimenticio INT, -- REFERENCES grupoalim,
+    temporada INT, -- REFERENCES temporadas,
+    ingredientePrincipal INT, -- REFERENCES ingredientes,
+    puntajeTotal INT DEFAULT 0,
+    vecesCalificada INT DEFAULT 0,
+    FOREIGN KEY (creador) REFERENCES Grupo88.Usuarios(nombreUsuario),
+    FOREIGN KEY (idDificultad) REFERENCES Grupo88.dificultad(idDificultad),
+    FOREIGN KEY (grupoAlimenticio) REFERENCES Grupo88.grupoalim(idGrupoAlim),
+    FOREIGN KEY (temporada) REFERENCES Grupo88.temporadas(idTemporada),
+    FOREIGN KEY (ingredientePrincipal) REFERENCES Grupo88.ingredientes(idIngrediente)
+);
+
+CREATE TABLE Grupo88.Grupos(
+	idGrupo INT AUTO_INCREMENT PRIMARY KEY,
+    nombreGrupo VARCHAR(30) UNIQUE,
+    detalle VARCHAR(255) NOT NULL,
+    creador VARCHAR(30), -- REFERENCES Usuarios
+    FOREIGN KEY (creador) REFERENCES Grupo88.usuarios(nombreUsuario)
+);
+
+CREATE TABLE Grupo88.Pasos(
+	idReceta INT(11), -- REFERENCES Recetas,
+    numeroPaso INT,
+    descripcion VARCHAR(2000) NOT NULL,
+    foto BLOB NULL,
+    UNIQUE(idReceta, numeroPaso),
+    FOREIGN KEY(idReceta) REFERENCES Grupo88.recetas(idReceta)
+);
+
+CREATE TABLE Grupo88.amigos(
+	nombreUsuario1 VARCHAR(30) REFERENCES Usuarios,
+    nombreUsuario2 VARCHAR(30) REFERENCES Usuarios,
+    PRIMARY KEY(nombreUsuario1,nombreUsuario2),
+    CHECK(nombreUsuario1 <> nombreUsuario2)
     
 );
 
-CREATE TABLE Grupo88.dificultad(
-	idDificultad int auto_increment primary key,
-    descripcion varchar(30) not null
+CREATE TABLE Grupo88.Historial(
+	idHistorial INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATETIME NOT NULL,
+    idReceta INT NOT NULL,
+    usuario VARCHAR(30), --  REFERENCES usuarios,
+    cantVecesUsada INT,
+    calificacionUsuario INT default 0,
+    FOREIGN KEY (usuario) REFERENCES Grupo88.usuarios(nombreUsuario)
+);
+
+
+CREATE TABLE Grupo88.historicoConsultas(
+	idHistorico INT auto_increment PRIMARY KEY,
+	idReceta INT, -- REFERENCES recetas,
+    username VARCHAR(30), -- REFERENCES Usuarios,
+    fecha DATE,
+    FOREIGN KEY (idReceta) REFERENCES Grupo88.recetas(idReceta),
+    FOREIGN KEY (username) REFERENCES Grupo88.usuarios(nombreUsuario)
 );
 
 
 CREATE TABLE Grupo88.relRecetCondimento(
-	idReceta int(11) references Recetas(idReceta),
-    idCondimento int references Condimento,
-    primary key(idReceta, idCondimento)
-);
-
-CREATE TABLE Grupo88.Condimento(
-	idCondimento int auto_increment primary key,
-    nombre varchar(30) not null
+	idReceta INT(11) REFERENCES Recetas(idReceta),
+    idCondimento INT REFERENCES Condimento,
+    PRIMARY KEY(idReceta, idCondimento)
 );
 
 CREATE TABLE Grupo88.relRecetaIngredientes(
-	idReceta int(11) references Recetas,
-    idIngrediente int references Ingredientes,
-    cantidad int not null,
-    primary key(idReceta, idIngrediente)
+	idReceta INT(11) REFERENCES Recetas,
+    idIngrediente INT REFERENCES Ingredientes,
+    cantidad INT NOT NULL,
+    PRIMARY KEY(idReceta, idIngrediente)
 );
 
 CREATE TABLE Grupo88.relTipoIngGrupoAlim(
-	idTipoIngrediente int references idTipoIngrediente,
-	idGrupoAlim int references idGrupoAlim,
-    primary key (idTipoIngrediente, idGrupoAlim)
-);
-
-CREATE TABLE Grupo88.tipoIngrediente(
-	idTipoIngrediente int auto_increment primary key,
-    descripcion varchar(30) not null
-);  
-
-CREATE TABLE grupo88.GrupoAlim(
-	idGrupoAlim int auto_increment primary key,
-    descripcion varchar (50) not null
-);
-
-CREATE TABLE Grupo88.Ingredientes(
-	idIngrediente int auto_increment primary key,
-    nombre varchar(30) not null,
-    caloriasPorcion int not null,
-    tipoIngrediente int not null
-);
-
-CREATE TABLE Grupo88.Pasos(
-	idReceta int(11) references Recetas,
-    numeroPaso int,
-    descripcion varchar(2000) not null,
-    foto blob null,
-    
-    unique(idReceta, numeroPaso)
+	idTipoIngrediente INT REFERENCES idTipoIngrediente,
+	idGrupoAlim INT REFERENCES idGrupoAlim,
+    PRIMARY KEY (idTipoIngrediente, idGrupoAlim)
 );
 
 CREATE TABLE Grupo88.relUsuarioGrupo(
-	nombreUsuario varchar(30) references Usuarios,
-    idGrupo int references Grupos,
-    primary key(nombreUsuario, idGrupo)
-);
-
-CREATE TABLE Grupo88.Grupos(
-	idGrupo int auto_increment primary key,
-    nombreGrupo varchar(30) unique,
-    detalle varchar(255) not null,
-    creador varchar(30) references Usuarios
-);
-
-CREATE TABLE Grupo88.Usuarios(
-	nombreUsuario varchar(30) primary key,
-	clave varchar(120) not null,
-    nombre varchar(30) not null,
-    apellido varchar(30) not null,
-    mail varchar(60) not null,
-    fechaNac date,
-    sexo char(1) not null,
-    altura int not null,
-    idComplexion int references Complexiones,
-    idDieta int references dietas,
-    idRutina int references Rutinas
-);
-
-CREATE TABLE Grupo88.Rutinas(
-	idRutina int auto_increment primary key,
-    rutina varchar(45) not null
-);
-
-CREATE TABLE Grupo88.Complexion(
-	idComplexion int auto_increment primary key,
-    complexion varchar(30) not null
+	nombreUsuario VARCHAR(30) REFERENCES Usuarios,
+    idGrupo INT REFERENCES Grupos,
+    PRIMARY KEY(nombreUsuario, idGrupo)
 );
 
 CREATE TABLE Grupo88.relUsuarioCondicion(
-	nombreUsuario varchar(30) references Usuarios,
-    idCondicion int references Condiciones,
-    primary key(nombreUsuario, idCondicion)
+	nombreUsuario VARCHAR(30) REFERENCES Usuarios,
+    idCondicion INT REFERENCES Condiciones,
+    PRIMARY KEY(nombreUsuario, idCondicion)
 );
 
-CREATE TABLE Grupo88.Condiciones(
-	idCondicion int auto_increment primary key,
-    condicion varchar(30) not null
-);
 
 CREATE TABLE Grupo88.relUsuarioDietas(
-	nombreUsuario varchar(30) references Usuarios,
-    idDieta int references Dietas,
-    primary key (nombreUsuario, idDieta)
+	nombreUsuario VARCHAR(30) REFERENCES Usuarios,
+    idDieta INT REFERENCES Dietas,
+    PRIMARY KEY (nombreUsuario, idDieta)
 );
 
-CREATE TABLE Grupo88.Dietas(
-	idDieta int auto_increment primary key,
-    tipoDieta varchar(30) not null
-);
 
 CREATE TABLE Grupo88.relUsuarioPreferencia(
 	
-    nombreUsuario varchar(30) references Usuarios,
-    idPreferencia int references PreferenciasAlimenticias,
-    primary key (nombreUsuario, idPreferencia)
-);
-
-CREATE TABLE Grupo88.PreferenciasAlimenticias(
-	idPreferencia int auto_increment primary key,
-    descripcion varchar(120) not null
-);
-
-CREATE TABLE Grupo88.Historial(
-	idHistorial int auto_increment primary key,
-    fecha datetime not null,
-    idReceta int not null,
-    usuario varchar(30) references usuarios,
-    -- cantVecesUsada int
-    calificacionUsuario int default 0
-    -- foreign key (usuario)
-    -- references Grupo88.usuarios(nombreUsuario)
-);
-
-CREATE TABLE Grupo88.Temporadas(
-	idTemporada int auto_increment primary key,
-    nombreTemporada varchar(50) not null
-);
-
-CREATE TABLE Grupo88.amigos(
-	nombreUsuario1 int references Usuarios,
-    nombreUsuario2 int references Usuarios,
-    PRIMARY KEY(nombreUsuario1,nombreUsuario2),
-    check(nombreUsuario1 <> nombreUsuario2)
-);
-
-CREATE TABLE Grupo88.historicoConsultas(
-	idHistorico int auto_increment PRIMARY KEY,
-	idReceta int references recetas,
-    username varchar(30) references Usuarios,
-    fecha date
+    nombreUsuario VARCHAR(30) REFERENCES Usuarios,
+    idPreferencia INT REFERENCES PreferenciasAlimenticias,
+    PRIMARY KEY (nombreUsuario, idPreferencia)
 );
 
 CREATE TABLE Grupo88.relgruporeceta(
-	idGrupo int references grupos,
-	idReceta int references Recetas,
+	idGrupo INT REFERENCES grupos,
+	idReceta INT REFERENCES Recetas,
 	PRIMARY KEY(idGrupo,idReceta)
 );
+-- ----------------------------------- INSERT EN TABLAS
 
-insert into Grupo88.Rutinas (rutina)
-values ('Sedentaria con algo de ejercicio'),
-	   ('Sedentaria con nada de ejercicio'),
-       ('Sedentaria con ejercicio'),
-       ('Activa con ejercicio'),
-       ('Activa sin ejercicio');
-
-insert into Grupo88.dificultad(descripcion)
-values('Facil'),
+INSERT INTO Grupo88.dificultad(descripcion)
+VALUES('Facil'),
 	  ('Media'),
 	  ('Dificil');
       
-insert into grupo88.condiciones(condicion)
-values('Diabetes'),('Hipertencion'),('Celiasis');
-      
-insert into grupo88.complexion(complexion)
-values('Pequeña') ,
-	  ('Mediana'),
-      ('Grande');
- 
-insert into Grupo88.relRecetaIngredientes (idReceta,idIngrediente,cantidad)
-values (1,31,1),(1,21,1),
-	   (3,34,1),(3,13,5),
-       (4,3,2),(4,29,2);
-
-insert into grupo88.condimento (nombre)
-values ('Sal'),('Pimienta Negra'),('Paprika'),('Oregano'),('Laurel'),('Aji Molido'),('Azafran');
-      
-insert into grupo88.tipoingrediente(descripcion)
-values ('Cereales y derivados'),('Legumbres'),('Huevos'),('Azucares y dulces'),('Verduras y Hortalizas'),
+INSERT INTO Grupo88.tipoingrediente(descripcion)
+VALUES ('Cereales y derivados'),('Legumbres'),('Huevos'),('Azucares y dulces'),('Verduras y Hortalizas'),
 	   ('Frutas'),('Frutos Secos'),('Lacteos y derivados'),('Carnes'), ('Pescados y Mariscos'), 
        ('Aceites y grasas'), ('Otros');
-
-insert into grupo88.GrupoAlim (descripcion)
-values ('Grupo 1: Leche y Derivados'), 
+       
+INSERT INTO Grupo88.condimento (nombre)
+VALUES ('Sal'),('Pimienta Negra'),('Paprika'),('Oregano'),('Laurel'),('Aji Molido'),('Azafran');
+      
+INSERT INTO Grupo88.GrupoAlim (descripcion)
+VALUES ('Grupo 1: Leche y Derivados'), 
 	   ('Grupo 2: Carnes, Huevos y Pescado'), 
        ('Grupo 3: Papas, Legumbres, Frutos Secos'),
        ('Grupo 4: Verduras y Hortalizas'),
@@ -226,30 +224,8 @@ values ('Grupo 1: Leche y Derivados'),
        ('Grupo 6: Harinas, Cereales, Dulces'),
        ('Grupo 7: Grasas, Aceites y Mantequilla');
 
-insert into Grupo88.usuarios
-values('jorge','pass','Jorge','Gomez','',null,'M',170,3,2,1),
-	  ('maria','pass','Maria','Rodriguez','',null,'F',150,1,4,2),
-      ('carlos', 'pass', 'Carlos', 'Batata','@gmail.com',null,'M', 160, 2, 1, 3);
-
-insert into Grupo88.Recetas(nombre,creador,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
-values('Pollo al horno','jorge',2,1000,2,1,31),
-	  ('milanesas napolitana','maria',1,800,2,3,34),
-      ('Pulpo en su tinta',null,3,1200,2,5,35),
-      ('Ñoquis','maria',2,760,6,4,3),
-      ('Pan con queso',null,1,1000,1,1,29),
-      ('Pizza','jorge',1,1150,6,2,3),
-      ('Asado','jorge',2,940,2,2,32);
-    
-
-insert into Grupo88.Historial(fecha,idReceta,usuario)
-values ('2013-08-27',3,'jorge'),
-	   ('2013-08-29', 1, 'jorge');
-
-insert into Grupo88.Temporadas(NombreTemporada)
-values('Verano'),('Otoño'),('Invierno'),('Primavera'),('Navidad'),('Pascua'),('Fechas de Final');
-
-insert into Grupo88.ingredientes(nombre,caloriasPorcion, tipoIngrediente)
-values ('Arroz',354,1), ('Avena',367,1),('Harina',150, 1), -- cereales y derivados
+INSERT INTO Grupo88.ingredientes(nombre,caloriasPorcion, tipoIngrediente)
+VALUES ('Arroz',354,1), ('Avena',367,1),('Harina',150, 1), -- cereales y derivados
 	   ('Lentejas',336,2),('Poroto',316,2), -- legumbres
        ('Clara de Huevo', 48, 3),('Yema de Huevo',368, 3),('Huevo Duro', 147, 3), -- huevos
        ('Cacao', 366, 4),('Chocolate', 550, 4),('Miel',300, 4), -- azucares y dulces
@@ -261,35 +237,82 @@ values ('Arroz',354,1), ('Avena',367,1),('Harina',150, 1), -- cereales y derivad
        ('Pollo',750, 9),('Vacio',1200, 9), ('Jamon Cocido',126,9), ('Milanesa',690,9), -- carnes
 	   ('Pulpo',57, 10),('Anchoas',175,10),('Sardinas',151,10), -- pescados y mariscos
        ('Manteca',670,11 ), ('Aceite de girasol',900,11) -- aceites y grasas
-       ;
+       ;      
        
-insert into Grupo88.dietas(tipoDieta)
-values ('Normal'),('Ovolactovegetariano'),('Vegetariano'),('Vegano');
+INSERT INTO Grupo88.Temporadas(NombreTemporada)
+VALUES('Verano'),('Otoño'),('Invierno'),('Primavera'),('Navidad'),('Pascua'),('Fechas de Final');
+       
+INSERT INTO Grupo88.condiciones(condicion)
+VALUES('Diabetes'),('Hipertencion'),('Celiasis'), ('Mariposon');
 
-insert into  Grupo88.pasos(idReceta,numeroPaso,descripcion)
-values (1,1,'Descongelar el pollo'),(1,2,'Sacarle lo que no sirve'),
+INSERT INTO Grupo88.complexion(complexion)
+VALUES('Pequeña') ,
+	  ('Mediana'),
+      ('Grande');
+ 
+INSERT INTO Grupo88.Rutinas (rutina)
+VALUES ('Sedentaria con algo de ejercicio'),
+	   ('Sedentaria con nada de ejercicio'),
+       ('Sedentaria con ejercicio'),
+       ('Activa con ejercicio'),
+       ('Activa sin ejercicio');
+
+INSERT INTO Grupo88.dietas(tipoDieta)
+VALUES ('Normal'),('Ovolactovegetariano'),('Vegetariano'),('Vegano'), ('Solo Cebollita');
+      
+
+INSERT INTO Grupo88.usuarios
+VALUES('jorge','pass','Jorge','Gomez','',null,'M',170,3,2,1),
+	  ('maria','pass','Maria','Rodriguez','',null,'F',150,1,4,2),
+      ('carlos', 'pass', 'Carlos', 'Batata','@gmail.com',null,'M', 160, 2, 1, 3);
+
+INSERT INTO Grupo88.Recetas(nombre,creador,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
+VALUES('Pollo al horno','jorge',2,1000,2,1,31),
+	  ('milanesas napolitana','maria',1,800,2,3,34),
+      ('Pulpo en su tinta',null,3,1200,2,5,35),
+      ('Ñoquis','maria',2,760,6,4,3),
+      ('Pan con queso',null,1,1000,1,1,29),
+      ('Pizza','jorge',1,1150,6,2,3),
+      ('Asado','jorge',2,940,2,2,32);
+    
+
+INSERT INTO Grupo88.Historial(fecha,idReceta,usuario)
+VALUES ('2013-08-27',3,'jorge'),
+	   ('2013-08-29', 1, 'jorge');
+
+
+INSERT INTO  Grupo88.pasos(idReceta,numeroPaso,descripcion)
+VALUES (1,1,'Descongelar el pollo'),(1,2,'Sacarle lo que no sirve'),
 		(1,3,'Mandarlo al horno'),(1,4,'Agregar papa si se quiere'),
         (1,5,'Disfrutar del pollo');
         
- insert into Grupo88.grupos(nombreGrupo,creador,detalle)
- values('Locomia','jorge','Aca se come de todo'),
+INSERT INTO Grupo88.grupos(nombreGrupo,creador,detalle)
+VALUES('Locomia','jorge','Aca se come de todo'),
 		('Putos','carlos','cualquier cosa ponele');
         
-insert into Grupo88.relusuariocondicion()
-values ('jorge',1),('jorge',3);
+INSERT INTO Grupo88.relusuariocondicion()
+VALUES ('jorge',1),('jorge',3);
 
-insert into Grupo88.relusuariogrupo()
-values ('maria',1),('carlos',1),('carlos',2);
+INSERT INTO Grupo88.relusuariogrupo()
+VALUES ('maria',1),('carlos',1),('carlos',2);
 
-insert into Grupo88.relgruporeceta()
-values (1,1);
+INSERT INTO Grupo88.relgruporeceta()
+VALUES (1,1);
+
+INSERT INTO Grupo88.relRecetaIngredientes (idReceta,idIngrediente,cantidad)
+VALUES (1,31,1),(1,21,1),
+	   (3,34,1),(3,13,5),
+       (4,3,2),(4,29,2);
+
 
 DELIMITER $$
 USE `Grupo88` $$
 
 
+-- ------------------------------------------------STORE PROCEDURES
+
 CREATE PROCEDURE raise_error(
-    in mensaje varchar(500)
+    IN mensaje VARCHAR(500)
 )
 BEGIN
 
@@ -297,19 +320,17 @@ BEGIN
 END $$
 
 
-
-
-CREATE PROCEDURE `ObtenerRecetas` (in nombreBuscar varchar(45))
+CREATE PROCEDURE `ObtenerRecetas` (IN nombreBuscar VARCHAR(45))
 BEGIN
-    select *
-    from Grupo88.recetas
-    where nombre = nombreBuscar;
+    SELECT *
+    FROM Grupo88.recetas
+    WHERE nombre = nombreBuscar;
 END $$
 
 USE `Grupo88` $$
 CREATE PROCEDURE `SP_Login`(
-	in username varchar(30),
-	in pass varchar(120),
+	IN username VARCHAR(30),
+	IN pass VARCHAR(120),
     out bResp boolean
 )
 BEGIN
@@ -323,7 +344,7 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_CargarUsuario(
-	IN username varchar(30)
+	IN username VARCHAR(30)
 )
 BEGIN
 
@@ -334,12 +355,12 @@ BEGIN
 		ON rut.idRutina = us.idRutina
 	JOIN dietas die
 		ON us.idDieta = die.idDieta
-    where nombreUsuario = username;
+    WHERE nombreUsuario = username;
 END $$
 
 
 CREATE PROCEDURE SP_CargarCondPreexUsuario(
-	IN username varchar(30)
+	IN username VARCHAR(30)
 )
 BEGIN
 
@@ -364,7 +385,7 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_HistorialUsuario(
-in username varchar(30) 
+IN username VARCHAR(30) 
 )
 BEGIN
 
@@ -379,7 +400,7 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_RecetasUsuario(
-in username varchar(30) 
+IN username VARCHAR(30) 
 )
 BEGIN
 
@@ -391,13 +412,13 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_BuscarRecetas(
-in dificultadB int,
-in temporadaB int,
-in ingredienteB int,
-in grupoAlim int,
-in calificacion int,
-in caloriasMax int,
-in caloriasMin int
+IN dificultadB INT,
+IN temporadaB INT,
+IN ingredienteB INT,
+IN grupoAlim INT,
+IN calificacion INT,
+IN caloriasMax INT,
+IN caloriasMin INT
 )
 BEGIN
 	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad
@@ -414,22 +435,22 @@ END $$
 
 
 CREATE PROCEDURE SP_RegistrarUsuario(
-in username_ varchar(30),
-in pass_ varchar(30),
-in mail_ varchar(30),
-in nombre_ varchar(30),
-in apellido_ varchar(30),
-in fechaNac_ date,
-in sexo_ varchar(1),
-in altura_ int,
-in idComplexion int,
-in idDieta int,
-in IdRutina int,
-out respuesta varchar(90)
+IN username_ VARCHAR(30),
+IN pass_ VARCHAR(30),
+IN mail_ VARCHAR(30),
+IN nombre_ VARCHAR(30),
+IN apellido_ VARCHAR(30),
+IN fechaNac_ DATE,
+IN sexo_ VARCHAR(1),
+IN altura_ INT,
+IN idComplexion INT,
+IN idDieta INT,
+IN IdRutina INT,
+out respuesta VARCHAR(90)
 )
 BEGIN
 	
-	declare rutinaID int;
+	DECLARE rutinaID INT;
     
     
 	DECLARE exit HANDLER FOR SQLSTATE '23000' call raise_error('El usuario ingresado ya existe');
@@ -439,17 +460,17 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_modificarPerfil(
-in username_ varchar(30),
-in pass_ varchar(30),
-in nombre_ varchar(30),
-in apellido_ varchar(30),
-in mail_ varchar(30),
-in fechaNac_ date,
-in sexo_ varchar(1),
-in altura_ int,
-in idComplexion int,
-in idDieta int,
-in IdRutina int
+IN username_ VARCHAR(30),
+IN pass_ VARCHAR(30),
+IN nombre_ VARCHAR(30),
+IN apellido_ VARCHAR(30),
+IN mail_ VARCHAR(30),
+IN fechaNac_ DATE,
+IN sexo_ VARCHAR(1),
+IN altura_ INT,
+IN idComplexion INT,
+IN idDieta INT,
+IN IdRutina INT
 
 )
 BEGIN
@@ -465,8 +486,8 @@ END$$
 
 
 CREATE PROCEDURE SP_RegistrarCondPreexUsuario(
-in username varchar(30),
-in idCondPreex int
+IN username VARCHAR(30),
+IN idCondPreex INT
 )
 BEGIN
 	 INSERT INTO relusuariocondicion
@@ -474,14 +495,14 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_ObtenerReceta(
-	IN idReceta int,
-    IN username varchar(30)
+	IN idReceta INT,
+    IN username VARCHAR(30)
 )
 BEGIN
-	declare calificacion int;
+	DECLARE calificacion INT;
     
-    set calificacion = (select his.calificacionUsuario from Grupo88.historial his
-    where his.idReceta = idReceta
+    set calificacion = (SELECT his.calificacionUsuario FROM Grupo88.historial his
+    WHERE his.idReceta = idReceta
     and	his.usuario = username
 	order by his.fecha desc
     limit 1);
@@ -502,7 +523,7 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_ObtenerIngredientesReceta(
-	IN idReceta int
+	IN idReceta INT
 )
 BEGIN
 
@@ -514,7 +535,7 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_ObtenerCondimentosReceta(
-	IN idReceta int
+	IN idReceta INT
 )
 BEGIN
 	SELECT cond.nombre as 'condimento' FROM relrecetcondimento rel
@@ -525,7 +546,7 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_ObtenerPasosReceta(
-	IN idReceta int
+	IN idReceta INT
 )
 BEGIN
 
@@ -535,27 +556,27 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_agregarAHistorial(
-	IN idReceta int, 
-    IN username varchar(30)
+	IN idReceta INT, 
+    IN username VARCHAR(30)
 )
 BEGIN
 
 	
-    INSERT INTO grupo88.historial (fecha, idReceta, usuario)
+    INSERT INTO Grupo88.historial (fecha, idReceta, usuario)
     VALUES (current_date(), idReceta, username);
     
     
 END $$
 
 CREATE PROCEDURE SP_calUltimaConfirmacion(
-	IN idRec int, 
-    IN username varchar(30),
-    IN calificacion int
+	IN idRec INT, 
+    IN username VARCHAR(30),
+    IN calificacion INT
 )
 BEGIN
-	declare ultCal int;
-    set ultCal = (select calificacionUsuario 
-		  from Grupo88.historial his
+	DECLARE ultCal INT;
+    set ultCal = (SELECT calificacionUsuario 
+		  FROM Grupo88.historial his
           WHERE his.idReceta =  idRec and
 		  his.usuario = username
 		  ORDER BY his.fecha, his.idHistorial desc
@@ -577,7 +598,7 @@ BEGIN
             END;
 	end if;
     
-    UPDATE grupo88.historial his
+    UPDATE Grupo88.historial his
     SET calificacionUsuario = calificacion
     WHERE his.idReceta = idRec and
 		  his.usuario = username
@@ -588,10 +609,10 @@ BEGIN
 END $$
 
 CREATE PROCEDURE SP_cargarGruposUsuario(
-	IN username varchar(30))
+	IN username VARCHAR(30))
 BEGIN
 
-	SELECT * from Grupo88.grupos gr
+	SELECT * FROM Grupo88.grupos gr
     JOIN relusuariogrupo rel
     ON rel.nombreUsuario = username
     WHERE rel.idGrupo = gr.idGrupo;
@@ -601,13 +622,13 @@ END$$
 CREATE PROCEDURE SP_cargarGrupos()
 BEGIN
 
-	SELECT * from Grupo88.grupos;
+	SELECT * FROM Grupo88.grupos;
     
 END$$
 
 CREATE PROCEDURE SP_salirGrupo(
-IN username varchar(30),
-IN idGrupoIN int)
+IN username VARCHAR(30),
+IN idGrupoIN INT)
 BEGIN
 	
     DELETE FROM relusuariogrupo 
@@ -617,8 +638,8 @@ BEGIN
 END$$
 
 CREATE PROCEDURE SP_entrarGrupo(
-IN username varchar(30),
-IN idGrupoIN int)
+IN username VARCHAR(30),
+IN idGrupoIN INT)
 BEGIN
 	
     INSERT INTO relusuariogrupo 
@@ -627,23 +648,23 @@ BEGIN
 END$$
 
 CREATE PROCEDURE SP_agregarNuevoGrupo(
-IN nombre varchar(30),
-IN creador varchar(30),
-IN detalle varchar (255))
+IN nombre VARCHAR(30),
+IN creador VARCHAR(30),
+IN detalle VARCHAR (255))
 
 BEGIN
 
 	INSERT INTO grupos(nombreGrupo,detalle,creador)
     VALUES (nombre,detalle,creador);
     
-	select idGrupo from grupos
-    where nombreGrupo = nombre;
+	SELECT idGrupo FROM grupos
+    WHERE nombreGrupo = nombre;
 
 END$$
 
 CREATE PROCEDURE SP_agregarHistorico(
-IN username varchar(30),
-IN idReceta int)
+IN username VARCHAR(30),
+IN idReceta INT)
 BEGIN
 
 	INSERT INTO historicoConsultas(username,idReceta,fecha)
@@ -652,36 +673,45 @@ BEGIN
 END$$
 
 CREATE PROCEDURE SP_grupoTieneReceta(
-IN idGrupo int,
-IN idReceta int)
+IN idGrupo INT,
+IN idReceta INT)
 BEGIN
 
-	select * from relgruporeceta rel
-    where rel.idGrupo = idGrupo and
+	SELECT * FROM relgruporeceta rel
+    WHERE rel.idGrupo = idGrupo and
 			rel.idReceta = idReceta;
     
 END$$
 
 CREATE PROCEDURE SP_agregarRecetaGrupo(
-IN idGrupo int,
-IN idReceta int)
+IN idGrupo INT,
+IN idReceta INT)
 BEGIN
 	INSERT INTO relgruporeceta(idGrupo,idReceta)
     VALUES (idGrupo,idReceta);
 END$$
     
 CREATE PROCEDURE SP_agregarReceta(
-IN creador varchar(30),
-IN nombreReceta varchar(30),
-IN dificultad int,
-IN calorias int,
-IN grpAlim int,
-IN temporada int,
-IN ingPrinc int
+IN creador VARCHAR(30),
+IN nombreReceta VARCHAR(30),
+IN descripcion VARCHAR(200),
+IN dificultad INT,
+IN calorias INT,
+IN grpAlim INT,
+IN temporada INT,
+IN ingPrinc INT,
+OUT idReceta INT
 )
 BEGIN
-	INSERT INTO recetas(creador,nombre,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
-    VALUES (creador,nombreReceta,dificultad,calorias,grpAlim,temporada,ingPrinc);
+
+	START TRANSACTION;
+	INSERT INTO recetas(creador,nombre, descripcion, idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
+    VALUES (creador,nombreReceta, descripcion, dificultad,calorias,grpAlim,temporada,ingPrinc);
+    
+    SET idReceta = (SELECT last_insert_id() FROM recetas limit 1);
+    
+	COMMIT;
+    
 END$$    
 
 CREATE PROCEDURE SP_TOPRecetas(
@@ -719,14 +749,14 @@ BEGIN
 END$$
 */
 CREATE PROCEDURE SP_obtenerGrupo(
-IN idGrupo int)
+IN idGrupo INT)
 BEGIN
 	SELECT * FROM grupos gr
     WHERE gr.idGrupo = idGrupo;
 END$$
 
 CREATE PROCEDURE SP_obtenerRecetasGrupo(
-IN idGrupo int)
+IN idGrupo INT)
 BEGIN
 	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad, grupoalim.descripcion as 'grpAlim',
 			tem.nombreTemporada, tem.idTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente
@@ -758,6 +788,18 @@ BEGIN
 	JOIN dietas die
 		ON us.idDieta = die.idDieta
     where rel.idGrupo = idGrupo;
+END$$
     
+CREATE PROCEDURE SP_agregarPasoAReceta(
+IN idRecetaNva INT,
+IN nroPaso INT,
+IN descrip VARCHAR(2000))
+-- IN fotoPaso blob)
+
+
+BEGIN
+	 INSERT INTO pasos (idReceta, numeroPaso,descripcion)
+		VALUES (IdRecetaNva,nroPaso, descrip ); -- FALTA LA FOTO
+
 END$$
 DELIMITER ;
