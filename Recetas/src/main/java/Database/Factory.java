@@ -758,6 +758,26 @@ public class Factory {
 				est.agregarTopRecetasHombreMes(rs.getString("nombre"));
 			}
 			
+			//Se obtienen top Consultas Mujer Semanal
+			cmd = con.prepareCall("{Call SP_TOPRecetas(?,?)}");
+			cmd.setString(1, "F");
+			cmd.setInt(2, 7);
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				est.agregarTopRecetasMujerSemana(rs.getString("nombre"));
+			}
+			
+			//Se obtienen top Consultas Hombre Mes
+			cmd = con.prepareCall("{Call SP_TOPRecetas(?,?)}");
+			cmd.setString(1, "F");
+			cmd.setInt(2, 31);
+			rs = cmd.executeQuery();
+			
+			while (rs.next()){
+				est.agregarTopRecetasMujerMes(rs.getString("nombre"));
+			}
+			
 		}
 		catch(SQLException ex){
 			JOptionPane.showMessageDialog(null, ex.getMessage());	

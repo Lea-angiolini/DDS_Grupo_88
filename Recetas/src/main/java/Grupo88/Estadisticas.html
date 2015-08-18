@@ -8,6 +8,19 @@
 </style>
 <body>
 	<wicket:extend>
+	<script>
+	function mujer(){
+		$(document).ready(function(){
+			document.getElementById('cambioSexo').innerHTML = 'Mostrar mujeres';
+		}) ;};
+	
+		function hombre(){
+			$(document).ready(function(){
+				document.getElementById('cambioSexo').innerHTML = 'Mostrar hombres';
+			}) ;};
+	</script>
+	
+	
 		<div>
 			<form id="frmEstadisticas" wicket:id="frmEstadisticas" method="get">
 				<fieldset id="misRecetas" class="center">
@@ -21,7 +34,7 @@
 								
 								
 								<div class="row">
-								<a class="btn">Hombres</a><br>
+								<a id="cambioSexo" class="btn btn-primary" wicket:id="cambiarSexo">Mostrar mujeres</a><br>
 								<div class="container col-md-6" style="width: 450px">    
 						<div id="menu-inicio">                    
 					    	<div class="panel panel-info">
@@ -29,9 +42,11 @@
 					            	<div class="panel-title"><span class="glyphicon glyphicon-home"></span> Ultima semana</div>
 					            </div>     
 								<div class="panel-body" style="padding: 20px 0px 0px 20px;">
+								<div wicket:id="Semsexo">
 								<ol>
 								<li wicket:id="ultSem"><a wicket:id="nombreReceta"></a></li>
 								</ol>
+								</div>
 								</div></div></div></div>
 								
 								<div class="container col-md-6" style="width: 450px">    
@@ -41,10 +56,11 @@
 					            	<div class="panel-title"><span class="glyphicon glyphicon-home"></span> Ultimo mes</div>
 					            </div>     
 								<div class="panel-body" style="padding: 20px 0px 0px 20px;">
+								<div wicket:id="Messexo">
 								<ol>
 								<li wicket:id="ultMes"><a wicket:id="nombreReceta"></a></li>
 								</ol>
-								
+								</div>
 								</div></div></div></div>
 								
 								</div>
