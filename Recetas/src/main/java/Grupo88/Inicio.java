@@ -56,17 +56,16 @@ import ObjetosDB.itemsABuscar;
 
 public class Inicio extends MasterPage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private FrmInicio frmInicio;
 	
 	@SuppressWarnings("unchecked")
 	public Inicio(){
 		super();
 		//getMenuPanel().setVisible(false);
-		
-		if(!((SesionUsuario)getSession()).estaLogueado())
-		{
-			setResponsePage(Login.class);
-		}
 		
 		
 		add(frmInicio = new FrmInicio("FrmInicio"));

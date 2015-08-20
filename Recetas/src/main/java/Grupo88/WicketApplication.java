@@ -23,7 +23,7 @@ public class WicketApplication extends WebApplication
 	@Override
 	public Class<? extends WebPage> getHomePage()
 	{
-		return Login.class;
+		return Inicio.class;
 	}
 
 	/**

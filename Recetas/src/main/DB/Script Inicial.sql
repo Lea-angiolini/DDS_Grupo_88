@@ -200,6 +200,18 @@ CREATE TABLE Grupo88.relgruporeceta(
 	idReceta INT REFERENCES Recetas,
 	PRIMARY KEY(idGrupo,idReceta)
 );
+
+CREATE TABLE Grupo88.relCondPreexIngNoComestible(
+	idCond INT REFERENCES condiciones,
+    idIngNoComestible INT REFERENCES ingredientes,
+    PRIMARY KEY(idCond,idIngNoComestible)
+);
+
+CREATE TABLE Grupo88.relDietaTipoIngNoComestible(
+	idDieta INT REFERENCES dietas,
+    idTipoIngNoComestible INT REFERENCES tipoingrediente,
+    PRIMARY KEY(idDieta, idTipoIngNoComestible)
+);
 -- ----------------------------------- INSERT EN TABLAS
 
 INSERT INTO Grupo88.dificultad(descripcion)
@@ -303,6 +315,9 @@ INSERT INTO Grupo88.relRecetaIngredientes (idReceta,idIngrediente,cantidad)
 VALUES (1,31,1),(1,21,1),
 	   (3,34,1),(3,13,5),
        (4,3,2),(4,29,2);
+       
+INSERT INTO Grupo88.relCondPreexIngNoComestible()
+VALUES (1,1),(1,3),(2,3);
 
 
 DELIMITER $$
