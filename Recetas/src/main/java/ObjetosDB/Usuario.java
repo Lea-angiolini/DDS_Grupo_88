@@ -219,4 +219,8 @@ public class Usuario implements Serializable{
 	public String modificarPerfil(){
 		return Browser.modificarPerfil(this);
 	}
+	
+	public ArrayList<Receta> cargarHome(){
+		return Browser.cargarHomeRecetas(this);
+	}
 }

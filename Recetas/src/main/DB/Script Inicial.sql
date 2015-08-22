@@ -476,7 +476,6 @@ END $$
 
 CREATE PROCEDURE SP_modificarPerfil(
 IN username_ VARCHAR(30),
-IN pass_ VARCHAR(30),
 IN nombre_ VARCHAR(30),
 IN apellido_ VARCHAR(30),
 IN mail_ VARCHAR(30),
@@ -491,7 +490,7 @@ IN IdRutina INT
 BEGIN
 
 	UPDATE usuarios usu
-	SET usu.clave=pass_, usu.nombre= nombre_, usu.apellido = apellido_, usu.mail=mail_, usu.fechaNac = fechaNac_, usu.sexo = sexo_, 
+	SET  usu.nombre= nombre_, usu.apellido = apellido_, usu.mail=mail_, usu.fechaNac = fechaNac_, usu.sexo = sexo_, 
 		usu.altura=altura_,	usu.idComplexion = idComplexion, usu.idDieta = idDieta, usu.idRutina = idRutina
     WHERE usu.nombreUsuario=username_;
     
@@ -814,7 +813,61 @@ IN descrip VARCHAR(2000))
 
 BEGIN
 	 INSERT INTO pasos (idReceta, numeroPaso,descripcion)
-		VALUES (IdRecetaNva,nroPaso, descrip ); -- FALTA LA FOTO
+		VALUES (IdRecetaNva,nroPaso, descrip ); -- FALTA LA FOTO. que foto
+
+END$$
+
+CREATE PROCEDURE SP_recetasHome(
+IN username varchar(30))
+BEGIN
+	
+    IF EXISTS (SELECT 1 FROM historial where usuario = username)
+    THEN
+		BEGIN
+			SELECT DISTINCT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad
+			FROM Grupo88.recetas rec
+			JOIN Grupo88.dificultad dif
+			ON dif.idDificultad = rec.idDificultad
+			JOIN Grupo88.historial his
+			ON his.usuario = username and
+				his.idReceta = rec.idReceta
+			ORDER BY his.idHistorial DESC
+			LIMIT 10;
+		END;
+        ELSE
+        BEGIN
+			IF EXISTS(SELECT 1 FROM historicoconsultas hiscon where hiscon.username = username)
+            THEN
+				BEGIN
+					SELECT DISTINCT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad
+					FROM Grupo88.recetas rec
+					JOIN Grupo88.dificultad dif
+					ON dif.idDificultad = rec.idDificultad
+					JOIN Grupo88.historicoconsultas hiscon
+					ON hiscon.username = username and
+						hiscon.idReceta = rec.idReceta
+					ORDER BY hiscon.idHistorico DESC
+					LIMIT 10;
+				END;
+                ELSE
+                BEGIN
+					CALL SP_mejoresCalificadas;
+                END;
+                END IF;
+			END;
+    END IF;
+	
+END$$
+
+CREATE PROCEDURE SP_mejoresCalificadas()
+BEGIN
+
+	SELECT DISTINCT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad
+					FROM Grupo88.recetas rec
+					JOIN Grupo88.dificultad dif
+					ON dif.idDificultad = rec.idDificultad
+					ORDER BY rec.puntajeTotal DESC
+					LIMIT 10;
 
 END$$
 DELIMITER ;

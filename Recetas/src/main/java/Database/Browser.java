@@ -177,4 +177,9 @@ public class Browser {
 		Factory f = new Factory();
 		return f.obtenerUsuariosGrupo(grupo);
 	}
+	
+	public static ArrayList<Receta> cargarHomeRecetas(Usuario user){
+		Factory f = new Factory();
+		return f.cargarHomeRecetas(user);
+	}
 }

@@ -502,18 +502,18 @@ public class Factory {
 	public String modificarPerfil(Usuario user){
 		try
 		{
-			CallableStatement cmd=con.prepareCall("{call SP_modificarPerfil(?,?,?,?,?,?,?,?,?,?,?)}");
+			CallableStatement cmd=con.prepareCall("{call SP_modificarPerfil(?,?,?,?,?,?,?,?,?,?)}");
 			cmd.setString(1, user.getUsername());
-			cmd.setString(2, user.getPassword());
-			cmd.setString(3, user.getNombre());
-			cmd.setString(4, user.getApellido());
-			cmd.setString(5, user.getEmail());
-			cmd.setString(6, user.getFechaNacimiento());
-			cmd.setString(7, String.valueOf(user.getSexo()));
-			cmd.setInt(8, user.getAltura());
-			cmd.setInt(9, (user.getComplexion()).getIdComplexion());
-			cmd.setInt(10, (user.getDieta()).getIdDietas());
-			cmd.setInt(11, (user.getRutina()).getIdRutina());
+			
+			cmd.setString(2, user.getNombre());
+			cmd.setString(3, user.getApellido());
+			cmd.setString(4, user.getEmail());
+			cmd.setString(5, user.getFechaNacimiento());
+			cmd.setString(6, String.valueOf(user.getSexo()));
+			cmd.setInt(7, user.getAltura());
+			cmd.setInt(8, (user.getComplexion()).getIdComplexion());
+			cmd.setInt(9, (user.getDieta()).getIdDietas());
+			cmd.setInt(10, (user.getRutina()).getIdRutina());
 //			cmd.registerOutParameter(12, Types.VARCHAR);
 			
 			cmd.executeQuery();
@@ -946,6 +946,40 @@ public static ArrayList<Usuario> obtenerUsuariosGrupo(Grupo grupo){
 	}
 
 }
+
+public ArrayList<Receta> cargarHomeRecetas(Usuario user){
+	
+	ResultSet rs = null;
+	ArrayList<Receta> recetas = new ArrayList<Receta>();
+	
+	try
+	{
+		
+		CallableStatement cmd = con.prepareCall("{call SP_recetasHome(?)}");
+		
+		cmd.setString(1, user.getUsername());
+		rs = cmd.executeQuery();
+		
+		while (rs.next()){
+			
+			recetas.add(new Receta(
+					rs.getInt("idReceta"),
+					rs.getString("nombre"), 
+					rs.getString("creador"),
+					new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
+					new Ingredientes(0, "", 0, 0)
+					));
+	
+		}
+	}
+	catch(SQLException ex){
+		//JOptionPane.showMessageDialog(null, ex.getMessage());	
+	}
+	
+	return recetas;
+}
+
+
 }
 
 

@@ -27,9 +27,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import Database.Browser;
-import Grupo88.Inicio.FragmentoBuscarRecetas;
-import Grupo88.Inicio.FragmentoRecetasBuscadas;
-import Grupo88.Inicio.FragmentoRecetasUsuario;
 import ObjetosDB.Dificultades;
 import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
