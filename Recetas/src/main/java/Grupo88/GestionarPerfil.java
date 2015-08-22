@@ -90,7 +90,7 @@ public class GestionarPerfil extends RegisteredPage {
 			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
 			add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
 			add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));
-			add(new TextField<String>("password", new PropertyModel<String>(usuario, "password")));
+			
 			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
 			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
 			add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));

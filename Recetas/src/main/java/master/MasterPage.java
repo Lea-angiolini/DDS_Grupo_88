@@ -27,7 +27,7 @@ public class MasterPage extends WebPage {
 		add(headerPanel = new HeaderPanel("header"));
 		add(menuPanel = new MenuPanel("menu"));
 		add(footerPanel = new FooterPanel("footer"));	
-
+		headerPanel.setVisible(false);
 		
     }
 
