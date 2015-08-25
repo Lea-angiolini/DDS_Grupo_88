@@ -13,6 +13,10 @@ import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.ajax.AjaxEventBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -44,13 +48,14 @@ import org.apache.wicket.Session;
 
 import Database.Browser;
 import Grupo88.Login.FrmLogin;
+import ObjetosDB.Condimentos;
 import ObjetosDB.Dificultades;
 import ObjetosDB.Ingredientes;
 import ObjetosDB.Pasos;
 import ObjetosDB.RecetaU;
 import ObjetosDB.Temporadas;
 import ObjetosDB.Usuario;
-import ObjetosDB.Recetas.Receta;
+import ObjetosDB.Receta;
 
 public class AgregarReceta extends RegisteredPage {
    
@@ -100,6 +105,8 @@ public class AgregarReceta extends RegisteredPage {
 		add(new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"), Browser.listaDificultades(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
 		add(new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), Browser.listaIngredientes(), new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
 		
+		add(new DropList<Ingredientes>("dropIngredientes",Browser.listaIngredientes()));
+		add(new DropList<Condimentos>("dropCondimentos",Browser.listaCondimentos()));
 		}
 		
 		@Override

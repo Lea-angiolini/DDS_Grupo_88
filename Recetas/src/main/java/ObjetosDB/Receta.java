@@ -10,41 +10,22 @@ import javax.swing.JOptionPane;
 import Database.Browser;
 
 
-public class Recetas implements Serializable{
-	
-	private ArrayList<Receta> coleccionRecetas;
-	
-	public Recetas() {
-		coleccionRecetas = new ArrayList<Receta>();
-	}
-	
-	public void agregarNuevaReceta(int id, String nom, String crea, Dificultades difi, Ingredientes ingPrinc){
-		agregarReceta(new Receta(id,nom,crea,difi,ingPrinc));
-	}
-	
-	public void agregarReceta(Receta rec){
-		coleccionRecetas.add(rec);
-	}
-
-	public ArrayList<Receta> ObtenerColeccionRecetas(){
-		return coleccionRecetas;
-	}
-	
-	
-	public static class Receta implements Serializable{
+	public class Receta implements Serializable{
 		
 		private int idreceta;
 		private String nombre;
 		private String creador;
 		private Dificultades dificultad;
 		private Ingredientes ingredientePrincipal;
+		private String descripcion;
 
-		public Receta(int id, String nom, String crea, Dificultades difi, Ingredientes IngPrinc){
+		public Receta(int id, String nom, String crea, Dificultades difi, Ingredientes IngPrinc, String desc){
 			setIdreceta(id);
 			setNombre(nom);
 			setCreador(crea);
 			setDificultad(difi);
 			setIngredientePrincipal(IngPrinc);
+			setDescripcion(desc);
 		}
 		
 		public int getIdreceta() {
@@ -85,9 +66,16 @@ public class Recetas implements Serializable{
 			this.ingredientePrincipal = ingredientePrincipal;
 		}
 
+		public String getDescripcion() {
+			return descripcion;
+		}
+
+		public void setDescripcion(String descripcion) {
+			this.descripcion = descripcion;
+		}
+
 		public void consulta(Usuario user){
 			Browser.agregarHistConsultas(getIdreceta(),user.getUsername());
 		}
 		
 	}	
-}

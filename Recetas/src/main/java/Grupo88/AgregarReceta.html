@@ -8,7 +8,7 @@
 	<wicket:extend>
 	
 	<style>
-#div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+#div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;background-color: white;}
 </style>
 	
 		<div>
@@ -59,12 +59,14 @@
 			</div>
 			<div class="form-group">
 				<label class="col-md-3">Ingredientes</label>
-				<div class="col-md-5 div1" awicket:id="ingPrinc"></div>
 			</div>
+			<div wicket:id="dropIngredientes"></div>
+			
 			<div class="form-group">
 				<label class="col-md-3">Condimentos</label>
-				<div class="col-md-5 div1" awicket:id="ingPrinc"></div>
 			</div>
+			<div wicket:id="dropCondimentos"></div>
+			<br><br>
 			<button type="submit">Siguiente</button>
 		</form>
 

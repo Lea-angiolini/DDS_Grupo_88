@@ -11,7 +11,6 @@ import org.apache.wicket.protocol.http.documentvalidation.TextContent;
 import org.eclipse.jetty.util.StringUtil;
 
 import ObjetosDB.*;
-import ObjetosDB.Recetas.Receta;
 
 
 public class Factory {
@@ -114,10 +113,10 @@ public class Factory {
 		
 	}
 	
-	public Recetas cargarRecetasPopulares()
+	public ArrayList<Receta> cargarRecetasPopulares()
 	{
 		ResultSet rs = null;
-		Recetas recetas = new Recetas();
+		ArrayList<Receta> recetas = new ArrayList<Receta>();
 		try
 		{
 			
@@ -128,11 +127,11 @@ public class Factory {
 			
 			while (rs.next()){
 				
-				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
+				recetas.add(new Receta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
 										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
-											new Ingredientes(0, "", 0, 0));
+											new Ingredientes(0, "", 0, 0),rs.getString("descripcion")));
 				
 				
 		}
@@ -144,10 +143,10 @@ public class Factory {
 		return recetas;
 	}
 	
-	public Recetas cargarRecetasUsuario(String usuario)
+	public ArrayList<Receta> cargarRecetasUsuario(String usuario)
 	{
 		ResultSet rs = null;
-		Recetas recetas = new Recetas();
+		ArrayList<Receta> recetas = new ArrayList<Receta>();
 		try
 		{
 			
@@ -159,11 +158,11 @@ public class Factory {
 			
 			while (rs.next()){
 				
-				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
+				recetas.add(new Receta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
 										   new Dificultades(rs.getInt("idDificultad"), rs.getString("descripcion")),
-										   new Ingredientes(0, "", 0, 0));
+										   new Ingredientes(0, "", 0, 0),rs.getString("descripcion")));
 				
 				
 		}
@@ -176,10 +175,10 @@ public class Factory {
 	}
 		
 	
-	public Recetas cargarRecetasBuscadas(itemsABuscar queBuscar){
+	public ArrayList<Receta> cargarRecetasBuscadas(itemsABuscar queBuscar){
 		
 		ResultSet rs = null;
-		Recetas recetas = new Recetas();
+		ArrayList<Receta> recetas = new ArrayList<Receta>();
 		
 		try
 		{
@@ -198,12 +197,12 @@ public class Factory {
 			
 			while (rs.next()){
 				
-				recetas.agregarNuevaReceta(rs.getInt("idReceta"),
+				recetas.add(new Receta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"),
 										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
-										   new Ingredientes(0, "", 0, 0)
-										   );
+										   new Ingredientes(0, "", 0, 0),rs.getString("descripcion")
+										   ));
 		
 			}
 		}
@@ -357,7 +356,7 @@ public class Factory {
 					
 			rs = cmd.executeQuery();
 			
-			temporadas.add(new Temporadas(-1,"Todas"));
+			//temporadas.add(new Temporadas(-1,"Todas"));
 			
 			while (rs.next()){
 				
@@ -385,7 +384,7 @@ public class Factory {
 					
 			rs = cmd.executeQuery();
 			
-			gruposAlim.add(new GruposAlimenticios(-1,"Todos"));
+			//gruposAlim.add(new GruposAlimenticios(-1,"Todos"));
 			
 			while (rs.next()){
 				
@@ -413,7 +412,7 @@ public class Factory {
 					
 			rs = cmd.executeQuery();
 			
-			ingredientes.add(new Ingredientes(-1, "Todos", 0,0));
+			//ingredientes.add(new Ingredientes(-1, "Todos", 0,0));
 			
 			while (rs.next()){
 				
@@ -429,6 +428,35 @@ public class Factory {
 		return ingredientes;
 	}
 	
+	public ArrayList<Condimentos> listaCondimentos(){
+		
+		ResultSet rs = null;
+		ArrayList<Condimentos> condimentos = new ArrayList<Condimentos>();
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("select * from Grupo88.condimento order by nombre");
+					
+			rs = cmd.executeQuery();
+			
+			//condimentos.add(new Ingredientes(-1, "Todos", 0,0));
+			
+			while (rs.next()){
+				
+				condimentos.add(new Condimentos(rs.getInt("idCondimento"), rs.getString("nombre")));
+		
+			}
+		}
+		catch(SQLException ex){
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
+		}
+		
+		
+		return condimentos;
+	}
+	
+	
 	public ArrayList<Dificultades> listaDificultades(){
 		
 		ResultSet rs = null;
@@ -441,7 +469,7 @@ public class Factory {
 					
 			rs = cmd.executeQuery();
 			
-			dificultades.add(new Dificultades(-1, "Todas"));
+			//dificultades.add(new Dificultades(-1, "Todas"));
 			
 			while (rs.next()){
 				
@@ -899,7 +927,7 @@ public Grupo obtenerGrupo(int idGrupo){
 public ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
 	CallableStatement cmd;
 	ResultSet rs;
-	ArrayList<Receta> recetas = new ArrayList<Recetas.Receta>();
+	ArrayList<Receta> recetas = new ArrayList<Receta>();
 	try
 	{
 		cmd=con.prepareCall("{Call SP_obtenerRecetasGrupo(?)}");
@@ -907,7 +935,12 @@ public ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
 		rs = cmd.executeQuery();
 		
 		while(rs.next()){
-			recetas.add(new Receta(rs.getInt("idReceta"), rs.getString("nombre"), rs.getString("creador"), new Dificultades( rs.getInt("idDificultad"), rs.getString("dificultad")),new Ingredientes(rs.getInt("idIngrediente"),  rs.getString("IngPrincipal"), rs.getInt("caloriasPorcion"), rs.getInt("tipoIngrediente"))));
+			recetas.add(new Receta(rs.getInt("idReceta"), 
+						rs.getString("nombre"), 
+						rs.getString("creador"), 
+						new Dificultades( rs.getInt("idDificultad"), rs.getString("dificultad")),
+						new Ingredientes(rs.getInt("idIngrediente"),  rs.getString("IngPrincipal"), rs.getInt("caloriasPorcion"), rs.getInt("tipoIngrediente")),
+						rs.getString("descripcion")));
 		}
 			
 		return recetas;
@@ -920,7 +953,7 @@ public ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
 
 }
 
-public static ArrayList<Usuario> obtenerUsuariosGrupo(Grupo grupo){
+public ArrayList<Usuario> obtenerUsuariosGrupo(Grupo grupo){
 	CallableStatement cmd;
 	ResultSet rs;
 	ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
@@ -967,7 +1000,8 @@ public ArrayList<Receta> cargarHomeRecetas(Usuario user){
 					rs.getString("nombre"), 
 					rs.getString("creador"),
 					new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
-					new Ingredientes(0, "", 0, 0)
+					new Ingredientes(0, "", 0, 0),
+					rs.getString("descripcion")
 					));
 	
 		}

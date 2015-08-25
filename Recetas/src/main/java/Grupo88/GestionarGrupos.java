@@ -68,7 +68,7 @@ import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
 import ObjetosDB.Grupo;
-import ObjetosDB.Recetas;
+import ObjetosDB.Receta;
 import ObjetosDB.Rutinas;
 import ObjetosDB.Usuario;
 import ObjetosDB.itemsABuscar;

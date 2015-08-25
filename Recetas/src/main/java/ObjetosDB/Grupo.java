@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.eclipse.jetty.server.Authentication.User;
 
 import Database.Browser;
-import ObjetosDB.Recetas.Receta;
+import ObjetosDB.Receta;
 
 public class Grupo {
 	

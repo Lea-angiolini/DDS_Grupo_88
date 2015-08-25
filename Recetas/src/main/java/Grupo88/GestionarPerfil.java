@@ -61,7 +61,7 @@ import Grupo88.Login.FrmLogin;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
-import ObjetosDB.Recetas;
+import ObjetosDB.Receta;
 import ObjetosDB.Rutinas;
 import ObjetosDB.Usuario;
 
