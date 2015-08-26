@@ -422,7 +422,7 @@ BEGIN
 	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion, dif.idDificultad, rec.descripcion
     FROM recetas rec 
     JOIN dificultad dif
-    ON rec.idDificultad = dif.idDificulrecetastad
+    ON rec.idDificultad = dif.idDificultad
     WHERE rec.creador = username;
 END $$
 
