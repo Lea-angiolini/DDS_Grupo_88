@@ -46,8 +46,7 @@ import org.apache.wicket.Session;
 
 import Database.Browser;
 import Grupo88.Login.FrmLogin;
-import ObjetosDB.Recetas;
-import ObjetosDB.Recetas.Receta;
+import ObjetosDB.Receta;
 import ObjetosDB.Dificultades;
 import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;

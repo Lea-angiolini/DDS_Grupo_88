@@ -17,8 +17,7 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import ObjetosDB.Recetas;
-import ObjetosDB.Recetas.Receta;
+import ObjetosDB.Receta;
 import ObjetosDB.Usuario;
 
 public class MisRecetas extends RegisteredPage {
@@ -36,7 +35,7 @@ public class MisRecetas extends RegisteredPage {
 		public FrmMisRecetas(String id) {
 			super(id);			
 
-			add(new ListaDeRecetas("listaMisRecetas", getUsuarioActual().cargarMisRecetas().ObtenerColeccionRecetas() , getUsuarioActual()));
+			add(new ListaDeRecetas("listaMisRecetas", getUsuarioActual().cargarMisRecetas() , getUsuarioActual()));
 			
 			add(new Link("cancelar"){
 				public void onClick(){

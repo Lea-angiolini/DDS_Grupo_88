@@ -419,10 +419,10 @@ IN username VARCHAR(30)
 )
 BEGIN
 
-	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion, dif.idDificultad
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion, dif.idDificultad, rec.descripcion
     FROM recetas rec 
     JOIN dificultad dif
-    ON rec.idDificultad = dif.idDificultad
+    ON rec.idDificultad = dif.idDificulrecetastad
     WHERE rec.creador = username;
 END $$
 
@@ -436,7 +436,7 @@ IN caloriasMax INT,
 IN caloriasMin INT
 )
 BEGIN
-	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad, rec.descripcion
 	FROM Grupo88.recetas rec
     JOIN Grupo88.dificultad dif
     ON dif.idDificultad = rec.idDificultad
@@ -773,7 +773,8 @@ CREATE PROCEDURE SP_obtenerRecetasGrupo(
 IN idGrupo INT)
 BEGIN
 	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad, grupoalim.descripcion as 'grpAlim',
-			tem.nombreTemporada, tem.idTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente
+			tem.nombreTemporada, tem.idTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente,
+            rec.descripcion
      FROM recetas rec
      JOIN dificultad dif
      ON dif.idDificultad = rec.idDificultad 
@@ -824,6 +825,7 @@ BEGIN
     IF EXISTS (SELECT 1 FROM historial where usuario = username)
     THEN
 		BEGIN
+<<<<<<< HEAD
 			SELECT DISTINCT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad
 			FROM Grupo88.recetas rec
 			JOIN Grupo88.dificultad dif
@@ -863,6 +865,50 @@ CREATE PROCEDURE SP_mejoresCalificadas()
 BEGIN
 
 	SELECT DISTINCT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad
+=======
+			SELECT DISTINCT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad,
+							rec.descripcion
+			FROM Grupo88.recetas rec
+			JOIN Grupo88.dificultad dif
+			ON dif.idDificultad = rec.idDificultad
+			JOIN Grupo88.historial his
+			ON his.usuario = username and
+				his.idReceta = rec.idReceta
+			ORDER BY his.idHistorial DESC
+			LIMIT 10;
+		END;
+        ELSE
+        BEGIN
+			IF EXISTS(SELECT 1 FROM historicoconsultas hiscon where hiscon.username = username)
+            THEN
+				BEGIN
+					SELECT DISTINCT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad,
+									rec.descripcion
+					FROM Grupo88.recetas rec
+					JOIN Grupo88.dificultad dif
+					ON dif.idDificultad = rec.idDificultad
+					JOIN Grupo88.historicoconsultas hiscon
+					ON hiscon.username = username and
+						hiscon.idReceta = rec.idReceta
+					ORDER BY hiscon.idHistorico DESC
+					LIMIT 10;
+				END;
+                ELSE
+                BEGIN
+					CALL SP_mejoresCalificadas;
+                END;
+                END IF;
+			END;
+    END IF;
+	
+END$$
+
+CREATE PROCEDURE SP_mejoresCalificadas()
+BEGIN
+
+	SELECT DISTINCT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad,
+					rec.descripcion
+>>>>>>> branch 'master' of https://github.com/Lea-angiolini/DDS_Grupo_88.git
 					FROM Grupo88.recetas rec
 					JOIN Grupo88.dificultad dif
 					ON dif.idDificultad = rec.idDificultad

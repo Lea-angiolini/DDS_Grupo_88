@@ -59,7 +59,7 @@ import ObjetosDB.Complexiones;
 import ObjetosDB.PreferenciasAlimenticias;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
-import ObjetosDB.Recetas;
+import ObjetosDB.Receta;
 import ObjetosDB.Rutinas;
 import ObjetosDB.Usuario;
 

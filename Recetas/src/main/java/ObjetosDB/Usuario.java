@@ -7,7 +7,7 @@ import java.util.List;
 
 import Database.Browser;
 import Grupo88.GestionarPerfil;
-import ObjetosDB.Recetas.Receta;
+import ObjetosDB.Receta;
 
 public class Usuario implements Serializable{
 
@@ -210,7 +210,7 @@ public class Usuario implements Serializable{
 		return false;
 	}
 	
-	public Recetas cargarMisRecetas(){
+	public ArrayList<Receta> cargarMisRecetas(){
 		return Browser.cargarRecetasUsuario(username);
 		
 	}

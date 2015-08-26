@@ -11,7 +11,6 @@ import org.apache.log4j.chainsaw.Main;
 
 import Database.Factory;
 import ObjetosDB.*;
-import ObjetosDB.Recetas.Receta;
 
 public class Browser {
 	
@@ -29,21 +28,21 @@ public class Browser {
 		return user;
 	}
 	
-	public static Recetas cargarRecetasPopulares(){
+	public static ArrayList<Receta> cargarRecetasPopulares(){
 		Factory f = new Factory();
-		Recetas recetas = f.cargarRecetasPopulares();
+		ArrayList<Receta> recetas = f.cargarRecetasPopulares();
 		return recetas;
 	}
 	
-	public static Recetas cargarRecetasUsuario(String usuario){
+	public static ArrayList<Receta> cargarRecetasUsuario(String usuario){
 		Factory f = new Factory();
-		Recetas recetas = f.cargarRecetasUsuario(usuario);
+		ArrayList<Receta> recetas = f.cargarRecetasUsuario(usuario);
 		return recetas;
 	}
 	
-	public static Recetas cargarRecetasBuscadas(itemsABuscar queBuscar){
+	public static ArrayList<Receta> cargarRecetasBuscadas(itemsABuscar queBuscar){
 		Factory f = new Factory();
-		Recetas recetas = f.cargarRecetasBuscadas(queBuscar);
+		ArrayList<Receta> recetas = f.cargarRecetasBuscadas(queBuscar);
 		return recetas;
 	}
 	
@@ -85,6 +84,11 @@ public class Browser {
 	public static ArrayList<Ingredientes> listaIngredientes(){
 		Factory f = new Factory();
 		return f.listaIngredientes();
+	}
+	
+	public static ArrayList<Condimentos> listaCondimentos(){
+		Factory f = new Factory();
+		return f.listaCondimentos();	
 	}
 	
 	public static ArrayList<Dificultades> listaDificultades(){
