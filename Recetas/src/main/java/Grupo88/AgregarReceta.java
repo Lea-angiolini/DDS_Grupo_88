@@ -63,6 +63,9 @@ public class AgregarReceta extends RegisteredPage {
 	private Usuario user = sesion.getUsuario().getObject();
 	private final RecetaU nuevareceta = new RecetaU(-1, "", user.getUsername(), null, null, null, 0);
 	private List<Fragmento> fragmentos = new ArrayList<Fragmento>();
+	private DropList<Ingredientes> dropIng;
+	private DropList<Condimentos> dropCond;
+	
 	//private Fragmento frm
 	
 	public AgregarReceta(){
@@ -105,8 +108,10 @@ public class AgregarReceta extends RegisteredPage {
 		add(new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"), Browser.listaDificultades(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
 		add(new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), Browser.listaIngredientes(), new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
 		
-		add(new DropList<Ingredientes>("dropIngredientes",Browser.listaIngredientes()));
-		add(new DropList<Condimentos>("dropCondimentos",Browser.listaCondimentos()));
+		
+		
+		add(dropIng = new DropList<Ingredientes>("dropIngredientes",Browser.listaIngredientes()));
+		add(dropCond = new DropList<Condimentos>("dropCondimentos",Browser.listaCondimentos()));
 		}
 		
 		@Override
@@ -114,8 +119,8 @@ public class AgregarReceta extends RegisteredPage {
 		// Va a conectarse con BD y comprobar las validaciones
 		super.onSubmit();
 		pagina().addOrReplace(fragmentos.get(1));
-		
-		
+		//nuevareceta.setIngredientes(dropIng.getElegidos());
+		//nuevareceta.setCondimentos(dropCond.getElegidos());
 		}
 	}
 	

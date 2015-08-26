@@ -967,7 +967,6 @@ public ArrayList<Usuario> obtenerUsuariosGrupo(Grupo grupo){
 			Usuario usuarioObtenido;
 			usuarios.add(usuarioObtenido = new Usuario());
 			usuarioObtenido.setUsername(rs.getString("nombreUsuario"));
-			JOptionPane.showMessageDialog(null, usuarioObtenido.getUsername());
 		}
 			
 		return usuarios;

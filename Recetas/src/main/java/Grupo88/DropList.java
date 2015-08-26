@@ -27,11 +27,11 @@ public class DropList<T> extends Panel {
 
 	MarkupContainer contIng1;
 	MarkupContainer contIng2;
+	final ArrayList<Estado<T>> estados = new ArrayList<Estado<T>>();
 	
 	public DropList(String id, ArrayList<T> lista) {
 		super(id);
 		
-		final ArrayList<Estado<T>> estados = new ArrayList<Estado<T>>();
 		for(T prod : lista){
 			estados.add(new Estado<T>(prod));
 		}
@@ -101,6 +101,17 @@ public class DropList<T> extends Panel {
 		contenedor.setOutputMarkupId(true);
 		return contenedor;
 	}
+	
+	public ArrayList<T> getElegidos(){
+		ArrayList<T> elegidos = new ArrayList<T>();
+		for(Estado<T> prod : estados ){
+			if(prod.isElegido()){
+				elegidos.add(prod.getObject());
+			}
+		}
+		return elegidos;
+	}
+	
 	
 	private class Estado<T>{
 		private T object;
