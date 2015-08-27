@@ -3,36 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<wicket:panel>
-		
-			<div>
+<wicket:panel>
+	
+    <form  wicket:id="FrmLinks" method="get">
+    <div id="MainMenu">
+  <div class="list-group panel">
+    <a  wicket:id="recetas" class="list-group-item list-group-item-success"><span class="glyphicon glyphicon-list-alt"></span> Recetas</a>
+    
+    <a class="list-group-item list-group-item-success" wicket:id="perfil"><span class="glyphicon glyphicon-user"></span> Perfil</a>
+     <a class="list-group-item list-group-item-success" wicket:id="grupos"><span class="glyphicon glyphicon-globe"></span> Grupos</a>
+     <a class="list-group-item list-group-item-success" wicket:id="misRecetas"><span class="glyphicon glyphicon-list"></span> Mis Recetas</a>
+   
+  <a href="#demo4"  class="list-group-item list-group-item-success"  data-toggle="collapse" ><span class="glyphicon glyphicon-tasks"></span> Estadisticas</a>
+    <div class="collapse" id="demo4">
+      <a wicket:id="estadisticas" class="list-group-item"> Por sexo</a>
+      <a href="" class="list-group-item"> Por dificultad de receta</a>
+      <a href="" class="list-group-item"> Recetas mas consultadas</a>
+    </div>
+    <a href="#demo5"  class="list-group-item list-group-item-success" data-toggle="collapse" ><span class="glyphicon glyphicon-stats"></span> Reportes</a>
+    <div class="collapse" id="demo5">
+      <a href="" class="list-group-item"> Recetas consultadas</a>
+      <a href="" class="list-group-item"> Recetas nuevas</a>
+      <a href="" class="list-group-item"> Preferencias de recetas</a>
+      <a href="" class="list-group-item"> Recetas según calorías</a>
+    </div>
+  </div>
+</div>
 
-				<form id="frmLiks" wicket:id="FrmLinks" method="get">
-					<fieldset id="Links" class="text-center">
-					
-					<button type="button" wicket:id="recetas" class="btn btn-primary" style="margin-bottom: 2px;">
-						<span class="glyphicon glyphicon-list-alt"></span> Recetas</button><br>
-					<button type="button" wicket:id="perfil" class="btn btn-primary" style="margin-bottom: 2px;">
-						<span class="glyphicon glyphicon-user"></span> Perfil</button><br>
-					<button type="button" wicket:id="grupos" class="btn btn-primary" style="margin-bottom: 2px;">
-						<span class="glyphicon glyphicon-globe"></span> Grupos</button><br>
-					<!-- <button wicket:id="planificador">Planificador</button><br> -->
-					<button type="button" wicket:id="misRecetas" class="btn btn-primary" style="margin-bottom: 2px;">
-						<span class="glyphicon glyphicon-list"></span> Mis recetas</button><br>
-					<button type="button" wicket:id="estadisticas" class="btn btn-primary" style="margin-bottom: 2px;">
-						<span class="glyphicon glyphicon-stats"></span> Estadísticas</button><br>
-					
-					
-
-					</fieldset>
-				</form>
-
-			</div>
-			<script src="js/login.js"></script>
-		
-	</wicket:panel>
+      
+ 
+</form>
+    
+     
+    <script>$("#MainMenu").autoHidingNavbar();</script>
+</wicket:panel>
 </body>
 </html>
+
 					
