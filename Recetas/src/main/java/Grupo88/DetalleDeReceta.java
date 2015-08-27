@@ -54,7 +54,9 @@ import Database.Browser;
 import Grupo88.Inicio.FrmInicio;
 import Grupo88.Login.FrmLogin;
 import ObjetosDB.CondicionesPreexistentes;
+import ObjetosDB.Condimentos;
 import ObjetosDB.Grupo;
+import ObjetosDB.Ingredientes;
 import ObjetosDB.Pasos;
 import ObjetosDB.RecetaU;
 import ObjetosDB.Usuario;
@@ -109,11 +111,11 @@ public class DetalleDeReceta extends MasterPage {
 		
 		RepeatingView ingredientes = new RepeatingView("listaIngredientes");
 		
-		for (String ingrediente : receta.getIngredientes()) {
+		for (Ingredientes ingrediente : receta.getIngredientes()) {
 			
 			AbstractItem item = new AbstractItem(ingredientes.newChildId());
 					
-			item.add(new Label("unIngrediente", ingrediente));
+			item.add(new Label("unIngrediente", ingrediente.getIngrediente()));
 			ingredientes.add(item);
 			
 		}
@@ -122,11 +124,11 @@ public class DetalleDeReceta extends MasterPage {
 		
 		RepeatingView condimentos = new RepeatingView("listaCondimentos");
 		
-		for (String condimento : receta.getCondimentos()) {
+		for (Condimentos condimento : receta.getCondimentos()) {
 			
 			AbstractItem item = new AbstractItem(condimentos.newChildId());
 					
-			item.add(new Label("unCondimento", condimento));
+			item.add(new Label("unCondimento", condimento.getCondimento()));
 			condimentos.add(item);
 			
 		}

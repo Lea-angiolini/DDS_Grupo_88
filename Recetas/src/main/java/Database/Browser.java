@@ -186,4 +186,9 @@ public class Browser {
 		Factory f = new Factory();
 		return f.cargarHomeRecetas(user);
 	}
+	
+	public static boolean agregarIngredientesyCondimentos(RecetaU receta){
+		Factory f = new Factory();
+		return f.agregarIngredientesyCondimentos(receta);
+	}
 }

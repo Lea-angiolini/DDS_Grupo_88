@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.documentvalidation.TextContent;
 import org.eclipse.jetty.util.StringUtil;
+import org.junit.internal.builders.IgnoredBuilder;
 
 import ObjetosDB.*;
 
@@ -161,7 +162,7 @@ public class Factory {
 				recetas.add(new Receta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
-										   new Dificultades(rs.getInt("idDificultad"), rs.getString("descripcion")),
+										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
 										   new Ingredientes(0, "", 0, 0),rs.getString("descripcion")));
 				
 				
@@ -598,7 +599,7 @@ public class Factory {
 			rs = cmd.executeQuery();
 			
 			while(rs.next()){
-				receta.agregarIngrediente(rs.getString("cantidad")+" "+rs.getString("ingrediente"));
+				receta.agregarIngrediente(new Ingredientes(rs.getInt("idIngrediente"), rs.getString("ingrediente"), rs.getInt("caloriasPorcion"), rs.getInt("tipoIngrediente")));
 			}
 			
 			cmd = con.prepareCall("{call SP_ObtenerCondimentosReceta(?)}");
@@ -606,7 +607,7 @@ public class Factory {
 			rs = cmd.executeQuery();
 			
 			while(rs.next()){
-				receta.agregarCondimento(rs.getString("condimento"));
+				receta.agregarCondimento(new Condimentos(rs.getInt("idCondimento"),rs.getString("condimento")));
 			}
 			
 			cmd = con.prepareCall("{call SP_ObtenerPasosReceta(?)}");
@@ -618,7 +619,7 @@ public class Factory {
 			}
 		}
 		catch(SQLException ex){
-			//JOptionPane.showMessageDialog(null, ex.getMessage());	
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
 			receta = new RecetaU(-1, ex.getMessage(), "", null,null,null,0);
 		}
 		return receta;
@@ -894,7 +895,7 @@ public boolean agregarReceta(RecetaU receta){
 			cmdRegPaso.executeQuery();
 		}
 	
-		
+		receta.setIdreceta(cmd.getInt(9));
 		return true;
 	}
 	
@@ -1013,7 +1014,35 @@ public ArrayList<Receta> cargarHomeRecetas(Usuario user){
 	return recetas;
 }
 
+	public boolean agregarIngredientesyCondimentos(RecetaU receta){
+		
+		ArrayList<Ingredientes> ingredientes = receta.getIngredientes();
+		ArrayList<Condimentos> condimentos = receta.getCondimentos();
+		
+		try
+		{
+			for(Ingredientes ingrediente : ingredientes){
+			CallableStatement cmd = con.prepareCall("{call SP_agregarIngredienteAReceta(?,?)}");
+			
+			cmd.setInt(1,receta.getIdreceta());
+			cmd.setInt(2,ingrediente.getIdIngrediente());
+			cmd.executeQuery();
+		}
+			for(Condimentos condimento : condimentos){
+				CallableStatement cmd = con.prepareCall("{call SP_agregarCondimentoAReceta(?,?)}");
+				
+				cmd.setInt(1,receta.getIdreceta());
+				cmd.setInt(2,condimento.getIdCondimento());
+				cmd.executeQuery();
+			}
+			return true;
+		}
+		catch(SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			return false;
+		}
 
+	}
 }
 
 

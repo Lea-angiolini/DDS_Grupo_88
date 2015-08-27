@@ -15,8 +15,8 @@ public class RecetaU {
 	private Dificultades dificultad;
 	private Temporadas temporada;
 	private Ingredientes ingredientePrincipal;
-	private ArrayList<String> ingredientes;
-	private ArrayList<String> condimentos;
+	private ArrayList<Ingredientes> ingredientes;
+	private ArrayList<Condimentos> condimentos;
 	private ArrayList<Pasos> pasos;
 	private int calificacion;
 
@@ -28,8 +28,8 @@ public class RecetaU {
 		setDificultad(difi);
 		setTemporada(temp);
 		setIngredientePrincipal(ingPrin);
-		ingredientes = new ArrayList<String>();
-		condimentos = new ArrayList<String>();
+		ingredientes = new ArrayList<Ingredientes>();
+		condimentos = new ArrayList<Condimentos>();
 		pasos = new ArrayList<Pasos>();
 		setCalificacion(calif);
 	}
@@ -88,27 +88,27 @@ public class RecetaU {
 		this.ingredientePrincipal = ingredientePrincipal;
 	}
 	
-	public ArrayList<String> getIngredientes() {
+	public ArrayList<Ingredientes> getIngredientes() {
 		return ingredientes;
 	}
 
-	public void setIngredientes(ArrayList<String> ingredientes) {
+	public void setIngredientes(ArrayList<Ingredientes> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
 
-	public ArrayList<String> getCondimentos() {
+	public ArrayList<Condimentos> getCondimentos() {
 		return condimentos;
 	}
 
-	public void setCondimentos(ArrayList<String> condimentos) {
+	public void setCondimentos(ArrayList<Condimentos> condimentos) {
 		this.condimentos = condimentos;
 	}
 	
-	public void agregarIngrediente(String ingrediente){
+	public void agregarIngrediente(Ingredientes ingrediente){
 		ingredientes.add(ingrediente);
 	}
 	
-	public void agregarCondimento(String condimento){
+	public void agregarCondimento(Condimentos condimento){
 		condimentos.add(condimento);
 	}
 	
@@ -133,7 +133,10 @@ public class RecetaU {
 	}
 	
 	public boolean guardarReceta(){
-		return Browser.agregarReceta(this);
+		if(Browser.agregarReceta(this)){
+			return Browser.agregarIngredientesyCondimentos(this);
+		}
+		return false;
 	}
 }
 

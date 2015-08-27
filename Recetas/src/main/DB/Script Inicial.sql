@@ -419,7 +419,7 @@ IN username VARCHAR(30)
 )
 BEGIN
 
-	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion, dif.idDificultad, rec.descripcion
+	SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', dif.idDificultad, rec.descripcion
     FROM recetas rec 
     JOIN dificultad dif
     ON rec.idDificultad = dif.idDificultad
@@ -541,7 +541,9 @@ CREATE PROCEDURE SP_ObtenerIngredientesReceta(
 )
 BEGIN
 
-	SELECT ing.nombre as 'ingrediente', rel.cantidad FROM relrecetaingredientes rel
+	SELECT ing.idIngrediente, ing.nombre as 'ingrediente', rel.cantidad,
+			ing.caloriasPorcion, ing.tipoingrediente
+    FROM relrecetaingredientes rel
      JOIN ingredientes ing
      ON rel.idIngrediente = ing.idIngrediente
      WHERE rel.idReceta = idReceta;
@@ -552,7 +554,7 @@ CREATE PROCEDURE SP_ObtenerCondimentosReceta(
 	IN idReceta INT
 )
 BEGIN
-	SELECT cond.nombre as 'condimento' FROM relrecetcondimento rel
+	SELECT cond.idCondimento, cond.nombre as 'condimento' FROM relrecetcondimento rel
      JOIN condimento cond
      ON rel.idCondimento = cond.idCondimento
      WHERE rel.idReceta = idReceta;
@@ -873,5 +875,29 @@ BEGIN
 					ORDER BY rec.puntajeTotal DESC
 					LIMIT 10;
 
+END$$
+
+CREATE PROCEDURE SP_agregarIngredienteAReceta(
+IN idReceta int,
+IN idIngrediente int)
+BEGIN
+
+	INSERT INTO relrecetaingredientes(idReceta,idIngrediente,cantidad)
+    VALUES(idReceta,idIngrediente,1);
+    
+    UPDATE recetas
+    SET calorias = calorias + (SELECT caloriasPorcion FROM ingredientes ing
+								WHERE ing.idIngrediente = idIngrediente);
+    
+END$$
+
+CREATE PROCEDURE SP_agregarCondimentoAReceta(
+IN idReceta int,
+IN idCondimento int)
+BEGIN
+
+	INSERT INTO relrecetcondimento(idReceta,idCondimento)
+    VALUES(idReceta,idCondimento);
+    
 END$$
 DELIMITER ;

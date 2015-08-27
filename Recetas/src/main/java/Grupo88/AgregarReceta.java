@@ -119,8 +119,8 @@ public class AgregarReceta extends RegisteredPage {
 		// Va a conectarse con BD y comprobar las validaciones
 		super.onSubmit();
 		pagina().addOrReplace(fragmentos.get(1));
-		//nuevareceta.setIngredientes(dropIng.getElegidos());
-		//nuevareceta.setCondimentos(dropCond.getElegidos());
+		nuevareceta.setIngredientes(dropIng.getElegidos());
+		nuevareceta.setCondimentos(dropCond.getElegidos());
 		}
 	}
 	
