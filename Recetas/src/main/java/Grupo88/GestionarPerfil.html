@@ -1,21 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Perfil</title>
+<meta charset="utf-8" />
+<title>Fechas</title>
+
+
 </head>
 <body>
-	<wicket:extend>
-	
-		<div>
+
+<wicket:extend>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script>
+$(function () {
+$("#fecha").datepicker();
+});
+</script>
+<script>
+ $.datepicker.regional['es'] = {
+ closeText: 'Cerrar',
+ prevText: '<Ant',
+ nextText: 'Sig>',
+ currentText: 'Hoy',
+ monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+ monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+ dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+ dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+ dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+ weekHeader: 'Sm',
+ dateFormat: 'dd/mm/yy',
+ firstDay: 1,
+ isRTL: false,
+ showMonthAfterYear: false,
+ yearSuffix: ''
+ };
+ $.datepicker.setDefaults($.datepicker.regional['es']);
+$(function () {
+$("#fecha").datepicker();
+});
+</script>
+
+<div>
 			<form id="frmModifUsuario" wicket:id="FrmModifUsuario" method="post">
 				<fieldset id="modifPerfil" class="center">
 					<div id="signupbox" style="display:block; margin-top:50px" class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
 							<div class="panel panel-info">
 					    	<div class="panel-heading">
-					        	<div class="panel-title"><span class="glyphicon glyphicon-edit"></span>&nbsp;<span>Perfil</span></div>   
+					        	<div class="panel-title" style="font-size:20px"><span class="glyphicon glyphicon-edit"></span>&nbsp;<span>Perfil</span></div>   
 					        </div>  
 					        <div class="panel-body">
+					        
 					        	<form id="signupform" class="form-horizontal" role="form">
 					            	<div id="signupalert" style="display:none" class="alert alert-danger">
 					                	<p>Error:</p>
@@ -55,10 +90,11 @@
 					                </div>
 					                
 					                 <div class="form-group">
-					                	<label align=left for="icode" class="col-md-4 control-label">Fecha nacimiento</label>
-					                    <div class="col-md-8">
-					                    	<input type="text" class="form-control" name="fechaNac" id="fechaNac"  wicket:id="fechaNac"  placeholder="Fecha">
-					                    </div>
+					                    
+					                    <label align=left for="icode" class="col-md-4 control-label">Fecha nacimiento</label>
+ <div class="col-md-8">
+ <input type="text" id="fecha" class="form-control" value="" placeholder="Fecha" wicket:id="fechaNac"/>
+ </div>
 					                </div>
 					                
 					                <div class="form-group">
@@ -126,7 +162,6 @@
 				</fieldset>		
 			</form>
 		</div>
-	<!-- 	<script src="js/AltaUsuario.js"></script> -->
-	</wicket:extend>
+		</wicket:extend>
 </body>
 </html>
