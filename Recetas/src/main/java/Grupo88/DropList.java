@@ -20,14 +20,16 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 
 import Database.Browser;
+import ObjetosDB.AlimDeReceta;
 import ObjetosDB.Condimentos;
 import ObjetosDB.Ingredientes;
 
-public class DropList<T> extends Panel {
+public class DropList<T extends AlimDeReceta> extends Panel {
 
 	MarkupContainer contIng1;
 	MarkupContainer contIng2;
 	final ArrayList<Estado<T>> estados = new ArrayList<Estado<T>>();
+	final Model<String> filtroIngText;
 	
 	public DropList(String id, ArrayList<T> lista) {
 		super(id);
@@ -36,28 +38,20 @@ public class DropList<T> extends Panel {
 			estados.add(new Estado<T>(prod));
 		}
 		
-		final Model<String> filtroIngText = new Model<String>();
+		filtroIngText = new Model<String>();
 		final TextField<String> filtroIng = new TextField<String>("filtroIng", filtroIngText);
 		filtroIng.add(new AjaxFormComponentUpdatingBehavior ("onkeyup") {
 			
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
 				// TODO Auto-generated method stub
-				target.add(filtroIng);
-				/*ArrayList<Estado<Ingredientes>> nvoEstadosIng;
-				for(Estado<Ingredientes> ing : estadosIng){
-					if(ing.getObject().getIngrediente());
-				}
+				//target.add(filtroIng);
 				
 				MarkupContainer nvoCont1;
-				contIng1.replaceWith(nvoCont1 = generarListaIng(estadosIng,"contIng", false));
+				contIng1.replaceWith(nvoCont1 = generarListaIng(filtrarProductos(estados, filtroIngText),"contIng", false));
 				target.add(nvoCont1);
 				contIng1 = nvoCont1;
 				
-				MarkupContainer nvoCont2;
-				contIng2.replaceWith(nvoCont2 = generarListaIng(estadosIng,"contIng2", true));
-				target.add(nvoCont2);
-				contIng2 = nvoCont2;*/
 				
 			}
 		});
@@ -68,7 +62,20 @@ public class DropList<T> extends Panel {
 		add(contIng2 = generarListaIng(estados,"contIng2", true));
 		
 	}
-	
+	private ArrayList<Estado<T>> filtrarProductos(ArrayList<Estado<T>> productos, Model<String> filtro){
+		ArrayList<Estado<T>> filtrados = new ArrayList<Estado<T>>(); 
+		
+		if(filtro.getObject() == null){
+			return productos;
+		}
+		
+		for(Estado<T> prod : estados ){
+			if(prod.getName().toLowerCase().startsWith(filtro.getObject().toLowerCase())){
+				filtrados.add(prod);
+			}
+		}
+		return filtrados;
+	}
 	private MarkupContainer generarListaIng(final ArrayList<Estado<T>> productos, String containerID, boolean estad){
 		
 		final MarkupContainer contenedor = new MarkupContainer(containerID){};
@@ -83,12 +90,12 @@ public class DropList<T> extends Panel {
 					prod.alternar();
 					
 					MarkupContainer nvoCont1;
-					contIng1.replaceWith(nvoCont1 = generarListaIng(productos,"contIng", false));
+					contIng1.replaceWith(nvoCont1 = generarListaIng(filtrarProductos(productos, filtroIngText),"contIng", false));
 					target.add(nvoCont1);
 					contIng1 = nvoCont1;
 					
 					MarkupContainer nvoCont2;
-					contIng2.replaceWith(nvoCont2 = generarListaIng(productos,"contIng2", true));
+					contIng2.replaceWith(nvoCont2 = generarListaIng(filtrarProductos(productos, filtroIngText),"contIng2", true));
 					target.add(nvoCont2);
 					contIng2 = nvoCont2;
 				}
@@ -113,12 +120,12 @@ public class DropList<T> extends Panel {
 	}
 	
 	
-	private class Estado<T>{
+	private class Estado<T extends AlimDeReceta>{
 		private T object;
 		private boolean elegido;
-		public Estado(T obj) {
+		public Estado(T prod) {
 			// TODO Auto-generated constructor stub
-			object = obj;
+			object = prod;
 			elegido = false;
 		}
 		public T getObject() {
@@ -139,13 +146,8 @@ public class DropList<T> extends Panel {
 		}
 		
 		public String getName(){
-			if(object.getClass() == Ingredientes.class){
-				return ((Ingredientes) object).getIngrediente();
-			}
-			if(object.getClass() == Condimentos.class){
-				return ((Condimentos) object).getCondimento();
-			}
-			return "";
+			
+			return object.getName();
 			}
 	}
 }

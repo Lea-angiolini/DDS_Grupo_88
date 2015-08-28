@@ -1,6 +1,6 @@
 package ObjetosDB;
 
-public class Condimentos {
+public class Condimentos extends AlimDeReceta{
 	private int idCondimento;
 	private String condimento;
 	
@@ -24,6 +24,18 @@ public class Condimentos {
 
 	public void setCondimento(String condimento) {
 		this.condimento = condimento;
+	}
+
+	@Override
+	public int getId() {
+		// TODO Auto-generated method stub
+		return idCondimento;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return condimento;
 	}
 	
 }

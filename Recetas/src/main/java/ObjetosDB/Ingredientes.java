@@ -1,6 +1,6 @@
 package ObjetosDB;
 
-public class Ingredientes {
+public class Ingredientes extends AlimDeReceta{
 	
 	int idIngrediente;
 	String ingrediente;
@@ -47,6 +47,18 @@ public class Ingredientes {
 
 	public void setIdTipoIngrediente(int idTipoIngrediente) {
 		this.idTipoIngrediente = idTipoIngrediente;
+	}
+
+	@Override
+	public int getId() {
+		// TODO Auto-generated method stub
+		return idIngrediente;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return ingrediente;
 	}
 	
 	

@@ -35,6 +35,7 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -42,6 +43,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.validation.validator.StringValidator;
 import org.eclipse.jetty.server.Server;
 import org.omg.CORBA.NVList;
 import org.apache.wicket.Session;
@@ -71,13 +73,15 @@ public class AgregarReceta extends RegisteredPage {
 	public AgregarReceta(){
 		super();
 		//getMenuPanel().setVisible(false);
-
+		
 		fragmentos.add(new Fragmento("areaForms","fragmentoInicial",this,new FrmDatosReceta("frmDatosBasicos")));
 		for(int i = 1; i<= 5; i++){
 			nuevareceta.agregarPaso(new Pasos(i, ""));
 			fragmentos.add(new Fragmento("areaForms","fragmentoPaso",pagina(), new FrmPaso("frmPasos",i)));
 		}
 		add(fragmentos.get(0));
+		
+		add(new FeedbackPanel("feedback"));
 	}
 	
 	protected AgregarReceta pagina(){
@@ -126,15 +130,23 @@ public class AgregarReceta extends RegisteredPage {
 	
 	public class FrmPaso extends Form {
 		
+		private TextArea<String> detallePaso;
 		private int idFrmPaso;
+		
 		public FrmPaso(String id, int idPaso) {
 			super(id);
 			// TODO Auto-generated constructor stub
 			idFrmPaso = idPaso;
 			
+			StringValidator vText = new StringValidator(5, 12);
 			add(new Label("numPaso",idPaso));
-			add(new TextArea<String>("paso", new PropertyModel<String>(nuevareceta.getPasos().get(idPaso-1), "descripcionPaso")));
+			add(detallePaso = new TextArea<String>("paso", new PropertyModel<String>(nuevareceta.getPasos().get(idPaso-1), "descripcionPaso")));
+			detallePaso.add(vText);
+			detallePaso.setRequired(true);
+			
+			
 			add(new Label ("sigPaso", (idPaso<5) ? "Siguiente Paso" : "Finalizar"));
+			
 			add(new Link("pasoAnt"){
 				@Override
 				public void onClick() {
@@ -142,6 +154,7 @@ public class AgregarReceta extends RegisteredPage {
 					pagina().addOrReplace(fragmentos.get(idFrmPaso-1));
 				}
 			});
+			
 		}
 		
 		
