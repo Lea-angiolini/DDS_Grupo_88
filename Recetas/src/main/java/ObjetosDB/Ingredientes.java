@@ -1,12 +1,13 @@
 package ObjetosDB;
 
+import java.util.ArrayList;
+
 public class Ingredientes extends AlimDeReceta{
 	
 	int idIngrediente;
 	String ingrediente;
 	int calorias;
 	int idTipoIngrediente;
-	
 	
 
 	public Ingredientes(int idIngrediente, String ingrediente, int calorias,int idTipoIngrediente)
@@ -15,6 +16,7 @@ public class Ingredientes extends AlimDeReceta{
 		this.ingrediente = ingrediente;
 		this.calorias = calorias;
 		this.idTipoIngrediente = idTipoIngrediente;
+		setCondAptas(new ArrayList<Integer>());
 	}
 
 	public int getIdIngrediente() {
@@ -59,6 +61,12 @@ public class Ingredientes extends AlimDeReceta{
 	public String getName() {
 		// TODO Auto-generated method stub
 		return ingrediente;
+	}
+
+	@Override
+	public boolean visit(CondicionesPreexistentes cond) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

@@ -201,10 +201,10 @@ CREATE TABLE Grupo88.relgruporeceta(
 	PRIMARY KEY(idGrupo,idReceta)
 );
 
-CREATE TABLE Grupo88.relCondPreexIngNoComestible(
+CREATE TABLE Grupo88.relIngredienteCond(
 	idCond INT REFERENCES condiciones,
-    idIngNoComestible INT REFERENCES ingredientes,
-    PRIMARY KEY(idCond,idIngNoComestible)
+    idIngrediente INT REFERENCES ingredientes,
+    PRIMARY KEY(idCond,idIngrediente)
 );
 
 CREATE TABLE Grupo88.relDietaTipoIngNoComestible(
@@ -314,9 +314,10 @@ VALUES (1,1);
 INSERT INTO Grupo88.relRecetaIngredientes (idReceta,idIngrediente,cantidad)
 VALUES (1,31,1),(1,21,1),
 	   (3,34,1),(3,13,5),
-       (4,3,2),(4,29,2);
+       (4,3,2),(4,29,2),
+       (6,3,2);
        
-INSERT INTO Grupo88.relCondPreexIngNoComestible()
+INSERT INTO Grupo88.relIngredienteCond()
 VALUES (1,1),(1,3),(2,3);
 
 
@@ -898,6 +899,24 @@ BEGIN
 
 	INSERT INTO relrecetcondimento(idReceta,idCondimento)
     VALUES(idReceta,idCondimento);
+    
+END$$
+
+CREATE PROCEDURE SP_cargarIngrediente(
+IN idIngrediente int)
+BEGIN
+
+	SELECT * FROM ingredientes ing
+    WHERE ing.idIngrediente = idIngrediente;
+    
+END$$
+
+CREATE PROCEDURE SP_condPreexIngrediente(
+IN idIngrediente int)
+BEGIN
+
+    SELECT idCond FROM relIngredienteCond rel
+    WHERE rel.IdIngrediente = idIngrediente;
     
 END$$
 DELIMITER ;

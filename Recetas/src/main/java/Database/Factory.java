@@ -114,6 +114,38 @@ public class Factory {
 		
 	}
 	
+	public Ingredientes cargarIngrediente(int idIngrediente){
+		ResultSet rs = null;
+		
+		try
+		{
+			
+			CallableStatement cmd = con.prepareCall("{call SP_cargarIngrediente(?)}");
+			cmd.setInt(1, idIngrediente);
+			rs = cmd.executeQuery();
+			Ingredientes ingrediente;
+			
+			rs.next();
+				
+			ingrediente = new Ingredientes(rs.getInt("idIngrediente"), rs.getString("nombre"), rs.getInt("caloriasPorcion"), rs.getInt("TipoIngrediente"));
+			
+			cmd = con.prepareCall("{call SP_condPreexIngrediente(?)}");
+			cmd.setInt(1, idIngrediente);
+			rs = cmd.executeQuery();
+			
+			while(rs.next()){
+				ingrediente.setCondApta(rs.getInt("idCond"));
+			}
+			return ingrediente;
+		}
+		catch(SQLException ex){
+			return new Ingredientes(0, ex.getMessage(), 0, 0);
+		}
+		
+	
+	}
+	
+	
 	public ArrayList<Receta> cargarRecetasPopulares()
 	{
 		ResultSet rs = null;
@@ -589,7 +621,7 @@ public class Factory {
 										   rs.getString("creador"), 
 										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
 										   new Temporadas(rs.getInt("idTemporada"), rs.getString("nombreTemporada")),
-										   new Ingredientes(rs.getInt("idIngrediente"), rs.getString("IngPrincipal"),rs.getInt("caloriasPorcion"),rs.getInt("tipoIngrediente")),
+										   cargarIngrediente(rs.getInt("idIngrediente")),
 										   rs.getInt("calificacion"));
 	
 			}else{ receta = new RecetaU(-1, "Error en el if", "", null,null,null,0);}
@@ -599,7 +631,7 @@ public class Factory {
 			rs = cmd.executeQuery();
 			
 			while(rs.next()){
-				receta.agregarIngrediente(new Ingredientes(rs.getInt("idIngrediente"), rs.getString("ingrediente"), rs.getInt("caloriasPorcion"), rs.getInt("tipoIngrediente")));
+				receta.agregarIngrediente(cargarIngrediente(rs.getInt("idIngrediente")));
 			}
 			
 			cmd = con.prepareCall("{call SP_ObtenerCondimentosReceta(?)}");

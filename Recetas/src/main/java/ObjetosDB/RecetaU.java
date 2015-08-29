@@ -138,5 +138,9 @@ public class RecetaU {
 		}
 		return false;
 	}
+	
+	public boolean calificar(Usuario user){
+		return Browser.calUltimaConfirmacion(idreceta,user,calificacion);
+	}
 }
 

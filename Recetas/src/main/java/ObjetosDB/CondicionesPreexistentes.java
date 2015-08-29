@@ -1,6 +1,6 @@
 package ObjetosDB;
 
-public class CondicionesPreexistentes {
+public class CondicionesPreexistentes implements Visitable{
 	
 	int idCondPreex;
 	String condPreex;
@@ -22,5 +22,11 @@ public class CondicionesPreexistentes {
 	}
 	public void setCondPreex(String condPreex) {
 		this.condPreex = condPreex;
+	}
+
+	@Override
+	public boolean accept(Visitor visitor) {
+		// TODO Auto-generated method stub
+		return visitor.visit(this);
 	}
 }

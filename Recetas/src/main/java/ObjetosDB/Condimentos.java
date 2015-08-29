@@ -37,5 +37,11 @@ public class Condimentos extends AlimDeReceta{
 		// TODO Auto-generated method stub
 		return condimento;
 	}
+
+	@Override
+	public boolean visit(CondicionesPreexistentes cond) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

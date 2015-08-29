@@ -101,7 +101,7 @@ public class DetalleDeReceta extends MasterPage {
 			public void onSubmit() {
 				// TODO Auto-generated method stub
 				super.onSubmit();
-				Browser.calUltimaConfirmacion(idReceta.toInt(),user,receta.getCalificacion());
+				receta.calificar(user);
 			}
 		});
 		}
