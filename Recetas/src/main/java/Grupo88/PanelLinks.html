@@ -16,7 +16,7 @@
   <div class="list-group panel">
     <a  wicket:id="recetas" class="list-group-item list-group-item-success"><span class="glyphicon glyphicon-list-alt"></span> Recetas</a>
     
-    <a class="list-group-item list-group-item-success" wicket:id="perfil"><span class="glyphicon glyphicon-user"></span> Perfil</a>
+    <a class="list-group-item list-group-item-success icon-chevron-right" wicket:id="perfil"><span class="glyphicon glyphicon-user"></span> Perfil</a>
      <a class="list-group-item list-group-item-success" wicket:id="grupos"><span class="glyphicon glyphicon-globe"></span> Grupos</a>
      <a class="list-group-item list-group-item-success" wicket:id="misRecetas"><span class="glyphicon glyphicon-list"></span> Mis Recetas</a>
    
@@ -41,7 +41,7 @@
 </form>
     
      
-    <script>$("#MainMenu").autoHidingNavbar();</script>
+    <script>$('.navbar-fixed').autoHidingNavbar('setDisableAutohide', true);</script>
 </wicket:panel>
 </body>
 </html>
