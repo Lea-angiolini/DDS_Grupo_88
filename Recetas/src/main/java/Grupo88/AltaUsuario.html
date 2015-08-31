@@ -6,6 +6,37 @@
 </head>
 <body>
 	<wicket:extend>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<script>
+$(function () {
+$("#fecha").datepicker();
+});
+</script>
+<script>
+ $.datepicker.regional['es'] = {
+ closeText: 'Cerrar',
+ prevText: '<Ant',
+ nextText: 'Sig>',
+ currentText: 'Hoy',
+ monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+ monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+ dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+ dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+ dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+ weekHeader: 'Sm',
+ dateFormat: 'dd/mm/yy',
+ firstDay: 1,
+ isRTL: false,
+ showMonthAfterYear: false,
+ yearSuffix: ''
+ };
+ $.datepicker.setDefaults($.datepicker.regional['es']);
+$(function () {
+$("#fecha").datepicker();
+});
+</script>
 	
 		<div>
 			<form id="frmAltaUsuario" wicket:id="FrmAltaUsuario" method="post">
@@ -71,11 +102,11 @@
 					                </div>
 					                
 					                 <div class="form-group">
-					                	<label align=left for="icode" class="col-md-4 control-label">Fecha nacimiento</label>
-					                    <div class="col-md-8">
-					                    	<input type="text" class="form-control" name="fechaNac" id="fechaNac"  wicket:id="fechaNac"  placeholder="Fecha">
-					                    </div>
-					                </div>
+					                 <label align=left for="icode" class="col-md-4 control-label">Fecha nacimiento</label>
+ <div class="col-md-8">
+ <input type="text" id="fecha" class="form-control" value="" placeholder="Fecha" wicket:id="fechaNac"/>
+ </div>
+				</div>	                
 					                
 					                <div class="form-group">
 					                	<label align=left for="icode" class="col-md-4 control-label">Altura <sub>cm</sub></label>
@@ -131,7 +162,7 @@
 					                    	<label style="color:red" wicket:id="lblError"></label>
 					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
 					                    	<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Registrarse</button>
-					                    </div>
+					                           </div>
 					            </form>
 					        </div>
 					    </div>
