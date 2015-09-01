@@ -23,19 +23,18 @@ public class SesionUsuario extends WebSession {
 	}
 	
 	public boolean loguearUsuario(ModelUsuario user){
-		if (usuario == null){
+		if (usuario.getObject().getUsername() == "Invitado"){
 			if (Browser.Login(user.getObject().getUsername(), user.getObject().getPassword())){
 				this.usuario = user;
+				return true;
 			}
 		}
-		return usuario != null;
+		return false;
 	}
 
 	
 	public void desloguearUsuario(){
-		ModelUsuario invitado = new ModelUsuario(new Usuario());
-		invitado.getObject().setUsername("Invitado");
-		setAttribute("usuario", invitado);
+		this.invalidateNow();
 	}
 	
 	public ModelUsuario getUsuario() {

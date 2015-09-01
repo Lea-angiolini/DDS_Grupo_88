@@ -81,7 +81,7 @@ public class Grupo {
 		
 	}
 	
-	public ArrayList<Receta> obtenerRecetas(){
+	public ArrayList<RecetaU> obtenerRecetas(){
 		return Browser.obtenerRecetasGrupo(idGrupo);
 	}
 	

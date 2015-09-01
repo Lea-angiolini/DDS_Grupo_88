@@ -63,7 +63,7 @@ public class AgregarReceta extends RegisteredPage {
    
 	private SesionUsuario sesion = (SesionUsuario)getSession();
 	private Usuario user = sesion.getUsuario().getObject();
-	private final RecetaU nuevareceta = new RecetaU(-1, "", user.getUsername(), null, null, null, 0);
+	private final RecetaU nuevareceta = new RecetaU(-1, "", user.getUsername(), null, null, null,"",0);
 	private List<Fragmento> fragmentos = new ArrayList<Fragmento>();
 	private DropList<Ingredientes> dropIng;
 	private DropList<Condimentos> dropCond;

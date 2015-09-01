@@ -11,10 +11,11 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import ObjetosDB.Receta;
+import ObjetosDB.RecetaU;
 import ObjetosDB.Usuario;
 
 public class ListaDeRecetas extends Panel {
-public ListaDeRecetas(String id, ArrayList<Receta> recetas, final Usuario user) {
+public ListaDeRecetas(String id, ArrayList<RecetaU> recetas, final Usuario user) {
 	// TODO Auto-generated constructor stub
 	super(id);
 	
@@ -23,7 +24,7 @@ public ListaDeRecetas(String id, ArrayList<Receta> recetas, final Usuario user) 
 		protected void populateItem(Item item) {
 			// TODO Auto-generated method stub
 			
-			final Receta recetas= (Receta) item.getModelObject();
+			final RecetaU recetas= (RecetaU) item.getModelObject();
 			
 			final PageParameters pars = new PageParameters();
 			pars.add("idReceta",recetas.getIdreceta());

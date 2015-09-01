@@ -1,12 +1,15 @@
 package ObjetosDB;
 
+import java.io.Serializable;
+import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import Database.Browser;
 
-public class RecetaU {
+public class RecetaU implements Serializable{
 	
 	private int idreceta;
 	private String nombre;
@@ -19,9 +22,10 @@ public class RecetaU {
 	private ArrayList<Condimentos> condimentos;
 	private ArrayList<Pasos> pasos;
 	private int calificacion;
+	private String descripcion;
 
 
-	public RecetaU(int id, String nom, String crea, Dificultades difi, Temporadas temp, Ingredientes ingPrin, int calif){
+	public RecetaU(int id, String nom, String crea, Dificultades difi, Temporadas temp, Ingredientes ingPrin, String descripcion, int calif){
 		setIdreceta(id);
 		setNombre(nom);
 		setCreador(crea);
@@ -32,6 +36,7 @@ public class RecetaU {
 		condimentos = new ArrayList<Condimentos>();
 		pasos = new ArrayList<Pasos>();
 		setCalificacion(calif);
+		setDescripcion(descripcion);
 	}
 	
 	public int getIdreceta() {
@@ -132,6 +137,18 @@ public class RecetaU {
 		this.calificacion = calificacion;
 	}
 	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	public void consulta(Usuario user){
+		Browser.agregarHistConsultas(getIdreceta(),user.getUsername());
+	}
+	
 	public boolean guardarReceta(){
 		if(Browser.agregarReceta(this)){
 			return Browser.agregarIngredientesyCondimentos(this);
@@ -141,6 +158,18 @@ public class RecetaU {
 	
 	public boolean calificar(Usuario user){
 		return Browser.calUltimaConfirmacion(idreceta,user,calificacion);
+	}
+	
+	public boolean aceptaCond(List<CondicionesPreexistentes> list){
+		
+		for(CondicionesPreexistentes cond : list){
+			for(Ingredientes ing : getIngredientes()){
+				if(!ing.accept(cond)){ JOptionPane.showMessageDialog(null, ing.getName());
+					return false;}
+			}
+		}
+		
+		return true;
 	}
 }
 

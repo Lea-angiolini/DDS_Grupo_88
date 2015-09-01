@@ -1,5 +1,6 @@
 package ObjetosDB;
 
 public interface Visitor {
-	boolean visit(CondicionesPreexistentes cond);
+	boolean visitarIngrediente(Ingredientes cond);
+	boolean visitarCondimento(Condimentos cond);
 }

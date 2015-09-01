@@ -16,7 +16,6 @@ public class Ingredientes extends AlimDeReceta{
 		this.ingrediente = ingrediente;
 		this.calorias = calorias;
 		this.idTipoIngrediente = idTipoIngrediente;
-		setCondAptas(new ArrayList<Integer>());
 	}
 
 	public int getIdIngrediente() {
@@ -64,9 +63,9 @@ public class Ingredientes extends AlimDeReceta{
 	}
 
 	@Override
-	public boolean visit(CondicionesPreexistentes cond) {
+	public boolean accept(Visitor visitor) {
 		// TODO Auto-generated method stub
-		return false;
+		return visitor.visitarIngrediente(this);
 	}
 	
 	

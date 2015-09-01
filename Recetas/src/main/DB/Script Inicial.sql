@@ -201,10 +201,10 @@ CREATE TABLE Grupo88.relgruporeceta(
 	PRIMARY KEY(idGrupo,idReceta)
 );
 
-CREATE TABLE Grupo88.relIngredienteCond(
+CREATE TABLE Grupo88.relCondPreexIngNoComestible(
 	idCond INT REFERENCES condiciones,
-    idIngrediente INT REFERENCES ingredientes,
-    PRIMARY KEY(idCond,idIngrediente)
+    idIngNoComestible INT REFERENCES ingredientes,
+    PRIMARY KEY(idCond,idIngNoComestible)
 );
 
 CREATE TABLE Grupo88.relDietaTipoIngNoComestible(
@@ -317,7 +317,7 @@ VALUES (1,31,1),(1,21,1),
        (4,3,2),(4,29,2),
        (6,3,2);
        
-INSERT INTO Grupo88.relIngredienteCond()
+INSERT INTO Grupo88.relCondPreexIngNoComestible()
 VALUES (1,1),(1,3),(2,3);
 
 
@@ -388,6 +388,15 @@ BEGIN
     
 END $$
 
+CREATE PROCEDURE SP_CargarIngNoComestibleCond(
+	IN idCond int
+)
+BEGIN
+
+	SELECT idIngNoComestible FROM relcondpreexingnocomestible rel
+    WHERE rel.idCond = idCond;
+    
+END $$
 
 CREATE PROCEDURE SP_RecetasPopulares(
 )
@@ -523,7 +532,8 @@ BEGIN
     limit 1);
 
 	 SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad, grupoalim.descripcion as 'grpAlim',
-			tem.nombreTemporada, tem.idTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente, IFNULL(calificacion,-1) as 'calificacion'
+			tem.nombreTemporada, tem.idTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente, IFNULL(calificacion,-1) as 'calificacion',
+            rec.descripcion
      FROM recetas rec
      JOIN dificultad dif
      ON dif.idDificultad = rec.idDificultad 
@@ -911,12 +921,4 @@ BEGIN
     
 END$$
 
-CREATE PROCEDURE SP_condPreexIngrediente(
-IN idIngrediente int)
-BEGIN
-
-    SELECT idCond FROM relIngredienteCond rel
-    WHERE rel.IdIngrediente = idIngrediente;
-    
-END$$
 DELIMITER ;

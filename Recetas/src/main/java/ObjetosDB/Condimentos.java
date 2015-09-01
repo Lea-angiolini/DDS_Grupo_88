@@ -39,9 +39,10 @@ public class Condimentos extends AlimDeReceta{
 	}
 
 	@Override
-	public boolean visit(CondicionesPreexistentes cond) {
+	public boolean accept(Visitor visitor) {
 		// TODO Auto-generated method stub
-		return false;
+		return visitor.visitarCondimento(this);
 	}
+
 	
 }

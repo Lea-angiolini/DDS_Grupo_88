@@ -34,15 +34,15 @@ public class Browser {
 		return recetas;
 	}
 	
-	public static ArrayList<Receta> cargarRecetasUsuario(String usuario){
+	public static ArrayList<RecetaU> cargarRecetasUsuario(String usuario){
 		Factory f = new Factory();
-		ArrayList<Receta> recetas = f.cargarRecetasUsuario(usuario);
+		ArrayList<RecetaU> recetas = f.cargarRecetasUsuario(usuario);
 		return recetas;
 	}
 	
-	public static ArrayList<Receta> cargarRecetasBuscadas(itemsABuscar queBuscar){
+	public static ArrayList<RecetaU> cargarRecetasBuscadas(itemsABuscar queBuscar){
 		Factory f = new Factory();
-		ArrayList<Receta> recetas = f.cargarRecetasBuscadas(queBuscar);
+		ArrayList<RecetaU> recetas = f.cargarRecetasBuscadas(queBuscar);
 		return recetas;
 	}
 	
@@ -172,7 +172,7 @@ public class Browser {
 		return f.obtenerGrupo(idGrupo);
 	}
 	
-	public static ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
+	public static ArrayList<RecetaU> obtenerRecetasGrupo(int idGrupo){
 		Factory f = new Factory();
 		return f.obtenerRecetasGrupo(idGrupo);
 	}
@@ -182,7 +182,7 @@ public class Browser {
 		return f.obtenerUsuariosGrupo(grupo);
 	}
 	
-	public static ArrayList<Receta> cargarHomeRecetas(Usuario user){
+	public static ArrayList<RecetaU> cargarHomeRecetas(Usuario user){
 		Factory f = new Factory();
 		return f.cargarHomeRecetas(user);
 	}

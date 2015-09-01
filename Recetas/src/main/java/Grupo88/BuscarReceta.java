@@ -31,6 +31,7 @@ import ObjetosDB.Dificultades;
 import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
 import ObjetosDB.Receta;
+import ObjetosDB.RecetaU;
 import ObjetosDB.Temporadas;
 import ObjetosDB.Usuario;
 import ObjetosDB.itemsABuscar;
@@ -91,7 +92,7 @@ public class BuscarReceta extends MasterPage {
         	
         	super(id, markupId, markupPorvider);
         	
-        	ArrayList<Receta> recetas = Browser.cargarRecetasBuscadas(queBuscar);	
+        	ArrayList<RecetaU> recetas = getUsuarioActual().filtrarRecetas(Browser.cargarRecetasBuscadas(queBuscar));	
     		
         	markupPorvider.remove(id);
         	

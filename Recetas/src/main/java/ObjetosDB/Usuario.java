@@ -210,7 +210,7 @@ public class Usuario implements Serializable{
 		return false;
 	}
 	
-	public ArrayList<Receta> cargarMisRecetas(){
+	public ArrayList<RecetaU> cargarMisRecetas(){
 		return Browser.cargarRecetasUsuario(username);
 		
 	}
@@ -220,7 +220,22 @@ public class Usuario implements Serializable{
 		return Browser.modificarPerfil(this);
 	}
 	
-	public ArrayList<Receta> cargarHome(){
+	public ArrayList<RecetaU> cargarHome(){
 		return Browser.cargarHomeRecetas(this);
+	}
+	
+	public ArrayList<RecetaU> filtrarRecetas(ArrayList<RecetaU> recetas){
+		
+		ArrayList<RecetaU> recetasFiltradas = new ArrayList<RecetaU>();
+		
+		for(RecetaU receta : recetas )
+		{
+			if(receta.aceptaCond(getCondiciones())){
+				recetasFiltradas.add(receta);
+			}
+			
+		}
+ 		
+		return recetasFiltradas;
 	}
 }

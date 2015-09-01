@@ -147,7 +147,7 @@ public class AltaUsuario extends MasterPage {
 			super.onSubmit();
 			
 			lblError.setDefaultModelObject(this.cargarDatosUsuario());
-			setResponsePage(Login.class);
+			setResponsePage(Inicio.class);
 			
 		}
 		
