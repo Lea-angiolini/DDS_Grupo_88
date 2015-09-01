@@ -15,6 +15,7 @@ public class SesionUsuario extends WebSession {
 		super(request);
 		ModelUsuario invitado = new ModelUsuario(new Usuario());
 		invitado.getObject().setUsername("Invitado");
+		this.usuario = invitado;
 		setAttribute("usuario", invitado);
 	}
 	
