@@ -40,6 +40,7 @@ $("#fecha").datepicker();
 	
 		<div>
 			<form id="frmAltaUsuario" wicket:id="FrmAltaUsuario" method="post">
+			
 				<fieldset id="altaUsuario" class="center">
 					<div id="signupbox" style="display:block; margin-top:50px" class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
 						<div class="panel panel-info">
@@ -53,7 +54,8 @@ $("#fecha").datepicker();
 									<div id="signupalert" style="display: none"
 										class="alert alert-danger">
 										<p>Error:</p>
-										<span></span>
+										<span wicket:id="feedback"></span>
+										<span wicket:id="DBERROR"></span>
 									</div>
 
 									<div class=" form-group">
@@ -238,7 +240,6 @@ $("#fecha").datepicker();
 					                <br>-->
 					                	<div class="col-md-offset-7 col-md-5 text-right">
 					                    	<br>
-					                    	<label style="color:red" wicket:id="lblError"></label>
 					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
 					                    	<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Registrarse</button>
 					                           </div>

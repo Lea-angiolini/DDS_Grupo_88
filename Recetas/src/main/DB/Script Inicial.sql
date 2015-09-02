@@ -471,17 +471,16 @@ IN altura_ INT,
 IN idComplexion INT,
 IN idDieta INT,
 IN IdRutina INT,
-out respuesta VARCHAR(90)
+out respuesta varchar(90)
 )
 BEGIN
 	
-	DECLARE rutinaID INT;
-    
-    
 	DECLARE exit HANDLER FOR SQLSTATE '23000' call raise_error('El usuario ingresado ya existe');
 
 		INSERT INTO usuarios(nombreUsuario,clave,mail,nombre,apellido,sexo,fechaNac,altura,idComplexion,idDieta,idRutina)
 			VALUES(username_,pass_,mail_,nombre_,apellido_,sexo_,fechaNac_,altura_,idComplexion ,idDieta,idRutina);
+            
+		SET respuesta = '';
 END $$
 
 CREATE PROCEDURE SP_modificarPerfil(

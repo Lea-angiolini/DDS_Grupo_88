@@ -560,7 +560,7 @@ public class Factory {
 	
 	
 	public String registrarUsuario(Usuario nvoUsuario){
-
+		
 		try
 		{
 			
@@ -592,10 +592,12 @@ public class Factory {
 			}	
 			
 			return cmd.getString(12);
+
+
 		
 		}
 		catch(SQLException ex){
-			JOptionPane.showConfirmDialog(null, ex.getMessage());
+			//JOptionPane.showConfirmDialog(null, ex.getMessage());
 			return ex.getMessage();
 		}
 	}

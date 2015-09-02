@@ -41,6 +41,7 @@ import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -50,6 +51,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.apache.wicket.validation.validator.StringValidator;
 import org.eclipse.jetty.server.Server;
 import org.apache.wicket.Session;
 
@@ -78,23 +80,28 @@ public class AltaUsuario extends MasterPage {
 
 		private Usuario usuario = new Usuario();
 		private final ArrayList<estadoCondPreex> estados;
-		private Label lblError;
+		private FeedbackPanel feedback;
+		private Label dbERROR;
 		
 		@SuppressWarnings("unchecked")
 		public FrmAltaUsuario(String id) {
-			super(id);			
+			super(id);		
 			
+			add(feedback = new FeedbackPanel("feedback"));
+			feedback.setOutputMarkupId(true);
+			add(dbERROR = new Label("DBERROR",Model.of("")));
+			dbERROR.setOutputMarkupId(true);
 			PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
 			PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
 			
 			
-			add(new TextField("username", new PropertyModel<String>(usuario, "username")));
+			add((new TextField("username", new PropertyModel<String>(usuario, "username")).add(new StringValidator(1,30))).setRequired(true));
 			add(password);
 			add(repPassword);
 			add(new EqualPasswordInputValidator(password, repPassword));
 			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
 			add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
-			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));
+			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));{};
 			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
 			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
 			add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
@@ -126,10 +133,7 @@ public class AltaUsuario extends MasterPage {
 			
 		    add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), Browser.listaDietas(), new ChoiceRenderer("dieta","idDieta")));
 		    add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),Browser.listaRutinas(), new ChoiceRenderer("rutina","idRutina")));
-		    add(lblError = new Label("lblError",""));
-		    lblError.setOutputMarkupId(true);
-		   
-		    
+		   		    
 		    add(new Link("cancelar"){
 				
 				@Override
@@ -145,12 +149,14 @@ public class AltaUsuario extends MasterPage {
 		@Override
 		protected void onSubmit() {
 			super.onSubmit();
-			
-			lblError.setDefaultModelObject(this.cargarDatosUsuario());
+			String msg = this.cargarDatosUsuario();
+			if(msg != ""){
+				dbERROR.setDefaultModelObject(msg);
+				return;
+			}
 			setResponsePage(Inicio.class);
 			
 		}
-		
 		private String cargarDatosUsuario(){
 			
 			for (estadoCondPreex estado : estados) {
