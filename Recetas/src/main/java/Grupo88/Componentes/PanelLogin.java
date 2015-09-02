@@ -1,25 +1,21 @@
-package Grupo88;
-
-import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.Fragment;
-import org.apache.wicket.markup.html.panel.Panel;
+package Grupo88.Componentes;
 
 import objetosWicket.ModelUsuario;
 import objetosWicket.SesionUsuario;
 
-import org.apache.wicket.markup.html.WebComponent;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
-import org.junit.runner.Computer;
 
-import Grupo88.Login.FrmLogin;
+//import paquete AltaUsuario
+import Grupo88.AltaUsuario.AltaUsuario;
+import Grupo88.Inicio.Inicio;
 import ObjetosDB.Usuario;
 
 public class PanelLogin extends Panel {

@@ -1,4 +1,4 @@
-package Grupo88;
+package Grupo88.Componentes;
 
 import objetosWicket.ModelUsuario;
 import objetosWicket.SesionUsuario;
@@ -6,6 +6,12 @@ import objetosWicket.SesionUsuario;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
+
+import Grupo88.BuscarReceta.BuscarReceta;
+import Grupo88.Estadisticas.Estadisticas;
+import Grupo88.GestionarGrupos.GestionarGrupos;
+import Grupo88.GestionarPerfil.GestionarPerfil;
+import Grupo88.MisRecetas.MisRecetas;
 
 public class PanelLinks extends Panel {
 

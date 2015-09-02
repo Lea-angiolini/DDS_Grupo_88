@@ -1,24 +1,17 @@
-package Grupo88;
+package Grupo88.Estadisticas;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import javax.swing.JOptionPane;
-
-import master.MasterPage;
 import master.RegisteredPage;
 
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 
 import Database.Browser;
-import Grupo88.Login.FrmLogin;
 
 public class Estadisticas extends RegisteredPage{
 	//private static final long serialVersionUID = 1L;

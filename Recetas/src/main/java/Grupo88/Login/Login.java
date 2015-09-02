@@ -1,20 +1,20 @@
-package Grupo88;
+package Grupo88.Login;
 
 import master.MasterPage;
 import objetosWicket.ModelUsuario;
 import objetosWicket.SesionUsuario;
 
-import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.protocol.http.WebSession;
 
-import Database.Browser;
+//import paquete de AltaUsuario
+import Grupo88.AltaUsuario.AltaUsuario;
+import Grupo88.BuscarReceta.BuscarReceta;
+import Grupo88.Inicio.Inicio;
 //import ObjetosDB.ObjectodePrueba;
 import ObjetosDB.Usuario;
 

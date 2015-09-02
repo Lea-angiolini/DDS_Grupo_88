@@ -1,4 +1,4 @@
-package Grupo88;
+package Grupo88.Componentes;
 
 import java.util.ArrayList;
 

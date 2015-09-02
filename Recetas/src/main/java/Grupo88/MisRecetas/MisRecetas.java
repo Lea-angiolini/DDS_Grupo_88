@@ -1,24 +1,13 @@
-package Grupo88;
+package Grupo88.MisRecetas;
 
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
-import master.MasterPage;
 import master.RegisteredPage;
-import objetosWicket.SesionUsuario;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.data.DataView;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import ObjetosDB.Receta;
-import ObjetosDB.Usuario;
+import Grupo88.AgregarReceta.AgregarReceta;
+import Grupo88.Componentes.ListaDeRecetas;
+import Grupo88.Inicio.Inicio;
 
 public class MisRecetas extends RegisteredPage {
 

@@ -1,15 +1,6 @@
 package master;
 
-import objetosWicket.SesionUsuario;
-
-import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.*;
-import org.omg.CORBA.PRIVATE_MEMBER;
-
-import Grupo88.Inicio;
-import Grupo88.Login;
-import ObjetosDB.Usuario;
+import Grupo88.Inicio.Inicio;
 
 public class RegisteredPage extends MasterPage {
 	private static final long serialVersionUID = 1L;

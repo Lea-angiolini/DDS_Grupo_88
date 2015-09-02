@@ -6,12 +6,10 @@ import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.link.Link;
 
-import Grupo88.BuscarReceta;
-import Grupo88.PanelLinks;
-import Grupo88.PanelLogin;
-import Grupo88.PanelLogueado;
+import Grupo88.Componentes.PanelLinks;
+import Grupo88.Componentes.PanelLogin;
+import Grupo88.Componentes.PanelLogueado;
 
 public class MenuPanel extends Panel {
 

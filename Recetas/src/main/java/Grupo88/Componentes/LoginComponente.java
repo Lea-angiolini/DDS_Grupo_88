@@ -1,4 +1,4 @@
-package Grupo88;
+package Grupo88.Componentes;
 
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IModel;

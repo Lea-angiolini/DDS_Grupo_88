@@ -1,13 +1,10 @@
 package ObjetosDB;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import Database.Browser;
-import Grupo88.GestionarPerfil;
-import ObjetosDB.Receta;
 
 public class Usuario implements Serializable{
 

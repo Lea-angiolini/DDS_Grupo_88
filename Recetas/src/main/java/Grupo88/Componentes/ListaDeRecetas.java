@@ -1,4 +1,4 @@
-package Grupo88;
+package Grupo88.Componentes;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import ObjetosDB.Receta;
+import Grupo88.GestionarRecetas.DetalleDeReceta;
 import ObjetosDB.RecetaU;
 import ObjetosDB.Usuario;
 

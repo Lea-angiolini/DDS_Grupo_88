@@ -1,11 +1,9 @@
-package Grupo88;
+package Grupo88.BuscarReceta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import master.MasterPage;
-import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -14,26 +12,17 @@ import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.NumberTextField;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.data.DataView;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import Database.Browser;
+import Grupo88.Componentes.ListaDeRecetas;
 import ObjetosDB.Dificultades;
 import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
-import ObjetosDB.Receta;
 import ObjetosDB.RecetaU;
 import ObjetosDB.Temporadas;
-import ObjetosDB.Usuario;
 import ObjetosDB.itemsABuscar;
 
 public class BuscarReceta extends MasterPage {

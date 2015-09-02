@@ -11,7 +11,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import Grupo88.Inicio;
+import Grupo88.Inicio.Inicio;
 import ObjetosDB.Usuario;
 
 public class HeaderPanel extends Panel {
