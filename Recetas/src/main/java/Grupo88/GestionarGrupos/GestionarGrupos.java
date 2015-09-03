@@ -21,6 +21,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import Database.Browser;
+import Grupo88.Detalles.DetalleGrupo;
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Grupo;
 

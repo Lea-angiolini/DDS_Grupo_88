@@ -1,4 +1,4 @@
-package Grupo88.GestionarGrupos;
+package Grupo88.Detalles;
 
 import master.RegisteredPage;
 

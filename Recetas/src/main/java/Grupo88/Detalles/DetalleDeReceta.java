@@ -1,4 +1,4 @@
-package Grupo88.GestionarRecetas;
+package Grupo88.Detalles;
 
 import java.util.ArrayList;
 import java.util.Arrays;

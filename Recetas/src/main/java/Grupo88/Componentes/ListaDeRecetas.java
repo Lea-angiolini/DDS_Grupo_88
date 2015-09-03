@@ -10,7 +10,7 @@ import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import Grupo88.GestionarRecetas.DetalleDeReceta;
+import Grupo88.Detalles.DetalleDeReceta;
 import ObjetosDB.RecetaU;
 import ObjetosDB.Usuario;
 
