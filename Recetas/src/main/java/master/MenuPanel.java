@@ -23,12 +23,12 @@ public class MenuPanel extends Panel {
 		
 		
 		if(sesionActual.estaLogueado()){
-			add(new PanelLinks("linkPanel"));
+			//add(new PanelLinks("linkPanel"));
 			add(new PanelLogueado("loginPanel",sesionActual));
 		}
 		else
 		{
-			add(new EmptyPanel("linkPanel"));
+			//add(new EmptyPanel("linkPanel"));
 			add(new PanelLogin("loginPanel"));
 		}
 	}

@@ -24,8 +24,8 @@ public class PanelLogueado extends Panel {
 		public FrmLogueado(String id) {
 			super(id);
 			
-			add(new Label("mensaje","Bienvenido/a "+ sesionActual.getUsuarioActual().getNombre()));
-			
+			add(new Label("mensaje", sesionActual.getUsuarioActual().getNombre()));
+			add(new PanelLinks("panelLinks"));
 			add(new Link("cerrarSesion"){
 				@Override
 				public void onClick() {
