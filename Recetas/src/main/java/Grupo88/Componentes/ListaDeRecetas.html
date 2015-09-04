@@ -13,8 +13,8 @@
 												<br>
 												<button id="botonReceta" type="button" class="box col-md-12"
 													style="background-color: rgba(255, 255, 255, 0.8);margin-bottom: 10px;"
-													wicket:id="bt" onmouseover="focus();">
-													<div class="row" align=left style="background-color: #E4E485;">
+													wicket:id="bt"  onmouseover="cambiacolor_over(this)" onmouseout="cambiacolor_out(this)">
+													<div class="row" align=left >
 														<div class="col-md-4" style="font-size: 15px; font-family:cursive;">
 															<strong>Receta:</strong> <span wicket:id="campo1"
 																style="padding-right: 50px;"></span>
@@ -35,6 +35,10 @@
 												</button>
 												
 											</div>
+										<script language="javascript">
+function cambiacolor_over(celda){ celda.style.backgroundColor="#E4E485" } 
+function cambiacolor_out(celda){ celda.style.backgroundColor="#ffffff" }
+</script>
 											
 	</wicket:panel>
 </body>
