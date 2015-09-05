@@ -2,6 +2,8 @@ package ObjetosDB;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class CondicionesPreexistentes implements Visitor{
 	
 	private int idCondPreex;
@@ -22,7 +24,7 @@ public class CondicionesPreexistentes implements Visitor{
 	}
 
 	public void setIngredientesNoComestible(ArrayList<Integer> ingredientesNoComestible) {
-		ingredientesNoComestible = ingredientesNoComestible;
+		this.ingredientesNoComestible = ingredientesNoComestible;
 	}
 	
 	public void setIngredienteNoComestible(int ingredienteNoComestible) {

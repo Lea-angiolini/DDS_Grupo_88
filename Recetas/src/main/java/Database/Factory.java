@@ -113,7 +113,8 @@ public class Factory {
 				CondicionesPreexistentes condActual = new CondicionesPreexistentes(rs.getInt("idCondicion"), rs.getString("condicion"));
 				
 				while(ingRS.next()){
-					condActual.setCondimentoNoComestible(ingRS.getInt("idIngNoComestible"));
+					
+					condActual.setIngredienteNoComestible(ingRS.getInt("idIngNoComestible"));
 				}
 				
 				user.setCondicion(condActual);
@@ -280,7 +281,7 @@ public class Factory {
 			}
 		}
 		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());	
+			//JOptionPane.showMessageDialog(null, ex.getMessage());	
 		}
 		
 		return recetas;

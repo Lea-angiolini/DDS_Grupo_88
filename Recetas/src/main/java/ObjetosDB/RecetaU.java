@@ -164,7 +164,7 @@ public class RecetaU implements Serializable{
 		
 		for(CondicionesPreexistentes cond : list){
 			for(Ingredientes ing : getIngredientes()){
-				if(!ing.accept(cond)){ JOptionPane.showMessageDialog(null, ing.getName());
+				if(!ing.accept(cond)){
 					return false;}
 			}
 		}
