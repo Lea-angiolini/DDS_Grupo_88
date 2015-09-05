@@ -51,6 +51,47 @@ function cambiarClase(a){
 				<div  class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" style="background-color:rgba(255,255,255,0.6)">
 					<h1 wicket:id="Nombre">Detalle de Receta</h1>								
 					
+
+
+<div class="container">			
+
+	<div class="well well-sm text-center">
+
+		<h3>PUNTAJE</h3>
+		
+		<div class="btn-group" data-toggle="buttons">
+	
+
+			<label class="btn btn-primary">
+				<input type="radio" name="options" id="option1" autocomplete="off">
+				<span class="glyphicon glyphicon-ok">1</span>
+			</label>
+
+			<label class="btn btn-info">
+				<input type="radio" name="options" id="option2" autocomplete="off">
+				<span class="glyphicon glyphicon-ok">2</span>
+			</label>
+
+			<label class="btn btn-default">
+				<input type="radio" name="options" id="option2" autocomplete="off">
+				<span class="glyphicon glyphicon-ok">3</span>
+			</label>
+
+			<label class="btn btn-warning">
+				<input type="radio" name="options" id="option2" autocomplete="off">
+				<span class="glyphicon glyphicon-ok">4</span>
+			</label>
+
+			<label class="btn btn-danger">
+				<input type="radio" name="options" id="option2" autocomplete="off">
+				<span class="glyphicon glyphicon-ok">5</span>
+			</label>
+		
+		</div>
+</div>
+
+	</div>
+					
 					<div valign="top" wicket:id="calificacion"></div><button wicket:id="confCalificacion">¡Calificar!</button>
 					<h3>Dificultad <label wicket:id="dif"></label></h3>
 					<h3>Temporada <label wicket:id="tem"></label></h3>
@@ -105,6 +146,80 @@ function cambiarClase(a){
 			</form>
 		</div>
 		
+		
+	<script>	
+(function($) { 
+    window.addEventListener('message', receiveMessage, false);
+    function receiveMessage(evt)
+    {
+        if (evt.origin !== 'http://bootsnipp.com') return;
+        
+        if ((evt.data != undefined) && (evt.data) && (typeof evt.data === "number"))
+            if(evt.data >= 500) {
+                $('#playground-container').css('height', evt.data+30+'px');    
+            }
+    }
+
+    var htmleditor = ace.edit("editor-html");
+    var jseditor = ace.edit("editor-js");
+    var csseditor = ace.edit("editor-css");
+
+    $('#theme_chooser').change(function(){
+        whichCSS = $(this).val();
+        document.getElementById('snippet-preview').contentWindow.changeCSS(whichCSS);
+    });
+
+    function setEditorOptions(editor, type){
+        editor.setTheme("ace/theme/clouds");
+        editor.setHighlightActiveLine(false);
+        editor.setReadOnly(true);
+        editor.getSession().setMode("ace/mode/"+type);
+    };
+
+    setEditorOptions(htmleditor,'html');
+    setEditorOptions(jseditor,'javascript');
+    setEditorOptions(csseditor,'css');
+
+    function markActive(el)
+    {
+       $(el).siblings().removeClass('active');
+       $(el).addClass('active'); 
+    }
+
+    $('#show-html').click(function(e){
+        e.preventDefault();
+        $('#editor-html').show().siblings().hide();
+        markActive(this);
+        $('#preview-container').hide();
+        htmleditor.resize();
+    });
+
+    $('#show-js').click(function(e){
+        e.preventDefault();
+        $('#editor-js').show().siblings().hide();
+        $('#preview-container').hide();
+        markActive(this);
+        jseditor.resize();
+    });
+
+    $('#show-css').click(function(e){
+        e.preventDefault();
+        $('#editor-css').show().siblings().hide();
+        $('#preview-container').hide();
+        markActive(this);
+        csseditor.resize();
+    });
+
+    $('#show-preview').click(function(e){
+        e.preventDefault();
+        $('#preview-container').show();
+        $('.playground-editor').hide();
+        markActive(this);
+    });
+
+    
+})(jQuery);
+			</script>	
 	</wicket:extend>
 	
 </body>
