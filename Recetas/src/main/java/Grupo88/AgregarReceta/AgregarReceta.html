@@ -6,7 +6,7 @@
 </head>
 <body>
 	<wicket:extend>
-	
+		
 	<style>
 #div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;background-color: white;}
 </style>
@@ -47,6 +47,11 @@
 				<textarea type="text" class="col-md-5" wicket:id="descripcion" cols="7"></textarea>
 			</div>
 			<div class="form-group">
+				<label class="col-md-3">Foto descriptiva</label>
+				<input class="col-md-5" wicket:id="fileUpload" type="file"/>
+			</div>
+			
+			<div class="form-group">
 				<label class="col-md-3">Temporada</label>
 				<select class="col-md-5" wicket:id="temporada"></select>
 			</div>
@@ -85,9 +90,10 @@
 			<div class="form-group">
 			<label class="col-md-3">Imagen</label>
 				<div class="col-xs-6 col-md-3">
-    				<a href="#" class="thumbnail">
-      					<img src="..." alt="Seleccione una imagen" style="height: 180px; width: 100%; display: block;">
-   					 </a>
+      					<img wicket:id="img" src="..." alt="Seleccione una imagen" style="height: 180px; width: 100%; display: block;">
+   						<input wicket:id="fileUpload" type="file"/>
+      			
+   					 
   				</div>
   			</div>
   			<a wicket:id="pasoAnt">Paso anterior</a>

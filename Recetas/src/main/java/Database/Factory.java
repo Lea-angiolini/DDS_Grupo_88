@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.JOptionPane;
 
 import org.apache.wicket.markup.html.form.TextField;
@@ -668,7 +669,8 @@ public class Factory {
 										   new Ingredientes(rs.getInt("idIngrediente"), rs.getString("IngPrincipal"),rs.getInt("caloriasPorcion"),rs.getInt("tipoIngrediente")),
 										   rs.getString("descripcion"),
 										   rs.getInt("calificacion"));
-	
+				receta.setFotoPrincipal(rs.getBytes("foto"));
+				
 			}else{ receta = new RecetaU(-1, "Error en el if", "", null,null,null,"",0);}
 			
 			cmd = con.prepareCall("{call SP_ObtenerIngredientesReceta(?)}");
@@ -692,7 +694,9 @@ public class Factory {
 			rs = cmd.executeQuery();
 			
 			while(rs.next()){
-				receta.agregarPaso(new Pasos(rs.getInt("numeroPaso") ,rs.getString("descripcion")));
+				Pasos nuevoPaso = new Pasos(rs.getInt("numeroPaso") ,rs.getString("descripcion"));
+				nuevoPaso.setImagen(rs.getBytes("foto"));
+				receta.agregarPaso(nuevoPaso);
 			}
 		}
 		catch(SQLException ex){
@@ -948,7 +952,7 @@ public boolean agregarReceta(RecetaU receta){
 	CallableStatement cmd;
 	try
 	{
-		cmd=con.prepareCall("{Call SP_agregarReceta(?,?,?,?,?,?,?,?,?)}");
+		cmd=con.prepareCall("{Call SP_agregarReceta(?,?,?,?,?,?,?,?,?,?)}");
 		cmd.setString(1, receta.getCreador());
 		cmd.setString(2, receta.getNombre());
 		cmd.setString(3, receta.getDetalle());
@@ -957,22 +961,26 @@ public boolean agregarReceta(RecetaU receta){
 		cmd.setInt(6, 1);
 		cmd.setInt(7, receta.getTemporada().getIdTemporada());
 		cmd.setInt(8, receta.getIngredientePrincipal().getIdIngrediente());
-		cmd.registerOutParameter(9, Types.INTEGER);
+		cmd.setBlob(9, new SerialBlob(receta.getFotoPrincipal()));
+		cmd.registerOutParameter(10, Types.INTEGER);
 		
 		cmd.executeQuery();
 		
-		CallableStatement cmdRegPaso = con.prepareCall("{Call SP_agregarPasoAReceta(?,?,?)}");
-		cmdRegPaso.setInt(1, cmd.getInt(9));
+		CallableStatement cmdRegPaso = con.prepareCall("{Call SP_agregarPasoAReceta(?,?,?,?)}");
+		cmdRegPaso.setInt(1, cmd.getInt(10));
 		
 		for (Pasos pasosReceta: receta.getPasos())
 		{
 			cmdRegPaso.setInt(2, pasosReceta.getNumPaso());
 			cmdRegPaso.setString(3, pasosReceta.getDescripcionPaso());
-			//cmdRegPaso.setBlob(4, pasosReceta.getFoto()); falta la foto y el ? de la foto arriba y en la DB
+			if(pasosReceta.getImagen() != null)
+				cmdRegPaso.setBlob(4, new SerialBlob(pasosReceta.getImagen()));
+			else
+				cmdRegPaso.setNull(4, Types.BLOB);
 			cmdRegPaso.executeQuery();
 		}
-	
-		receta.setIdreceta(cmd.getInt(9));
+		
+		receta.setIdreceta(cmd.getInt(10));
 		return true;
 	}
 	

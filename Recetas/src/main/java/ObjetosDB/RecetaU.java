@@ -23,6 +23,7 @@ public class RecetaU implements Serializable{
 	private ArrayList<Pasos> pasos;
 	private int calificacion;
 	private String descripcion;
+	private byte[] fotoPrincipal;
 
 
 	public RecetaU(int id, String nom, String crea, Dificultades difi, Temporadas temp, Ingredientes ingPrin, String descripcion, int calif){
@@ -145,6 +146,14 @@ public class RecetaU implements Serializable{
 		this.descripcion = descripcion;
 	}
 	
+	public byte[] getFotoPrincipal() {
+		return fotoPrincipal;
+	}
+
+	public void setFotoPrincipal(byte[] fotoPrincipal) {
+		this.fotoPrincipal = fotoPrincipal;
+	}
+
 	public void consulta(Usuario user){
 		Browser.agregarHistConsultas(getIdreceta(),user.getUsername());
 	}

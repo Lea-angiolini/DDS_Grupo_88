@@ -96,6 +96,7 @@ CREATE TABLE Grupo88.Recetas(
     ingredientePrincipal INT, -- REFERENCES ingredientes,
     puntajeTotal INT DEFAULT 0,
     vecesCalificada INT DEFAULT 0,
+    foto LONGBLOB DEFAULT NULL,
     FOREIGN KEY (creador) REFERENCES Grupo88.Usuarios(nombreUsuario),
     FOREIGN KEY (idDificultad) REFERENCES Grupo88.dificultad(idDificultad),
     FOREIGN KEY (grupoAlimenticio) REFERENCES Grupo88.grupoalim(idGrupoAlim),
@@ -115,7 +116,7 @@ CREATE TABLE Grupo88.Pasos(
 	idReceta INT(11), -- REFERENCES Recetas,
     numeroPaso INT,
     descripcion VARCHAR(2000) NOT NULL,
-    foto BLOB NULL,
+    foto LONGBLOB NULL,
     UNIQUE(idReceta, numeroPaso),
     FOREIGN KEY(idReceta) REFERENCES Grupo88.recetas(idReceta)
 );
@@ -532,7 +533,7 @@ BEGIN
 
 	 SELECT rec.idReceta, rec.nombre, rec.creador, dif.descripcion as 'dificultad', rec.idDificultad, grupoalim.descripcion as 'grpAlim',
 			tem.nombreTemporada, tem.idTemporada, ing.nombre as 'IngPrincipal', ing.idIngrediente, ing.caloriasPorcion, ing.tipoIngrediente, IFNULL(calificacion,-1) as 'calificacion',
-            rec.descripcion
+            rec.descripcion, rec.foto
      FROM recetas rec
      JOIN dificultad dif
      ON dif.idDificultad = rec.idDificultad 
@@ -726,13 +727,14 @@ IN calorias INT,
 IN grpAlim INT,
 IN temporada INT,
 IN ingPrinc INT,
+IN fotoDescriptiva LONGBLOB,
 OUT idReceta INT
 )
 BEGIN
 
 	START TRANSACTION;
-	INSERT INTO recetas(creador,nombre, descripcion, idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
-    VALUES (creador,nombreReceta, descripcion, dificultad,calorias,grpAlim,temporada,ingPrinc);
+	INSERT INTO recetas(creador,nombre, descripcion, idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal,foto)
+    VALUES (creador,nombreReceta, descripcion, dificultad,calorias,grpAlim,temporada,ingPrinc,fotoDescriptiva);
     
     SET idReceta = (SELECT last_insert_id() FROM recetas limit 1);
     
@@ -756,24 +758,7 @@ BEGIN
 	LIMIT 10;
 
 END$$
-/*
-CREATE PROCEDURE SP_TOPdificultad()
-BEGIN
-	SELECT D.descripcion AS dificultad, count(*) AS cantidad 
-    FROM Historial AS H 
-    JOIN Recetas AS R ON H.idReceta = R.idReceta 
-    JOIN dificultad AS D ON R.idDificultad = D.idDificultad
-    GROUP BY D.descripcion ORDER BY cantidad DESC;
-END$$
 
-CREATE PROCEDURE SP_TOPrecetas()
-BEGIN
-	SELECT R.nombre AS nombreReceta, count(*) AS cantidad 
-    FROM Historial AS H 
-    JOIN Recetas AS R ON H.idReceta = R.idReceta 
-    GROUP BY R.nombre ORDER BY cantidad DESC;
-END$$
-*/
 CREATE PROCEDURE SP_obtenerGrupo(
 IN idGrupo INT)
 BEGIN
@@ -820,13 +805,13 @@ END$$
 CREATE PROCEDURE SP_agregarPasoAReceta(
 IN idRecetaNva INT,
 IN nroPaso INT,
-IN descrip VARCHAR(2000))
--- IN fotoPaso blob)
+IN descrip VARCHAR(2000),
+IN fotoPaso LONGBLOB)
 
 
 BEGIN
-	 INSERT INTO pasos (idReceta, numeroPaso,descripcion)
-		VALUES (IdRecetaNva,nroPaso, descrip ); -- FALTA LA FOTO. que foto
+	 INSERT INTO pasos (idReceta, numeroPaso,descripcion,foto)
+		VALUES (IdRecetaNva,nroPaso, descrip, fotoPaso);
 
 END$$
 
