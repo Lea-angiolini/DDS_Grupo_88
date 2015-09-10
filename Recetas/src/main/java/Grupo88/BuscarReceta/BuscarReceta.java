@@ -18,6 +18,7 @@ import org.apache.wicket.model.PropertyModel;
 
 import Database.Browser;
 import Grupo88.Componentes.ListaDeRecetas;
+import ObjetosDB.Calificacion;
 import ObjetosDB.Dificultades;
 import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
@@ -56,11 +57,18 @@ public class BuscarReceta extends MasterPage {
     		ArrayList<GruposAlimenticios> grpAlim = Browser.listaGruposAlim();
     		grpAlim.add(0, new GruposAlimenticios(-1, "Todos"));
     		
+    		ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>();
+    		calificaciones.add(new Calificacion("Todas", -1));
+    		calificaciones.add(new Calificacion("Sin calificar", 0));
+    		for(int i = 1; i<= 5;i++){
+    			calificaciones.add(new Calificacion(String.valueOf(i), i));
+    		}
+    		
     		add(new DropDownChoice<Dificultades>("dificultad",new PropertyModel<Dificultades>(items,"dificultad"), dificultades ,new ChoiceRenderer("dificultad","idDificultad")));
     		add(new DropDownChoice<Temporadas>("temporada",new PropertyModel<Temporadas>(items,"temporada"), temporadas,new ChoiceRenderer("temporada","idTemporada")));
         	add(new DropDownChoice<Ingredientes>("ingrediente",new PropertyModel<Ingredientes>(items,"ingredientePrincipal"), ingredientes,new ChoiceRenderer("ingrediente","idIngrediente")));
         	add(new DropDownChoice<GruposAlimenticios>("grupoAlim",new PropertyModel<GruposAlimenticios>(items,"grupoAlimenticio"), grpAlim ,new ChoiceRenderer("grupoAlim","idGrupoAlim")));
-        	add(new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), Arrays.asList(1,2,3,4,5)));
+        	add(new DropDownChoice<Calificacion>("calificaciones",new PropertyModel<Calificacion>(items, "calificacion"), calificaciones, new ChoiceRenderer("calificacion","valor")));
         	add(new NumberTextField<Integer>("caloriasMin", new PropertyModel<Integer>(items, "caloriasMin"), Integer.class));
         	add(new NumberTextField<Integer>("caloriasMax", new PropertyModel<Integer>(items, "caloriasMax"), Integer.class));
     		

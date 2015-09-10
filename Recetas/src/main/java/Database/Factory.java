@@ -244,7 +244,7 @@ public class Factory {
 			cmd.setInt(2, (queBuscar.getTemporada()).getIdTemporada());
 			cmd.setInt(3, (queBuscar.getIngredientePrincipal()).getIdIngrediente());
 			cmd.setInt(4, (queBuscar.getGrupoAlimenticio()).getIdGrupoAlim());
-			cmd.setInt(5, queBuscar.getCalificacion());
+			cmd.setInt(5, queBuscar.getCalificacion().getValor());
 			cmd.setInt(6, queBuscar.getCaloriasMax());
 			cmd.setInt(7, queBuscar.getCaloriasMin());
 

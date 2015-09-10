@@ -437,6 +437,25 @@ BEGIN
     WHERE rec.creador = username;
 END $$
 
+CREATE FUNCTION FN_calcularCalificacion(
+id_receta int) RETURNS int
+NOT deterministic
+BEGIN
+	
+    DECLARE puntaje int;
+    DECLARE veces int;
+	
+	SET puntaje = (select puntajeTotal FROM Grupo88.recetas rec
+		WHERE rec.idReceta = id_receta);
+	SET veces = (select vecesCalificada FROM Grupo88.recetas rec
+		WHERE rec.idReceta = id_receta);
+        
+	IF(veces = 0)
+    THEN RETURN 0;
+    ELSE RETURN puntaje/veces;
+    END IF;
+END$$
+
 CREATE PROCEDURE SP_BuscarRecetas(
 IN dificultadB INT,
 IN temporadaB INT,
@@ -455,8 +474,9 @@ BEGIN
 		  (temporadaB = -1 or rec.temporada = temporadaB) AND
           (ingredienteB = -1 or rec.ingredientePrincipal = ingredienteB) AND
           (grupoAlim = -1 or rec.grupoAlimenticio = grupoAlim) AND
-          rec.calorias < caloriasMax AND
-          rec.calorias > caloriasMin;
+          (calificacion = -1 or calificacion =FN_calcularCalificacion(rec.idReceta)) AND
+          rec.calorias <= caloriasMax AND
+          rec.calorias >= caloriasMin;
 END $$
 
 
