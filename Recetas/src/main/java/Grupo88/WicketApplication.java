@@ -1,5 +1,6 @@
 package Grupo88;
 
+import master.MasterPage;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.Session;
@@ -35,7 +36,7 @@ public class WicketApplication extends WebApplication
 	{
 		super.init();
 		
-
+		mountPage("/pageMount", MasterPage.class);
 		// add your configuration here
 	}
 	

@@ -191,4 +191,14 @@ public class Browser {
 		Factory f = new Factory();
 		return f.agregarIngredientesyCondimentos(receta);
 	}
+	
+	public static ArrayList<Consulta> obtenerConsultasSegunDificultad(int dias){
+		Factory f = new Factory();
+		return f.obtenerConsultasSegunDificultad(dias);
+	}
+	
+	public static ArrayList<Consulta> obtenerTopRecetasMasConsultadas(int dias){
+		Factory f = new Factory();
+		return f.obtenerTopRecetasMasConsultadas(dias);
+	}
 }

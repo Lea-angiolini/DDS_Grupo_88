@@ -8,7 +8,9 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 
 import Grupo88.BuscarReceta.BuscarReceta;
+import Grupo88.Estadisticas.ConsultasDificultad;
 import Grupo88.Estadisticas.Estadisticas;
+import Grupo88.Estadisticas.TopConsultasRecetas;
 import Grupo88.GestionarGrupos.GestionarGrupos;
 import Grupo88.GestionarPerfil.GestionarPerfil;
 import Grupo88.MisRecetas.MisRecetas;
@@ -64,6 +66,20 @@ public class PanelLinks extends Panel {
 				}
 			});
 
+			add(new Link("consultasDificultad"){
+				
+				public void onClick() {
+					setResponsePage(ConsultasDificultad.class);
+				}
+			});
+			
+			add(new Link("topRecetasConsultadas"){
+				
+				public void onClick() {
+					setResponsePage(TopConsultasRecetas.class);
+				}
+			});
+			
 		}
 	}	
 }

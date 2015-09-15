@@ -8,6 +8,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
+import org.apache.wicket.request.mapper.mount.Mount;
+import org.apache.wicket.request.mapper.mount.MountParameters;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import Grupo88.Detalles.DetalleDeReceta;
@@ -35,7 +37,6 @@ public ListaDeRecetas(String id, ArrayList<RecetaU> recetas, final Usuario user)
 					// TODO Auto-generated method stub
 					recetas.consulta(user);
 					setResponsePage(DetalleDeReceta.class,pars);
-					
 				}
 				
 			};

@@ -213,6 +213,27 @@ CREATE TABLE Grupo88.relDietaTipoIngNoComestible(
     idTipoIngNoComestible INT REFERENCES tipoingrediente,
     PRIMARY KEY(idDieta, idTipoIngNoComestible)
 );
+
+USE Grupo88;
+
+CREATE VIEW V_recetas
+	AS
+	SELECT r.idReceta, r.nombre, r.creador, r.descripcion, r.idDificultad, dif.descripcion as 'Dificultad',
+	r.calorias, r.grupoAlimenticio as 'IDGrupoAlimenticio', grA.descripcion as 'GrupoAlimenticio',
+	r.temporada as 'IdTemporada', tmp.nombreTemporada as 'Temporada', r.ingredientePrincipal as 'IdIngredientePrincipal',
+	ing.nombre as 'IngredientePrincipal', ing.caloriasPorcion as 'CaloriasIngPrincipal', ing.tipoingrediente as 'TipoIngPrincipal',
+	r.puntajeTotal, r.vecesCalificada, r.foto
+	FROM recetas r
+	JOIN dificultad dif
+	ON r.idDificultad = dif.idDificultad
+	JOIN grupoalim grA
+	ON grA.idGrupoAlim = r.grupoAlimenticio
+	JOIN temporadas tmp
+	ON tmp.idTemporada = r.temporada
+	JOIN ingredientes ing
+	ON ing.IdINgrediente = r.ingredientePrincipal;
+
+
 -- ----------------------------------- INSERT EN TABLAS
 
 INSERT INTO Grupo88.dificultad(descripcion)
@@ -315,19 +336,21 @@ VALUES (1,1);
 INSERT INTO Grupo88.relRecetaIngredientes (idReceta,idIngrediente,cantidad)
 VALUES (1,31,1),(1,21,1),
 	   (3,34,1),(3,13,5),
-       (4,3,2),(4,29,2),
-       (6,3,2);
+       (4,3,2),(6,3,2),
+       (2,34,1);
        
 INSERT INTO Grupo88.relCondPreexIngNoComestible()
 VALUES (1,1),(1,3),(2,3);
 
-
-DELIMITER $$
-USE `Grupo88` $$
+INSERT INTO Grupo88.reldietatipoingnocomestible()
+VALUES (4,6),(4,7),(4,8),(4,28),(4,29),(4,31),(4,32),(4,33),(4,34),(4,35),(4,36),(4,37),
+		(4,38),(4,39);
 
 
 -- ------------------------------------------------STORE PROCEDURES
 
+DELIMITER $$
+USE `Grupo88` $$
 CREATE PROCEDURE raise_error(
     IN mensaje VARCHAR(500)
 )
@@ -925,4 +948,72 @@ BEGIN
     
 END$$
 
+CREATE PROCEDURE SP_consultasSegunNievelDeDificultad(
+IN dias int)
+BEGIN
+
+select rec.idDificultad, dif.descripcion, count(*) as cantidad
+ from historicoconsultas his
+JOIN recetas rec
+on rec.idReceta = his.idReceta
+JOIN dificultad dif
+on rec.idDificultad = dif.idDificultad
+WHERE DATE_SUB(CURDATE(),INTERVAL dias DAY) <= fecha
+group by idDificultad;
+
+end $$
+
+CREATE PROCEDURE SP_recetasMasConsultadas(
+IN dias int)
+BEGIN
+
+ select vr.*, jn.cantidad from V_recetas vr
+ JOIN (select idReceta, count(*) as 'cantidad' from historicoconsultas con
+    where DATE_SUB(CURDATE(),INTERVAL dias DAY) <= con.fecha
+    group by idReceta) jn
+ON jn.idReceta = vr.idReceta
+limit 10;
+
+end $$
+
 DELIMITER ;
+
+
+
+DELIMITER $$
+USE `Grupo88` $$
+
+CREATE PROCEDURE SP_recetasSegunDieta(
+IN idDieta int)
+BEGIN
+
+	select * from grupo88.recetas rec
+	where not Exists ( select idIngrediente from grupo88.relrecetaingredientes rel
+						where rel.idReceta = rec.idReceta and
+					idIngrediente in (select idTipoIngNoComestible from grupo88.reldietatipoingnocomestible relD
+						where relD.idDieta = idDieta));
+
+END $$
+
+
+CREATE PROCEDURE SP_5RecetasConCondimento(
+IN idCondimento int)
+BEGIN
+
+	select * from grupo88.recetas rec
+	where idCondimento in (select rel.idCondimento from relrecetcondimento rel
+							where rec.idReceta = rel.idReceta)
+	limit 5;
+                        
+END$$
+
+CREATE PROCEDURE SP_5RecetasDeAlim(
+IN idGrupoAlim int)
+BEGIN
+
+	select * from grupo88.recetas rec
+	where rec.grupoAlimenticio = idGrupoAlim
+	limit 5;
+                        
+END$$
+DELIMITER $$

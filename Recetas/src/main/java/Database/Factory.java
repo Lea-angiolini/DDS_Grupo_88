@@ -896,6 +896,64 @@ public class Factory {
 		
 		return est;
 	}
+	
+	public ArrayList<Consulta> obtenerConsultasSegunDificultad(int dias){
+		ArrayList<Consulta> list = new ArrayList<Consulta>();
+		
+		CallableStatement cmd;
+		ResultSet rs = null;
+		
+		try{
+			cmd = con.prepareCall("{call SP_consultasSegunNievelDeDificultad(?)}");
+			cmd.setInt(1, dias);
+			rs = cmd.executeQuery();
+			
+			while(rs.next()){
+				list.add(new Consulta(rs.getInt("idDificultad"), rs.getString("descripcion"), rs.getInt("cantidad")));
+			}
+			
+		}
+		catch (SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		}
+		
+		return list;
+	}
+	
+	public ArrayList<Consulta> obtenerTopRecetasMasConsultadas(int dias){
+		ArrayList<Consulta> list = new ArrayList<Consulta>();
+		
+		CallableStatement cmd;
+		ResultSet rs = null;
+		
+		try{
+			cmd = con.prepareCall("{call SP_recetasMasConsultadas(?)}");
+			cmd.setInt(1, dias);
+			rs = cmd.executeQuery();
+			
+			while(rs.next()){
+				/*
+				list.add(new RecetaU(rs.getInt("idReceta"),
+									rs.getString("nombre"),
+									rs.getString("creador"),
+									new Dificultades(rs.getInt("idDificultad"), rs.getString("Dificultad")),
+									new Temporadas(rs.getInt("IdTemporada"), rs.getString("temporada")),
+									new Ingredientes(rs.getInt("IdIngredientePrincipal"), rs.getString("IngredientePrincipal"), rs.getInt("CaloriasIngPrincipal"), rs.getInt("TipoIngPrincipal")),
+									rs.getString("descripcion"),
+									rs.getInt("puntajeTotal")/rs.getInt("vecesCalificada")));*/
+				list.add(new Consulta(rs.getInt("idReceta"), rs.getString("nombre"), rs.getInt("cantidad")));
+			}
+			
+		}
+		catch (SQLException ex){
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		}
+		
+		return list;
+	}
+	
+	
+	
 
 	public boolean grupoTieneReceta(int idGrupo,int idReceta){
 	CallableStatement cmd;
