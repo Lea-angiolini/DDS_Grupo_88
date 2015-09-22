@@ -301,13 +301,14 @@ VALUES('jorge','pass','Jorge','Gomez','',null,'M',170,3,2,1),
       ('carlos', 'pass', 'Carlos', 'Batata','@gmail.com',null,'M', 160, 2, 1, 3);
 
 INSERT INTO Grupo88.Recetas(nombre,creador,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
-VALUES('Pollo al horno','jorge',2,1000,2,1,31),
+VALUES('Pollo al horno','carlos',2,1000,2,1,31),
 	  ('milanesas napolitana','maria',1,800,2,3,34),
       ('Pulpo en su tinta',null,3,1200,2,5,35),
       ('Ñoquis','maria',2,760,6,4,3),
       ('Pan con queso',null,1,1000,1,1,29),
       ('Pizza','jorge',1,1150,6,2,3),
-      ('Asado','jorge',2,940,2,2,32);
+      ('Asado','carlos',2,940,2,2,32),
+      ('Pollo a la parrilla','carlos',2,940,2,2,31);
     
 
 INSERT INTO Grupo88.Historial(fecha,idReceta,usuario)
@@ -321,8 +322,9 @@ VALUES (1,1,'Descongelar el pollo'),(1,2,'Sacarle lo que no sirve'),
         (1,5,'Disfrutar del pollo');
         
 INSERT INTO Grupo88.grupos(nombreGrupo,creador,detalle)
-VALUES('Locomia','jorge','Aca se come de todo'),
-		('Putos','carlos','cualquier cosa ponele');
+VALUES('Locos del asado','jorge','Las mejores recetas de carne. No se admiten vegetarianos'),
+		('Pizzamania','maria','Mil y una pizzas, ideales para cualquier ocasión'),
+		('Todo pasta','carlos','Ideal para domingo en familia');
         
 INSERT INTO Grupo88.relusuariocondicion()
 VALUES ('jorge',1),('jorge',3);
@@ -331,7 +333,7 @@ INSERT INTO Grupo88.relusuariogrupo()
 VALUES ('maria',1),('carlos',1),('carlos',2);
 
 INSERT INTO Grupo88.relgruporeceta()
-VALUES (1,1);
+VALUES (1,1),(1,7),(2,6);
 
 INSERT INTO Grupo88.relRecetaIngredientes (idReceta,idIngrediente,cantidad)
 VALUES (1,31,1),(1,21,1),

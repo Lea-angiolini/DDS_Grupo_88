@@ -22,7 +22,6 @@ public class Factory {
 	public Factory(){
 		try {
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
-		    //JOptionPane.showMessageDialog(null,"Registro exitoso");
 	
 		} catch (Exception ex) {
 	
@@ -53,6 +52,9 @@ public class Factory {
 		
 	}
 	
+	public Connection getConnection(){
+		return con;
+	}
 	public Boolean loguearUsuario(String user, String password) {
 		Boolean resp = false;
 		try
@@ -60,11 +62,11 @@ public class Factory {
 			CallableStatement cmd;
 			cmd = con.prepareCall("{call SP_Login(?,?,?)}");
 			
-			cmd.setString(1, user); // MySQL es re puto y quiere los numeros
+			cmd.setString(1, user); 
 			
-			cmd.setString(2, password); // MySQL es re puto y quiere los numeros
+			cmd.setString(2, password);
 			
-			cmd.registerOutParameter(3, Types.BOOLEAN); // MySQL es re puto y quiere los numeros
+			cmd.registerOutParameter(3, Types.BOOLEAN); 
 			cmd.execute();
 			
 			resp = cmd.getBoolean(3);

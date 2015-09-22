@@ -2,11 +2,14 @@ package master;
 
 
 
+import javax.swing.JOptionPane;
+
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import Database.FactoryIngredientes;
 import Grupo88.Componentes.PanelLinks;
 import Grupo88.Componentes.PanelLogin;
 import Grupo88.Componentes.PanelLogueado;
@@ -20,7 +23,6 @@ public class MenuPanel extends Panel {
 	private SesionUsuario sesionActual = (SesionUsuario)getSession();
 	public MenuPanel(String id) {
 		super(id);
-		
 		
 		if(sesionActual.estaLogueado()){
 			//add(new PanelLinks("linkPanel"));
