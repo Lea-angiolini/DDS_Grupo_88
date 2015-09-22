@@ -843,7 +843,7 @@ public class Factory {
 		return -1;
 	}
 	
-	public Estadisticas obtenerEstadisticas(){
+	/*public Estadisticas obtenerEstadisticas(){
 		
 		ResultSet rs = null;
 		Estadisticas est = new Estadisticas();
@@ -897,7 +897,7 @@ public class Factory {
 		
 		
 		return est;
-	}
+	}*/
 	
 	public ArrayList<Consulta> obtenerConsultasSegunDificultad(int dias){
 		ArrayList<Consulta> list = new ArrayList<Consulta>();

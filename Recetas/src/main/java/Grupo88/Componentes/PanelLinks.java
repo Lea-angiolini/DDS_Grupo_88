@@ -10,11 +10,13 @@ import org.apache.wicket.markup.html.panel.Panel;
 import Database.FactoryEstSegunDificultad;
 import Database.FactoryEstSegunMasConsultadas;
 import Database.FactoryEstSegunSexo;
+import Database.FactoryRepConsultasPeriodo;
 import Grupo88.BuscarReceta.BuscarReceta;
 import Grupo88.Estadisticas.Estadisticas;
 import Grupo88.GestionarGrupos.GestionarGrupos;
 import Grupo88.GestionarPerfil.GestionarPerfil;
 import Grupo88.MisRecetas.MisRecetas;
+import Grupo88.Reportes.Reportes;
 
 public class PanelLinks extends Panel {
 
@@ -81,6 +83,12 @@ public class PanelLinks extends Panel {
 				}
 			});
 			
+			add(new Link("recetasConsultadas"){
+				
+				public void onClick() {
+					setResponsePage(new Reportes(new FactoryRepConsultasPeriodo()));
+				}
+			});
 		}
 	}	
 }

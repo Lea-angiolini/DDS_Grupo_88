@@ -162,10 +162,10 @@ public class Browser {
 		return f.agregarReceta(receta);	
 	}
 	
-	public static Estadisticas obtenerEstadisticas(){
+	/*public static Estadisticas obtenerEstadisticas(){
 		Factory f = new Factory();
 		return f.obtenerEstadisticas();
-	}
+	}*/
 		
 	public static Grupo obtenerGrupo(int idGrupo){
 		Factory f = new Factory();
