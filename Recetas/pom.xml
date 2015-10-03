@@ -89,7 +89,16 @@
 			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!--  HIBERNATE DEPENDENCIES -->
+		<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-core</artifactId>
+	<version>4.1.0.Final</version>
+	</dependency>
+		
 	</dependencies>
+	
 	<build>
 		<resources>
 			<resource>
