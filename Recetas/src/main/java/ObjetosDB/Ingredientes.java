@@ -1,21 +1,46 @@
 package ObjetosDB;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ingredientes extends AlimDeReceta{
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.ManyToAny;
+
+
+@javax.persistence.Entity
+@javax.persistence.Table(name = "ingredientes")
+public class Ingredientes extends AlimDeReceta implements Serializable{
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idIngrediente")
 	int idIngrediente;
-	String ingrediente;
-	int calorias;
-	int idTipoIngrediente;
 	
+	@Column(name="nombre")
+	String ingrediente;
+	
+	@Column(name="caloriasPorcion")
+	int calorias;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="tipoIngrediente")
+	TipoIngrediente idTipoIngrediente;
+	
+	public Ingredientes(){	}
 
 	public Ingredientes(int idIngrediente, String ingrediente, int calorias,int idTipoIngrediente)
 	{
 		this.idIngrediente = idIngrediente;
 		this.ingrediente = ingrediente;
 		this.calorias = calorias;
-		this.idTipoIngrediente = idTipoIngrediente;
+		//this.idTipoIngrediente = idTipoIngrediente;
 	}
 
 	public int getIdIngrediente() {
@@ -42,11 +67,11 @@ public class Ingredientes extends AlimDeReceta{
 		this.calorias = calorias;
 	}
 
-	public int getIdTipoIngrediente() {
+	public TipoIngrediente getIdTipoIngrediente() {
 		return idTipoIngrediente;
 	}
 
-	public void setIdTipoIngrediente(int idTipoIngrediente) {
+	public void setIdTipoIngrediente(TipoIngrediente idTipoIngrediente) {
 		this.idTipoIngrediente = idTipoIngrediente;
 	}
 
