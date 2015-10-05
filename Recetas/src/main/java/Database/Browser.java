@@ -12,6 +12,7 @@ import org.apache.log4j.chainsaw.Main;
 import Database.Factory;
 import ObjetosDB.*;
 
+@Deprecated
 public class Browser {
 	
 	public static Boolean Login(String username, String password) {
