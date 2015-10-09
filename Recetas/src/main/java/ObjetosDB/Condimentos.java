@@ -1,7 +1,24 @@
 package ObjetosDB;
 
-public class Condimentos extends AlimDeReceta{
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Condimento")
+public class Condimentos extends AlimDeReceta implements Serializable{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idCondimento")
 	private int idCondimento;
+	
+	@Column(name="nombre")
 	private String condimento;
 	
 	public Condimentos(int id, String cond) {

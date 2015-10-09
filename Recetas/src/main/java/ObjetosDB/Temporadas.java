@@ -1,8 +1,25 @@
 package ObjetosDB;
 
-public class Temporadas {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Temporadas")
+
+public class Temporadas implements Serializable{
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idTemporada")
 	int idTemporada;
+	
+	@Column(name="nombreTemporada")
 	String temporada;
 	
 	public Temporadas(int idTemporada, String temporada) {

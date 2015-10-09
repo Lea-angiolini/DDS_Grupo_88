@@ -1,8 +1,25 @@
 package ObjetosDB;
 
-public class Complexiones {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Complexion")
+public class Complexiones implements Serializable{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idComplexion")
 	
 	int idComplexion;
+	
+	@Column(name="complexion")
 	String complexion;
 	
 	public Complexiones(int id, String complexion){

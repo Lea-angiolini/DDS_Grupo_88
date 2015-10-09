@@ -1,8 +1,25 @@
 package ObjetosDB;
 
-public class Rutinas {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Rutinas")
+
+public class Rutinas implements Serializable{
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idRutina")
 	int idRutina;
+	
+	@Column(name="rutina")
 	String rutina;
 	
 	public Rutinas(int idRutina, String rutina){
