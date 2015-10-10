@@ -17,10 +17,10 @@ public class PreferenciasAlimenticias implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idPreferencia")
-	int idPreferencia;
+	private int idPreferencia;
 	
 	@Column(name="descripcion")
-	String preferencia;
+	private String preferencia;
 	
 	public PreferenciasAlimenticias(int id, String preferencia){
 		setIdPreferencia(id);

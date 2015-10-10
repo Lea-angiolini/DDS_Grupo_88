@@ -16,11 +16,10 @@ public class Complexiones implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idComplexion")
-	
-	int idComplexion;
+	private int idComplexion;
 	
 	@Column(name="complexion")
-	String complexion;
+	private String complexion;
 	
 	public Complexiones(int id, String complexion){
 		setIdComplexion(id);

@@ -16,11 +16,11 @@ public class GruposAlimenticios implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="isGrupoAlim")
-	int idGrupoAlim;
+	@Column(name="idGrupoAlim")
+	private int idGrupoAlim;
 	
 	@Column(name="descripcion")
-	String grupoAlim;
+	private String grupoAlim;
 	
 	public GruposAlimenticios(int idGrupoAlim, String grupoAlim) 
 	{
