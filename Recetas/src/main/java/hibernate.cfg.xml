@@ -12,6 +12,15 @@
      <mapping class="ObjetosDB.Ingredientes"/>
      <mapping class="ObjetosDB.TipoIngrediente"/>
      <mapping class="ObjetosDB.Receta_Ingrediente"/>
+     <mapping class="ObjetosDB.Complexiones"/>
+     <mapping class="ObjetosDB.Dietas"/>
+     <mapping class="ObjetosDB.GruposAlimenticios"/>
+     <mapping class="ObjetosDB.CondicionesPreexistentes"/>
+     <mapping class="ObjetosDB.Dificultades"/>
+     <mapping class="ObjetosDB.Condimentos"/>
+     <mapping class="ObjetosBD.Temporadas"/>
+     <mapping class="ObjetosDB.PreferenciasAlimenticias"/>
+     <mapping class="ObjetosDB.Rutinas"/>
 
   </session-factory>
  </hibernate-configuration>

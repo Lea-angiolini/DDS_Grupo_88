@@ -1,9 +1,27 @@
 package ObjetosDB;
 
-public class GruposAlimenticios {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="GrupoAlim")
+public class GruposAlimenticios implements Serializable{
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="isGrupoAlim")
 	int idGrupoAlim;
+	
+	@Column(name="descripcion")
 	String grupoAlim;
+	
 	public GruposAlimenticios(int idGrupoAlim, String grupoAlim) 
 	{
 		this.idGrupoAlim = idGrupoAlim;

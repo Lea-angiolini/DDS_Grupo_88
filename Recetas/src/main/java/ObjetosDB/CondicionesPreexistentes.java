@@ -1,13 +1,29 @@
 package ObjetosDB;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.swing.JOptionPane;
 
-public class CondicionesPreexistentes implements Visitor{
+@Entity
+@Table(name="Condiciones")
+
+public class CondicionesPreexistentes implements Visitor,Serializable{
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idCondicion")
 	private int idCondPreex;
+	
+	@Column(name="condicion")
 	private String condPreex;
+	
 	private ArrayList<Integer> ingredientesNoComestible;
 	private ArrayList<Integer> condimentosNoComestible;
 	
