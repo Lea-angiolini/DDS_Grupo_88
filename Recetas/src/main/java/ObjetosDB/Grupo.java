@@ -1,17 +1,42 @@
 package ObjetosDB;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.eclipse.jetty.server.Authentication.User;
 
 import Database.Browser;
 import ObjetosDB.Receta;
 
-public class Grupo {
+@Entity
+@Table(name="Grupos")
+public class Grupo implements Serializable{
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idGrupo")
 	private int idGrupo;
+	
+	@Size(min=0, max=30)
+	@Column(name="nombreGrupo", unique=true)
 	private String nombre;
+	
+	@Size(min=0, max=30)
+	@Column(name="creador")
 	private String creador;
+	
+	@NotNull
+	@Size(min=1, max=255)
+	@Column(name="detalle")
 	private String detalle;
 	
 	public Grupo(int id, String nom, String cread, String det){

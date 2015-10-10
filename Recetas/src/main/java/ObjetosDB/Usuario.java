@@ -4,23 +4,83 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
 import Database.Browser;
 
+@Entity
+@Table(name="Usuarios")
 public class Usuario implements Serializable{
 
+	@Id
+	@NotNull
+	@Size(min=1, max=30)
+	@Column(name="nombreUsuario")
 	private String username;
+	
+	@NotNull
+	@Size(min=4, max=120)
+	@Column(name="clave")
 	private String password;
+	
+	@NotNull
+	@Email
+	@Size(min=1, max=60)
+	@Column(name="mail")
 	private String email;
+	
+	@NotNull
+	@Size(min=1, max=30)
+	@Column(name="nombre")
 	private String nombre;
+	
+	@NotNull
+	@Size(min=1, max=30)
+	@Column(name="apellido")
 	private String apellido;
+	
+	@Past
+	@Column(name="fechaNac")
 	private String fechaNacimiento;
+	
+	@NotNull
+	@Column(name="sexo")
 	private char sexo;
+	
+	@NotNull
+	@Min(0)
+	@Column(name="altura")
 	private int altura;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Complexion")
 	private Complexiones complexion;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Rutinas")
 	private Rutinas rutina;
+	
 	private PreferenciasAlimenticias preferencia;
 	private List<CondicionesPreexistentes> condiciones;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="Dietas")
 	private Dietas dieta;
+	
 	private List<Grupo> grupos;
 	
 	

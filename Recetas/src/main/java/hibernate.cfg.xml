@@ -21,6 +21,9 @@
      <mapping class="ObjetosDB.Temporadas"/>
      <mapping class="ObjetosDB.PreferenciasAlimenticias"/>
      <mapping class="ObjetosDB.Rutinas"/>
+     <mapping class="ObjetosDB.Usuario"/>
+     <mapping class="ObjetosDB.Grupo"/>
+     <mapping class="ObjetosDB.Pasos"/>
 
   </session-factory>
  </hibernate-configuration>

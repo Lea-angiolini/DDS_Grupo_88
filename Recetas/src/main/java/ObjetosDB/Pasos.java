@@ -1,6 +1,14 @@
 package ObjetosDB;
 
-public class Pasos {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+public class Pasos{
+	
 	private int numPaso;
 	private String descripcionPaso;
 	private byte[] imagen;

@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="PreferenciasAlimenticias")
@@ -19,6 +21,8 @@ public class PreferenciasAlimenticias implements Serializable{
 	@Column(name="idPreferencia")
 	private int idPreferencia;
 	
+	@NotNull
+	@Size(min=1, max=120)
 	@Column(name="descripcion")
 	private String preferencia;
 	

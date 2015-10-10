@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="Temporadas")
@@ -19,6 +21,8 @@ public class Temporadas implements Serializable{
 	@Column(name="idTemporada")
 	private int idTemporada;
 	
+	@NotNull
+	@Size(min=1, max=50)
 	@Column(name="nombreTemporada")
 	private String temporada;
 	

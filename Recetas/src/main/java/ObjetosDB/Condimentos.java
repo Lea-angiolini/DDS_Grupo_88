@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="Condimento")
@@ -18,6 +20,8 @@ public class Condimentos extends AlimDeReceta implements Serializable{
 	@Column(name="idCondimento")
 	private int idCondimento;
 	
+	@NotNull
+	@Size(min=1, max=30)
 	@Column(name="nombre")
 	private String condimento;
 	

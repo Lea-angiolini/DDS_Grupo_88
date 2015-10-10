@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.swing.JOptionPane;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="Condiciones")
@@ -21,6 +23,8 @@ public class CondicionesPreexistentes implements Visitor,Serializable{
 	@Column(name="idCondicion")
 	private int idCondPreex;
 	
+	@NotNull
+	@Size(min=1, max=30)
 	@Column(name="condicion")
 	private String condPreex;
 	
