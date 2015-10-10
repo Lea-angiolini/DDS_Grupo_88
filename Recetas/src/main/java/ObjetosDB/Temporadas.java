@@ -17,10 +17,10 @@ public class Temporadas implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idTemporada")
-	int idTemporada;
+	private int idTemporada;
 	
 	@Column(name="nombreTemporada")
-	String temporada;
+	private String temporada;
 	
 	public Temporadas(int idTemporada, String temporada) {
 		this.idTemporada = idTemporada;

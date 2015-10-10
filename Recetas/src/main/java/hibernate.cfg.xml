@@ -18,7 +18,7 @@
      <mapping class="ObjetosDB.CondicionesPreexistentes"/>
      <mapping class="ObjetosDB.Dificultades"/>
      <mapping class="ObjetosDB.Condimentos"/>
-     <mapping class="ObjetosBD.Temporadas"/>
+     <mapping class="ObjetosDB.Temporadas"/>
      <mapping class="ObjetosDB.PreferenciasAlimenticias"/>
      <mapping class="ObjetosDB.Rutinas"/>
 

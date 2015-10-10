@@ -16,11 +16,12 @@ public class Dificultades implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="isDificultad")
-	int idDificultad;
+	@Column(name="idDificultad")
+	private int idDificultad;
 	
 	@Column(name="descripcion")
-	String dificultad;
+	private String dificultad;
+	
 	public Dificultades(int idDificultad, String dificultad) 
 	{
 		this.idDificultad = idDificultad;

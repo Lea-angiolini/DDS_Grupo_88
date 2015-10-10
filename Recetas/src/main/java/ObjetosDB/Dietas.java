@@ -16,10 +16,10 @@ public class Dietas implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idDieta")
-	int idDieta;
+	private int idDieta;
 	
 	@Column(name="tipoDieta")
-	String dieta;
+	private String dieta;
 	
 	public Dietas(int id, String dieta){
 		setIdDietas(id);

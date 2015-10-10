@@ -17,10 +17,10 @@ public class Rutinas implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idRutina")
-	int idRutina;
+	private int idRutina;
 	
 	@Column(name="rutina")
-	String rutina;
+	private String rutina;
 	
 	public Rutinas(int idRutina, String rutina){
 		setIdRutina(idRutina);
