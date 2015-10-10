@@ -11,6 +11,7 @@
 
      <mapping class="ObjetosDB.Ingredientes"/>
      <mapping class="ObjetosDB.TipoIngrediente"/>
+     <mapping class="ObjetosDB.Receta_Ingrediente"/>
 
   </session-factory>
  </hibernate-configuration>

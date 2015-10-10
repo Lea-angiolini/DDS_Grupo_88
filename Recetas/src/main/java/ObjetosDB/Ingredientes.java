@@ -2,7 +2,10 @@ package ObjetosDB;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,8 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @javax.persistence.Entity
@@ -21,17 +26,20 @@ public class Ingredientes extends AlimDeReceta implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idIngrediente")
-	int idIngrediente;
+	private int idIngrediente;
 	
 	@Column(name="nombre")
-	String ingrediente;
+	private String ingrediente;
 	
 	@Column(name="caloriasPorcion")
-	int calorias;
+	private int calorias;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipoIngrediente")
-	TipoIngrediente idTipoIngrediente;
+	private TipoIngrediente idTipoIngrediente;
+	
+	@OneToMany(mappedBy="key.ingrediente")
+	private Set<Receta_Ingrediente> relRecetas = new HashSet<Receta_Ingrediente>();
 	
 	public Ingredientes(){	}
 
@@ -74,7 +82,20 @@ public class Ingredientes extends AlimDeReceta implements Serializable{
 	public void setIdTipoIngrediente(TipoIngrediente idTipoIngrediente) {
 		this.idTipoIngrediente = idTipoIngrediente;
 	}
+	
+	public Set<Receta_Ingrediente> getRelRecetas() {
+		return relRecetas;
+	}
 
+	public void setRelRecetas(Set<Receta_Ingrediente> relRecetas) {
+		this.relRecetas = relRecetas;
+	}
+	
+	public void setRecetaRelacionada(Receta_Ingrediente relRecetas) {
+		this.relRecetas.add(relRecetas);
+	}
+
+	
 	@Override
 	public int getId() {
 		// TODO Auto-generated method stub
