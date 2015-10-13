@@ -6,6 +6,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.chainsaw.Main;
 
@@ -122,7 +123,7 @@ public class Browser {
 		return f.calUltimaConfirmacion(idReceta, user, calificacion);
 	}
 	
-	public static List<Grupo> cargarGrupos(String username){
+	public static Set<Grupo> cargarGrupos(String username){
 		Factory f = new Factory();
 		return f.cargarGrupos(username);
 		

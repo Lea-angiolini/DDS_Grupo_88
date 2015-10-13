@@ -2,7 +2,9 @@ package Database;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.JOptionPane;
@@ -749,10 +751,10 @@ public class Factory {
 		
 	}
 	
-	public List<Grupo> cargarGrupos(String username){
+	public Set<Grupo> cargarGrupos(String username){
 		
 		ResultSet rs = null;
-		List<Grupo> grupos = new ArrayList<Grupo>();
+		Set<Grupo> grupos = new HashSet<Grupo>();
 		CallableStatement cmd;
 		
 		try

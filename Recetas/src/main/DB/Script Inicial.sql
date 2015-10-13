@@ -143,7 +143,8 @@ CREATE TABLE Grupo88.Historial(
     usuario VARCHAR(30), --  REFERENCES usuarios,
     cantVecesUsada INT,
     calificacionUsuario INT default 0,
-    FOREIGN KEY (usuario) REFERENCES Grupo88.usuarios(nombreUsuario)
+    FOREIGN KEY (usuario) REFERENCES Grupo88.usuarios(nombreUsuario),
+    FOREIGN KEY (idReceta) REFERENCES Grupo88.recetas(idReceta)
 );
 
 

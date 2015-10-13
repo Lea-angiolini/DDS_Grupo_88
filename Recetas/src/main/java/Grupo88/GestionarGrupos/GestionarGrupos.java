@@ -1,6 +1,7 @@
 package Grupo88.GestionarGrupos;
 
 import java.util.List;
+import java.util.Set;
 
 import master.MasterPage;
 
@@ -61,7 +62,7 @@ public class GestionarGrupos extends MasterPage {
 					// TODO Auto-generated method stub
 					
 		        	getUsuarioActual().cargarGrupos();
-		        	List<Grupo> todosGrupos = Browser.cargarGrupos("");
+		        	Set<Grupo> todosGrupos = Browser.cargarGrupos("");
 		        	if (!todosGrupos.isEmpty())
 		        	{
 		        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, todosGrupos).setOutputMarkupId(true));
@@ -102,7 +103,7 @@ public class GestionarGrupos extends MasterPage {
 	}
 	
 	private class FragmentoMisGrupos extends Fragment {
-        public FragmentoMisGrupos(String id, String markupId, MarkupContainer markupPorvider, List<Grupo> grupos) {
+        public FragmentoMisGrupos(String id, String markupId, MarkupContainer markupPorvider, Set<Grupo> grupos) {
         	
         	super(id, markupId, markupPorvider);
     		
@@ -110,10 +111,14 @@ public class GestionarGrupos extends MasterPage {
         	
         	RepeatingView iterGrupos = new RepeatingView("iterGrupos");
         	
-				for (int i = 0; i< grupos.size(); i++) {
+        		int i = 0;
+        		//for (int i = 0; i < grupos.size(); i++)
+				
+				for (Grupo grupo:grupos) {
+					
 					
 					AbstractItem item = new AbstractItem(iterGrupos.newChildId());
-					Grupo grupoActual = grupos.get(i);
+					Grupo grupoActual = grupo;
 
 					item.add(new Label("nombre", grupoActual.getNombre()));
 					item.add(new Label("creador", grupoActual.getCreador()));
@@ -121,7 +126,7 @@ public class GestionarGrupos extends MasterPage {
 					item.add(new Botones("botones", i, grupoActual));
 					iterGrupos.add(item);
 					
-					
+					i++;
 				}
 				add(iterGrupos);
 				iterGrupos.setOutputMarkupId(true);

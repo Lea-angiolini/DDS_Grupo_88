@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -169,7 +170,7 @@ public class RecetaU implements Serializable{
 		return Browser.calUltimaConfirmacion(idreceta,user,calificacion);
 	}
 	
-	public boolean aceptaCond(List<CondicionesPreexistentes> list){
+	public boolean aceptaCond(Set<CondicionesPreexistentes> list){
 		
 		for(CondicionesPreexistentes cond : list){
 			for(Ingredientes ing : getIngredientes()){

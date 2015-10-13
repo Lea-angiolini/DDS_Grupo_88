@@ -2,15 +2,17 @@ package ObjetosDB;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -74,18 +76,31 @@ public class Usuario implements Serializable{
 	@JoinColumn(name="Rutinas")
 	private Rutinas rutina;
 	
-	private PreferenciasAlimenticias preferencia;
-	private List<CondicionesPreexistentes> condiciones;
+	@ManyToMany(cascade={CascadeType.ALL})
+	@JoinTable(name="relUsuarioPreferencia", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idPreferencia")})
+	private Set<PreferenciasAlimenticias> preferencias=new HashSet<PreferenciasAlimenticias>();
+	
+	@ManyToMany(cascade={CascadeType.ALL})
+	@JoinTable(name="relUsuarioCondicion", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idCondicion")})
+	private Set<CondicionesPreexistentes> condiciones=new HashSet<CondicionesPreexistentes>();
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="Dietas")
 	private Dietas dieta;
 	
-	private List<Grupo> grupos;
+	@ManyToMany(cascade={CascadeType.ALL})
+	@JoinTable(name="relUsuarioGrupo", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idGrupo")})
+	private Set<Grupo> grupos=new HashSet<Grupo>();
 	
+	/*@ManyToMany(cascade={CascadeType.ALL})
+	@JoinTable(name="amigos", joinColumns={@JoinColumn(name="nombreUsuario1")}, inverseJoinColumns={@JoinColumn(name="nombreUsuario2")})
+	private Set<Usuario> amigos=new HashSet<Usuario>();
+	
+	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="amigos")
+	private Set<Usuario> usuarios=new HashSet<Usuario>();*/
 	
 	public Usuario(){
-		this.condiciones = new ArrayList<CondicionesPreexistentes>();
+		this.condiciones = new HashSet<CondicionesPreexistentes>();
 		
 	}
 
@@ -165,12 +180,12 @@ public class Usuario implements Serializable{
 		this.complexion = complexion;
 	}
 
-	public PreferenciasAlimenticias getPreferencia() {
-		return preferencia;
+	public Set<PreferenciasAlimenticias> getPreferencia() {
+		return preferencias;
 	}
 
-	public void setPreferencia(PreferenciasAlimenticias preferencia) {
-		this.preferencia = preferencia;
+	public void setPreferencia(Set<PreferenciasAlimenticias> preferencia) {
+		this.preferencias = preferencia;
 	}
 
 	public Rutinas getRutina() {
@@ -183,12 +198,12 @@ public class Usuario implements Serializable{
 	}
 
 
-	public List<CondicionesPreexistentes> getCondiciones() {
+	public Set<CondicionesPreexistentes> getCondiciones() {
 		return condiciones;
 	}
 
 
-	public void setCondiciones(List<CondicionesPreexistentes> condiciones) {
+	public void setCondiciones(Set<CondicionesPreexistentes> condiciones) {
 		this.condiciones = condiciones;
 	}
 	
@@ -218,12 +233,12 @@ public class Usuario implements Serializable{
 	}
 	
 
-	public List<Grupo> getGrupos() {
+	public Set<Grupo> getGrupos() {
 		return grupos;
 	}
 
 
-	public void setGrupos(List<Grupo> grupos) {
+	public void setGrupos(Set<Grupo> grupos) {
 		this.grupos = grupos;
 	}
 	
