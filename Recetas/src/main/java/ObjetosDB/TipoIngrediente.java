@@ -1,10 +1,17 @@
 package ObjetosDB;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +26,10 @@ public class TipoIngrediente {
 	@Column(name="descripcion")
 	private String descripcion;
 
+	@ManyToMany(cascade={CascadeType.ALL})
+	@JoinTable(name="relTipoIngGrupoAlim", joinColumns={@JoinColumn(name="idTipoIngrediente")}, inverseJoinColumns={@JoinColumn(name="idGrupoAlim")})
+	private Set<GruposAlimenticios> gruposAlimenticios= new HashSet<GruposAlimenticios>();
+	
 	public TipoIngrediente() {}
 
 	public int getIdTipoIngrediente() {

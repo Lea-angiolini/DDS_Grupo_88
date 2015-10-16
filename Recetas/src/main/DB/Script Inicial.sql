@@ -66,6 +66,11 @@ CREATE TABLE Grupo88.Dietas(
     tipoDieta VARCHAR(30) NOT NULL
 );
 
+CREATE TABLE Grupo88.tipoReceta(
+	idTipoReceta INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(30) NOT NULL
+);
+
 
 CREATE TABLE Grupo88.Usuarios(
 	nombreUsuario VARCHAR(30) PRIMARY KEY,
@@ -97,11 +102,13 @@ CREATE TABLE Grupo88.Recetas(
     puntajeTotal INT DEFAULT 0,
     vecesCalificada INT DEFAULT 0,
     foto LONGBLOB DEFAULT NULL,
+    idTipoReceta INT,
     FOREIGN KEY (creador) REFERENCES Grupo88.Usuarios(nombreUsuario),
     FOREIGN KEY (idDificultad) REFERENCES Grupo88.dificultad(idDificultad),
     FOREIGN KEY (grupoAlimenticio) REFERENCES Grupo88.grupoalim(idGrupoAlim),
     FOREIGN KEY (temporada) REFERENCES Grupo88.temporadas(idTemporada),
-    FOREIGN KEY (ingredientePrincipal) REFERENCES Grupo88.ingredientes(idIngrediente)
+    FOREIGN KEY (ingredientePrincipal) REFERENCES Grupo88.ingredientes(idIngrediente),
+    FOREIGN KEY (idTipoReceta) REFERENCES Grupo88.tipoReceta(idTipoReceta)
 );
 
 CREATE TABLE Grupo88.Grupos(
@@ -136,7 +143,8 @@ CREATE TABLE Grupo88.Historial(
     usuario VARCHAR(30), --  REFERENCES usuarios,
     cantVecesUsada INT,
     calificacionUsuario INT default 0,
-    FOREIGN KEY (usuario) REFERENCES Grupo88.usuarios(nombreUsuario)
+    FOREIGN KEY (usuario) REFERENCES Grupo88.usuarios(nombreUsuario),
+    FOREIGN KEY (idReceta) REFERENCES Grupo88.recetas(idReceta)
 );
 
 
@@ -180,14 +188,6 @@ CREATE TABLE Grupo88.relUsuarioCondicion(
     idCondicion INT REFERENCES Condiciones,
     PRIMARY KEY(nombreUsuario, idCondicion)
 );
-
-
-CREATE TABLE Grupo88.relUsuarioDietas(
-	nombreUsuario VARCHAR(30) REFERENCES Usuarios,
-    idDieta INT REFERENCES Dietas,
-    PRIMARY KEY (nombreUsuario, idDieta)
-);
-
 
 CREATE TABLE Grupo88.relUsuarioPreferencia(
 	
@@ -293,7 +293,12 @@ VALUES ('Sedentaria con algo de ejercicio'),
 
 INSERT INTO Grupo88.dietas(tipoDieta)
 VALUES ('Normal'),('Ovolactovegetariano'),('Vegetariano'),('Vegano'), ('Solo Cebollita');
-      
+
+INSERT INTO Grupo88.tipoReceta(descripcion)
+VALUES ('Desayuno'),
+       ('Almuerzo'),
+       ('Merienda'),
+       ('Cena');
 
 INSERT INTO Grupo88.usuarios
 VALUES('jorge','pass','Jorge','Gomez','',null,'M',170,3,2,1),

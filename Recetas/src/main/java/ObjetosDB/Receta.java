@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -214,7 +215,7 @@ public class Receta implements Serializable{
 		return Browser.calUltimaConfirmacion(idreceta,user,getCalificacion());
 	}
 	
-	public boolean aceptaCond(List<CondicionesPreexistentes> list){
+	public boolean aceptaCond(Set<CondicionesPreexistentes> list){
 		
 		for(CondicionesPreexistentes cond : list){
 			for(Receta_Ingrediente ingrel : getRelacionIngredientes()){
