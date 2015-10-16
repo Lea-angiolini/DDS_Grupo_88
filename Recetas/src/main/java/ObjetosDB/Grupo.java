@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 import org.eclipse.jetty.server.Authentication.User;
 
 import Database.Browser;
-import ObjetosDB.Receta;
+import ObjetosDB.Recetaborrar;
 
 @Entity
 @Table(name="Grupos")
@@ -106,7 +106,7 @@ public class Grupo implements Serializable{
 		
 	}
 	
-	public ArrayList<RecetaU> obtenerRecetas(){
+	public ArrayList<Receta> obtenerRecetas(){
 		return Browser.obtenerRecetasGrupo(idGrupo);
 	}
 	

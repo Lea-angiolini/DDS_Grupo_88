@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import master.ErrorPage;
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
 
@@ -27,13 +28,17 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.DynamicImageResource;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.StringValue;
+import org.apache.wicket.util.string.StringValueConversionException;
 
 import Database.Browser;
+import Database.DAORecetas;
+import Database.DBExeption;
 import ObjetosDB.Condimentos;
 import ObjetosDB.Grupo;
 import ObjetosDB.Ingredientes;
 import ObjetosDB.Pasos;
-import ObjetosDB.RecetaU;
+import ObjetosDB.Receta;
+import ObjetosDB.Receta_Ingrediente;
 import ObjetosDB.Usuario;
 
 public class DetalleDeReceta extends MasterPage {
@@ -49,11 +54,23 @@ public class DetalleDeReceta extends MasterPage {
 		
 		final Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
 		final StringValue idReceta;
-		final RecetaU receta;
+		final Receta receta;
+		DAORecetas daoreceta = new DAORecetas();
 		
 		if(parameters.getNamedKeys().contains("idReceta")){
 			idReceta = parameters.get("idReceta");
-			receta = Browser.cargarReceta(idReceta.toInt(), user);
+			try {
+				receta = daoreceta.get(idReceta.toInt());
+			} catch (StringValueConversionException e) {
+				// TODO Auto-generated catch block
+				setResponsePage(new ErrorPage(e.getMessage()));
+				return;
+			} catch (DBExeption e) {
+				// TODO Auto-generated catch block
+				setResponsePage(new ErrorPage(e.getMessage()));
+				return;
+			}
+			//receta = Browser.cargarReceta(idReceta.toInt(), user);
 			
 		user.cargarGrupos();
 		
@@ -93,7 +110,7 @@ public class DetalleDeReceta extends MasterPage {
 		
 		RepeatingView ingredientes = new RepeatingView("listaIngredientes");
 		
-		for (Ingredientes ingrediente : receta.getIngredientes()) {
+		for (Receta_Ingrediente ingrediente : receta.getRelacionIngredientes()) {
 			
 			AbstractItem item = new AbstractItem(ingredientes.newChildId());
 					

@@ -22,7 +22,7 @@ import ObjetosDB.Calificacion;
 import ObjetosDB.Dificultades;
 import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
-import ObjetosDB.RecetaU;
+import ObjetosDB.Receta;
 import ObjetosDB.Temporadas;
 import ObjetosDB.itemsABuscar;
 
@@ -89,7 +89,7 @@ public class BuscarReceta extends MasterPage {
         	
         	super(id, markupId, markupPorvider);
         	
-        	ArrayList<RecetaU> recetas = getUsuarioActual().filtrarRecetas(Browser.cargarRecetasBuscadas(queBuscar));	
+        	ArrayList<Receta> recetas = getUsuarioActual().filtrarRecetas(Browser.cargarRecetasBuscadas(queBuscar));	
     		
         	markupPorvider.remove(id);
         	

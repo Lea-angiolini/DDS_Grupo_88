@@ -46,13 +46,15 @@ import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import Database.Browser;
+import Database.DAORecetas;
+import Database.DBExeption;
 import Grupo88.Componentes.DropList;
 import Grupo88.MisRecetas.MisRecetas;
 import ObjetosDB.Condimentos;
 import ObjetosDB.Dificultades;
 import ObjetosDB.Ingredientes;
 import ObjetosDB.Pasos;
-import ObjetosDB.RecetaU;
+import ObjetosDB.Receta;
 import ObjetosDB.Temporadas;
 import ObjetosDB.Usuario;
 
@@ -60,7 +62,7 @@ public class AgregarReceta extends RegisteredPage {
 	
 	private SesionUsuario sesion = (SesionUsuario)getSession();
 	private Usuario user = sesion.getUsuario().getObject();
-	private final RecetaU nuevareceta = new RecetaU(-1, "", user.getUsername(), null, null, null,"",0);
+	private final Receta nuevareceta = new Receta();
 	private List<Fragmento> fragmentos = new ArrayList<Fragmento>();
 	private DropList<Ingredientes> dropIng;
 	private DropList<Condimentos> dropCond;
@@ -71,6 +73,7 @@ public class AgregarReceta extends RegisteredPage {
 	
 	public AgregarReceta(){
 		super();
+		nuevareceta.setCreador(getUsuarioActual());
 		//getMenuPanel().setVisible(false);
 		
 		fragmentos.add(new Fragmento("areaForms","fragmentoInicial",this,new FrmDatosReceta("frmDatosBasicos")));
@@ -123,7 +126,11 @@ public class AgregarReceta extends RegisteredPage {
 		// Va a conectarse con BD y comprobar las validaciones
 		super.onSubmit();
 		pagina().addOrReplace(fragmentos.get(1));
-		nuevareceta.setIngredientes(dropIng.getElegidos());
+		
+		for(Ingredientes ing : dropIng.getElegidos())
+			nuevareceta.agregarIngrediente(ing,1);
+		
+		
 		nuevareceta.setCondimentos(dropCond.getElegidos());
 		
 		if(fileUpload.getFileUpload() != null){		
@@ -226,8 +233,16 @@ public class AgregarReceta extends RegisteredPage {
 		pagina().addOrReplace(fragmentos.get(idFrmPaso+1));	
 		}
 		else{
-			nuevareceta.guardarReceta();
-			setResponsePage(MisRecetas.class);
+			DAORecetas daoreceta = new DAORecetas();
+			try {
+				daoreceta.saveOrUpdate(nuevareceta);
+				setResponsePage(MisRecetas.class);
+			} catch (DBExeption e) {
+				// TODO Auto-generated catch block
+				error(e.getMessage());
+			}
+			//nuevareceta.guardarReceta();
+			
 			}
 		}
 	}

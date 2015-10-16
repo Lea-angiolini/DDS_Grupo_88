@@ -166,10 +166,10 @@ public class Factory {
 	}*/
 	
 	
-	public ArrayList<Receta> cargarRecetasPopulares()
+	public ArrayList<Recetaborrar> cargarRecetasPopulares()
 	{
 		ResultSet rs = null;
-		ArrayList<Receta> recetas = new ArrayList<Receta>();
+		ArrayList<Recetaborrar> recetas = new ArrayList<Recetaborrar>();
 		try
 		{
 			
@@ -180,7 +180,7 @@ public class Factory {
 			
 			while (rs.next()){
 				
-				recetas.add(new Receta(rs.getInt("idReceta"),
+				recetas.add(new Recetaborrar(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
 										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
@@ -196,10 +196,10 @@ public class Factory {
 		return recetas;
 	}
 	
-	public ArrayList<RecetaU> cargarRecetasUsuario(String usuario)
+	/*public ArrayList<Receta> cargarRecetasUsuario(String usuario)
 	{
 		ResultSet rs = null;
-		ArrayList<RecetaU> recetas = new ArrayList<RecetaU>();
+		ArrayList<Receta> recetas = new ArrayList<Receta>();
 		try
 		{
 			
@@ -211,14 +211,13 @@ public class Factory {
 			
 			while (rs.next()){
 				
-				recetas.add(new RecetaU(rs.getInt("idReceta"),
+				recetas.add(new Receta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
-										   rs.getString("creador"), 
+										   new Usuario()/rs.getString("creador")/, 
 										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
 										   new Temporadas(0, ""),
-										   new Ingredientes(0, "", 0, 0),
-										   rs.getString("descripcion"),
-										   0));
+										   new Ingredientes(0, "", 0, 0)
+										   ));
 				
 				
 		}
@@ -229,13 +228,13 @@ public class Factory {
 		
 		return recetas;
 	}
-		
-	
-	public ArrayList<RecetaU> cargarRecetasBuscadas(itemsABuscar queBuscar){
+	*/	
+	@Deprecated
+	public ArrayList<Receta> cargarRecetasBuscadas(itemsABuscar queBuscar){
 		
 		ResultSet rs = null;
-		ArrayList<RecetaU> recetas = new ArrayList<RecetaU>();
-		RecetaU receta;
+		ArrayList<Receta> recetas = new ArrayList<Receta>();
+		Receta receta;
 		
 		try
 		{
@@ -254,13 +253,12 @@ public class Factory {
 			
 			while (rs.next()){
 				
-				receta = new RecetaU(rs.getInt("idReceta"),
+				receta = new Receta(rs.getInt("idReceta"),
 						rs.getString("nombre"), 
-						   rs.getString("creador"),
+						new Usuario(),//rs.getString("creador"),
 						   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
 						   new Temporadas(0, "hardcore"),
-						   new Ingredientes(0, "", 0, 0),
-						   rs.getString("descripcion"),0);
+						   new Ingredientes(0, "", 0, 0));
 		
 				CallableStatement alim;
 				ResultSet AlimRS = null;
@@ -269,7 +267,7 @@ public class Factory {
 				AlimRS = alim.executeQuery();
 				
 				while(AlimRS.next()){
-					receta.agregarIngrediente(new Ingredientes(AlimRS.getInt("idIngrediente"), AlimRS.getString("ingrediente"), AlimRS.getInt("caloriasPorcion"), AlimRS.getInt("tipoIngrediente")));
+					receta.agregarIngrediente(new Ingredientes(AlimRS.getInt("idIngrediente"), AlimRS.getString("ingrediente"), AlimRS.getInt("caloriasPorcion"), AlimRS.getInt("tipoIngrediente")),1);
 				}
 				
 				alim = con.prepareCall("{call SP_ObtenerCondimentosReceta(?)}");
@@ -646,10 +644,10 @@ public class Factory {
 	};
 	
 	
-	public RecetaU cargarReceta(int idReceta, Usuario user){
+	/*public Receta cargarReceta(int idReceta, Usuario user){
 		
 		ResultSet rs = null;
-		RecetaU receta;
+		Receta receta;
 		
 		try
 		{
@@ -663,7 +661,7 @@ public class Factory {
 			
 			if (rs.next()){
 				
-				receta = new RecetaU(rs.getInt("idReceta"),
+				receta = new Receta(rs.getInt("idReceta"),
 										   rs.getString("nombre"), 
 										   rs.getString("creador"), 
 										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
@@ -673,7 +671,7 @@ public class Factory {
 										   rs.getInt("calificacion"));
 				receta.setFotoPrincipal(rs.getBytes("foto"));
 				
-			}else{ receta = new RecetaU(-1, "Error en el if", "", null,null,null,"",0);}
+			}else{ receta = new Receta(-1, "Error en el if", "", null,null,null,"",0);}
 			
 			cmd = con.prepareCall("{call SP_ObtenerIngredientesReceta(?)}");
 			cmd.setInt(1,idReceta);
@@ -703,11 +701,11 @@ public class Factory {
 		}
 		catch(SQLException ex){
 			JOptionPane.showMessageDialog(null, ex.getMessage());	
-			receta = new RecetaU(-1, ex.getMessage(), "", null,null,null,"",0);
+			receta = new Receta(-1, ex.getMessage(), "", null,null,null,"",0);
 		}
 		return receta;
 	}
-	
+	*/
 	public boolean agregarAHistorial(int idReceta, Usuario user){
 		
 		ResultSet rs = null;
@@ -1008,7 +1006,7 @@ public class Factory {
 		}
 	}
 
-public boolean agregarReceta(RecetaU receta){
+/*public boolean agregarReceta(Receta receta){
 	CallableStatement cmd;
 	try
 	{
@@ -1049,7 +1047,7 @@ public boolean agregarReceta(RecetaU receta){
 		return false;
 	}
 }
-
+*/
 public Grupo obtenerGrupo(int idGrupo){
 	CallableStatement cmd;
 	ResultSet rs;
@@ -1069,11 +1067,11 @@ public Grupo obtenerGrupo(int idGrupo){
 	}
 
 }
-
-public ArrayList<RecetaU> obtenerRecetasGrupo(int idGrupo){
+@Deprecated
+public ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
 	CallableStatement cmd;
 	ResultSet rs;
-	ArrayList<RecetaU> recetas = new ArrayList<RecetaU>();
+	ArrayList<Receta> recetas = new ArrayList<Receta>();
 	try
 	{
 		cmd=con.prepareCall("{Call SP_obtenerRecetasGrupo(?)}");
@@ -1081,14 +1079,13 @@ public ArrayList<RecetaU> obtenerRecetasGrupo(int idGrupo){
 		rs = cmd.executeQuery();
 		
 		while(rs.next()){
-			recetas.add(new RecetaU(rs.getInt("idReceta"), 
+			recetas.add(new Receta(rs.getInt("idReceta"), 
 						rs.getString("nombre"), 
-						rs.getString("creador"), 
+						new Usuario(),//.getString("creador"), 
 						new Dificultades( rs.getInt("idDificultad"), rs.getString("dificultad")),
 						new Temporadas(0, ""),
-						new Ingredientes(rs.getInt("idIngrediente"),  rs.getString("IngPrincipal"), rs.getInt("caloriasPorcion"), rs.getInt("tipoIngrediente")),
-						rs.getString("descripcion"),
-						0));
+						new Ingredientes(rs.getInt("idIngrediente"),  rs.getString("IngPrincipal"), rs.getInt("caloriasPorcion"), rs.getInt("tipoIngrediente"))
+						));
 		}
 			
 		return recetas;
@@ -1126,11 +1123,11 @@ public ArrayList<Usuario> obtenerUsuariosGrupo(Grupo grupo){
 	}
 
 }
-
-public ArrayList<RecetaU> cargarHomeRecetas(Usuario user){
+@Deprecated
+public ArrayList<Receta> cargarHomeRecetas(Usuario user){
 	
 	ResultSet rs = null;
-	ArrayList<RecetaU> recetas = new ArrayList<RecetaU>();
+	ArrayList<Receta> recetas = new ArrayList<Receta>();
 	
 	try
 	{
@@ -1142,15 +1139,13 @@ public ArrayList<RecetaU> cargarHomeRecetas(Usuario user){
 		
 		while (rs.next()){
 			
-			recetas.add(new RecetaU(
+			recetas.add(new Receta(
 					rs.getInt("idReceta"),
 					rs.getString("nombre"), 
-					rs.getString("creador"),
+					new Usuario(),//rs.getString("creador"),
 					new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
 					new Temporadas(0, ""),
-					new Ingredientes(0, "", 0, 0),
-					rs.getString("descripcion"),0
-					));
+					new Ingredientes(0, "", 0, 0)));
 	
 		}
 	}
@@ -1161,7 +1156,7 @@ public ArrayList<RecetaU> cargarHomeRecetas(Usuario user){
 	return recetas;
 }
 
-	public boolean agregarIngredientesyCondimentos(RecetaU receta){
+/*	public boolean agregarIngredientesyCondimentos(Receta receta){
 		
 		ArrayList<Ingredientes> ingredientes = receta.getIngredientes();
 		ArrayList<Condimentos> condimentos = receta.getCondimentos();
@@ -1189,7 +1184,7 @@ public ArrayList<RecetaU> cargarHomeRecetas(Usuario user){
 			return false;
 		}
 
-	}
+	}*/
 }
 
 

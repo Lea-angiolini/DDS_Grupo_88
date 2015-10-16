@@ -30,21 +30,22 @@ public class Receta_Ingrediente implements Serializable {
 
 	  @Embeddable
 	  public static class Key implements Serializable{
+		  
 		@ManyToOne
-		@NotNull
 		@JoinColumn(name="idIngrediente")
 		private Ingredientes ingrediente;
-		@NotNull
-	    @Column(name="idReceta")
-	    private int aa; //Arreglar por Receta
+		
+		@ManyToOne
+		@JoinColumn(name="idReceta")
+	    private Receta receta; //Arreglar por Receta
 
 	    protected Key () {
 	      // for hibernate
 	    }
 	    
-	    public Key (Ingredientes Ingredientes, int aa) {
+	    public Key (Ingredientes Ingredientes, Receta receta) {
 	      this.ingrediente = Ingredientes;
-	      this.aa = aa;
+	      this.receta = receta;
 	    }
 	  }
 	//@ManyToOne()
@@ -60,19 +61,18 @@ public class Receta_Ingrediente implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Receta_Ingrediente(/*RecetaU receta,*/ Ingredientes ingrediente, int cantidad) {
-		//this.receta = receta;
-		key = new Key(ingrediente,6);
+	public Receta_Ingrediente(Receta receta, Ingredientes ingrediente, int cantidad) {
+		key = new Key(ingrediente,receta);
 		this.cantidad = cantidad;
 	}
-/*
-	public RecetaU getReceta() {
-		return receta;
+
+	public Receta getReceta() {
+		return key.receta;
 	}
 
-	public void setReceta(RecetaU receta) {
-		this.receta = receta;
-	}*/
+	public void setReceta(Receta receta) {
+		this.key.receta = receta;
+	}
 
 	public Ingredientes getIngrediente() {
 		return key.ingrediente;

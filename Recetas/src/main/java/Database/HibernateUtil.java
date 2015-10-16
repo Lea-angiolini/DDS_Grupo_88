@@ -24,9 +24,10 @@ public class HibernateUtil {
 	           }
 	       }
 	  
-	       public static void openSessionAndBindToThread() {
+	       public static Session openSessionAndBindToThread() {
 	           Session session = sessionFactory.openSession();
 	           ThreadLocalSessionContext.bind(session);
+	           return session;
 	       }
 	  
 	  

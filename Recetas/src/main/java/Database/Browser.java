@@ -29,21 +29,21 @@ public class Browser {
 		return user;
 	}
 	
-	public static ArrayList<Receta> cargarRecetasPopulares(){
+	public static ArrayList<Recetaborrar> cargarRecetasPopulares(){
 		Factory f = new Factory();
-		ArrayList<Receta> recetas = f.cargarRecetasPopulares();
+		ArrayList<Recetaborrar> recetas = f.cargarRecetasPopulares();
 		return recetas;
 	}
 	
-	public static ArrayList<RecetaU> cargarRecetasUsuario(String usuario){
+	/*public static ArrayList<Receta> cargarRecetasUsuario(String usuario){
 		Factory f = new Factory();
-		ArrayList<RecetaU> recetas = f.cargarRecetasUsuario(usuario);
+		ArrayList<Receta> recetas = f.cargarRecetasUsuario(usuario);
 		return recetas;
-	}
+	}*/
 	
-	public static ArrayList<RecetaU> cargarRecetasBuscadas(itemsABuscar queBuscar){
+	public static ArrayList<Receta> cargarRecetasBuscadas(itemsABuscar queBuscar){
 		Factory f = new Factory();
-		ArrayList<RecetaU> recetas = f.cargarRecetasBuscadas(queBuscar);
+		ArrayList<Receta> recetas = f.cargarRecetasBuscadas(queBuscar);
 		return recetas;
 	}
 	
@@ -107,10 +107,10 @@ public class Browser {
 		return f.modificarPerfil(user);
 	}
 	
-	public static RecetaU cargarReceta(int idReceta, Usuario user){
+	/*public static Receta cargarReceta(int idReceta, Usuario user){
 		Factory f = new Factory();
 		return f.cargarReceta(idReceta, user);
-	}
+	}*/
 	
 	public static boolean agregarAHistorial(int idReceta ,Usuario user){
 		Factory f = new Factory();
@@ -158,10 +158,10 @@ public class Browser {
 		return f.agregarHistConsultas(idReceta, username);
 	}
 	
-	public static boolean agregarReceta(RecetaU receta){
+	/*public static boolean agregarReceta(Receta receta){
 		Factory f = new Factory();
 		return f.agregarReceta(receta);	
-	}
+	}*/
 	
 	/*public static Estadisticas obtenerEstadisticas(){
 		Factory f = new Factory();
@@ -173,7 +173,7 @@ public class Browser {
 		return f.obtenerGrupo(idGrupo);
 	}
 	
-	public static ArrayList<RecetaU> obtenerRecetasGrupo(int idGrupo){
+	public static ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
 		Factory f = new Factory();
 		return f.obtenerRecetasGrupo(idGrupo);
 	}
@@ -183,15 +183,15 @@ public class Browser {
 		return f.obtenerUsuariosGrupo(grupo);
 	}
 	
-	public static ArrayList<RecetaU> cargarHomeRecetas(Usuario user){
+	public static ArrayList<Receta> cargarHomeRecetas(Usuario user){
 		Factory f = new Factory();
 		return f.cargarHomeRecetas(user);
 	}
 	
-	public static boolean agregarIngredientesyCondimentos(RecetaU receta){
+	/*public static boolean agregarIngredientesyCondimentos(Receta receta){
 		Factory f = new Factory();
 		return f.agregarIngredientesyCondimentos(receta);
-	}
+	}*/
 	
 	public static ArrayList<Consulta> obtenerConsultasSegunDificultad(int dias){
 		Factory f = new Factory();

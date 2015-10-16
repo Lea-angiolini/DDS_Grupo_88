@@ -21,6 +21,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 
 import Database.Browser;
+import Database.DAORecetas;
+import Database.DBExeption;
 
 @Entity
 @Table(name="Usuarios")
@@ -267,9 +269,12 @@ public class Usuario implements Serializable{
 		return false;
 	}
 	
-	public ArrayList<RecetaU> cargarMisRecetas(){
-		return Browser.cargarRecetasUsuario(username);
-		
+	public List<Receta> cargarMisRecetas(){
+		DAORecetas daoReceta = new DAORecetas();
+		try{
+		return daoReceta.recetasDeUsuario(this);
+		}
+		catch(DBExeption ex){return new ArrayList<Receta>();}
 	}
 	
 	
@@ -277,15 +282,15 @@ public class Usuario implements Serializable{
 		return Browser.modificarPerfil(this);
 	}
 	
-	public ArrayList<RecetaU> cargarHome(){
+	public ArrayList<Receta> cargarHome(){
 		return Browser.cargarHomeRecetas(this);
 	}
 	
-	public ArrayList<RecetaU> filtrarRecetas(ArrayList<RecetaU> recetas){
+	public ArrayList<Receta> filtrarRecetas(ArrayList<Receta> recetas){
 		
-		ArrayList<RecetaU> recetasFiltradas = new ArrayList<RecetaU>();
+		ArrayList<Receta> recetasFiltradas = new ArrayList<Receta>();
 		
-		for(RecetaU receta : recetas )
+		for(Receta receta : recetas )
 		{
 			if(receta.aceptaCond(getCondiciones())){
 				recetasFiltradas.add(receta);
