@@ -25,6 +25,10 @@ public class Complexiones implements Serializable{
 	@Column(name="complexion")
 	private String complexion;
 	
+	public Complexiones() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Complexiones(int id, String complexion){
 		setIdComplexion(id);
 		setComplexion(complexion);

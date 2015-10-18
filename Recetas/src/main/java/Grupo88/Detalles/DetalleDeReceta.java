@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import master.ErrorPage;
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
@@ -47,7 +49,7 @@ public class DetalleDeReceta extends MasterPage {
 	// private PasswordTextField txtPassword;
 	//
 	private FrmDetalleDeReceta frmDetalleDeReceta;
-
+	private DAORecetas daoreceta;
 	public DetalleDeReceta(final PageParameters parameters){
 		super();
 		//getMenuPanel().setVisible(false);
@@ -55,13 +57,17 @@ public class DetalleDeReceta extends MasterPage {
 		final Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
 		final StringValue idReceta;
 		final Receta receta;
-		DAORecetas daoreceta = new DAORecetas();
+		daoreceta = new DAORecetas();
 		
 		if(parameters.getNamedKeys().contains("idReceta")){
 			idReceta = parameters.get("idReceta");
 			try {
 				receta = daoreceta.get(idReceta.toInt());
-			} catch (StringValueConversionException e) {
+			} catch (NullPointerException e){
+				setResponsePage(new ErrorPage(e.getMessage()));
+				return;
+			}
+			catch (StringValueConversionException e) {
 				// TODO Auto-generated catch block
 				setResponsePage(new ErrorPage(e.getMessage()));
 				return;
@@ -70,9 +76,10 @@ public class DetalleDeReceta extends MasterPage {
 				setResponsePage(new ErrorPage(e.getMessage()));
 				return;
 			}
-			//receta = Browser.cargarReceta(idReceta.toInt(), user);
 			
-		user.cargarGrupos();
+//			JOptionPane.showMessageDialog(null, receta.getDificultad().getDificultad());
+			//receta = Browser.cargarReceta(idReceta.toInt(), user);
+		//user.cargarGrupos();
 		
 		add(generar(user,idReceta.toInt()));
 		
@@ -114,7 +121,7 @@ public class DetalleDeReceta extends MasterPage {
 			
 			AbstractItem item = new AbstractItem(ingredientes.newChildId());
 					
-			item.add(new Label("unIngrediente", ingrediente.getIngrediente()));
+			item.add(new Label("unIngrediente", ingrediente.getIngrediente().getIngrediente()));
 			ingredientes.add(item);
 			
 		}

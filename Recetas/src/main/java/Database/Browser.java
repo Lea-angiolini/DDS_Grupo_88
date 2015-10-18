@@ -122,12 +122,7 @@ public class Browser {
 		Factory f = new Factory();
 		return f.calUltimaConfirmacion(idReceta, user, calificacion);
 	}
-	
-	public static Set<Grupo> cargarGrupos(String username){
-		Factory f = new Factory();
-		return f.cargarGrupos(username);
-		
-	}
+
 	
 	public static boolean entrarGrupo (String username, int idGrupo){
 		Factory f = new Factory();
@@ -139,10 +134,7 @@ public class Browser {
 		return f.salirGrupo(username, idGrupo);
 	}
 	
-	public static int agregarNuevoGrupo (Grupo grupo){
-		Factory f = new Factory();
-		return f.agregarNuevoGrupo(grupo);
-	}
+
 	
 	public static boolean grupoTieneReceta(int idGrupo ,int idReceta){
 		Factory f = new Factory();
@@ -169,11 +161,6 @@ public class Browser {
 		return f.obtenerEstadisticas();
 	}*/
 		
-	public static Grupo obtenerGrupo(int idGrupo){
-		Factory f = new Factory();
-		return f.obtenerGrupo(idGrupo);
-	}
-	
 	public static ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
 		Factory f = new Factory();
 		return f.obtenerRecetasGrupo(idGrupo);

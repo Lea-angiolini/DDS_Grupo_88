@@ -1,6 +1,8 @@
 package Grupo88.Componentes;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -109,8 +111,8 @@ public class DropList<T extends AlimDeReceta> extends Panel {
 		return contenedor;
 	}
 	
-	public ArrayList<T> getElegidos(){
-		ArrayList<T> elegidos = new ArrayList<T>();
+	public Set<T> getElegidos(){
+		Set<T> elegidos = new HashSet<T>();
 		for(Estado<T> prod : estados ){
 			if(prod.isElegido()){
 				elegidos.add(prod.getObject());

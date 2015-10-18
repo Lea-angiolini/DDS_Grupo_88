@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -35,8 +37,9 @@ public class Grupo implements Serializable{
 	private String nombre;
 	
 	@Size(min=0, max=30)
-	@Column(name="creador")
-	private String creador;
+	@ManyToOne
+	@JoinColumn(name="creador")
+	private Usuario creador;
 	
 	@NotNull
 	@Size(min=1, max=255)
@@ -46,7 +49,11 @@ public class Grupo implements Serializable{
 	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="grupos")
 	private Set<Usuario> usuarios=new HashSet<Usuario>();
 	
-	public Grupo(int id, String nom, String cread, String det){
+	public Grupo() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Grupo(int id, String nom, Usuario cread, String det){
 		setCreador(cread);
 		setDetalle(det);
 		setIdGrupo(id);
@@ -65,10 +72,10 @@ public class Grupo implements Serializable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getCreador() {
+	public Usuario getCreador() {
 		return creador;
 	}
-	public void setCreador(String creador) {
+	public void setCreador(Usuario creador) {
 		this.creador = creador;
 	}
 	public String getDetalle() {
@@ -93,16 +100,7 @@ public class Grupo implements Serializable{
 		}
 		return false;
 	}
-	
-	public int agregarGrupo() {
-		int dev = Browser.agregarNuevoGrupo(this);
-		if(dev > 0){
-			this.setIdGrupo(dev);
-			Browser.entrarGrupo(getCreador(), getIdGrupo());
-		}
-		return dev;
-		
-	}
+
 	
 	public boolean tieneReceta(int idReceta){
 		return Browser.grupoTieneReceta(getIdGrupo(),idReceta);

@@ -4,9 +4,16 @@ import master.MasterPage;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.CompoundPropertyModel;
-
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 import Grupo88.Componentes.ListaDeRecetas;
+import ObjetosDB.Ingredientes;
+import ObjetosDB.Receta;
 
 
 public class Inicio extends MasterPage {
@@ -21,7 +28,18 @@ public class Inicio extends MasterPage {
 	public Inicio(){
 		super();
 		//getMenuPanel().setVisible(false);
+		/*
+		SessionFactory sessionFactory;
+		 
+		  Configuration configuration = new Configuration();
+		 configuration.configure();
+		 ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+		 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		
+		
+		Session se = sessionFactory.openSession();
+		Receta q = (Receta) se.createQuery("from Receta").list().get(0);
+		*/
 		add(frmInicio = new FrmInicio("FrmInicio"));
 	}
 	

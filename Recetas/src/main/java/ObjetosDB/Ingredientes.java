@@ -34,7 +34,7 @@ public class Ingredientes extends AlimDeReceta implements Serializable{
 	@Column(name="caloriasPorcion")
 	private int calorias;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY*/)
 	@JoinColumn(name="tipoIngrediente")
 	private TipoIngrediente idTipoIngrediente;
 	

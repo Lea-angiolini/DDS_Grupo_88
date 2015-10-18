@@ -26,6 +26,10 @@ public class Temporadas implements Serializable{
 	@Column(name="nombreTemporada")
 	private String temporada;
 	
+	public Temporadas() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Temporadas(int idTemporada, String temporada) {
 		this.idTemporada = idTemporada;
 		this.temporada = temporada;

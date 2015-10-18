@@ -26,6 +26,10 @@ public class Dificultades implements Serializable{
 	@Column(name="descripcion")
 	private String dificultad;
 	
+	public Dificultades() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Dificultades(int idDificultad, String dificultad) 
 	{
 		this.idDificultad = idDificultad;

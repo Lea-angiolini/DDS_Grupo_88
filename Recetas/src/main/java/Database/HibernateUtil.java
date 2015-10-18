@@ -1,5 +1,7 @@
 package Database;
 
+import javax.swing.JOptionPane;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -12,7 +14,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 public class HibernateUtil {
 	
 
-	   private static SessionFactory sessionFactory;
+	   private static SessionFactory sessionFactory = null;
 	  
 	       public static synchronized void buildSessionFactory() {
 	           if (sessionFactory == null) {
@@ -21,6 +23,7 @@ public class HibernateUtil {
 	               configuration.setProperty("hibernate.current_session_context_class", "thread");
 	               ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
 	               sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+	               
 	           }
 	       }
 	  

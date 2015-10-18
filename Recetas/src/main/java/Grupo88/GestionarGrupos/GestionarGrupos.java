@@ -1,5 +1,6 @@
 package Grupo88.GestionarGrupos;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +23,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import Database.Browser;
+import Database.DAOGrupos;
+import Database.DBExeption;
 import Grupo88.Detalles.DetalleGrupo;
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Grupo;
@@ -29,10 +32,10 @@ import ObjetosDB.Grupo;
 public class GestionarGrupos extends MasterPage {	
 	
 	private FrmGestionarGrupos frmGestionarGrupos;
-	
+	private DAOGrupos daogrupos;
 	public GestionarGrupos(){
 		super();
-		
+		daogrupos = new DAOGrupos();
 		add(frmGestionarGrupos = new FrmGestionarGrupos("frmGestionarGrupos"));
 
 	}
@@ -61,8 +64,14 @@ public class GestionarGrupos extends MasterPage {
 				public void onClick() {
 					// TODO Auto-generated method stub
 					
-		        	getUsuarioActual().cargarGrupos();
-		        	Set<Grupo> todosGrupos = Browser.cargarGrupos("");
+					
+		        	List<Grupo> todosGrupos = null;
+					try {
+						todosGrupos = (List<Grupo>) daogrupos.findAll();
+					} catch (DBExeption e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					};
 		        	if (!todosGrupos.isEmpty())
 		        	{
 		        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, todosGrupos).setOutputMarkupId(true));
@@ -79,10 +88,9 @@ public class GestionarGrupos extends MasterPage {
 				public void onClick() {
 					// TODO Auto-generated method stub
 					
-					getUsuarioActual().cargarGrupos();
-		        	if (!getUsuarioActual().getGrupos().isEmpty())
+		        	if (!getUsuarioActual().getMisGrupos().isEmpty())
 		        	{
-		        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, getUsuarioActual().getGrupos()).setOutputMarkupId(true).setOutputMarkupId(true));
+		        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, (List<Grupo>) getUsuarioActual().getMisGrupos()).setOutputMarkupId(true).setOutputMarkupId(true));
 		        	}
 		        	else
 		        	{
@@ -103,7 +111,7 @@ public class GestionarGrupos extends MasterPage {
 	}
 	
 	private class FragmentoMisGrupos extends Fragment {
-        public FragmentoMisGrupos(String id, String markupId, MarkupContainer markupPorvider, Set<Grupo> grupos) {
+        public FragmentoMisGrupos(String id, String markupId, MarkupContainer markupPorvider, List<Grupo> grupos) {
         	
         	super(id, markupId, markupPorvider);
     		
@@ -141,7 +149,7 @@ public class GestionarGrupos extends MasterPage {
 			super (id, markupId, markupPorvider);
 			
 			final FragmentoGrupoNuevo esteFrag = this;
-			final Grupo nuevoGrupo = new Grupo(0,"",getUsuarioActual().getUsername(),"");
+			final Grupo nuevoGrupo = new Grupo(0,"",getUsuarioActual(),"");
 			add(new TextField<String>("nombreGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "nombre")));
 			add(new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
 			add(new EmptyPanel("etiquetaConf"));
@@ -150,12 +158,16 @@ public class GestionarGrupos extends MasterPage {
 				public void onSubmit() {
 					// TODO Auto-generated method stub
 					String msg;
-					if (nuevoGrupo.agregarGrupo() > 0){
+					
+					try {
+						daogrupos.saveOrUpdate(nuevoGrupo);
 						msg = "Su grupo ha sido creado!";
-					}
-					else{
+					} catch (DBExeption e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 						msg = "Opss, parece que hubo un problema!";
 					}
+				
 					esteFrag.addOrReplace(new Label("etiquetaConf", msg ) );
 
 				}

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import objetosWicket.SesionUsuario;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,7 +17,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 	
 	public DAOGenerico() {
 		sessionFactory=HibernateUtil.getSessionFactory();
-		session = sessionFactory.openSession();
+		//session = sessionFactory.openSession();
 	}
 	
 	public void closeSession(){
@@ -229,11 +231,11 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 	public List<T> findAll() throws DBExeption {
 		Session session = sessionFactory.getCurrentSession();
 		try {
-	
+			session.beginTransaction();
 			Query query = session.createQuery("SELECT e FROM " + getEntityClass().getName() + " e");
 			@SuppressWarnings("unchecked")
 			List<T> entities = (List<T>) query.list();
-	
+			session.getTransaction().commit();
 			return entities;} 
 		 catch (javax.validation.ConstraintViolationException cve) {
 			 try {

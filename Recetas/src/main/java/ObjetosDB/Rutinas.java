@@ -26,6 +26,10 @@ public class Rutinas implements Serializable{
 	@Column(name="rutina")
 	private String rutina;
 	
+	public Rutinas() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Rutinas(int idRutina, String rutina){
 		setIdRutina(idRutina);
 		setRutina(rutina);

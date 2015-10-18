@@ -25,6 +25,10 @@ public class Dietas implements Serializable{
 	@Column(name="tipoDieta")
 	private String dieta;
 	
+	public Dietas() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Dietas(int id, String dieta){
 		setIdDietas(id);
 		setDieta(dieta);

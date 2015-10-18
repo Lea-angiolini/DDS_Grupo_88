@@ -14,7 +14,8 @@ import org.apache.wicket.util.string.StringValue;
 import org.eclipse.jetty.servlet.ErrorPageErrorHandler;
 
 import Database.Browser;
-import Database.FactoryGrupo;
+import Database.DAOGenerico;
+import Database.DAOGrupos;
 import Grupo88.Componentes.ListaDeRecetas;
 import ObjetosDB.Grupo;
 import ObjetosDB.Usuario;
@@ -27,7 +28,7 @@ public class DetalleGrupo extends RegisteredPage {
 	private FrmDetalleGrupo frmDetalleGrupo;
 	private StringValue idGrupo;
 	private Grupo grupo;
-	
+	private DAOGrupos daogrupos;
 	
 	public DetalleGrupo(final PageParameters parameters){
 		super();
@@ -35,12 +36,12 @@ public class DetalleGrupo extends RegisteredPage {
 		if(parameters.getNamedKeys().contains("idGrupo")){
 			idGrupo = parameters.get("idGrupo");
 		
-		FactoryGrupo fabGrupo = new FactoryGrupo(getUsuarioActual());
-		grupo = fabGrupo.getGrupoCompleto(idGrupo.toInt());
+	
+//		FactoryGrupo fabGrupo = new FactoryGrupo(getUsuarioActual());
+		grupo = getUsuarioActual().getGrupoPorID(idGrupo.toInt());
 		if(grupo == null)
 			 setResponsePage(new ErrorPage("No se encontro el Grupo o no esta autorizado"));
-		
-		grupo = Browser.obtenerGrupo(idGrupo.toInt());
+	
 		add(new FrmDetalleGrupo("frmDetalleGrupo"));
 		
 	}	

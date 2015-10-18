@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -71,12 +72,12 @@ public class Usuario implements Serializable{
 	@Column(name="altura")
 	private int altura;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="Complexion")
+	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@JoinColumn(name="idComplexion")
 	private Complexiones complexion;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="Rutinas")
+	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@JoinColumn(name="idRutina")
 	private Rutinas rutina;
 	
 	@ManyToMany(cascade={CascadeType.ALL})
@@ -87,13 +88,17 @@ public class Usuario implements Serializable{
 	@JoinTable(name="relUsuarioCondicion", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idCondicion")})
 	private Set<CondicionesPreexistentes> condiciones=new HashSet<CondicionesPreexistentes>();
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="Dietas")
+	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@JoinColumn(name="idDieta")
 	private Dietas dieta;
 	
 	@ManyToMany(cascade={CascadeType.ALL})
 	@JoinTable(name="relUsuarioGrupo", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idGrupo")})
 	private Set<Grupo> grupos=new HashSet<Grupo>();
+	
+	
+	@OneToMany(mappedBy="creador",cascade= CascadeType.ALL) // cambiar a lazy
+	private Set<Grupo> misGrupos = new HashSet<Grupo>();
 	
 	/*@ManyToMany(cascade={CascadeType.ALL})
 	@JoinTable(name="amigos", joinColumns={@JoinColumn(name="nombreUsuario1")}, inverseJoinColumns={@JoinColumn(name="nombreUsuario2")})
@@ -101,7 +106,7 @@ public class Usuario implements Serializable{
 	
 	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="amigos")
 	private Set<Usuario> usuarios=new HashSet<Usuario>();*/
-	
+
 	public Usuario(){
 		this.condiciones = new HashSet<CondicionesPreexistentes>();
 		
@@ -249,6 +254,30 @@ public class Usuario implements Serializable{
 		grupos.add(grupo);
 	}
 	
+	public Set<Grupo> getMisGrupos() {
+		return misGrupos;
+	}
+
+	public void setMisGrupos(Set<Grupo> misGrupos) {
+		this.misGrupos = misGrupos;
+	}
+	
+	public void setMisGrupo(Grupo grupo) {
+		this.misGrupos.add(grupo);
+		grupo.setCreador(this);
+	}
+	
+	
+	public Grupo getGrupoPorID(int id){
+		Grupo grupoObtenido = null;
+		
+		for (Grupo grupo : getGrupos() ){
+			if (grupo.getIdGrupo() == id){
+				grupoObtenido = grupo;
+			}
+		}
+		return grupoObtenido;
+	}
 	public void eliminarGrupo(Grupo grupoSacar){
 		for (Grupo grupo : grupos){
 			if (grupo.getIdGrupo() == grupoSacar.getIdGrupo()){
@@ -268,10 +297,6 @@ public class Usuario implements Serializable{
 
 		return false;
 		
-	}
-	
-	public void cargarGrupos(){
-		setGrupos(Browser.cargarGrupos(username));
 	}
 	
 	public boolean estaEnGrupo(Grupo unGrupo){

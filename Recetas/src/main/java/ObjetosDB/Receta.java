@@ -3,6 +3,7 @@ package ObjetosDB;
 import java.io.Serializable;
 import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class Receta implements Serializable{
 	@Size(min=1, max=45)
 	private String nombre;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY*/)
     @JoinColumn(name="creador")
 	private Usuario creador;
 	
@@ -49,26 +50,26 @@ public class Receta implements Serializable{
 	@Size(min=1, max=200)
 	private String detalle;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY*/)
     @JoinColumn(name="idDificultad")
 	private Dificultades dificultad;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY*/)
     @JoinColumn(name="temporada")
 	private Temporadas temporada;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY*/)
     @JoinColumn(name="ingredientePrincipal")
 	private Ingredientes ingredientePrincipal;
 	
-	@OneToMany(mappedBy = "key.receta", fetch=FetchType.LAZY)
-	private ArrayList<Receta_Ingrediente> ingredientesRelacionados;
+	@OneToMany(mappedBy = "key.receta", fetch=FetchType.EAGER) // cambiar a lazy
+	private Set<Receta_Ingrediente> ingredientesRelacionados;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER) // cambiar a lazy
 	@JoinTable(name="relrecetcondimento", joinColumns={@JoinColumn(name="idReceta")}, inverseJoinColumns={@JoinColumn(name="idCondimento")})
-	private ArrayList<Condimentos> condimentos;
+	private Set<Condimentos> condimentos;
 	
-	@OneToMany(cascade= CascadeType.ALL)
+	@OneToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER) // cambiar a lazy
 	@JoinColumn(name="idReceta")
 	@IndexColumn(name="numeroPaso")
 	private List<Pasos> pasos;
@@ -93,8 +94,8 @@ public class Receta implements Serializable{
 		setDificultad(difi);
 		setTemporada(temp);
 		setIngredientePrincipal(ingPrin);
-		ingredientesRelacionados = new ArrayList<Receta_Ingrediente>();
-		condimentos = new ArrayList<Condimentos>();
+		ingredientesRelacionados = new HashSet<Receta_Ingrediente>();
+		condimentos = new HashSet<Condimentos>();
 		pasos = new ArrayList<Pasos>();
 	}
 	
@@ -152,19 +153,19 @@ public class Receta implements Serializable{
 		this.ingredientePrincipal = ingredientePrincipal;
 	}
 	
-	public ArrayList<Receta_Ingrediente> getRelacionIngredientes() {
+	public Set<Receta_Ingrediente> getRelacionIngredientes() {
 		return ingredientesRelacionados;
 	}
 
-	public void setRelacionIngredientes(ArrayList<Receta_Ingrediente> ingredientesRelacionados) {
+	public void setRelacionIngredientes(Set<Receta_Ingrediente> ingredientesRelacionados) {
 		this.ingredientesRelacionados = ingredientesRelacionados;
 	}
 
-	public ArrayList<Condimentos> getCondimentos() {
+	public Set<Condimentos> getCondimentos() {
 		return condimentos;
 	}
 
-	public void setCondimentos(ArrayList<Condimentos> condimentos) {
+	public void setCondimentos(Set<Condimentos> condimentos) {
 		this.condimentos = condimentos;
 	}
 	
@@ -189,6 +190,9 @@ public class Receta implements Serializable{
 	}
 	
 	public int getCalificacion() {
+		if(vecesCalificada == 0){
+			return 0;
+		}
 		return (int)(puntajeTotal/vecesCalificada);
 	}
 	

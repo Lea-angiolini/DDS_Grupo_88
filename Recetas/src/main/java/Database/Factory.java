@@ -749,38 +749,38 @@ public class Factory {
 		
 	}
 	
-	public Set<Grupo> cargarGrupos(String username){
-		
-		ResultSet rs = null;
-		Set<Grupo> grupos = new HashSet<Grupo>();
-		CallableStatement cmd;
-		
-		try
-		{
-			if(username != "")
-			{
-				cmd = con.prepareCall("{call SP_cargarGruposUsuario(?)}");
-				cmd.setString(1,username);
-			}
-			else
-			{
-				cmd = con.prepareCall("{call SP_cargarGrupos()}");
-			}
-			
-			rs = cmd.executeQuery();
-			while(rs.next()){
-				grupos.add(new Grupo(rs.getInt("idGrupo"),rs.getString("nombreGrupo"),rs.getString("creador"),rs.getString("detalle")));
-				
-			}
-			
-		
-		}
-		catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());
-			}
-		
-		return grupos;
-	}
+//	public Set<Grupo> cargarGrupos(String username){
+//		
+//		ResultSet rs = null;
+//		Set<Grupo> grupos = new HashSet<Grupo>();
+//		CallableStatement cmd;
+//		
+//		try
+//		{
+//			if(username != "")
+//			{
+//				cmd = con.prepareCall("{call SP_cargarGruposUsuario(?)}");
+//				cmd.setString(1,username);
+//			}
+//			else
+//			{
+//				cmd = con.prepareCall("{call SP_cargarGrupos()}");
+//			}
+//			
+//			rs = cmd.executeQuery();
+//			while(rs.next()){
+//				grupos.add(new Grupo(rs.getInt("idGrupo"),rs.getString("nombreGrupo"),rs.getString("creador"),rs.getString("detalle")));
+//				
+//			}
+//			
+//		
+//		}
+//		catch(SQLException ex){
+//			JOptionPane.showMessageDialog(null, ex.getMessage());
+//			}
+//		
+//		return grupos;
+//	}
 	
 	public boolean entrarGrupo (String username, int idGrupo){
 		
@@ -822,26 +822,26 @@ public class Factory {
 		return true;
 	}
 
-	public int agregarNuevoGrupo (Grupo grupo){
-		CallableStatement cmd;
-		ResultSet rs = null;
-	
-		try{
-			cmd = con.prepareCall("{call SP_agregarNuevoGrupo(?,?,?)}");
-			cmd.setString(1,grupo.getNombre());
-			cmd.setString(2,grupo.getCreador());
-			cmd.setString(3,grupo.getDetalle());
-			rs = cmd.executeQuery();
-		
-			if(rs.next()){
-				return rs.getInt("idGrupo");
-			}
-		}catch(SQLException ex){
-			//JOptionPane.showMessageDialog(null, ex.getMessage());
-			return -1;
-		}
-		return -1;
-	}
+//	public int agregarNuevoGrupo (Grupo grupo){
+//		CallableStatement cmd;
+//		ResultSet rs = null;
+//	
+//		try{
+//			cmd = con.prepareCall("{call SP_agregarNuevoGrupo(?,?,?)}");
+//			cmd.setString(1,grupo.getNombre());
+//			cmd.setString(2,grupo.getCreador());
+//			cmd.setString(3,grupo.getDetalle());
+//			rs = cmd.executeQuery();
+//		
+//			if(rs.next()){
+//				return rs.getInt("idGrupo");
+//			}
+//		}catch(SQLException ex){
+//			//JOptionPane.showMessageDialog(null, ex.getMessage());
+//			return -1;
+//		}
+//		return -1;
+//	}
 	
 	/*public Estadisticas obtenerEstadisticas(){
 		
@@ -1050,25 +1050,25 @@ public class Factory {
 	}
 }
 */
-public Grupo obtenerGrupo(int idGrupo){
-	CallableStatement cmd;
-	ResultSet rs;
-	try
-	{
-		cmd=con.prepareCall("{Call SP_obtenerGrupo(?)}");
-		cmd.setInt(1, idGrupo);
-		rs = cmd.executeQuery();
-		
-		rs.next();
-		return new Grupo(rs.getInt("idGrupo"), rs.getString("nombreGrupo"), rs.getString("creador"), rs.getString("detalle"));
-	}
-	
-	catch(SQLException ex)
-	{	//JOptionPane.showMessageDialog(null, ex.getMessage());
-		return new Grupo(0,"error",ex.getMessage(),"");
-	}
-
-}
+//public Grupo obtenerGrupo(int idGrupo){
+//	CallableStatement cmd;
+//	ResultSet rs;
+//	try
+//	{
+//		cmd=con.prepareCall("{Call SP_obtenerGrupo(?)}");
+//		cmd.setInt(1, idGrupo);
+//		rs = cmd.executeQuery();
+//		
+//		rs.next();
+//		return new Grupo(rs.getInt("idGrupo"), rs.getString("nombreGrupo"), rs.getString("creador"), rs.getString("detalle"));
+//	}
+//	
+//	catch(SQLException ex)
+//	{	//JOptionPane.showMessageDialog(null, ex.getMessage());
+//		return new Grupo(0,"error",ex.getMessage(),"");
+//	}
+//
+//}
 @Deprecated
 public ArrayList<Receta> obtenerRecetasGrupo(int idGrupo){
 	CallableStatement cmd;

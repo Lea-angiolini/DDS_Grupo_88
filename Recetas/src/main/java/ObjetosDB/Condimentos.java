@@ -1,12 +1,17 @@
 package ObjetosDB;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,6 +29,13 @@ public class Condimentos extends AlimDeReceta implements Serializable{
 	@Size(min=1, max=30)
 	@Column(name="nombre")
 	private String condimento;
+	
+	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="condimentos",fetch=FetchType.LAZY)
+	private Set<Receta> recetas = new HashSet<Receta>();
+	
+	public Condimentos() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Condimentos(int id, String cond) {
 		// TODO Auto-generated constructor stub
