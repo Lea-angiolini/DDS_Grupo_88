@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,11 +33,12 @@ public class Grupo implements Serializable{
 	@Column(name="idGrupo")
 	private int idGrupo;
 	
-	@Size(min=0, max=30)
+	@NotNull
+	@Size(min=1, max=30)
 	@Column(name="nombreGrupo", unique=true)
 	private String nombre;
 	
-	@Size(min=0, max=30)
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="creador")
 	private Usuario creador;
@@ -46,18 +48,18 @@ public class Grupo implements Serializable{
 	@Column(name="detalle")
 	private String detalle;
 	
-	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="grupos")
-	private Set<Usuario> usuarios=new HashSet<Usuario>();
+	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="grupos", fetch=FetchType.EAGER) //cambiar a lazy
+	private Set<Usuario> usuarios;
 	
 	public Grupo() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Grupo(int id, String nom, Usuario cread, String det){
-		setCreador(cread);
+	public Grupo(int id, String nom, String det){
 		setDetalle(det);
 		setIdGrupo(id);
 		setNombre(nom);
+		usuarios = new HashSet<Usuario>();
 	}
 	
 	public int getIdGrupo() {
@@ -77,6 +79,7 @@ public class Grupo implements Serializable{
 	}
 	public void setCreador(Usuario creador) {
 		this.creador = creador;
+		creador.setMisGrupo(this);
 	}
 	public String getDetalle() {
 		return detalle;
@@ -85,6 +88,20 @@ public class Grupo implements Serializable{
 		this.detalle = detalle;
 	}
 	
+	
+	public Set<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
+	public void setUsuario(Usuario usuario) {
+		this.usuarios.add(usuario);
+		usuario.agregarGrupo(this);
+	}
+
 	public boolean agregarUsuario(Usuario user){
 		if( Browser.entrarGrupo(user.getUsername(), idGrupo)){
 			user.agregarGrupo(this);

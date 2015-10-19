@@ -13,18 +13,18 @@ import org.hibernate.SessionFactory;
 public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, ID> {
 	
 	SessionFactory sessionFactory;
-	Session session;
+	//Session session;
 	
 	public DAOGenerico() {
 		sessionFactory=HibernateUtil.getSessionFactory();
 		//session = sessionFactory.openSession();
 	}
 	
-	public void closeSession(){
+	/*public void closeSession(){
 		if (session != null){
 			session.close();
 		}
-	}
+	}*/
 	@Override
 	public T create() throws DBExeption {
 		try {

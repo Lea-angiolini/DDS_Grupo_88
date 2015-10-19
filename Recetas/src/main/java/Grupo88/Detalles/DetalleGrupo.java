@@ -39,8 +39,10 @@ public class DetalleGrupo extends RegisteredPage {
 	
 //		FactoryGrupo fabGrupo = new FactoryGrupo(getUsuarioActual());
 		grupo = getUsuarioActual().getGrupoPorID(idGrupo.toInt());
-		if(grupo == null)
+		if(grupo == null){
 			 setResponsePage(new ErrorPage("No se encontro el Grupo o no esta autorizado"));
+			 return;
+		}
 	
 		add(new FrmDetalleGrupo("frmDetalleGrupo"));
 		

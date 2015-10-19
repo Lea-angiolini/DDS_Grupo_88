@@ -80,11 +80,11 @@ public class Usuario implements Serializable{
 	@JoinColumn(name="idRutina")
 	private Rutinas rutina;
 	
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER) // cambiar a lazy
 	@JoinTable(name="relUsuarioPreferencia", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idPreferencia")})
 	private Set<PreferenciasAlimenticias> preferencias=new HashSet<PreferenciasAlimenticias>();
 	
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER) // cambiar a lazy
 	@JoinTable(name="relUsuarioCondicion", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idCondicion")})
 	private Set<CondicionesPreexistentes> condiciones=new HashSet<CondicionesPreexistentes>();
 	
@@ -92,12 +92,12 @@ public class Usuario implements Serializable{
 	@JoinColumn(name="idDieta")
 	private Dietas dieta;
 	
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER) // cambiar a lazy
 	@JoinTable(name="relUsuarioGrupo", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idGrupo")})
-	private Set<Grupo> grupos=new HashSet<Grupo>();
+	private Set<Grupo> grupos;
 	
 	
-	@OneToMany(mappedBy="creador",cascade= CascadeType.ALL) // cambiar a lazy
+	@OneToMany(mappedBy="creador",cascade= CascadeType.ALL, fetch=FetchType.EAGER) // cambiar a lazy
 	private Set<Grupo> misGrupos = new HashSet<Grupo>();
 	
 	/*@ManyToMany(cascade={CascadeType.ALL})
@@ -106,10 +106,15 @@ public class Usuario implements Serializable{
 	
 	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="amigos")
 	private Set<Usuario> usuarios=new HashSet<Usuario>();*/
-
-	public Usuario(){
+	
+	public Usuario() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Usuario(String username){
+		this.username = username;
 		this.condiciones = new HashSet<CondicionesPreexistentes>();
-		
+		this.grupos =new HashSet<Grupo>();
 	}
 
 	public String getUsername() {
@@ -264,7 +269,7 @@ public class Usuario implements Serializable{
 	
 	public void setMisGrupo(Grupo grupo) {
 		this.misGrupos.add(grupo);
-		grupo.setCreador(this);
+		//grupo.setCreador(this);
 	}
 	
 	
@@ -299,7 +304,7 @@ public class Usuario implements Serializable{
 		
 	}
 	
-	public boolean estaEnGrupo(Grupo unGrupo){
+	/*public boolean estaEnGrupo(Grupo unGrupo){
 		
 		for(Grupo grupo : grupos){
 			if (grupo.getIdGrupo() == unGrupo.getIdGrupo()){
@@ -308,7 +313,7 @@ public class Usuario implements Serializable{
 		}
 		
 		return false;
-	}
+	}*/
 	
 	public List<Receta> cargarMisRecetas(){
 		DAORecetas daoReceta = new DAORecetas();

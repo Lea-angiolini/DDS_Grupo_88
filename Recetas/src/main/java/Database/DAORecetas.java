@@ -17,6 +17,7 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 	@SuppressWarnings("unchecked")
 	public List<Receta> recetasDeUsuario(Usuario user) throws DBExeption{
 		
+		Session session = sessionFactory.getCurrentSession();
 
 		 try {
 			Query query = session.createQuery("from Receta r where r.creador.username = :user")

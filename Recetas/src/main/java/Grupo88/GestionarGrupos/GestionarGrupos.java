@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 import master.MasterPage;
 
 import org.apache.wicket.AttributeModifier;
@@ -149,7 +151,8 @@ public class GestionarGrupos extends MasterPage {
 			super (id, markupId, markupPorvider);
 			
 			final FragmentoGrupoNuevo esteFrag = this;
-			final Grupo nuevoGrupo = new Grupo(0,"",getUsuarioActual(),"");
+			final Grupo nuevoGrupo = new Grupo(0,"","");
+			nuevoGrupo.setCreador(getUsuarioActual());
 			add(new TextField<String>("nombreGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "nombre")));
 			add(new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
 			add(new EmptyPanel("etiquetaConf"));
@@ -200,7 +203,7 @@ public class GestionarGrupos extends MasterPage {
 				}
 			};
 			
-			if(getUsuarioActual().estaEnGrupo(grupoActual)){
+			if(grupoActual.getUsuarios().contains(getUsuarioActual())){
 				label = new Label("textoEntrar/salir","Salir");
 				label.add(new AttributeModifier("class","btn btn-danger"));
 				verGrupo.add(new AttributeModifier("style", "visibility: visible"));
@@ -220,13 +223,28 @@ public class GestionarGrupos extends MasterPage {
 				public void onClick(AjaxRequestTarget target) {
 					// TODO Auto-generated method stub
 		            
-					if(getUsuarioActual().estaEnGrupo(grupoActual)){
-						grupoActual.sacarUsuario(getUsuarioActual());
-						target.appendJavaScript("noAdherido('"+i+"');");
+					if(grupoActual.getUsuarios().contains(getUsuarioActual())){
+						grupoActual.setUsuario(getUsuarioActual());
+						try {
+							daogrupos.saveOrUpdate(grupoActual);
+							target.appendJavaScript("noAdherido('"+i+"');");
+						} catch (Exception/*DBExeption*/ e) {
+							// TODO Auto-generated catch block
+							JOptionPane.showMessageDialog(null, e.getMessage());
+							e.printStackTrace();
+							grupoActual.getUsuarios().remove(getUsuarioActual());
+						}
 					}
 					else{
-						grupoActual.agregarUsuario(getUsuarioActual());
-						target.appendJavaScript("adherido('"+i+"');");
+						if(grupoActual.getUsuarios().remove(getUsuarioActual())){
+							try {
+								daogrupos.saveOrUpdate(grupoActual);
+								target.appendJavaScript("adherido('"+i+"');");
+							} catch (DBExeption e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}						
 					}
 
 				}

@@ -3,13 +3,15 @@ package objetosWicket;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
+
 import Database.Browser;
+import Database.DAOUsuarios;
 import ObjetosDB.Usuario;
 
 public class SesionUsuario extends WebSession {
 	
 	ModelUsuario usuario;
-	
+	DAOUsuarios daousuario;
 	
 	public SesionUsuario(Request request) {
 		super(request);
@@ -17,6 +19,7 @@ public class SesionUsuario extends WebSession {
 		invitado.getObject().setUsername("Invitado");
 		this.usuario = invitado;
 		setAttribute("usuario", invitado);
+		daousuario = new DAOUsuarios();
 	}
 	
 	public static SesionUsuario get(){
@@ -25,7 +28,9 @@ public class SesionUsuario extends WebSession {
 	
 	public boolean loguearUsuario(ModelUsuario user){
 		if (usuario.getObject().getUsername() == "Invitado"){
-			if (Browser.Login(user.getObject().getUsername(), user.getObject().getPassword())){
+			Usuario logueado = daousuario.loguear(user.getObject().getUsername(),  user.getObject().getPassword());
+			if (logueado != null){
+				user.setObject(logueado);
 				this.usuario = user;
 				return true;
 			}
