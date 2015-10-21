@@ -23,11 +23,11 @@ public class Browser {
 	
 	public static Usuario cargarUsuario(String username){
 		Factory f = new Factory();
-		Usuario user = f.cargarDatosBasicosDe(username);
+		//Usuario user = f.cargarDatosBasicosDe(username);
 		//user.setGrupos(f.cargarGruposDe(user.getUsername()));
 		//user.setDietas(f.cargarDietas(user.getUsername()));
 		//user.setCondiciones(f.cargarCondiciones(user.getUsername()));
-		return user;
+		return null;
 	}
 	
 	public static ArrayList<Recetaborrar> cargarRecetasPopulares(){

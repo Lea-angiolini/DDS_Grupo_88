@@ -96,8 +96,8 @@ public class Login extends MasterPage {
 		{
 			SesionUsuario sesion = (SesionUsuario)getSession();
 			ModelUsuario mUsuario = new ModelUsuario(usuario);
-			if(sesion.loguearUsuario(mUsuario)){
-				sesion.setUsuario(mUsuario);
+			if(sesion.loguearUsuario(user) != null){
+				sesion.setUsuario(user);
 				setResponsePage(Inicio.class);
 			}
 			else {

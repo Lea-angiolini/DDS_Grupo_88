@@ -85,9 +85,9 @@ public class PanelLogin extends Panel {
 		
 		public final void onSubmit() 
 		{
-			mUsuario = new ModelUsuario(usuario);
-			if(sesion.loguearUsuario(mUsuario)){
-				sesion.setUsuario(mUsuario);
+			Usuario logueado = sesion.loguearUsuario(usuario);
+			if(logueado != null){
+				sesion.setUsuario(logueado);
 				setResponsePage(Inicio.class);
 			}
 			else {

@@ -26,7 +26,7 @@ public class HeaderPanel extends Panel {
 		
 		if(SesionUsuario.exists() && SesionUsuario.get().estaLogueado())
 		{
-			Usuario user = SesionUsuario.get().getUsuario().getObject();
+			Usuario user = SesionUsuario.get().getUsuario();
 			
 			addOrReplace(new Label("saludo", new PropertyModel<String>(user, "nombre"){
 				@Override

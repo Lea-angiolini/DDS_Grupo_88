@@ -82,7 +82,7 @@ public class Factory {
 		return resp;
 	}
 	
-	public Usuario cargarDatosBasicosDe(String nombreUsuario){
+	/*public Usuario cargarDatosBasicosDe(String nombreUsuario){
 		ResultSet rs = null;
 		Usuario user = new Usuario();
 		ResultSet ingRS = null;
@@ -135,7 +135,7 @@ public class Factory {
 		return user;
 		
 	}
-	
+	*/
 	/*public Ingredientes cargarIngrediente(int idIngrediente){
 		ResultSet rs = null;
 		

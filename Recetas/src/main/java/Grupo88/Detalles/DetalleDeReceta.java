@@ -54,7 +54,7 @@ public class DetalleDeReceta extends MasterPage {
 		super();
 		//getMenuPanel().setVisible(false);
 		
-		final Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
+		final Usuario user = getUsuarioActual();
 		final StringValue idReceta;
 		final Receta receta;
 		daoreceta = new DAORecetas();

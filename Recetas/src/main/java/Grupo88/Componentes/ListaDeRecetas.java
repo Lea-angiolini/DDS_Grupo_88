@@ -46,7 +46,7 @@ public ListaDeRecetas(String id, List<Receta> recetas, final Usuario user) {
 			//item.addOrReplace(new Label("indice",item.getIndex()));
 			
 			bton.addOrReplace(new Label("campo1",recetas.getNombre()));
-			bton.addOrReplace(new Label("campo2",recetas.getCreador()));
+			bton.addOrReplace(new Label("campo2",recetas.getCreador().getUsername()));
 			bton.addOrReplace(new Label("campo3",recetas.getDificultad().getDificultad()));
 			bton.addOrReplace(new Label("descripcion",recetas.getDetalle()));
 			item.add(bton);

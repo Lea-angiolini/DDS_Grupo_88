@@ -100,6 +100,9 @@ public class Usuario implements Serializable{
 	@OneToMany(mappedBy="creador",cascade= CascadeType.ALL, fetch=FetchType.EAGER) // cambiar a lazy
 	private Set<Grupo> misGrupos = new HashSet<Grupo>();
 	
+	@OneToMany(mappedBy="creador", fetch=FetchType.EAGER) // cambiar a lazy
+	private Set<Receta> misRecetas = new HashSet<Receta>();
+	
 	/*@ManyToMany(cascade={CascadeType.ALL})
 	@JoinTable(name="amigos", joinColumns={@JoinColumn(name="nombreUsuario1")}, inverseJoinColumns={@JoinColumn(name="nombreUsuario2")})
 	private Set<Usuario> amigos=new HashSet<Usuario>();

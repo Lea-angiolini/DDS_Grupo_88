@@ -27,19 +27,6 @@ public class Inicio extends MasterPage {
 	@SuppressWarnings("unchecked")
 	public Inicio(){
 		super();
-		//getMenuPanel().setVisible(false);
-		/*
-		SessionFactory sessionFactory;
-		 
-		  Configuration configuration = new Configuration();
-		 configuration.configure();
-		 ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
-		 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-		
-		
-		Session se = sessionFactory.openSession();
-		Receta q = (Receta) se.createQuery("from Receta").list().get(0);
-		*/
 		add(frmInicio = new FrmInicio("FrmInicio"));
 	}
 	

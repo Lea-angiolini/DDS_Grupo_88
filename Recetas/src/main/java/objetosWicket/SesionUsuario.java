@@ -1,5 +1,7 @@
 package objetosWicket;
 
+import javax.swing.JOptionPane;
+
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
@@ -10,13 +12,13 @@ import ObjetosDB.Usuario;
 
 public class SesionUsuario extends WebSession {
 	
-	ModelUsuario usuario;
-	DAOUsuarios daousuario;
+	private Usuario usuario;
+	private DAOUsuarios daousuario;
 	
 	public SesionUsuario(Request request) {
 		super(request);
-		ModelUsuario invitado = new ModelUsuario(new Usuario());
-		invitado.getObject().setUsername("Invitado");
+		Usuario invitado = new Usuario();
+		invitado.setUsername("Invitado");
 		this.usuario = invitado;
 		setAttribute("usuario", invitado);
 		daousuario = new DAOUsuarios();
@@ -26,16 +28,15 @@ public class SesionUsuario extends WebSession {
 		return (SesionUsuario)Session.get();
 	}
 	
-	public boolean loguearUsuario(ModelUsuario user){
-		if (usuario.getObject().getUsername() == "Invitado"){
-			Usuario logueado = daousuario.loguear(user.getObject().getUsername(),  user.getObject().getPassword());
+	public Usuario loguearUsuario(Usuario user){
+		if (usuario.getUsername() == "Invitado"){
+			Usuario logueado = daousuario.loguear(user.getUsername(), user.getPassword());
 			if (logueado != null){
-				user.setObject(logueado);
-				this.usuario = user;
-				return true;
+				return logueado;
+				
 			}
 		}
-		return false;
+		return null;
 	}
 
 	
@@ -43,19 +44,20 @@ public class SesionUsuario extends WebSession {
 		this.invalidateNow();
 	}
 	
-	public ModelUsuario getUsuario() {
-		return (ModelUsuario)getAttribute("usuario");
+	public Usuario getUsuario() {
+		return usuario;
 	}
 	
 	public Usuario getUsuarioActual(){
-		return getUsuario().getObject();
+		return usuario;
 	}
 
-	public void setUsuario(ModelUsuario usuario) {
+	public void setUsuario(Usuario usuario) {
 		setAttribute("usuario", usuario);
+		this.usuario= usuario; 
 	}
 	
 	public boolean estaLogueado(){
-		return getUsuario().getObject().getUsername() != "Invitado";
+		return getUsuario().getUsername() != "Invitado";
 	}
 }

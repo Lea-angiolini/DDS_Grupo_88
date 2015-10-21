@@ -8,9 +8,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.swing.JOptionPane;
@@ -35,30 +38,36 @@ public class CondicionesPreexistentes implements Visitor,Serializable{
 	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="condiciones")
 	private Set<Usuario> usuarios=new HashSet<Usuario>();
 	
-	private ArrayList<Integer> ingredientesNoComestible;
-	private ArrayList<Integer> condimentosNoComestible;
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="relcondpreexingnocomestible", joinColumns={@JoinColumn(name="idCond")}, inverseJoinColumns={@JoinColumn(name="idIngNoComestible")})
+	private Set<Ingredientes> ingredientesNoComestible;
 	
+	//private ArrayList<Integer> condimentosNoComestible;
+	
+	public CondicionesPreexistentes() {
+		// TODO Auto-generated constructor stub
+	}
 	public CondicionesPreexistentes(int idCondPreex, String condPreex) {
 		super();
 		this.idCondPreex = idCondPreex;
 		this.condPreex = condPreex;
-		this.ingredientesNoComestible = new ArrayList<Integer>();
-		this.condimentosNoComestible = new ArrayList<Integer>();
+		this.ingredientesNoComestible = new HashSet<Ingredientes>();
+		//this.condimentosNoComestible = new ArrayList<Integer>();
 	}
 	
-	public ArrayList<Integer> getIngredientesNoComestible() {
+	public Set<Ingredientes> getIngredientesNoComestible() {
 		return ingredientesNoComestible;
 	}
 
-	public void setIngredientesNoComestible(ArrayList<Integer> ingredientesNoComestible) {
+	public void setIngredientesNoComestible(Set<Ingredientes> ingredientesNoComestible) {
 		this.ingredientesNoComestible = ingredientesNoComestible;
 	}
 	
-	public void setIngredienteNoComestible(int ingredienteNoComestible) {
+	public void setIngredienteNoComestible(Ingredientes ingredienteNoComestible) {
 		ingredientesNoComestible.add(ingredienteNoComestible);
 	}
 	
-	public ArrayList<Integer> getCondimentosNoComestible() {
+	/*public ArrayList<Integer> getCondimentosNoComestible() {
 		return condimentosNoComestible;
 	}
 
@@ -68,7 +77,7 @@ public class CondicionesPreexistentes implements Visitor,Serializable{
 	
 	public void setCondimentoNoComestible(int condimentoNoComestible) {
 		this.condimentosNoComestible.add(condimentoNoComestible);
-	}
+	}*/
 
 	public int getIdCondPreex() {
 		return idCondPreex;
@@ -86,8 +95,8 @@ public class CondicionesPreexistentes implements Visitor,Serializable{
 	@Override
 	public boolean visitarIngrediente(Ingredientes ing) {
 		// TODO Auto-generated method stub
-		for(int ingNocomestible : ingredientesNoComestible){
-		if(ingNocomestible == ing.getId())
+		for(Ingredientes ingNocomestible : ingredientesNoComestible){
+		if(ingNocomestible.getId() == ing.getId())
 			return false;
 		}
 		return true;
@@ -96,11 +105,11 @@ public class CondicionesPreexistentes implements Visitor,Serializable{
 
 	@Override
 	public boolean visitarCondimento(Condimentos cond) {
-		// TODO Auto-generated method stub
+		/*// TODO Auto-generated method stub
 		for(int condNocomestible : condimentosNoComestible){
 		if(condNocomestible == cond.getId())
 			return false;
-		}
+		}*/
 		return true;
 	}
 

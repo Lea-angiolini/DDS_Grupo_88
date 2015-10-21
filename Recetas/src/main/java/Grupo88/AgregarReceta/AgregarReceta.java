@@ -61,7 +61,7 @@ import ObjetosDB.Usuario;
 public class AgregarReceta extends RegisteredPage {
 	
 	private SesionUsuario sesion = (SesionUsuario)getSession();
-	private Usuario user = sesion.getUsuario().getObject();
+	private Usuario user = getUsuarioActual();
 	private final Receta nuevareceta = new Receta();
 	private List<Fragmento> fragmentos = new ArrayList<Fragmento>();
 	private DropList<Ingredientes> dropIng;
