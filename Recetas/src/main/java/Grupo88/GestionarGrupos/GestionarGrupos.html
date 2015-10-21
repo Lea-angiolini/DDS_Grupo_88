@@ -35,17 +35,42 @@
 								</div>
 							</div>
 							<div class = "form-group">
-							<div class = "col-md-9">
-							<button type="button" class="btn btn-success" wicket:id="todosGrupos">
-								<span class="glyphicon">Todos</span> 
+							<div class = "row">
+							<button type="button" style="
+    margin-top: 20px;
+    position: center;
+    width: 76.995px;
+    height: 63.818182px;
+    margin-left: 335px;
+							" class="btn btn-success" wicket:id="todosGrupos">
+								<span class="glyphicon" style="font-family: inherit;
+    font-size: large;
+    font-stretch: initial;
+    font-style: italic;">Todos</span> 
 							</button> &nbsp;
-							<button type="button" class="btn btn-success" wicket:id="btnMisGrupos">
-								<span class="glyphicon">Mis Grupos</span> 
+							<button type="button" style="
+    margin-top: 20px;
+    position: center;
+   
+    height: 63.818182px;
+							"
+							class="btn btn-warning" wicket:id="btnMisGrupos">
+								<span class="glyphicon" style="font-family: inherit;
+    font-size: large;
+    font-stretch: initial;
+    font-style: italic;">Mis Grupos</span> 
 							</button> 
-							</div>
-								<div class = "col-md-3">
-								<button type="button" class="btn btn-success" wicket:id="btnCrearGrupo">
-									<span class="glyphicon">Crear Grupo</span>
+							
+								<button type="button"  style="
+    margin-top: 20px;
+    position: center;
+    margin-left:7px;
+    height: 63.818182px;
+							"class="btn btn-danger" wicket:id="btnCrearGrupo">
+									<span class="glyphicon" style="font-family: inherit;
+    font-size: large;
+    font-stretch: initial;
+    font-style: italic;">Crear Grupo</span>
 								</button>
 								</div>
 							</div>
@@ -68,17 +93,19 @@
 				
 				<wicket:fragment wicket:id="fragmentGrupos">
 				
-				<div class="form-group">
-								<label for="calorias" class="control-label col-md-2">Nombre
-									grupo</label>
-								<div class="col-md-9">
+				<div class="form-group" style="margin-top:-30px">
+								<label for="calorias" class="control-label col-sm-2" style="
+margin-right: -40px;margin-top: 6px;">Nombre
+									grupo:</label>
+								<div class="col-md-4">
 									<input type="text" class="form-control" id="caloriasMin"
 										aawicket:id="caloriasMin">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="calorias" class="control-label col-md-2">Creador</label>
-								<div class="col-md-9">
+								<label for="calorias" class="control-label col-md-1" style="
+margin-right: -5px;margin-top: 6px;">Creador:</label>
+								<div class="col-md-4">
 									<input type="text" class="form-control" id="caloriasMax"
 										awicket:id="caloriasMax">
 								</div>
@@ -89,7 +116,7 @@
 
 							<br>
 												<div type="button" class="box col-md-12"
-													style="background-color: rgba(255, 255, 255, 0.8)">
+													style="background-color: rgba(255, 255, 255, 0.8);border-bottom: 20px;border-bottom-color: aquamarine;">
 													<div class="row" ALIGN=left>
 														<div class="col-md-6">
 															Nombre grupo: <span wicket:id="nombre"
@@ -104,7 +131,9 @@
 														<a class="btn btn-primary" wicket:id="verGrupo" id=""><span>Ver grupo</span></a></div>
 														</div>
 														<br> <br>
-														<dl class="dl-horizontal">
+														<dl class="dl-horizontal" style="
+    margin-top: -30px;
+														">
 															<dt>Descripción:</dt>
 															<dd wicket:id="detalle">Una breve descripción de la receta</dd>
 														</dl>
