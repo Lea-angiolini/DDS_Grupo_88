@@ -20,10 +20,13 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 		Session session = sessionFactory.getCurrentSession();
 
 		 try {
+			session.beginTransaction();
 			Query query = session.createQuery("from Receta r where r.creador.username = :user")
 					.setParameter("user", user.getUsername());
 			
-			return (List<Receta>)query.list();
+			List<Receta> recetas = (List<Receta>)query.list();
+			session.getTransaction().commit();
+			return recetas;
 		 } 
 		 catch (javax.validation.ConstraintViolationException cve) {
 			 try {

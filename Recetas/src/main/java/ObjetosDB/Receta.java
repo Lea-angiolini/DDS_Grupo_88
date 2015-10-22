@@ -62,7 +62,7 @@ public class Receta implements Serializable{
     @JoinColumn(name="ingredientePrincipal")
 	private Ingredientes ingredientePrincipal;
 	
-	@OneToMany(mappedBy = "key.receta", fetch=FetchType.EAGER) // cambiar a lazy
+	@OneToMany(mappedBy = "key.receta", fetch=FetchType.EAGER, cascade = CascadeType.ALL) // cambiar a lazy
 	private Set<Receta_Ingrediente> ingredientesRelacionados;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER) // cambiar a lazy
@@ -170,7 +170,9 @@ public class Receta implements Serializable{
 	}
 	
 	public void agregarIngrediente(Ingredientes ingrediente, int cantidad){
-		ingredientesRelacionados.add(new Receta_Ingrediente(this,ingrediente,cantidad));
+		Receta_Ingrediente relacion = new Receta_Ingrediente(this,ingrediente,cantidad);
+		ingredientesRelacionados.add(relacion);
+		//ingrediente.setRecetaRelacionada(relacion);
 	}
 	
 	public void agregarCondimento(Condimentos condimento){

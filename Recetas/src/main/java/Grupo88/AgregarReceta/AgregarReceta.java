@@ -45,8 +45,11 @@ import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import Database.Browser;
+import Database.DAOCondimentos;
+import Database.DAODificultades;
+import Database.DAOIngredientes;
 import Database.DAORecetas;
+import Database.DAOTemporadas;
 import Database.DBExeption;
 import Grupo88.Componentes.DropList;
 import Grupo88.MisRecetas.MisRecetas;
@@ -62,10 +65,14 @@ public class AgregarReceta extends RegisteredPage {
 	
 	private SesionUsuario sesion = (SesionUsuario)getSession();
 	private Usuario user = getUsuarioActual();
-	private final Receta nuevareceta = new Receta();
-	private List<Fragmento> fragmentos = new ArrayList<Fragmento>();
+	private final Receta nuevareceta = new Receta(0, "", user, new Dificultades(), new Temporadas(), new Ingredientes());
+	private List<Fragmento> fragmentos = new ArrayList<Fragmento>(); 
 	private DropList<Ingredientes> dropIng;
 	private DropList<Condimentos> dropCond;
+	private final DAOIngredientes daoIgredientes = new DAOIngredientes();
+	private DAOCondimentos daoCondimentos = new DAOCondimentos();
+	private DAODificultades daoDificultades = new DAODificultades();
+	private DAOTemporadas daoTeporadas = new DAOTemporadas();
 	private static final ResourceReference RESOURCE_REF = new PackageResourceReference(AgregarReceta.class,
 	        "default.jpg");
 
@@ -73,8 +80,6 @@ public class AgregarReceta extends RegisteredPage {
 	
 	public AgregarReceta(){
 		super();
-		nuevareceta.setCreador(getUsuarioActual());
-		//getMenuPanel().setVisible(false);
 		
 		fragmentos.add(new Fragmento("areaForms","fragmentoInicial",this,new FrmDatosReceta("frmDatosBasicos")));
 		for(int i = 1; i<= 5; i++){
@@ -110,15 +115,27 @@ public class AgregarReceta extends RegisteredPage {
 		//final TextField<String> nombre;
 		add(new TextField<String>("nombreReceta", new PropertyModel<String>(nuevareceta, "nombre")));
 		add(new TextArea<String>("descripcion", new PropertyModel<String>(nuevareceta, "detalle")));
-		add(new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), Browser.listaTemporadas(), new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
-		add(new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"), Browser.listaDificultades(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
-		add(new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), Browser.listaIngredientes(), new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
+		
+		try {
+			add(new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), daoIgredientes.findAll(), new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
+			add(new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), daoTeporadas.findAll(), new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
+			add(new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"), daoDificultades.findAll(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
+		} catch (DBExeption e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		add(fileUpload = new FileUploadField("fileUpload"));
 		fileUpload.setRequired(true);
 		
-		add(dropIng = new DropList<Ingredientes>("dropIngredientes",Browser.listaIngredientes()));
-		add(dropCond = new DropList<Condimentos>("dropCondimentos",Browser.listaCondimentos()));
+		try {
+			add(dropIng = new DropList<Ingredientes>("dropIngredientes",(ArrayList<Ingredientes>)daoIgredientes.findAll()));
+			add(dropCond = new DropList<Condimentos>("dropCondimentos",(ArrayList<Condimentos>)daoCondimentos.findAll()));
+		} catch (DBExeption e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		}
 		
 		@Override

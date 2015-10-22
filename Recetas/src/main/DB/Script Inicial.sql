@@ -95,7 +95,7 @@ CREATE TABLE Grupo88.Recetas(
 	creador  VARCHAR(30), -- REFERENCES Usuarios,
     descripcion VARCHAR(200),
     idDificultad INT, -- REFERENCES dificultad,
-    calorias INT NOT NULL,
+    calorias INT NOT NULL DEFAULT 0,
     grupoAlimenticio INT, -- REFERENCES grupoalim,
     temporada INT, -- REFERENCES temporadas,
     ingredientePrincipal INT, -- REFERENCES ingredientes,

@@ -38,7 +38,7 @@ public class Ingredientes extends AlimDeReceta implements Serializable{
 	@JoinColumn(name="tipoIngrediente")
 	private TipoIngrediente idTipoIngrediente;
 	
-	@OneToMany(mappedBy="key.ingrediente")
+	@OneToMany(mappedBy="key.ingrediente", fetch=FetchType.LAZY) // cambiar a lazy
 	private Set<Receta_Ingrediente> relRecetas = new HashSet<Receta_Ingrediente>();
 	
 	public Ingredientes(){	}
