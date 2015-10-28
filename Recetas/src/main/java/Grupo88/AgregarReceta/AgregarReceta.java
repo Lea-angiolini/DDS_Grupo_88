@@ -72,7 +72,7 @@ public class AgregarReceta extends RegisteredPage {
 	private final DAOIngredientes daoIgredientes = new DAOIngredientes();
 	private DAOCondimentos daoCondimentos = new DAOCondimentos();
 	private DAODificultades daoDificultades = new DAODificultades();
-	private DAOTemporadas daoTeporadas = new DAOTemporadas();
+	private DAOTemporadas daoTemporadas = new DAOTemporadas();
 	private static final ResourceReference RESOURCE_REF = new PackageResourceReference(AgregarReceta.class,
 	        "default.jpg");
 
@@ -118,7 +118,7 @@ public class AgregarReceta extends RegisteredPage {
 		
 		try {
 			add(new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), daoIgredientes.findAll(), new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
-			add(new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), daoTeporadas.findAll(), new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
+			add(new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), daoTemporadas.findAll(), new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
 			add(new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"), daoDificultades.findAll(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
 		} catch (DBExeption e1) {
 			// TODO Auto-generated catch block

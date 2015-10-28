@@ -12,11 +12,7 @@ CREATE TABLE Grupo88.dificultad(
 	idDificultad INT AUTO_INCREMENT PRIMARY KEY,
     descripcion VARCHAR(30) NOT NULL
 );
-
-CREATE TABLE Grupo88.tipoIngrediente(
-	idTipoIngrediente INT AUTO_INCREMENT PRIMARY KEY,
-    descripcion VARCHAR(30) NOT NULL
-);  
+  
 
 CREATE TABLE Grupo88.Condimento(
 	idCondimento INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +22,13 @@ CREATE TABLE Grupo88.Condimento(
 CREATE TABLE Grupo88.GrupoAlim(
 	idGrupoAlim INT AUTO_INCREMENT PRIMARY KEY,
     descripcion VARCHAR (50) NOT NULL
+);
+
+CREATE TABLE Grupo88.tipoIngrediente(
+	idTipoIngrediente INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(30) NOT NULL,
+    grupoQuePertenece INT NOT NULL,
+	FOREIGN KEY (grupoQuePertenece) REFERENCES Grupo88.GrupoAlim(idGrupoAlim)
 );
 
 CREATE TABLE Grupo88.Ingredientes(
@@ -95,7 +98,7 @@ CREATE TABLE Grupo88.Recetas(
 	creador  VARCHAR(30), -- REFERENCES Usuarios,
     descripcion VARCHAR(200),
     idDificultad INT, -- REFERENCES dificultad,
-    calorias INT NOT NULL DEFAULT 0,
+    caloriasTotales INT NOT NULL DEFAULT 0,
     grupoAlimenticio INT, -- REFERENCES grupoalim,
     temporada INT, -- REFERENCES temporadas,
     ingredientePrincipal INT, -- REFERENCES ingredientes,
@@ -220,7 +223,7 @@ USE Grupo88;
 CREATE VIEW V_recetas
 	AS
 	SELECT r.idReceta, r.nombre, r.creador, r.descripcion, r.idDificultad, dif.descripcion as 'Dificultad',
-	r.calorias, r.grupoAlimenticio as 'IDGrupoAlimenticio', grA.descripcion as 'GrupoAlimenticio',
+	r.caloriasTotales, r.grupoAlimenticio as 'IDGrupoAlimenticio', grA.descripcion as 'GrupoAlimenticio',
 	r.temporada as 'IdTemporada', tmp.nombreTemporada as 'Temporada', r.ingredientePrincipal as 'IdIngredientePrincipal',
 	ing.nombre as 'IngredientePrincipal', ing.caloriasPorcion as 'CaloriasIngPrincipal', ing.tipoingrediente as 'TipoIngPrincipal',
 	r.puntajeTotal, r.vecesCalificada, r.foto
@@ -242,10 +245,6 @@ VALUES('Facil'),
 	  ('Media'),
 	  ('Dificil');
       
-INSERT INTO Grupo88.tipoingrediente(descripcion)
-VALUES ('Cereales y derivados'),('Legumbres'),('Huevos'),('Azucares y dulces'),('Verduras y Hortalizas'),
-	   ('Frutas'),('Frutos Secos'),('Lacteos y derivados'),('Carnes'), ('Pescados y Mariscos'), 
-       ('Aceites y grasas'), ('Otros');
        
 INSERT INTO Grupo88.condimento (nombre)
 VALUES ('Sal'),('Pimienta Negra'),('Paprika'),('Oregano'),('Laurel'),('Aji Molido'),('Azafran');
@@ -257,7 +256,13 @@ VALUES ('Grupo 1: Leche y Derivados'),
        ('Grupo 4: Verduras y Hortalizas'),
        ('Grupo 5: Frutas'),
        ('Grupo 6: Harinas, Cereales, Dulces'),
-       ('Grupo 7: Grasas, Aceites y Mantequilla');
+       ('Grupo 7: Grasas, Aceites y Mantequilla'),
+       ('Otros');
+       
+INSERT INTO Grupo88.tipoingrediente(descripcion, grupoQuePertenece)
+VALUES ('Cereales y derivados',6),('Legumbres',3),('Huevos',2),('Azucares y dulces',6),('Verduras y Hortalizas',4),
+	   ('Frutas',5),('Frutos Secos',5),('Lacteos y derivados',1),('Carnes',2), ('Pescados y Mariscos',2), 
+       ('Aceites y grasas',7), ('Harinas',6), ('Otros',8);
 
 INSERT INTO Grupo88.ingredientes(nombre,caloriasPorcion, tipoIngrediente)
 VALUES ('Arroz',354,1), ('Avena',367,1),('Harina',150, 1), -- cereales y derivados
@@ -306,7 +311,7 @@ VALUES('jorge','pass','Jorge','Gomez','',null,'M',170,3,2,1),
 	  ('maria','pass','Maria','Rodriguez','',null,'F',150,1,4,2),
       ('carlos', 'pass', 'Carlos', 'Batata','@gmail.com',null,'M', 160, 2, 1, 3);
 
-INSERT INTO Grupo88.Recetas(nombre,creador,idDificultad,calorias,grupoAlimenticio,temporada,ingredientePrincipal)
+INSERT INTO Grupo88.Recetas(nombre,creador,idDificultad,caloriasTotales,grupoAlimenticio,temporada,ingredientePrincipal)
 VALUES('Pollo al horno','carlos',2,1000,2,1,31),
 	  ('milanesas napolitana','maria',1,800,2,3,34),
       ('Pulpo en su tinta',null,3,1200,2,5,35),
@@ -346,6 +351,7 @@ VALUES (1,31,1),(1,21,1),
 	   (3,34,1),(3,13,5),
        (4,3,2),(6,3,2),
        (2,34,1);
+       
        
 INSERT INTO Grupo88.relCondPreexIngNoComestible()
 VALUES (1,1),(1,3),(2,3);
@@ -506,8 +512,8 @@ BEGIN
           (ingredienteB = -1 or rec.ingredientePrincipal = ingredienteB) AND
           (grupoAlim = -1 or rec.grupoAlimenticio = grupoAlim) AND
           (calificacion = -1 or calificacion =FN_calcularCalificacion(rec.idReceta)) AND
-          rec.calorias <= caloriasMax AND
-          rec.calorias >= caloriasMin;
+          rec.caloriasTotales <= caloriasMax AND
+          rec.caloriasTotales >= caloriasMin;
 END $$
 
 

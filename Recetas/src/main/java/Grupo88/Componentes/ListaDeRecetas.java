@@ -45,8 +45,12 @@ public ListaDeRecetas(String id, List<Receta> recetas, final Usuario user) {
 			
 			//item.addOrReplace(new Label("indice",item.getIndex()));
 			
+			Usuario usercreador = recetas.getCreador();
+			String creador = "";
+			if(usercreador != null) creador = usercreador.getUsername();
+			
 			bton.addOrReplace(new Label("campo1",recetas.getNombre()));
-			bton.addOrReplace(new Label("campo2",recetas.getCreador().getUsername()));
+			bton.addOrReplace(new Label("campo2",creador)); // TODO arreglar como se debe el problema con el null desde capa de negocios?
 			bton.addOrReplace(new Label("campo3",recetas.getDificultad().getDificultad()));
 			bton.addOrReplace(new Label("descripcion",recetas.getDetalle()));
 			item.add(bton);

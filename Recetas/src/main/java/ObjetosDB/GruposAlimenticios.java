@@ -7,10 +7,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,8 +32,12 @@ public class GruposAlimenticios implements Serializable{
 	@Column(name="descripcion")
 	private String grupoAlim;
 	
-	@ManyToMany(cascade= {CascadeType.ALL}, mappedBy="gruposAlimenticios")
+	@OneToMany(mappedBy="grupoQuePertenece", cascade= CascadeType.ALL, fetch=FetchType.EAGER) //cambiar a lazy
 	private Set<TipoIngrediente> tiposIngredientes= new HashSet<TipoIngrediente>();
+	
+	public GruposAlimenticios() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public GruposAlimenticios(int idGrupoAlim, String grupoAlim) 
 	{

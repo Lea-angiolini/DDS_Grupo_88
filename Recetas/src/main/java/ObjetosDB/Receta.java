@@ -82,6 +82,9 @@ public class Receta implements Serializable{
 	
 	@Column(name = "foto")
 	private byte[] fotoPrincipal;
+	
+	@Column(name = "caloriasTotales")
+	private int caloriasTotales;
 
 	public Receta(){
 		
@@ -159,6 +162,7 @@ public class Receta implements Serializable{
 
 	public void setRelacionIngredientes(Set<Receta_Ingrediente> ingredientesRelacionados) {
 		this.ingredientesRelacionados = ingredientesRelacionados;
+		calcularCalorias();
 	}
 
 	public Set<Condimentos> getCondimentos() {
@@ -172,6 +176,7 @@ public class Receta implements Serializable{
 	public void agregarIngrediente(Ingredientes ingrediente, int cantidad){
 		Receta_Ingrediente relacion = new Receta_Ingrediente(this,ingrediente,cantidad);
 		ingredientesRelacionados.add(relacion);
+		caloriasTotales += ingrediente.getCalorias();
 		//ingrediente.setRecetaRelacionada(relacion);
 	}
 	
@@ -231,6 +236,12 @@ public class Receta implements Serializable{
 		}
 		
 		return true;
+	}
+	
+	public void calcularCalorias(){
+		for(Receta_Ingrediente rel : ingredientesRelacionados){
+			caloriasTotales += rel.getIngrediente().getCalorias();
+		}
 	}
 }
 
