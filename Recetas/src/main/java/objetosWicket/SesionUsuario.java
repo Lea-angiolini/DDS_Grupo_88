@@ -46,6 +46,7 @@ public class SesionUsuario extends WebSession {
 
 	
 	public void desloguearUsuario(){
+		session.close();
 		this.invalidateNow();
 	}
 	
