@@ -69,10 +69,11 @@ public class AgregarReceta extends RegisteredPage {
 	private List<Fragmento> fragmentos = new ArrayList<Fragmento>(); 
 	private DropList<Ingredientes> dropIng;
 	private DropList<Condimentos> dropCond;
-	private final DAOIngredientes daoIgredientes = new DAOIngredientes();
-	private DAOCondimentos daoCondimentos = new DAOCondimentos();
-	private DAODificultades daoDificultades = new DAODificultades();
-	private DAOTemporadas daoTemporadas = new DAOTemporadas();
+	private final DAOIngredientes daoIgredientes = new DAOIngredientes(getSessionBD());
+	private DAOCondimentos daoCondimentos = new DAOCondimentos(getSessionBD());
+	private DAODificultades daoDificultades = new DAODificultades(getSessionBD());
+	private DAOTemporadas daoTemporadas = new DAOTemporadas(getSessionBD());
+	DAORecetas daoreceta = new DAORecetas(getSessionBD());
 	private static final ResourceReference RESOURCE_REF = new PackageResourceReference(AgregarReceta.class,
 	        "default.jpg");
 
@@ -179,7 +180,7 @@ public class AgregarReceta extends RegisteredPage {
 			// TODO Auto-generated constructor stub
 			idFrmPaso = idPaso;
 			
-			StringValidator vText = new StringValidator(5, 12);
+			StringValidator vText = new StringValidator(5, 2000);
 			add(new Label("numPaso",idPaso));
 			add(detallePaso = new TextArea<String>("paso", new PropertyModel<String>(nuevareceta.getPasos().get(idPaso-1), "descripcionPaso")));
 			detallePaso.add(vText);
@@ -250,7 +251,6 @@ public class AgregarReceta extends RegisteredPage {
 		pagina().addOrReplace(fragmentos.get(idFrmPaso+1));	
 		}
 		else{
-			DAORecetas daoreceta = new DAORecetas();
 			try {
 				daoreceta.saveOrUpdate(nuevareceta);
 				setResponsePage(MisRecetas.class);

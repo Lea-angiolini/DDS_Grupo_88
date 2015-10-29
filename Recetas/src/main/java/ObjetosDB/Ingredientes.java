@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.swing.JOptionPane;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -34,14 +35,14 @@ public class Ingredientes extends AlimDeReceta implements Serializable{
 	@Column(name="caloriasPorcion")
 	private int calorias;
 	
-	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipoIngrediente")
 	private TipoIngrediente idTipoIngrediente;
 	
-	@OneToMany(mappedBy="key.ingrediente", fetch=FetchType.LAZY) // cambiar a lazy
+	@OneToMany(mappedBy="key.ingrediente", fetch=FetchType.LAZY)
 	private Set<Receta_Ingrediente> relRecetas = new HashSet<Receta_Ingrediente>();
 	
-	public Ingredientes(){	}
+	public Ingredientes(){}
 
 	public Ingredientes(int idIngrediente, String ingrediente, int calorias,int idTipoIngrediente)
 	{

@@ -57,7 +57,7 @@ public class DetalleDeReceta extends MasterPage {
 		final Usuario user = getUsuarioActual();
 		final StringValue idReceta;
 		final Receta receta;
-		daoreceta = new DAORecetas();
+		daoreceta = new DAORecetas(getSessionBD());
 		
 		if(parameters.getNamedKeys().contains("idReceta")){
 			idReceta = parameters.get("idReceta");

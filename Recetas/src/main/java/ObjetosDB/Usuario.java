@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import org.hibernate.Session;
 import org.hibernate.validator.constraints.Email;
 
 import Database.Browser;
@@ -72,35 +73,35 @@ public class Usuario implements Serializable{
 	@Column(name="altura")
 	private int altura;
 	
-	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idComplexion")
 	private Complexiones complexion;
 	
-	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idRutina")
 	private Rutinas rutina;
 	
-	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER) // cambiar a lazy
+	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY) 
 	@JoinTable(name="relUsuarioPreferencia", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idPreferencia")})
 	private Set<PreferenciasAlimenticias> preferencias=new HashSet<PreferenciasAlimenticias>();
 	
-	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER) // cambiar a lazy
+	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
 	@JoinTable(name="relUsuarioCondicion", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idCondicion")})
 	private Set<CondicionesPreexistentes> condiciones=new HashSet<CondicionesPreexistentes>();
 	
-	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idDieta")
 	private Dietas dieta;
 	
-	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER) // cambiar a lazy
+	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
 	@JoinTable(name="relUsuarioGrupo", joinColumns={@JoinColumn(name="nombreUsuario")}, inverseJoinColumns={@JoinColumn(name="idGrupo")})
 	private Set<Grupo> grupos;
 	
 	
-	@OneToMany(mappedBy="creador",cascade= CascadeType.ALL, fetch=FetchType.EAGER) // cambiar a lazy
+	@OneToMany(mappedBy="creador",cascade= CascadeType.ALL, fetch=FetchType.LAZY)
 	private Set<Grupo> misGrupos = new HashSet<Grupo>();
 	
-	@OneToMany(mappedBy="creador", fetch=FetchType.EAGER) // cambiar a lazy
+	@OneToMany(mappedBy="creador", fetch=FetchType.LAZY) // cambiar a lazy
 	private Set<Receta> misRecetas = new HashSet<Receta>();
 	
 	/*@ManyToMany(cascade={CascadeType.ALL})
@@ -318,8 +319,8 @@ public class Usuario implements Serializable{
 		return false;
 	}*/
 	
-	public List<Receta> cargarMisRecetas(){
-		DAORecetas daoReceta = new DAORecetas();
+	public List<Receta> cargarMisRecetas(Session session){
+		DAORecetas daoReceta = new DAORecetas(session);
 		try{
 		return daoReceta.recetasDeUsuario(this);
 		}

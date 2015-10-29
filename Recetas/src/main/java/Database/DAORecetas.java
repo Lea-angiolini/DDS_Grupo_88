@@ -11,9 +11,9 @@ import ObjetosDB.itemsABuscar;
 
 public class DAORecetas extends DAOGenerico<Receta,Integer> {
 	
-	public DAORecetas() {
+	public DAORecetas(Session session) {
 		// TODO Auto-generated constructor stub
-		super();
+		super(session);
 	}
 	
 	@Override
@@ -26,7 +26,7 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 	@SuppressWarnings("unchecked")
 	public List<Receta> recetasDeUsuario(Usuario user) throws DBExeption{
 		
-		Session session = sessionFactory.getCurrentSession();
+		//Session session = sessionFactory.getCurrentSession();
 
 		 try {
 			session.beginTransaction();
@@ -90,7 +90,7 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 	
 	
 	public List<Receta> buscarReceta (itemsABuscar items) throws DBExeption{
-		Session session = sessionFactory.getCurrentSession();
+		//Session session = sessionFactory.getCurrentSession();
 		
 		try{
 		session.beginTransaction();

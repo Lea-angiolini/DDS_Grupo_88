@@ -12,12 +12,12 @@ import org.hibernate.SessionFactory;
 
 public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, ID> {
 	
-	SessionFactory sessionFactory;
-	//Session session;
+	//SessionFactory sessionFactory;
+	Session session;
 	
-	public DAOGenerico() {
-		sessionFactory=HibernateUtil.getSessionFactory();
-		//session = sessionFactory.openSession();
+	public DAOGenerico(Session session) {
+		//sessionFactory=HibernateUtil.getSessionFactory();
+		this.session = session;
 	}
 	
 	/*public void closeSession(){
@@ -46,7 +46,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 	 
 	 @Override
 	 public void saveOrUpdate(T entity) throws DBExeption {
-		 Session session = sessionFactory.getCurrentSession();
+		 //Session session = sessionFactory.getCurrentSession();
 		 try {
 			 session.beginTransaction();
 			 session.saveOrUpdate(entity);
@@ -104,7 +104,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 
 	 @Override
 	 public T get(ID id) throws DBExeption {
-		 Session session = sessionFactory.getCurrentSession();
+		 //Session session = sessionFactory.getCurrentSession();
 		 try {
 			 session.beginTransaction();
 			 @SuppressWarnings("unchecked")
@@ -166,7 +166,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 	
 	@Override
 	public void delete(ID id) throws DBExeption {
-		Session session = sessionFactory.getCurrentSession();
+		//Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			@SuppressWarnings("unchecked")
@@ -229,7 +229,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 	
 	@Override
 	public List<T> findAll() throws DBExeption {
-		Session session = sessionFactory.getCurrentSession();
+		//Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			Query query = session.createQuery("SELECT e FROM " + getEntityClass().getName() + " e");

@@ -1,12 +1,14 @@
 package Database;
 
+import org.hibernate.Session;
+
 import ObjetosDB.Ingredientes;
 
 public class DAOIngredientes extends DAOGenerico<Ingredientes, Integer> {
 	
-	public DAOIngredientes() {
+	public DAOIngredientes(Session session) {
 		// TODO Auto-generated constructor stub
-		super();
+		super(session);
 	}
 	
 }

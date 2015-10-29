@@ -42,7 +42,7 @@ public class Receta implements Serializable{
 	@Size(min=1, max=45)
 	private String nombre;
 	
-	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="creador")
 	private Usuario creador;
 	
@@ -50,26 +50,26 @@ public class Receta implements Serializable{
 	@Size(min=1, max=200)
 	private String detalle;
 	
-	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idDificultad")
 	private Dificultades dificultad;
 	
-	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="temporada")
 	private Temporadas temporada;
 	
-	@ManyToOne(/*fetch=FetchType.LAZY*/)
+	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="ingredientePrincipal")
 	private Ingredientes ingredientePrincipal;
 	
-	@OneToMany(mappedBy = "key.receta", fetch=FetchType.EAGER, cascade = CascadeType.ALL) // cambiar a lazy
+	@OneToMany(mappedBy = "key.receta", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Receta_Ingrediente> ingredientesRelacionados;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER) // cambiar a lazy
+	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinTable(name="relrecetcondimento", joinColumns={@JoinColumn(name="idReceta")}, inverseJoinColumns={@JoinColumn(name="idCondimento")})
 	private Set<Condimentos> condimentos;
 	
-	@OneToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER) // cambiar a lazy
+	@OneToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="idReceta")
 	@IndexColumn(name="numeroPaso")
 	private List<Pasos> pasos;

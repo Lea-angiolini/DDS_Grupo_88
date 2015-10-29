@@ -24,7 +24,7 @@ public class MisRecetas extends RegisteredPage {
 		public FrmMisRecetas(String id) {
 			super(id);			
 
-			add(new ListaDeRecetas("listaMisRecetas", getUsuarioActual().cargarMisRecetas() , getUsuarioActual()));
+			add(new ListaDeRecetas("listaMisRecetas", getUsuarioActual().cargarMisRecetas(getSessionBD()) , getUsuarioActual()));
 			
 			add(new Link("cancelar"){
 				public void onClick(){

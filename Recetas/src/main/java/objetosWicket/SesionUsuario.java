@@ -8,12 +8,14 @@ import org.apache.wicket.request.Request;
 
 import Database.Browser;
 import Database.DAOUsuarios;
+import Database.HibernateUtil;
 import ObjetosDB.Usuario;
 
 public class SesionUsuario extends WebSession {
 	
 	private Usuario usuario;
 	private DAOUsuarios daousuario;
+	private org.hibernate.Session session;
 	
 	public SesionUsuario(Request request) {
 		super(request);
@@ -21,7 +23,10 @@ public class SesionUsuario extends WebSession {
 		invitado.setUsername("Invitado");
 		this.usuario = invitado;
 		setAttribute("usuario", invitado);
-		daousuario = new DAOUsuarios();
+		session = HibernateUtil.getSessionFactory().openSession();
+		daousuario = new DAOUsuarios(session);
+		
+		
 	}
 	
 	public static SesionUsuario get(){
@@ -59,5 +64,13 @@ public class SesionUsuario extends WebSession {
 	
 	public boolean estaLogueado(){
 		return getUsuario().getUsername() != "Invitado";
+	}
+
+	public org.hibernate.Session getSession() {
+		return session;
+	}
+
+	public void setSession(org.hibernate.Session session) {
+		this.session = session;
 	}
 }

@@ -37,7 +37,7 @@ public class GestionarGrupos extends MasterPage {
 	private DAOGrupos daogrupos;
 	public GestionarGrupos(){
 		super();
-		daogrupos = new DAOGrupos();
+		daogrupos = new DAOGrupos(getSessionBD());
 		add(frmGestionarGrupos = new FrmGestionarGrupos("frmGestionarGrupos"));
 
 	}
@@ -92,7 +92,7 @@ public class GestionarGrupos extends MasterPage {
 					
 		        	if (!getUsuarioActual().getMisGrupos().isEmpty())
 		        	{
-		        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, (List<Grupo>) getUsuarioActual().getMisGrupos()).setOutputMarkupId(true).setOutputMarkupId(true));
+		        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, new ArrayList<Grupo>( getUsuarioActual().getMisGrupos())).setOutputMarkupId(true).setOutputMarkupId(true));
 		        	}
 		        	else
 		        	{
@@ -131,7 +131,7 @@ public class GestionarGrupos extends MasterPage {
 					Grupo grupoActual = grupo;
 
 					item.add(new Label("nombre", grupoActual.getNombre()));
-					item.add(new Label("creador", grupoActual.getCreador()));
+					item.add(new Label("creador", grupoActual.getCreador().getUsername()));
 					item.add(new Label("detalle", grupoActual.getDetalle()));
 					item.add(new Botones("botones", i, grupoActual));
 					iterGrupos.add(item);

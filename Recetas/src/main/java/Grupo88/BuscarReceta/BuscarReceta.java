@@ -35,11 +35,11 @@ import ObjetosDB.itemsABuscar;
 public class BuscarReceta extends MasterPage {
 	
 	private FrmBuscarReceta frmBuscarReceta;
-	private DAODificultades daodificultades = new DAODificultades();
-	private DAOTemporadas daotemporadas = new DAOTemporadas();
-	private DAOIngredientes daoingredientes = new DAOIngredientes();
-	private DAOGruposAlimenticios daogruposalimenticios = new DAOGruposAlimenticios();
-	private DAORecetas daorecetas = new DAORecetas();
+	private DAODificultades daodificultades = new DAODificultades(getSessionBD());
+	private DAOTemporadas daotemporadas = new DAOTemporadas(getSessionBD());
+	private DAOIngredientes daoingredientes = new DAOIngredientes(getSessionBD());
+	private DAOGruposAlimenticios daogruposalimenticios = new DAOGruposAlimenticios(getSessionBD());
+	private DAORecetas daorecetas = new DAORecetas(getSessionBD());
 	
 	public BuscarReceta(){
 		super();
