@@ -78,7 +78,7 @@ public class DetalleDeReceta extends MasterPage {
 			//receta = Browser.cargarReceta(idReceta.toInt(), user);
 		//user.cargarGrupos();
 		
-		add(generar(user,idReceta.toInt()));
+		add(generar(user,receta));
 		
 		add(frmDetalleDeReceta = new FrmDetalleDeReceta("FrmDetalleDeReceta"));
 		//new CheckBoxMultipleChoice
@@ -209,7 +209,7 @@ public class DetalleDeReceta extends MasterPage {
 		}
 	}
 
-	public RepeatingView generar(Usuario user, final int idReceta){
+	public RepeatingView generar(Usuario user, final Receta receta){
 		RepeatingView condiciones = new RepeatingView("iterador");
 		int i = 1;
 		for (final Grupo grupo : user.getGrupos()){
@@ -218,7 +218,7 @@ public class DetalleDeReceta extends MasterPage {
 			
 			item.add(new Label("nombre",grupo.getNombre()));
 			
-			if(grupo.tieneReceta(idReceta)){
+			if(grupo.tieneReceta(receta.getIdreceta())){
 				final AbstractItem btnCompGrupo = new AbstractItem("bton");
 				btnCompGrupo.add(new AttributeModifier("class", "btn btn-success disabled"));
 				btnCompGrupo.add(new AttributeAppender("id", i));
@@ -234,7 +234,7 @@ public class DetalleDeReceta extends MasterPage {
 					private static final long serialVersionUID = 8454850453836642865L;
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						if(grupo.agregarReceta(idReceta))
+						if(grupo.agregarReceta(receta))
 						{
 						target.prependJavaScript("cambiarClase('"+target.getLastFocusedElementId()+"');");
 						target.prependJavaScript("cambiarTexto("+it+");");

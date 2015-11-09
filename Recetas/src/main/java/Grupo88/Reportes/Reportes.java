@@ -8,13 +8,20 @@ import master.RegisteredPage;
 
 public class Reportes extends RegisteredPage{
 	
+
+	private static final long serialVersionUID = 1L;
+
+
 	public Reportes(StrategyReportes fabReporte) {
 		// TODO Auto-generated constructor stub
 		add(new FormReporte("frmReportes",fabReporte));
 	}
 	
 	
-	private class FormReporte extends Form{
+	private class FormReporte extends Form<Object>{
+
+
+		private static final long serialVersionUID = 1L;
 
 		public FormReporte(String id,StrategyReportes fabReporte) {
 			super(id);

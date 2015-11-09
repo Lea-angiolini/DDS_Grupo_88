@@ -1,10 +1,7 @@
 package objetosWicket;
 
-import java.io.ObjectInputStream.GetField;
-
 import org.apache.wicket.model.LoadableDetachableModel;
 
-import Database.Browser;
 import ObjetosDB.Usuario;
 
 public class ModelUsuario extends LoadableDetachableModel<Usuario> {
@@ -22,14 +19,15 @@ public class ModelUsuario extends LoadableDetachableModel<Usuario> {
 	@Override
 	protected Usuario load() {
 		// TODO Auto-generated method stub
-		Usuario usuario = Browser.cargarUsuario(username);
+		Usuario usuario = new Usuario();
 		usuario.setUsername(username);
 		usuario.setPassword(password);
 		return usuario;
 	}
 	
 	public String save(Usuario user){
-		return Browser.registrarUsuario(user);
+		//TODO
+		return "";
 		 
 	}
 }

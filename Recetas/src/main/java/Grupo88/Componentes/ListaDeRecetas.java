@@ -1,6 +1,6 @@
 package Grupo88.Componentes;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -15,11 +15,20 @@ import ObjetosDB.Receta;
 import ObjetosDB.Usuario;
 
 public class ListaDeRecetas extends Panel {
-public ListaDeRecetas(String id, List<Receta> recetas, final Usuario user) {
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+@SuppressWarnings("unchecked")
+public ListaDeRecetas(String id, ArrayList<ObjetosDB.Receta> arrayList, final Usuario user) {
 	// TODO Auto-generated constructor stub
 	super(id);
 	
-	add(new DataView("tablaPopulares",  new ListDataProvider(recetas)){
+	add(new DataView("tablaPopulares",  new ListDataProvider(arrayList)){
+
+		private static final long serialVersionUID = 1L;
+
 		@Override
 		protected void populateItem(Item item) {
 			// TODO Auto-generated method stub
@@ -30,6 +39,11 @@ public ListaDeRecetas(String id, List<Receta> recetas, final Usuario user) {
 			pars.add("idReceta",recetas.getIdreceta());
 			
 			Link bton = new Link("bt"){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick() {
 					// TODO Auto-generated method stub

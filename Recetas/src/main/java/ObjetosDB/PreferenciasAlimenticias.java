@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,8 +31,10 @@ public class PreferenciasAlimenticias implements Serializable{
 	@Column(name="descripcion")
 	private String preferencia;
 	
-	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="preferencias")
+	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="preferencias", fetch=FetchType.LAZY)
 	private Set<Usuario> usuarios= new HashSet<Usuario>();
+	
+	public PreferenciasAlimenticias() {}
 	
 	public PreferenciasAlimenticias(int id, String preferencia){
 		setIdPreferencia(id);

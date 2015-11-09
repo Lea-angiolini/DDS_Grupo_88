@@ -1,5 +1,7 @@
 package Grupo88.Detalles;
 
+import java.util.ArrayList;
+
 import master.ErrorPage;
 import master.RegisteredPage;
 
@@ -12,6 +14,7 @@ import org.apache.wicket.util.string.StringValue;
 
 import Grupo88.Componentes.ListaDeRecetas;
 import ObjetosDB.Grupo;
+import ObjetosDB.Receta;
 import ObjetosDB.Usuario;
 
 public class DetalleGrupo extends RegisteredPage {
@@ -56,7 +59,8 @@ public class DetalleGrupo extends RegisteredPage {
 			super(id);
 			
 			add(new Label("nombreGrupo", grupo.getNombre()));
-			add(new ListaDeRecetas("listaRecetas",grupo.obtenerRecetas(),getUsuarioActual()));
+			
+			add(new ListaDeRecetas("listaRecetas",new ArrayList<Receta>(grupo.obtenerRecetas()),getUsuarioActual()));
 			
 			RepeatingView usuariosGrupo = new RepeatingView("listaUsuarios");
 			

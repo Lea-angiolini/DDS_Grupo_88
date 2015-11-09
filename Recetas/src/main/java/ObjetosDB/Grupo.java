@@ -13,21 +13,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.eclipse.jetty.server.Authentication.User;
-
-import Database.Browser;
-import ObjetosDB.Recetaborrar;
-
 @Entity
 @Table(name="Grupos")
 public class Grupo implements Serializable{
 	
+	private static final long serialVersionUID = -6889197720307310421L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idGrupo")
@@ -50,6 +48,10 @@ public class Grupo implements Serializable{
 	
 	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="grupos", fetch=FetchType.EAGER) //cambiar a lazy
 	private Set<Usuario> usuarios;
+	
+	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
+	@JoinTable(name="relgruporeceta", joinColumns={@JoinColumn(name="idGrupo")}, inverseJoinColumns={@JoinColumn(name="idReceta")})
+	private Set<Receta> recetas;
 	
 	public Grupo() {
 		// TODO Auto-generated constructor stub
@@ -88,7 +90,14 @@ public class Grupo implements Serializable{
 		this.detalle = detalle;
 	}
 	
-	
+	public Set<Receta> getRecetas() {
+		return recetas;
+	}
+
+	public void setRecetas(Set<Receta> recetas) {
+		this.recetas = recetas;
+	}
+
 	public Set<Usuario> getUsuarios() {
 		return usuarios;
 	}
@@ -103,36 +112,39 @@ public class Grupo implements Serializable{
 	}
 
 	public boolean agregarUsuario(Usuario user){
-		if( Browser.entrarGrupo(user.getUsername(), idGrupo)){
+			setUsuario(user);
 			user.agregarGrupo(this);
 			return true;
-		}
-		return false;
 	}
 	
 	public boolean sacarUsuario(Usuario user){
-		if(Browser.salirGrupo(user.getUsername(), idGrupo)){
+			getUsuarios().remove(user);
 			user.eliminarGrupo(this);
 			return true;
-		}
-		return false;
 	}
 
 	
 	public boolean tieneReceta(int idReceta){
-		return Browser.grupoTieneReceta(getIdGrupo(),idReceta);
+		
+		for (Receta rec : getRecetas()){
+			if (rec.getIdreceta() == idReceta){
+				return true;
+			}
+		}
+		return false;
 	}
 	
-	public boolean agregarReceta(int idReceta){
-		return Browser.agregarRecetaGrupo(getIdGrupo(),idReceta);
+	public boolean agregarReceta(Receta receta){
+		getRecetas().add(receta);
+		return true;
 		
 	}
 	
-	public ArrayList<Receta> obtenerRecetas(){
-		return Browser.obtenerRecetasGrupo(idGrupo);
+	public Set<Receta> obtenerRecetas(){
+		return getRecetas();
 	}
 	
-	public ArrayList<Usuario> obtenerUsuarios(){
-		return Browser.obtenerUsuariosGrupo(this);
+	public Set<Usuario> obtenerUsuarios(){
+		return getUsuarios();
 	}
 }

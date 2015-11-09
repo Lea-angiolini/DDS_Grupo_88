@@ -11,6 +11,10 @@ import Grupo88.Inicio.Inicio;
 
 public class GestionarRecetas extends RegisteredPage {	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private FrmGestionarRecetas frmGestionarRecetas;
 	
 	public GestionarRecetas(){
@@ -18,15 +22,19 @@ public class GestionarRecetas extends RegisteredPage {
 		
 		add(frmGestionarRecetas = new FrmGestionarRecetas("FrmGestionarRecetas"));
 		
-		frmGestionarRecetas.add(new Link("agregarReceta"){
+		frmGestionarRecetas.add(new Link<Object>("agregarReceta"){
 			
+			private static final long serialVersionUID = 1L;
+
 			public void onClick(){
 			setResponsePage(AgregarReceta.class);
 			}
 		});
 		
-		frmGestionarRecetas.add(new Link("volver"){
+		frmGestionarRecetas.add(new Link<Object>("volver"){
 			
+			private static final long serialVersionUID = 1L;
+
 			public void onClick(){
 			setResponsePage(Inicio.class);
 			}
@@ -34,20 +42,20 @@ public class GestionarRecetas extends RegisteredPage {
 		
 	}
 	
-	public class FrmGestionarRecetas extends Form {
-		
-		
+	public class FrmGestionarRecetas extends Form<Object> {
+
+		private static final long serialVersionUID = 1L;
+
 		public FrmGestionarRecetas(String id) {
 			super(id);			
-			setDefaultModel(new CompoundPropertyModel(this));
+			setDefaultModel(new CompoundPropertyModel<FrmGestionarRecetas>(this));
 
 			
 		}
 		
 		@Override
 		protected void onSubmit() {
-		// Va a conectarse con BD y comprobar las validaciones
-		super.onSubmit();
+			super.onSubmit();
 		}
 	}
 }

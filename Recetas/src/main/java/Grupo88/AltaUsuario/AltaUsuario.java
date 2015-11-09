@@ -5,10 +5,10 @@ import java.util.Arrays;
 
 import master.ErrorPage;
 import master.MasterPage;
-import objetosWicket.ModelUsuario;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
@@ -30,7 +30,9 @@ import org.apache.wicket.validation.validator.StringValidator;
 import Database.DAOComplexiones;
 import Database.DAOCondicionesPreexistentes;
 import Database.DAODietas;
+import Database.DAOPreferenciasAlimenticias;
 import Database.DAORutinas;
+import Database.DAOUsuarios;
 import Database.DBExeption;
 import Grupo88.Inicio.Inicio;
 import Grupo88.Login.Login;
@@ -42,11 +44,18 @@ import ObjetosDB.Usuario;
 
 public class AltaUsuario extends MasterPage {	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private FrmAltaUsuario frmAltaUsuario;
 	private DAOComplexiones daoComplexiones = new DAOComplexiones(getSessionBD());
 	private DAOCondicionesPreexistentes daoCondicionesPreexistentes = new DAOCondicionesPreexistentes(getSessionBD());
 	private DAODietas daoDietas = new DAODietas(getSessionBD());
 	private DAORutinas daoRutinas = new DAORutinas(getSessionBD());
+	private DAOPreferenciasAlimenticias daoPreferenciasAlimenticias = new DAOPreferenciasAlimenticias(getSessionBD());
+	private DAOUsuarios daoUsuarios;
 	
 	public AltaUsuario(){
 		super();
@@ -55,14 +64,17 @@ public class AltaUsuario extends MasterPage {
 	
 	}
 	
-	private class FrmAltaUsuario extends Form {
+	private class FrmAltaUsuario extends Form<Object> {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private Usuario usuario = new Usuario();
 		private final ArrayList<estadoCondPreex> estados = new ArrayList<estadoCondPreex>();
 		private FeedbackPanel feedback;
 		private Label dbERROR;
 		
-		@SuppressWarnings("unchecked")
 		public FrmAltaUsuario(String id) {
 			super(id);		
 			
@@ -75,22 +87,19 @@ public class AltaUsuario extends MasterPage {
 			
 			try {
 	
-				add((new TextField("username", new PropertyModel<String>(usuario, "username")).add(new StringValidator(1,30))).setRequired(true));
+				add((new TextField<String>("username", new PropertyModel<String>(usuario, "username")).add(new StringValidator(1,30))).setRequired(true));
 				add(password);
 				add(repPassword);
 				add(new EqualPasswordInputValidator(password, repPassword));
 				add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
-				add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
-				add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));{};
+				add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
+				add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));{};
 				add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
 				add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
-				add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
-				add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), daoComplexiones.findAll(), new ChoiceRenderer("complexion","idComplexion")));		
+				add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
+				add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), daoComplexiones.findAll(), new ChoiceRenderer<Complexiones>("complexion","idComplexion")));		
+				//add(new DropDownChoice<PreferenciasAlimenticias>("preferencia", new PropertyModel<PreferenciasAlimenticias>(usuario,"preferencias"),daoPreferenciasAlimenticias.findAll()/*, new ChoiceRenderer<PreferenciasAlimenticias>("preferencia","idPreferencia")*/));
 				
-				//add(new DropDownChoice<PreferenciasAlimenticias>("preferencia", new PropertyModel<PreferenciasAlimenticias>(usuario, "preferencia"), Browser.listaPreferenciasAlimenticias(), new ChoiceRenderer("preferencia","idPreferencia")));
-				
-				Model<String> preferenciaActual = new Model<String>();
-				add(new TextField<String>("preferencia",preferenciaActual));
 				
 				
 				RepeatingView condiciones = new RepeatingView("grupoCheckBox");
@@ -110,17 +119,21 @@ public class AltaUsuario extends MasterPage {
 				}
 				add(condiciones);	
 			
-				add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),daoRutinas.findAll(), new ChoiceRenderer("rutina","idRutina")));
-				add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), daoDietas.findAll(), new ChoiceRenderer("dieta","idDieta")));
+				add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),daoRutinas.findAll(), new ChoiceRenderer<Object>("rutina","idRutina")));
+				add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), daoDietas.findAll(), new ChoiceRenderer<Object>("dieta","idDieta")));
 		    } catch (DBExeption e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				setResponsePage(new ErrorPage("error cargar items"));
 				return;
 			}
 		   		    
-		    add(new Link("cancelar"){
+		    add(new Link<Object>("cancelar"){
 				
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick() {
 				
@@ -134,15 +147,11 @@ public class AltaUsuario extends MasterPage {
 		@Override
 		protected void onSubmit() {
 			super.onSubmit();
-			String msg = this.cargarDatosUsuario();
-			if(msg != "" || !msg.isEmpty() || msg != null){
-				setResponsePage(new ErrorPage(msg));
-				return;
-			}
+			this.cargarDatosUsuario();
 			setResponsePage(Inicio.class);
 			
 		}
-		private String cargarDatosUsuario(){
+		private boolean cargarDatosUsuario(){
 			
 			for (estadoCondPreex estado : estados) {
 				if(estado.modelCond.getObject())
@@ -150,9 +159,19 @@ public class AltaUsuario extends MasterPage {
 					usuario.setCondicion(estado.cond);
 				}
 			}
-
+			
+			daoUsuarios = new DAOUsuarios(getSessionBD());
+			try {
+				daoUsuarios.saveOrUpdate(usuario);
+			} catch (DBExeption e) {
+				e.printStackTrace();
+				setResponsePage(new ErrorPage(e.getMessage()));
+			}
+			
+			return true;
+			/*
 			ModelUsuario mUsuario = new ModelUsuario(usuario);
-			return mUsuario.save(usuario);			
+			return mUsuario.save(usuario);*/			
 			
 		}
 	}

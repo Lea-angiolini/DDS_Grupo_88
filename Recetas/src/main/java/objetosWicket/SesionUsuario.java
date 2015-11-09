@@ -1,12 +1,9 @@
 package objetosWicket;
 
-import javax.swing.JOptionPane;
-
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 
-import Database.Browser;
 import Database.DAOUsuarios;
 import Database.HibernateUtil;
 import ObjetosDB.Usuario;

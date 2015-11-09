@@ -3,6 +3,7 @@ package Grupo88.GestionarPerfil;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import master.ErrorPage;
 import master.RegisteredPage;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -22,7 +23,20 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 
-import Database.Browser;
+
+
+
+
+
+
+
+
+import Database.DAOComplexiones;
+import Database.DAOCondicionesPreexistentes;
+import Database.DAODietas;
+import Database.DAORutinas;
+import Database.DBExeption;
+//import Database.Browser;
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
@@ -32,8 +46,14 @@ import ObjetosDB.Usuario;
 
 public class GestionarPerfil extends RegisteredPage {	
 	
+	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private FrmModifUsuario frmModifUsuario;
 	public Object estados;
+	private DAOComplexiones daoComplexiones = new DAOComplexiones(getSessionBD());
+	private DAOCondicionesPreexistentes daoCondicionesPreexistentes = new DAOCondicionesPreexistentes(getSessionBD());
+	private DAODietas daoDietas = new DAODietas(getSessionBD());
+	private DAORutinas daoRutinas = new DAORutinas(getSessionBD());
 	
 	public GestionarPerfil(){
 		super();
@@ -42,51 +62,59 @@ public class GestionarPerfil extends RegisteredPage {
 	}
 	
 	
-	public class FrmModifUsuario extends Form {
+	public class FrmModifUsuario extends Form<Object> {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private Usuario usuario = getUsuarioActual();
-		private final ArrayList<estadoCondPreex> estados;
+		private final ArrayList<estadoCondPreex> estados = new ArrayList<estadoCondPreex>();
 		
-		@SuppressWarnings("unchecked")
 		public FrmModifUsuario(String id) {
 			super(id);			
 			//setDefaultModel(new CompoundPropertyModel(this));
-		
-			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
-			add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
-			add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));
-			
-			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
-			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
-			add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
-			add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), Browser.listaComplexiones(), new ChoiceRenderer<Complexiones>("complexion","idComplexion")));		
-			
-			RepeatingView condiciones = new RepeatingView("grupoCheckBox");
-			ArrayList<CondicionesPreexistentes> listaCondPreexistentes = Browser.listaCondPreexistentes();
-			estados = new ArrayList<estadoCondPreex>();
-			
-			for (CondicionesPreexistentes condPreex : listaCondPreexistentes) {
+			try {
+				add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
+				add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
+				add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));
 				
-				AbstractItem item = new AbstractItem(condiciones.newChildId());
+				add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
+				add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
+				add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
+				add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), daoComplexiones.findAll(), new ChoiceRenderer<Complexiones>("complexion","idComplexion")));		
 				
-				estadoCondPreex actual = new estadoCondPreex(condPreex,new Model<Boolean>(false));
-				estados.add(actual);
+				RepeatingView condiciones = new RepeatingView("grupoCheckBox");
+				ArrayList<CondicionesPreexistentes> listaCondPreexistentes = new ArrayList<CondicionesPreexistentes>(daoCondicionesPreexistentes.findAll());
 				
-				item.add(new Label("textoCheckBox", actual.cond.getCondPreex()));
-				CheckBox check = new CheckBox("CheckBox", actual.modelCond);
-				check.setModelObject(usuario.tineCondPreex(condPreex));
-				item.add(check);
-				condiciones.add(item);
+				for (CondicionesPreexistentes condPreex : listaCondPreexistentes) {
+					
+					AbstractItem item = new AbstractItem(condiciones.newChildId());
+					
+					estadoCondPreex actual = new estadoCondPreex(condPreex,new Model<Boolean>(false));
+					estados.add(actual);
+					
+					item.add(new Label("textoCheckBox", actual.cond.getCondPreex()));
+					CheckBox check = new CheckBox("CheckBox", actual.modelCond);
+					check.setModelObject(usuario.tineCondPreex(condPreex));
+					item.add(check);
+					condiciones.add(item);
+					
+				}
+				add(condiciones);	
 				
+			    add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), daoDietas.findAll(), new ChoiceRenderer<Dietas>("dieta","idDieta")));
+				add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),daoRutinas.findAll(), new ChoiceRenderer<Rutinas>("rutina","idRutina")));
+			} catch (DBExeption e) {
+				e.printStackTrace();
+				setResponsePage(new ErrorPage(e.getMessage()));
 			}
-			add(condiciones);	
-			
-		    add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), Browser.listaDietas(), new ChoiceRenderer<Dietas>("dieta","idDieta")));
-		    add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),Browser.listaRutinas(), new ChoiceRenderer<Rutinas>("rutina","idRutina")));
 		    add(new EmptyPanel("lblError"));
 		    
-		    add(new Link("cancelar"){
+		    add(new Link<Object>("cancelar"){
 				
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick() {
 				

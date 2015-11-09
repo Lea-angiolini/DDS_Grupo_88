@@ -8,7 +8,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import master.RegisteredPage;
-import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -25,8 +24,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.DynamicImageResource;
-import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.SharedResourceReference;
 import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.validation.validator.StringValidator;
@@ -49,7 +46,8 @@ import ObjetosDB.Usuario;
 
 public class AgregarReceta extends RegisteredPage {
 	
-	private SesionUsuario sesion = (SesionUsuario)getSession();
+
+	private static final long serialVersionUID = 1L;
 	private Usuario user = getUsuarioActual();
 	private final Receta nuevareceta = new Receta(0, "", user, new Dificultades(), new Temporadas(), new Ingredientes());
 	private List<Fragmento> fragmentos = new ArrayList<Fragmento>(); 
@@ -60,8 +58,7 @@ public class AgregarReceta extends RegisteredPage {
 	private DAODificultades daoDificultades = new DAODificultades(getSessionBD());
 	private DAOTemporadas daoTemporadas = new DAOTemporadas(getSessionBD());
 	DAORecetas daoreceta = new DAORecetas(getSessionBD());
-	private static final ResourceReference RESOURCE_REF = new PackageResourceReference(AgregarReceta.class,
-	        "default.jpg");
+//	private static final ResourceReference RESOURCE_REF = new PackageResourceReference(AgregarReceta.class, "default.jpg");
 
 	//private Fragmento frm
 	
@@ -85,20 +82,25 @@ public class AgregarReceta extends RegisteredPage {
 	
 	public class Fragmento extends Fragment{
 
-		public Fragmento(String id, String markupId, MarkupContainer markupProvider, Form form) {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public Fragmento(String id, String markupId, MarkupContainer markupProvider, Form<?> form) {
 			super(id, markupId, markupProvider);
-			// TODO Auto-generated constructor stub
 			add(form);
 		}
 	}
 	
 	
 	
-	public class FrmDatosReceta extends Form {
+	public class FrmDatosReceta extends Form<Object> {
+
+		private static final long serialVersionUID = 1L;
 		private FileUploadField fileUpload;
 		public FrmDatosReceta(String id) {
 			super(id);
-			// TODO Auto-generated constructor stub
 		//final TextField<String> nombre;
 		add(new TextField<String>("nombreReceta", new PropertyModel<String>(nuevareceta, "nombre")));
 		add(new TextArea<String>("descripcion", new PropertyModel<String>(nuevareceta, "detalle")));
@@ -108,7 +110,6 @@ public class AgregarReceta extends RegisteredPage {
 			add(new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), daoTemporadas.findAll(), new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
 			add(new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"), daoDificultades.findAll(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
 		} catch (DBExeption e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -119,7 +120,6 @@ public class AgregarReceta extends RegisteredPage {
 			add(dropIng = new DropList<Ingredientes>("dropIngredientes",(ArrayList<Ingredientes>)daoIgredientes.findAll()));
 			add(dropCond = new DropList<Condimentos>("dropCondimentos",(ArrayList<Condimentos>)daoCondimentos.findAll()));
 		} catch (DBExeption e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -153,8 +153,12 @@ public class AgregarReceta extends RegisteredPage {
 		}
 	}
 	
-	public class FrmPaso extends Form {
+	public class FrmPaso extends Form<Object> {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private TextArea<String> detallePaso;
 		private int idFrmPaso;
 		private FileUploadField fileUpload;
@@ -182,10 +186,12 @@ public class AgregarReceta extends RegisteredPage {
 			
 			add(new Label ("sigPaso", (idPaso<5) ? "Siguiente Paso" : "Finalizar"));
 			
-			add(new Link("pasoAnt"){
+			add(new Link<Object>("pasoAnt"){
+
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick() {
-					// TODO Auto-generated method stub
 					pagina().addOrReplace(fragmentos.get(idFrmPaso-1));
 				}
 			});
@@ -213,9 +219,13 @@ public class AgregarReceta extends RegisteredPage {
 				Image newImage;
 				imagen.replaceWith(newImage = new Image("img",new DynamicImageResource() {
 					
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					protected byte[] getImageData(Attributes attributes) {
-						// TODO Auto-generated method stub
 						return imagenSubida.getBytes();
 					}
 				}));
@@ -223,10 +233,8 @@ public class AgregarReceta extends RegisteredPage {
 				nuevareceta.getPasos().get(idFrmPaso-1).setImagen(imagenSubida.getBytes());
 			}
 		} catch (HeadlessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}}
 		
@@ -239,7 +247,6 @@ public class AgregarReceta extends RegisteredPage {
 				daoreceta.saveOrUpdate(nuevareceta);
 				setResponsePage(MisRecetas.class);
 			} catch (DBExeption e) {
-				// TODO Auto-generated catch block
 				error(e.getMessage());
 			}
 			//nuevareceta.guardarReceta();

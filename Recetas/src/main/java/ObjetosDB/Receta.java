@@ -1,7 +1,6 @@
 package ObjetosDB;
 
 import java.io.Serializable;
-import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,14 +19,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.swing.JOptionPane;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.IndexColumn;
-
-import Database.Browser;
 
 @Entity
 @Table(name = "recetas")
@@ -212,18 +206,14 @@ public class Receta implements Serializable{
 	}
 
 	public void consulta(Usuario user){
-		Browser.agregarHistConsultas(getIdreceta(),user.getUsername());
+		// TODO
+		//Browser.agregarHistConsultas(getIdreceta(),user.getUsername());
 	}
 	
-	/*public boolean guardarReceta(){
-		if(Browser.agregarReceta(this)){
-			return Browser.agregarIngredientesyCondimentos(this);
-		}
-		return false;
-	}*/
-	
 	public boolean calificar(Usuario user){
-		return Browser.calUltimaConfirmacion(idreceta,user,getCalificacion());
+		//return Browser.calUltimaConfirmacion(idreceta,user,getCalificacion());
+		// TODO
+		return true;
 	}
 	
 	public boolean aceptaCond(Set<CondicionesPreexistentes> list){

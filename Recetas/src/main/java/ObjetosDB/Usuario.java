@@ -25,7 +25,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.Session;
 import org.hibernate.validator.constraints.Email;
 
-import Database.Browser;
 import Database.DAORecetas;
 import Database.DBExeption;
 
@@ -329,11 +328,12 @@ public class Usuario implements Serializable{
 	
 	
 	public String modificarPerfil(){
-		return Browser.modificarPerfil(this);
+		return "";
 	}
 	
 	public ArrayList<Receta> cargarHome(){
-		return Browser.cargarHomeRecetas(this);
+		// TODO
+		return new ArrayList<Receta>();
 	}
 	
 	public ArrayList<Receta> filtrarRecetas(ArrayList<Receta> recetas){

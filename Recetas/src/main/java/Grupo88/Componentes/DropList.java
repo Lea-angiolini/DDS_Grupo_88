@@ -4,30 +4,22 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.swing.JOptionPane;
-
-import objetosWicket.ModelUsuario;
-import objetosWicket.SesionUsuario;
-
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 
-import Database.Browser;
 import ObjetosDB.AlimDeReceta;
-import ObjetosDB.Condimentos;
-import ObjetosDB.Ingredientes;
 
 public class DropList<T extends AlimDeReceta> extends Panel {
 
+
+	private static final long serialVersionUID = 1L;
 	MarkupContainer contIng1;
 	MarkupContainer contIng2;
 	final ArrayList<Estado<T>> estados = new ArrayList<Estado<T>>();
@@ -44,9 +36,13 @@ public class DropList<T extends AlimDeReceta> extends Panel {
 		final TextField<String> filtroIng = new TextField<String>("filtroIng", filtroIngText);
 		filtroIng.add(new AjaxFormComponentUpdatingBehavior ("onkeyup") {
 			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
-				// TODO Auto-generated method stub
 				//target.add(filtroIng);
 				
 				MarkupContainer nvoCont1;
@@ -80,15 +76,22 @@ public class DropList<T extends AlimDeReceta> extends Panel {
 	}
 	private MarkupContainer generarListaIng(final ArrayList<Estado<T>> productos, String containerID, boolean estad){
 		
-		final MarkupContainer contenedor = new MarkupContainer(containerID){};
+		final MarkupContainer contenedor = new MarkupContainer(containerID){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;};
 		
 		RepeatingView ingRep = new RepeatingView("ingSel");
 		for (final Estado<T> prod : productos){
 			if(prod.isElegido() == estad){
-			final AjaxLink item = new AjaxLink(ingRep.newChildId()){
+			final AjaxLink<?> item = new AjaxLink<Object>(ingRep.newChildId()){
+
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick(AjaxRequestTarget target) {
-					// TODO Auto-generated method stub
 					prod.alternar();
 					
 					MarkupContainer nvoCont1;
@@ -122,27 +125,20 @@ public class DropList<T extends AlimDeReceta> extends Panel {
 	}
 	
 	
+	@SuppressWarnings("hiding")
 	private class Estado<T extends AlimDeReceta>{
 		private T object;
 		private boolean elegido;
 		public Estado(T prod) {
-			// TODO Auto-generated constructor stub
 			object = prod;
 			elegido = false;
 		}
 		public T getObject() {
 			return object;
 		}
-		public void setObject(T object) {
-			this.object = object;
-		}
 		public boolean isElegido() {
 			return elegido;
 		}
-		public void setElegido(boolean elegido) {
-			this.elegido = elegido;
-		}
-		
 		public boolean alternar(){
 			return (elegido = !elegido);
 		}

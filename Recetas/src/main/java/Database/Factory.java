@@ -168,35 +168,6 @@ public class Factory {
 	}*/
 	
 	
-	public ArrayList<Recetaborrar> cargarRecetasPopulares()
-	{
-		ResultSet rs = null;
-		ArrayList<Recetaborrar> recetas = new ArrayList<Recetaborrar>();
-		try
-		{
-			
-			CallableStatement cmd = con.prepareCall("{call SP_RecetasPopulares()}");
-			
-			rs = cmd.executeQuery();
-			
-			
-			while (rs.next()){
-				
-				recetas.add(new Recetaborrar(rs.getInt("idReceta"),
-										   rs.getString("nombre"), 
-										   rs.getString("creador"), 
-										   new Dificultades(rs.getInt("idDificultad"), rs.getString("dificultad")),
-											new Ingredientes(0, "", 0, 0),rs.getString("descripcion")));
-				
-				
-		}
-		}
-		catch(SQLException ex){
-			
-		}
-		
-		return recetas;
-	}
 	
 	/*public ArrayList<Receta> cargarRecetasUsuario(String usuario)
 	{
