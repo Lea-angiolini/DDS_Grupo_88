@@ -2,24 +2,23 @@ package Grupo88.Estadisticas;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import master.RegisteredPage;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 
-import Database.Browser;
 import Database.StrategyEstadisticas;
 import ObjetosDB.Consulta;
 
 public class Estadisticas extends RegisteredPage{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//private static final long serialVersionUID = 1L;
 	//private Usuario user = ((SesionUsuario)getSession()).getUsuario().getObject();
+	@SuppressWarnings("unused")
 	private FrmEstadisticas frmEstadisticas;
 	private ArrayList<ArrayList<Consulta>> semanal;
 	private ArrayList<ArrayList<Consulta>> mensual;
@@ -34,8 +33,13 @@ public class Estadisticas extends RegisteredPage{
 		
 	}
 	
-	public class FrmEstadisticas extends Form{
+	public class FrmEstadisticas extends Form<Object>{
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public FrmEstadisticas(String id) {
 			super(id);
 			

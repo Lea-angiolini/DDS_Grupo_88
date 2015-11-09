@@ -11,8 +11,9 @@ import ObjetosDB.Consulta;
 
 public class PanelDeEstadisticas extends Panel{
 	
+	private static final long serialVersionUID = 5403475715355657733L;
+
 	public PanelDeEstadisticas(String id, ArrayList<Consulta> listaConsultas) {
-		// TODO Auto-generated constructor stub
 		super(id);
 		
 		RepeatingView lista = new RepeatingView("lista");

@@ -2,7 +2,6 @@ package Grupo88.GestionarGrupos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -24,7 +23,6 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import Database.Browser;
 import Database.DAOGrupos;
 import Database.DBExeption;
 import Grupo88.Detalles.DetalleGrupo;
@@ -33,6 +31,10 @@ import ObjetosDB.Grupo;
 
 public class GestionarGrupos extends MasterPage {	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private FrmGestionarGrupos frmGestionarGrupos;
 	private DAOGrupos daogrupos;
 	public GestionarGrupos(){
@@ -42,17 +44,26 @@ public class GestionarGrupos extends MasterPage {
 
 	}
 	
-	private class FrmGestionarGrupos extends Form {
+	private class FrmGestionarGrupos extends Form<Object> {
 		
-		@SuppressWarnings("unchecked")
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public FrmGestionarGrupos(String id) {
 			super(id);		
 			setOutputMarkupId(true);
 
 			add(new EmptyPanel("areaGrupos"));
 			
-			add(new Link("cancelar"){
+			add(new Link<Object>("cancelar"){
 				
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick() {
 				
@@ -61,17 +72,20 @@ public class GestionarGrupos extends MasterPage {
 				}
 			});	
 			
-			add(new Link("todosGrupos"){
+			add(new Link<Object>("todosGrupos"){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick() {
-					// TODO Auto-generated method stub
 					
 					
 		        	List<Grupo> todosGrupos = null;
 					try {
 						todosGrupos = (List<Grupo>) daogrupos.findAll();
 					} catch (DBExeption e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					};
 		        	if (!todosGrupos.isEmpty())
@@ -85,10 +99,14 @@ public class GestionarGrupos extends MasterPage {
 		        }
 			}.setOutputMarkupId(true));
 			
-			add(new Link("btnMisGrupos"){
+			add(new Link<Object>("btnMisGrupos"){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick() {
-					// TODO Auto-generated method stub
 					
 		        	if (!getUsuarioActual().getMisGrupos().isEmpty())
 		        	{
@@ -101,7 +119,12 @@ public class GestionarGrupos extends MasterPage {
 		        }
 			});
 			
-			add(new Link("btnCrearGrupo"){
+			add(new Link<Object>("btnCrearGrupo"){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick() {
 					frmGestionarGrupos.addOrReplace(new FragmentoGrupoNuevo ("areaGrupos", "fragmentCrearGrupo", frmGestionarGrupos));
@@ -113,7 +136,12 @@ public class GestionarGrupos extends MasterPage {
 	}
 	
 	private class FragmentoMisGrupos extends Fragment {
-        public FragmentoMisGrupos(String id, String markupId, MarkupContainer markupPorvider, List<Grupo> grupos) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public FragmentoMisGrupos(String id, String markupId, MarkupContainer markupPorvider, List<Grupo> grupos) {
         	
         	super(id, markupId, markupPorvider);
     		
@@ -147,6 +175,11 @@ public class GestionarGrupos extends MasterPage {
 	}
 	
 	private class FragmentoGrupoNuevo extends Fragment {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public FragmentoGrupoNuevo (String id, String markupId, MarkupContainer markupPorvider){
 			super (id, markupId, markupPorvider);
 			
@@ -157,16 +190,19 @@ public class GestionarGrupos extends MasterPage {
 			add(new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
 			add(new EmptyPanel("etiquetaConf"));
 			add(new Button("btnConfirmarNvoGrupo") {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onSubmit() {
-					// TODO Auto-generated method stub
 					String msg;
 					
 					try {
 						daogrupos.saveOrUpdate(nuevoGrupo);
 						msg = "Su grupo ha sido creado!";
 					} catch (DBExeption e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						msg = "Opss, parece que hubo un problema!";
 					}
@@ -182,11 +218,15 @@ public class GestionarGrupos extends MasterPage {
 	
 	private class Botones extends MarkupContainer{
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		final String labelActual;
 		final String verActual;
 		final Label label;
-		final Link verGrupo;
-		AjaxLink entrarsalir;
+		final Link<?> verGrupo;
+		AjaxLink<?> entrarsalir;
 		
 		public Botones(String id, final int i, final Grupo grupoActual) {
 			
@@ -194,7 +234,12 @@ public class GestionarGrupos extends MasterPage {
 			labelActual = "label"+i;
 			verActual = "verGrupo"+i;
 			
-			verGrupo = new Link("verGrupo") {
+			verGrupo = new Link<Object>("verGrupo") {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick() {
 					final PageParameters pars = new PageParameters();
@@ -217,11 +262,15 @@ public class GestionarGrupos extends MasterPage {
 			label.add(new AttributeModifier("id",labelActual));
 			verGrupo.add(new AttributeModifier("id",verActual));
 			
-			entrarsalir = new AjaxLink("entrar/salir") {
+			entrarsalir = new AjaxLink<Object>("entrar/salir") {
 				
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onClick(AjaxRequestTarget target) {
-					// TODO Auto-generated method stub
 		            
 					if(grupoActual.getUsuarios().contains(getUsuarioActual())){
 						grupoActual.setUsuario(getUsuarioActual());
@@ -229,7 +278,6 @@ public class GestionarGrupos extends MasterPage {
 							daogrupos.saveOrUpdate(grupoActual);
 							target.appendJavaScript("noAdherido('"+i+"');");
 						} catch (Exception/*DBExeption*/ e) {
-							// TODO Auto-generated catch block
 							JOptionPane.showMessageDialog(null, e.getMessage());
 							e.printStackTrace();
 							grupoActual.getUsuarios().remove(getUsuarioActual());
@@ -241,7 +289,6 @@ public class GestionarGrupos extends MasterPage {
 								daogrupos.saveOrUpdate(grupoActual);
 								target.appendJavaScript("adherido('"+i+"');");
 							} catch (DBExeption e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}						

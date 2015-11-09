@@ -1,7 +1,5 @@
 package Grupo88.Detalles;
 
-import javax.swing.JOptionPane;
-
 import master.ErrorPage;
 import master.RegisteredPage;
 
@@ -11,24 +9,22 @@ import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
-import org.eclipse.jetty.servlet.ErrorPageErrorHandler;
 
-import Database.Browser;
-import Database.DAOGenerico;
-import Database.DAOGrupos;
 import Grupo88.Componentes.ListaDeRecetas;
 import ObjetosDB.Grupo;
 import ObjetosDB.Usuario;
 
 public class DetalleGrupo extends RegisteredPage {
 
+	private static final long serialVersionUID = -4226255942815446132L;
 	// private TextField<String> txtUsuario;
 	// private PasswordTextField txtPassword;
 	//
+	@SuppressWarnings("unused")
 	private FrmDetalleGrupo frmDetalleGrupo;
 	private StringValue idGrupo;
 	private Grupo grupo;
-	private DAOGrupos daogrupos;
+	//private DAOGrupos daogrupos;
 	
 	public DetalleGrupo(final PageParameters parameters){
 		super();
@@ -50,7 +46,12 @@ public class DetalleGrupo extends RegisteredPage {
 	}
 	
 
-	private class FrmDetalleGrupo extends Form{
+	private class FrmDetalleGrupo extends Form<Object>{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -2951767968039503061L;
+
 		public FrmDetalleGrupo(String id) {
 			super(id);
 			

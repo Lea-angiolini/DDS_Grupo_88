@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import master.ErrorPage;
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
@@ -28,16 +26,13 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.DynamicImageResource;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.string.StringValueConversionException;
 
-import Database.Browser;
 import Database.DAORecetas;
 import Database.DBExeption;
 import ObjetosDB.Condimentos;
 import ObjetosDB.Grupo;
-import ObjetosDB.Ingredientes;
 import ObjetosDB.Pasos;
 import ObjetosDB.Receta;
 import ObjetosDB.Receta_Ingrediente;
@@ -45,6 +40,10 @@ import ObjetosDB.Usuario;
 
 public class DetalleDeReceta extends MasterPage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7898970758684629351L;
 	// private TextField<String> txtUsuario;
 	// private PasswordTextField txtPassword;
 	//
@@ -68,11 +67,9 @@ public class DetalleDeReceta extends MasterPage {
 				return;
 			}
 			catch (StringValueConversionException e) {
-				// TODO Auto-generated catch block
 				setResponsePage(new ErrorPage(e.getMessage()));
 				return;
 			} catch (DBExeption e) {
-				// TODO Auto-generated catch block
 				setResponsePage(new ErrorPage(e.getMessage()));
 				return;
 			}
@@ -96,9 +93,13 @@ public class DetalleDeReceta extends MasterPage {
 		frmDetalleDeReceta.add(new RadioChoice<Integer>("calificacion",new PropertyModel<Integer>(receta,"calificacion"),Arrays.asList(1,2,3,4,5)));
 		
 		frmDetalleDeReceta.add(new Button("confCalificacion"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6871206486314240822L;
+
 			@Override
 			public void onSubmit() {
-				// TODO Auto-generated method stub
 				super.onSubmit();
 				receta.calificar(user);
 			}
@@ -108,9 +109,13 @@ public class DetalleDeReceta extends MasterPage {
 		frmDetalleDeReceta.add(new Label("dif",receta.getDificultad().getDificultad()));
 		frmDetalleDeReceta.add(new Label("tem",receta.getTemporada().getTemporada()));
 		frmDetalleDeReceta.add(new Image("imgPrinc", new DynamicImageResource(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -296773244831553413L;
+
 			@Override
 			protected byte[] getImageData(Attributes attributes) {
-				// TODO Auto-generated method stub
 				return receta.getFotoPrincipal();
 			}
 		}));
@@ -151,9 +156,13 @@ public class DetalleDeReceta extends MasterPage {
 			item.add(new Label("nro","Paso "+i+":"));		
 			item.add(new Label("paso", paso.getDescripcionPaso()));
 			item.add(new Image("img", new DynamicImageResource(){
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 4335079479260519834L;
+
 				@Override
 				protected byte[] getImageData(Attributes attributes) {
-					// TODO Auto-generated method stub
 					return paso.getImagen();
 				}
 			}));
@@ -163,22 +172,37 @@ public class DetalleDeReceta extends MasterPage {
 		
 		frmDetalleDeReceta.add(pasos);
 		
-		frmDetalleDeReceta.add(new Link("confirmar"){
+		frmDetalleDeReceta.add(new Link<Object>("confirmar"){
 			
+			private static final long serialVersionUID = 8149758093736016771L;
+
 			public void onClick() {
 				final PageParameters pars = new PageParameters();
 				pars.add("idReceta",idReceta);
-				Browser.agregarAHistorial(idReceta.toInt(),user);
+				try {
+					daoreceta.agregarAHistorial(idReceta.toInt(), user.getUsername());
+				} catch (StringValueConversionException e) {
+					e.printStackTrace();
+					setResponsePage(new ErrorPage(e.getMessage()));
+				} catch (DBExeption e) {
+					e.printStackTrace();
+					setResponsePage(new ErrorPage(e.getMessage()));
+				}
+				
 				setResponsePage(DetalleDeReceta.class,pars);
 			}
 		}.setVisible(SesionUsuario.get().estaLogueado()));
 		
-		frmDetalleDeReceta.add(new AjaxLink("compartir"){
+		frmDetalleDeReceta.add(new AjaxLink<Object>("compartir"){
 			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 76988190569653974L;
+
 			@Override
 			public void onClick(AjaxRequestTarget target) {
-				// TODO Auto-generated method stub
-				
+
 				target.appendJavaScript("abrirDialogo();");
 			}
 		}.setVisible(SesionUsuario.get().estaLogueado()));
@@ -203,10 +227,13 @@ public class DetalleDeReceta extends MasterPage {
 			}
 			else{
 				final int it = i;
-				 final AjaxLink btnCompGrupo = new AjaxLink("bton") {
+				 final AjaxLink<?> btnCompGrupo = new AjaxLink<Object>("bton") {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 8454850453836642865L;
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						// TODO Auto-generated method stub
 						if(grupo.agregarReceta(idReceta))
 						{
 						target.prependJavaScript("cambiarClase('"+target.getLastFocusedElementId()+"');");
@@ -216,7 +243,6 @@ public class DetalleDeReceta extends MasterPage {
 					}
 					@Override
 					protected void onBeforeRender() {
-						// TODO Auto-generated method stub
 						super.onBeforeRender();
 						//this.add(new AttributeAppender("id", it));
 					}
@@ -250,11 +276,16 @@ public class DetalleDeReceta extends MasterPage {
 			gruposelegidos = new ArrayList<Grupo>();
 		}
 	}
-	public class FrmDetalleDeReceta extends Form {
+	public class FrmDetalleDeReceta extends Form<Object> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1393638805587049063L;
 
 		public FrmDetalleDeReceta(String id) {
 			super(id);
-			setDefaultModel(new CompoundPropertyModel(this));
+			setDefaultModel(new CompoundPropertyModel<FrmDetalleDeReceta>(this));
 
 		}
 

@@ -1,9 +1,5 @@
 package Database;
 
-import java.io.ObjectInputStream.GetField;
-
-import javax.swing.JOptionPane;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -12,7 +8,6 @@ import ObjetosDB.Usuario;
 public class DAOUsuarios extends DAOGenerico<Usuario, String>{
 	
 	public DAOUsuarios(Session session) {
-		// TODO Auto-generated constructor stub
 		super(session);
 	}
 	

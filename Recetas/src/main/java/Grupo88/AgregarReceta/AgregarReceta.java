@@ -1,25 +1,16 @@
 package Grupo88.AgregarReceta;
 
-import java.awt.Event;
 import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 import master.RegisteredPage;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.AjaxEventBehavior;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior.AjaxFormSubmitter;
-import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
-import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -32,17 +23,12 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.DynamicImageResource;
-import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.SharedResourceReference;
-import org.apache.wicket.request.resource.IResource.Attributes;
 import org.apache.wicket.util.lang.Bytes;
-import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import Database.DAOCondimentos;
@@ -161,7 +147,6 @@ public class AgregarReceta extends RegisteredPage {
 						nuevareceta.setFotoPrincipal(fileUpload.getFileUpload().getBytes());
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		}
@@ -177,7 +162,6 @@ public class AgregarReceta extends RegisteredPage {
 		private Image imagen;
 		public FrmPaso(String id,final int idPaso) {
 			super(id);
-			// TODO Auto-generated constructor stub
 			idFrmPaso = idPaso;
 			
 			StringValidator vText = new StringValidator(5, 2000);

@@ -178,4 +178,67 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 		 throw new RuntimeException(ex);
 	 }
 	}
+	
+	public void agregarAHistorial(int idReceta, String username) throws DBExeption{
+		
+		try{
+		session.beginTransaction();
+		
+		Query query = session.createSQLQuery("INSERT INTO Grupo88.historial (fecha, idReceta, usuario) "+
+                               "VALUES (current_date(), :idReceta, '"+username+"');");
+		query.setParameter("idReceta", idReceta)/*.setParameter("user", username)*/;
+		query.executeUpdate();
+		session.getTransaction().commit();
+		
+		} 
+		 catch (javax.validation.ConstraintViolationException cve) {
+			 try {
+				 if (session.getTransaction().isActive()) {
+					 session.getTransaction().rollback();
+				 }
+			 } 
+			 catch (Exception exc) {
+				 exc.printStackTrace();
+				 System.out.println("Falló al hacer un rollback");
+			 }
+			 throw new DBExeption(cve);
+		 } 
+		 catch (org.hibernate.exception.ConstraintViolationException cve) {
+			 try {
+				 if (session.getTransaction().isActive()) {
+					 session.getTransaction().rollback();
+				 }
+			 } 
+			 catch (Exception exc) {
+				 exc.printStackTrace();
+				 System.out.println("Falló al hacer un rollback");
+			 }
+			 throw new DBExeption(cve);
+		 } 
+		 catch (RuntimeException ex) {
+			 try {
+				 if (session.getTransaction().isActive()) {
+					 session.getTransaction().rollback();
+				 }
+			 } 
+			 catch (Exception exc) {
+				 exc.printStackTrace();
+				 System.out.println("Falló al hacer un rollback");
+			 }
+			 throw ex;
+		 } 
+		 catch (Exception ex) {
+			 try {
+				 if (session.getTransaction().isActive()) {
+					 session.getTransaction().rollback();
+				 }
+			 } 
+			 catch (Exception exc) {
+				 exc.printStackTrace();
+				 System.out.println("Falló al hacer un rollback");
+			 }
+			
+			 throw new RuntimeException(ex);
+		 }
+	}
 }

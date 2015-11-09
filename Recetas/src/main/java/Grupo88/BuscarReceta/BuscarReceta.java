@@ -1,7 +1,6 @@
 package Grupo88.BuscarReceta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import master.ErrorPage;
 import master.MasterPage;

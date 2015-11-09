@@ -3,6 +3,7 @@ package Grupo88.AltaUsuario;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import master.ErrorPage;
 import master.MasterPage;
 import objetosWicket.ModelUsuario;
 
@@ -26,7 +27,11 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import Database.Browser;
+import Database.DAOComplexiones;
+import Database.DAOCondicionesPreexistentes;
+import Database.DAODietas;
+import Database.DAORutinas;
+import Database.DBExeption;
 import Grupo88.Inicio.Inicio;
 import Grupo88.Login.Login;
 import ObjetosDB.Complexiones;
@@ -38,6 +43,10 @@ import ObjetosDB.Usuario;
 public class AltaUsuario extends MasterPage {	
 	
 	private FrmAltaUsuario frmAltaUsuario;
+	private DAOComplexiones daoComplexiones = new DAOComplexiones(getSessionBD());
+	private DAOCondicionesPreexistentes daoCondicionesPreexistentes = new DAOCondicionesPreexistentes(getSessionBD());
+	private DAODietas daoDietas = new DAODietas(getSessionBD());
+	private DAORutinas daoRutinas = new DAORutinas(getSessionBD());
 	
 	public AltaUsuario(){
 		super();
@@ -49,7 +58,7 @@ public class AltaUsuario extends MasterPage {
 	private class FrmAltaUsuario extends Form {
 
 		private Usuario usuario = new Usuario();
-		private final ArrayList<estadoCondPreex> estados;
+		private final ArrayList<estadoCondPreex> estados = new ArrayList<estadoCondPreex>();
 		private FeedbackPanel feedback;
 		private Label dbERROR;
 		
@@ -64,45 +73,51 @@ public class AltaUsuario extends MasterPage {
 			PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
 			PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
 			
-			
-			add((new TextField("username", new PropertyModel<String>(usuario, "username")).add(new StringValidator(1,30))).setRequired(true));
-			add(password);
-			add(repPassword);
-			add(new EqualPasswordInputValidator(password, repPassword));
-			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
-			add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
-			add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));{};
-			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
-			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
-			add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
-			add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), Browser.listaComplexiones(), new ChoiceRenderer("complexion","idComplexion")));		
-			
-			//add(new DropDownChoice<PreferenciasAlimenticias>("preferencia", new PropertyModel<PreferenciasAlimenticias>(usuario, "preferencia"), Browser.listaPreferenciasAlimenticias(), new ChoiceRenderer("preferencia","idPreferencia")));
-			
-			Model<String> preferenciaActual = new Model<String>();
-			add(new TextField<String>("preferencia",preferenciaActual));
-			
-			
-			RepeatingView condiciones = new RepeatingView("grupoCheckBox");
-			ArrayList<CondicionesPreexistentes> listaCondPreexistentes = Browser.listaCondPreexistentes();
-			estados = new ArrayList<estadoCondPreex>();
-			
-			for (CondicionesPreexistentes condPreex : listaCondPreexistentes) {
+			try {
+	
+				add((new TextField("username", new PropertyModel<String>(usuario, "username")).add(new StringValidator(1,30))).setRequired(true));
+				add(password);
+				add(repPassword);
+				add(new EqualPasswordInputValidator(password, repPassword));
+				add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
+				add(new TextField("nombre", new PropertyModel<String>(usuario, "nombre")));
+				add(new TextField("apellido", new PropertyModel<String>(usuario, "apellido")));{};
+				add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
+				add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
+				add(new NumberTextField("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
+				add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), daoComplexiones.findAll(), new ChoiceRenderer("complexion","idComplexion")));		
 				
-				AbstractItem item = new AbstractItem(condiciones.newChildId());
+				//add(new DropDownChoice<PreferenciasAlimenticias>("preferencia", new PropertyModel<PreferenciasAlimenticias>(usuario, "preferencia"), Browser.listaPreferenciasAlimenticias(), new ChoiceRenderer("preferencia","idPreferencia")));
 				
-				estadoCondPreex actual = new estadoCondPreex(condPreex,new Model<Boolean>(false));
-				estados.add(actual);
+				Model<String> preferenciaActual = new Model<String>();
+				add(new TextField<String>("preferencia",preferenciaActual));
 				
-				item.add(new Label("textoCheckBox", actual.cond.getCondPreex()));
-				item.add(new CheckBox("CheckBox", actual.modelCond));
-				condiciones.add(item);
 				
+				RepeatingView condiciones = new RepeatingView("grupoCheckBox");
+				ArrayList<CondicionesPreexistentes> listaCondPreexistentes = new ArrayList<CondicionesPreexistentes>(daoCondicionesPreexistentes.findAll());
+				
+				for (CondicionesPreexistentes condPreex : listaCondPreexistentes) {
+					
+					AbstractItem item = new AbstractItem(condiciones.newChildId());
+					
+					estadoCondPreex actual = new estadoCondPreex(condPreex,new Model<Boolean>(false));
+					estados.add(actual);
+					
+					item.add(new Label("textoCheckBox", actual.cond.getCondPreex()));
+					item.add(new CheckBox("CheckBox", actual.modelCond));
+					condiciones.add(item);
+					
+				}
+				add(condiciones);	
+			
+				add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),daoRutinas.findAll(), new ChoiceRenderer("rutina","idRutina")));
+				add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), daoDietas.findAll(), new ChoiceRenderer("dieta","idDieta")));
+		    } catch (DBExeption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				setResponsePage(new ErrorPage("error cargar items"));
+				return;
 			}
-			add(condiciones);	
-			
-		    add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), Browser.listaDietas(), new ChoiceRenderer("dieta","idDieta")));
-		    add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),Browser.listaRutinas(), new ChoiceRenderer("rutina","idRutina")));
 		   		    
 		    add(new Link("cancelar"){
 				
@@ -120,8 +135,8 @@ public class AltaUsuario extends MasterPage {
 		protected void onSubmit() {
 			super.onSubmit();
 			String msg = this.cargarDatosUsuario();
-			if(msg != ""){
-				dbERROR.setDefaultModelObject(msg);
+			if(msg != "" || !msg.isEmpty() || msg != null){
+				setResponsePage(new ErrorPage(msg));
 				return;
 			}
 			setResponsePage(Inicio.class);

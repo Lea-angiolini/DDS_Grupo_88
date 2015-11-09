@@ -1,6 +1,5 @@
 package Grupo88.Componentes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -9,8 +8,6 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
-import org.apache.wicket.request.mapper.mount.Mount;
-import org.apache.wicket.request.mapper.mount.MountParameters;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import Grupo88.Detalles.DetalleDeReceta;
