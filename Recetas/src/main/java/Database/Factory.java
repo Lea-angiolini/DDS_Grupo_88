@@ -546,7 +546,7 @@ public class Factory {
 			cmd.setString(3, nvoUsuario.getEmail());
 			cmd.setString(4, nvoUsuario.getNombre());
 			cmd.setString(5, nvoUsuario.getApellido());
-			cmd.setString(6, nvoUsuario.getFechaNacimiento());
+			//cmd.setString(6, nvoUsuario.getFechaNacimiento());
 			cmd.setString(7, String.valueOf(nvoUsuario.getSexo()));
 			cmd.setInt(8, nvoUsuario.getAltura());
 			cmd.setInt(9, (nvoUsuario.getComplexion()).getIdComplexion());
@@ -587,7 +587,7 @@ public class Factory {
 			cmd.setString(2, user.getNombre());
 			cmd.setString(3, user.getApellido());
 			cmd.setString(4, user.getEmail());
-			cmd.setString(5, user.getFechaNacimiento());
+			//cmd.setString(5, user.getFechaNacimiento());
 			cmd.setString(6, String.valueOf(user.getSexo()));
 			cmd.setInt(7, user.getAltura());
 			cmd.setInt(8, (user.getComplexion()).getIdComplexion());

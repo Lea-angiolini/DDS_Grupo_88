@@ -1,6 +1,7 @@
 package ObjetosDB;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -32,6 +34,8 @@ import Database.DBExeption;
 @Table(name="Usuarios")
 public class Usuario implements Serializable{
 
+	private static final long serialVersionUID = -5724134759517737833L;
+
 	@Id
 	@NotNull
 	@Size(min=1, max=30)
@@ -44,9 +48,9 @@ public class Usuario implements Serializable{
 	private String password;
 	
 	@NotNull
-	@Email
+	//@Email
 	@Size(min=1, max=60)
-	@Column(name="mail")
+	@Column(name="mail", unique= true)
 	private String email;
 	
 	@NotNull
@@ -59,7 +63,7 @@ public class Usuario implements Serializable{
 	@Column(name="apellido")
 	private String apellido;
 	
-	@Past
+	//@Past
 	@Column(name="fechaNac")
 	private String fechaNacimiento;
 	

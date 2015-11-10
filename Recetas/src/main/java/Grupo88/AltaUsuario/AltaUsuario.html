@@ -55,7 +55,6 @@ $("#fecha").datepicker();
 										class="alert alert-danger">
 										<p>Error:</p>
 										<span wicket:id="feedback"></span>
-										<span wicket:id="DBERROR"></span>
 									</div>
 
 									<div class=" form-group">
@@ -144,7 +143,7 @@ $("#fecha").datepicker();
 										<div class="row">
 											<div class="col-sm-3">
 												<select class="form-control" name="sexo" id="sexo"
-													style="width: 70px;margin-left: 20px;" wicket:id="sexo" placeholder="Sexo">
+													style="width: 100px;margin-left: 20px;" wicket:id="sexo" placeholder="Sexo">
 													<option disabled="disabled" selected="selected" required></option>
 												</select>
 											</div>
@@ -184,9 +183,8 @@ $("#fecha").datepicker();
 												</select>
 											</div>
 											<div class="col-md-5">
-												<select class="form-control" id="preferencia"
-													awicket:id="preferencia" placeholder="Preferencias Alimenticias" style="width: 263px;margin-left: 25px;" arequired>
-													</select>
+												<div  id="preferencia" wicket:id="preferencia" required>
+													</div>
 											</div>
 										</div>
 									</div>
@@ -205,9 +203,7 @@ $("#fecha").datepicker();
 										</div>
 										<div class="row">
 											<div class="col-md-3" style="margin-left: 20px;">
-												<div wicket:id="grupoCheckBox">
-													<input type="checkBox" wicket:id="CheckBox"> <label
-														wicket:id="textoCheckBox" required></label>
+												<div id="condicion" wicket:id="condPreex">
 												</div>
 											</div>
 											<div class="col-md-4" style="padding-left: 0px;">

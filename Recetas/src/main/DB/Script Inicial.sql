@@ -51,7 +51,7 @@ CREATE TABLE Grupo88.Condiciones(
 
 CREATE TABLE Grupo88.PreferenciasAlimenticias(
 	idPreferencia INT AUTO_INCREMENT PRIMARY KEY,
-    descripcion VARCHAR(120) NOT NULL
+    descripcion VARCHAR(120) NOT NULL UNIQUE
 );
 
 CREATE TABLE Grupo88.Complexion(
@@ -80,7 +80,7 @@ CREATE TABLE Grupo88.Usuarios(
 	clave VARCHAR(120) NOT NULL,
     nombre VARCHAR(30) NOT NULL,
     apellido VARCHAR(30) NOT NULL,
-    mail VARCHAR(60) NOT NULL,
+    mail VARCHAR(60) NOT NULL UNIQUE,
     fechaNac DATE,
     sexo CHAR(1) NOT NULL,
     altura INT NOT NULL,
@@ -306,10 +306,10 @@ VALUES ('Desayuno'),
        ('Merienda'),
        ('Cena');
 
-INSERT INTO Grupo88.usuarios
-VALUES('jorge','pass','Jorge','Gomez','',null,'M',170,3,2,1),
-	  ('maria','pass','Maria','Rodriguez','',null,'F',150,1,4,2),
-      ('carlos', 'pass', 'Carlos', 'Batata','@gmail.com',null,'M', 160, 2, 1, 3);
+INSERT INTO Grupo88.usuarios()
+VALUES('jorge','pass','Jorge','Gomez','jorge@gmail.com','1989/05/12','M',170,3,2,1),
+	  ('maria','pass','Maria','Rodriguez','maria@gmail.com','1975/12/18','F',150,1,4,2),
+      ('carlos', 'pass', 'Carlos', 'Batata','carlos@gmail.com','1965/04/19','M', 160, 2, 1, 3);
 
 INSERT INTO Grupo88.Recetas(nombre,creador,idDificultad,caloriasTotales,grupoAlimenticio,temporada,ingredientePrincipal)
 VALUES('Pollo al horno','carlos',2,1000,2,1,31),
@@ -360,7 +360,8 @@ INSERT INTO Grupo88.reldietatipoingnocomestible()
 VALUES (4,6),(4,7),(4,8),(4,28),(4,29),(4,31),(4,32),(4,33),(4,34),(4,35),(4,36),(4,37),
 		(4,38),(4,39);
 
-
+INSERT INTO Grupo88.preferenciasalimenticias(descripcion)
+VALUES ('Comidas calientes'),('Comidas Frias'),('Dulce'),('Salado'),('Rapida'),('Elaborada');
 -- ------------------------------------------------STORE PROCEDURES
 
 DELIMITER $$

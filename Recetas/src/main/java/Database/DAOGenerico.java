@@ -4,27 +4,24 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import objetosWicket.SesionUsuario;
 
+import org.hibernate.HibernateException;
+import org.hibernate.JDBCException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, ID> {
 	
-	//SessionFactory sessionFactory;
 	Session session;
 	
 	public DAOGenerico(Session session) {
-		//sessionFactory=HibernateUtil.getSessionFactory();
 		this.session = session;
 	}
 	
-	/*public void closeSession(){
-		if (session != null){
-			session.close();
-		}
-	}*/
 	@Override
 	public T create() throws DBExeption {
 		try {
@@ -46,21 +43,24 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 	 
 	 @Override
 	 public void saveOrUpdate(T entity) throws DBExeption {
-		 //Session session = sessionFactory.getCurrentSession();
+
 		 try {
 			 session.beginTransaction();
 			 session.saveOrUpdate(entity);
 			 session.getTransaction().commit();
-		 } 
+		 } 		 
 		 catch (javax.validation.ConstraintViolationException cve) {
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
+				 throw new DBExeption(exc);
 			 }
 			 throw new DBExeption(cve);
 		 } 
@@ -68,35 +68,44 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+				     session.clear();
+				     throw new DBExeption(cve);
 				 }
 			 } 
 			 catch (Exception exc) {
+			     session.clear();
 				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
+				 throw new DBExeption(exc);
 			 }
-			 throw new DBExeption(cve);
+
 		 } 
 		 catch (RuntimeException ex) {
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
+				 throw new DBExeption(exc);
 			 }
-			 throw ex;
+			 throw new DBExeption(ex);
 		 } 
 		 catch (Exception ex) {
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
+				 throw new DBExeption(exc);
 			 }
 			 throw new RuntimeException(ex);
 		 }
@@ -117,9 +126,11 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
 			 }
@@ -129,9 +140,11 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
 			 }
@@ -141,11 +154,13 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
+				 session.clear();
 			 }
 			 throw ex;
 		 } 
@@ -153,9 +168,11 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
 			 }
@@ -181,9 +198,11 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
 			 }
@@ -193,9 +212,11 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
 			 }
@@ -205,9 +226,11 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
 			 }
@@ -217,9 +240,11 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
+				 session.clear();
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
 			 }
@@ -241,6 +266,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {
@@ -253,6 +279,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
+					 session.clear();
 				 }
 			 } 
 			 catch (Exception exc) {

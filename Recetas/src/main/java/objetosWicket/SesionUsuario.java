@@ -5,6 +5,7 @@ import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 
 import Database.DAOUsuarios;
+import Database.DBExeption;
 import Database.HibernateUtil;
 import ObjetosDB.Usuario;
 
@@ -32,11 +33,17 @@ public class SesionUsuario extends WebSession {
 	
 	public Usuario loguearUsuario(Usuario user){
 		if (usuario.getUsername() == "Invitado"){
-			Usuario logueado = daousuario.loguear(user.getUsername(), user.getPassword());
-			if (logueado != null){
-				return logueado;
-				
+			Usuario logueado;
+			try {
+				logueado = daousuario.loguear(user.getUsername(), user.getPassword());
+				if (logueado != null){
+					return logueado;
+				}
+			} catch (DBExeption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
 		}
 		return null;
 	}

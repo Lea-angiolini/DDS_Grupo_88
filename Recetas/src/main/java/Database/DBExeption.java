@@ -40,9 +40,12 @@ public class DBExeption extends Exception {
 		     }
 		
 		     public DBExeption(org.hibernate.exception.ConstraintViolationException cve) {
-		    	 dbMessages.add(new DBMessage(null, cve.getLocalizedMessage()));
+		    	 dbMessages.add(new DBMessage(null, cve.getMessage()));
 		     }
 		     
+		     public DBExeption(RuntimeException re){
+		    	 dbMessages.add(new DBMessage(null, re.getMessage()));
+		     }
 		     public DBExeption(String fieldName, String message) {
 		    	 dbMessages.add(new DBMessage(fieldName, message));
 		     }

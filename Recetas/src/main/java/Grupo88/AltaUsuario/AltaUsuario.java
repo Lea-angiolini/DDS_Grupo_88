@@ -1,14 +1,25 @@
 package Grupo88.AltaUsuario;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+import javax.swing.JOptionPane;
 
 import master.ErrorPage;
 import master.MasterPage;
 
+import org.apache.wicket.datetime.DateConverter;
+import org.apache.wicket.datetime.StyleDateConverter;
+import org.apache.wicket.datetime.markup.html.form.DateTextField;
+import org.apache.wicket.extensions.yui.calendar.DateField;
+import org.apache.wicket.extensions.yui.calendar.DatePicker;
+import org.apache.wicket.extensions.yui.calendar.DateTimeField;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.CheckGroup;
+import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
@@ -26,6 +37,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
+import org.hibernate.HibernateException;
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.tool.hbm2ddl.ImportScriptException;
+import org.joda.time.format.DateTimeFormatter;
 
 import Database.DAOComplexiones;
 import Database.DAOCondicionesPreexistentes;
@@ -39,6 +54,7 @@ import Grupo88.Login.Login;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
+import ObjetosDB.PreferenciasAlimenticias;
 import ObjetosDB.Rutinas;
 import ObjetosDB.Usuario;
 
@@ -71,17 +87,14 @@ public class AltaUsuario extends MasterPage {
 		 */
 		private static final long serialVersionUID = 1L;
 		private Usuario usuario = new Usuario();
-		private final ArrayList<estadoCondPreex> estados = new ArrayList<estadoCondPreex>();
 		private FeedbackPanel feedback;
-		private Label dbERROR;
 		
+		@SuppressWarnings("rawtypes")
 		public FrmAltaUsuario(String id) {
 			super(id);		
 			
 			add(feedback = new FeedbackPanel("feedback"));
 			feedback.setOutputMarkupId(true);
-			add(dbERROR = new Label("DBERROR",Model.of("")));
-			dbERROR.setOutputMarkupId(true);
 			PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
 			PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
 			
@@ -98,40 +111,17 @@ public class AltaUsuario extends MasterPage {
 				add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
 				add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
 				add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), daoComplexiones.findAll(), new ChoiceRenderer<Complexiones>("complexion","idComplexion")));		
-				//add(new DropDownChoice<PreferenciasAlimenticias>("preferencia", new PropertyModel<PreferenciasAlimenticias>(usuario,"preferencias"),daoPreferenciasAlimenticias.findAll()/*, new ChoiceRenderer<PreferenciasAlimenticias>("preferencia","idPreferencia")*/));
-				
-				
-				
-				RepeatingView condiciones = new RepeatingView("grupoCheckBox");
-				ArrayList<CondicionesPreexistentes> listaCondPreexistentes = new ArrayList<CondicionesPreexistentes>(daoCondicionesPreexistentes.findAll());
-				
-				for (CondicionesPreexistentes condPreex : listaCondPreexistentes) {
-					
-					AbstractItem item = new AbstractItem(condiciones.newChildId());
-					
-					estadoCondPreex actual = new estadoCondPreex(condPreex,new Model<Boolean>(false));
-					estados.add(actual);
-					
-					item.add(new Label("textoCheckBox", actual.cond.getCondPreex()));
-					item.add(new CheckBox("CheckBox", actual.modelCond));
-					condiciones.add(item);
-					
-				}
-				add(condiciones);	
-			
+				add(new CheckBoxMultipleChoice<PreferenciasAlimenticias>("preferencia",new PropertyModel(usuario,"preferencias"), new ArrayList(daoPreferenciasAlimenticias.findAll()), new ChoiceRenderer("preferencia","idPreferencia")));
+				add(new CheckBoxMultipleChoice<CondicionesPreexistentes>("condPreex",new PropertyModel(usuario,"condiciones"), new ArrayList(daoCondicionesPreexistentes.findAll()), new ChoiceRenderer("condPreex","idCondPreex")));
 				add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),daoRutinas.findAll(), new ChoiceRenderer<Object>("rutina","idRutina")));
 				add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), daoDietas.findAll(), new ChoiceRenderer<Object>("dieta","idDieta")));
 		    } catch (DBExeption e) {
 				e.printStackTrace();
-				setResponsePage(new ErrorPage("error cargar items"));
+				setResponsePage(new ErrorPage("error cargar items " + e.getMessage()));
 				return;
 			}
 		   		    
 		    add(new Link<Object>("cancelar"){
-				
-				/**
-				 * 
-				 */
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -147,44 +137,16 @@ public class AltaUsuario extends MasterPage {
 		@Override
 		protected void onSubmit() {
 			super.onSubmit();
-			this.cargarDatosUsuario();
-			setResponsePage(Inicio.class);
-			
-		}
-		private boolean cargarDatosUsuario(){
-			
-			for (estadoCondPreex estado : estados) {
-				if(estado.modelCond.getObject())
-				{
-					usuario.setCondicion(estado.cond);
-				}
-			}
 			
 			daoUsuarios = new DAOUsuarios(getSessionBD());
 			try {
 				daoUsuarios.saveOrUpdate(usuario);
 			} catch (DBExeption e) {
-				e.printStackTrace();
 				setResponsePage(new ErrorPage(e.getMessage()));
 			}
 			
-			return true;
-			/*
-			ModelUsuario mUsuario = new ModelUsuario(usuario);
-			return mUsuario.save(usuario);*/			
+			setResponsePage(new ErrorPage("Ha sido registrado satisfactoriamente \n Ya puede iniciar sesion"));
 			
 		}
-	}
-	
-	private class estadoCondPreex{
-		estadoCondPreex(CondicionesPreexistentes cond, IModel<Boolean> modelCond){
-			this.cond = cond;
-			this.modelCond = modelCond;
-		}
-		
-		public CondicionesPreexistentes cond;
-		public IModel<Boolean> modelCond;
-
-		
 	}
 }
