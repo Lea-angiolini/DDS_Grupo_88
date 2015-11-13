@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import master.ErrorPage;
 import master.MasterPage;
 
 import org.apache.wicket.AttributeModifier;
@@ -24,6 +25,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import Database.DAOGrupos;
+import Database.DAOUsuarios;
 import Database.DBExeption;
 import Grupo88.Detalles.DetalleGrupo;
 import Grupo88.Inicio.Inicio;
@@ -120,10 +122,8 @@ public class GestionarGrupos extends MasterPage {
 			});
 			
 			add(new Link<Object>("btnCrearGrupo"){
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
+
+				private static final long serialVersionUID = 5863814327655189500L;
 
 				@Override
 				public void onClick() {
@@ -185,26 +185,33 @@ public class GestionarGrupos extends MasterPage {
 			
 			final FragmentoGrupoNuevo esteFrag = this;
 			final Grupo nuevoGrupo = new Grupo(0,"","");
-			nuevoGrupo.setCreador(getUsuarioActual());
 			add(new TextField<String>("nombreGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "nombre")));
 			add(new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
 			add(new EmptyPanel("etiquetaConf"));
 			add(new Button("btnConfirmarNvoGrupo") {
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
+	
+				private static final long serialVersionUID = -2840007213453451497L;
 
 				@Override
 				public void onSubmit() {
-					String msg;
-					
+					String msg = "";
+					try{
 					try {
+						nuevoGrupo.setCreador(getUsuarioActual());
 						daogrupos.saveOrUpdate(nuevoGrupo);
 						msg = "Su grupo ha sido creado!";
-					} catch (DBExeption e) {
-						e.printStackTrace();
-						msg = "Opss, parece que hubo un problema!";
+						getSessionBD().refresh(getUsuarioActual());
+					}
+					catch (javax.validation.ConstraintViolationException cve){
+						msg = cve.getConstraintViolations().iterator().next().getMessage();
+						}
+					catch (org.hibernate.exception.ConstraintViolationException cve){
+						msg = cve.getMessage();
+						}
+					
+					}
+					catch (Exception e) {
+						setResponsePage(new ErrorPage("Parece que hubo un error intentalo mas tarde"+e.getMessage()));
 					}
 				
 					esteFrag.addOrReplace(new Label("etiquetaConf", msg ) );
@@ -288,7 +295,7 @@ public class GestionarGrupos extends MasterPage {
 							try {
 								daogrupos.saveOrUpdate(grupoActual);
 								target.appendJavaScript("adherido('"+i+"');");
-							} catch (DBExeption e) {
+							} catch (Exception e) {
 								e.printStackTrace();
 							}
 						}						

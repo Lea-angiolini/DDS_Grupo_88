@@ -17,7 +17,9 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name="Pasos")
 public class Pasos implements Serializable{
-	
+
+	private static final long serialVersionUID = 8182622416290092257L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "idPaso")

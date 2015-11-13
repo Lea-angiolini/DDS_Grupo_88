@@ -31,8 +31,8 @@ public class Grupo implements Serializable{
 	@Column(name="idGrupo")
 	private int idGrupo;
 	
-	@NotNull
-	@Size(min=1, max=30)
+	@NotNull(message="Ingrese un nombre para su Grupo")
+	@Size(min=3, max=30, message="El nombre debe tener entre 3 y 30 caracteres")
 	@Column(name="nombreGrupo", unique=true)
 	private String nombre;
 	
@@ -41,8 +41,8 @@ public class Grupo implements Serializable{
 	@JoinColumn(name="creador")
 	private Usuario creador;
 	
-	@NotNull
-	@Size(min=1, max=255)
+	@NotNull(message="El detalle no puede estar vacio")
+	@Size(min=1, max=255, message="El detalle debe tener menos de 255 caracteres")
 	@Column(name="detalle")
 	private String detalle;
 	
@@ -81,7 +81,7 @@ public class Grupo implements Serializable{
 	}
 	public void setCreador(Usuario creador) {
 		this.creador = creador;
-		creador.setMisGrupo(this);
+		//creador.setMisGrupo(this);
 	}
 	public String getDetalle() {
 		return detalle;

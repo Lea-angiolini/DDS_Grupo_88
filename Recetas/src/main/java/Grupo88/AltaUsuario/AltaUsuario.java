@@ -1,24 +1,12 @@
 package Grupo88.AltaUsuario;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-
-import javax.swing.JOptionPane;
 
 import master.ErrorPage;
 import master.MasterPage;
 
-import org.apache.wicket.datetime.DateConverter;
-import org.apache.wicket.datetime.StyleDateConverter;
-import org.apache.wicket.datetime.markup.html.form.DateTextField;
-import org.apache.wicket.extensions.yui.calendar.DateField;
-import org.apache.wicket.extensions.yui.calendar.DatePicker;
-import org.apache.wicket.extensions.yui.calendar.DateTimeField;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -29,18 +17,11 @@ import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.hibernate.HibernateException;
-import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.tool.hbm2ddl.ImportScriptException;
-import org.joda.time.format.DateTimeFormatter;
 
 import Database.DAOComplexiones;
 import Database.DAOCondicionesPreexistentes;
@@ -49,7 +30,6 @@ import Database.DAOPreferenciasAlimenticias;
 import Database.DAORutinas;
 import Database.DAOUsuarios;
 import Database.DBExeption;
-import Grupo88.Inicio.Inicio;
 import Grupo88.Login.Login;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
@@ -87,14 +67,18 @@ public class AltaUsuario extends MasterPage {
 		 */
 		private static final long serialVersionUID = 1L;
 		private Usuario usuario = new Usuario();
-		private FeedbackPanel feedback;
-		
-		@SuppressWarnings("rawtypes")
+		private final MarkupContainer error;
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public FrmAltaUsuario(String id) {
 			super(id);		
 			
-			add(feedback = new FeedbackPanel("feedback"));
-			feedback.setOutputMarkupId(true);
+			add(error = new MarkupContainer("error"){
+				private static final long serialVersionUID = 6315760448959379801L;});
+			
+			error.setVisible(false);
+			error.add(new FeedbackPanel("feedback"));
+			error.setOutputMarkupId(true);
+			
 			PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
 			PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
 			
@@ -140,13 +124,21 @@ public class AltaUsuario extends MasterPage {
 			
 			daoUsuarios = new DAOUsuarios(getSessionBD());
 			try {
-				daoUsuarios.saveOrUpdate(usuario);
-			} catch (DBExeption e) {
-				setResponsePage(new ErrorPage(e.getMessage()));
+				try{
+				daoUsuarios.save(usuario);
+				setResponsePage(new ErrorPage("Ha sido registrado satisfactoriamente \n Ya puede iniciar sesion"));
+				}
+				catch(javax.validation.ConstraintViolationException cve){
+					info(cve.getConstraintViolations().iterator().next().getMessage());
+				}
+				catch (org.hibernate.exception.ConstraintViolationException cve) {
+					info(cve.getMessage());
+				}
+				error.setVisible(true);
+			} catch (Exception e) {
+				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde"));
+				
 			}
-			
-			setResponsePage(new ErrorPage("Ha sido registrado satisfactoriamente \n Ya puede iniciar sesion"));
-			
 		}
 	}
 }

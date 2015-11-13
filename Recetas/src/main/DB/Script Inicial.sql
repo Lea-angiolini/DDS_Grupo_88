@@ -328,9 +328,9 @@ VALUES ('2013-08-27',3,'jorge'),
 
 
 INSERT INTO  Grupo88.pasos(idReceta,numeroPaso,descripcion)
-VALUES (1,1,'Descongelar el pollo'),(1,2,'Sacarle lo que no sirve'),
-		(1,3,'Mandarlo al horno'),(1,4,'Agregar papa si se quiere'),
-        (1,5,'Disfrutar del pollo');
+VALUES (1,0,'Descongelar el pollo'),(1,1,'Sacarle lo que no sirve'),
+		(1,2,'Mandarlo al horno'),(1,3,'Agregar papa si se quiere'),
+        (1,4,'Disfrutar del pollo');
         
 INSERT INTO Grupo88.grupos(nombreGrupo,creador,detalle)
 VALUES('Locos del asado','jorge','Las mejores recetas de carne. No se admiten vegetarianos'),

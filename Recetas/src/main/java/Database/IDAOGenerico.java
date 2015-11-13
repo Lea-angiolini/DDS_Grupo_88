@@ -7,7 +7,7 @@ public interface IDAOGenerico<T,ID extends Serializable> {
 	
 	
 	T create() throws DBExeption;
-	void saveOrUpdate(T entity) throws DBExeption;
+	void saveOrUpdate(T entity) throws Exception;
 	T get(ID id) throws DBExeption;
 	void delete(ID id) throws DBExeption;
 	List<T> findAll() throws DBExeption;

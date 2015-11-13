@@ -17,7 +17,7 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 	}
 	
 	@Override
-	public void saveOrUpdate(Receta entity) throws DBExeption {
+	public void saveOrUpdate(Receta entity) throws Exception {
 		// TODO Auto-generated method stub
 		entity.calcularCalorias();
 		super.saveOrUpdate(entity);

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import master.ErrorPage;
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
@@ -74,7 +76,7 @@ public class DetalleDeReceta extends MasterPage {
 				return;
 			}
 			
-//			JOptionPane.showMessageDialog(null, receta.getDificultad().getDificultad());
+		//	JOptionPane.showMessageDialog(null, receta.getDificultad().getDificultad());
 			//receta = Browser.cargarReceta(idReceta.toInt(), user);
 		//user.cargarGrupos();
 		
@@ -105,7 +107,7 @@ public class DetalleDeReceta extends MasterPage {
 			}
 		});
 		}
-		
+
 		frmDetalleDeReceta.add(new Label("dif",receta.getDificultad().getDificultad()));
 		frmDetalleDeReceta.add(new Label("tem",receta.getTemporada().getTemporada()));
 		frmDetalleDeReceta.add(new Image("imgPrinc", new DynamicImageResource(){
@@ -119,7 +121,7 @@ public class DetalleDeReceta extends MasterPage {
 				return receta.getFotoPrincipal();
 			}
 		}));
-		
+
 		RepeatingView ingredientes = new RepeatingView("listaIngredientes");
 		
 		for (Receta_Ingrediente ingrediente : receta.getRelacionIngredientes()) {
@@ -130,7 +132,7 @@ public class DetalleDeReceta extends MasterPage {
 			ingredientes.add(item);
 			
 		}
-		
+
 		frmDetalleDeReceta.add(ingredientes);
 		
 		RepeatingView condimentos = new RepeatingView("listaCondimentos");
@@ -156,9 +158,7 @@ public class DetalleDeReceta extends MasterPage {
 			item.add(new Label("nro","Paso "+i+":"));		
 			item.add(new Label("paso", paso.getDescripcionPaso()));
 			item.add(new Image("img", new DynamicImageResource(){
-				/**
-				 * 
-				 */
+				
 				private static final long serialVersionUID = 4335079479260519834L;
 
 				@Override
@@ -169,7 +169,6 @@ public class DetalleDeReceta extends MasterPage {
 			pasos.add(item);
 			
 		}
-		
 		frmDetalleDeReceta.add(pasos);
 		
 		frmDetalleDeReceta.add(new Link<Object>("confirmar"){
@@ -192,7 +191,7 @@ public class DetalleDeReceta extends MasterPage {
 				setResponsePage(DetalleDeReceta.class,pars);
 			}
 		}.setVisible(SesionUsuario.get().estaLogueado()));
-		
+
 		frmDetalleDeReceta.add(new AjaxLink<Object>("compartir"){
 			
 			/**

@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.IndexColumn;
@@ -27,6 +28,8 @@ import org.hibernate.annotations.IndexColumn;
 @Table(name = "recetas")
 public class Receta implements Serializable{
 	
+	private static final long serialVersionUID = -394756840419765018L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "idReceta")
@@ -229,6 +232,7 @@ public class Receta implements Serializable{
 	}
 	
 	public void calcularCalorias(){
+		caloriasTotales = 0;
 		for(Receta_Ingrediente rel : ingredientesRelacionados){
 			caloriasTotales += rel.getIngrediente().getCalorias();
 		}

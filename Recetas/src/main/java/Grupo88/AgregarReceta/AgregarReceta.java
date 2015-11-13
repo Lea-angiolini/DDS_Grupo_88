@@ -246,8 +246,8 @@ public class AgregarReceta extends RegisteredPage {
 			try {
 				daoreceta.saveOrUpdate(nuevareceta);
 				setResponsePage(MisRecetas.class);
-			} catch (DBExeption e) {
-				error(e.getMessage());
+			} catch (Exception e) {
+				error("error"/*e.getMessage()*/);
 			}
 			//nuevareceta.guardarReceta();
 			

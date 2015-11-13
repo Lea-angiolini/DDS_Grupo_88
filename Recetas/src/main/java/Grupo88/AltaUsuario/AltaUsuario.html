@@ -50,8 +50,7 @@ $("#fecha").datepicker();
 								</div>
 							</div>
 							<div class="panel-body">
-								<form id="signupform" class="form-horizontal" role="form">
-									<div id="signupalert" style="display: none"
+									<div id="signupalert" wicket:id="error"
 										class="alert alert-danger">
 										<p>Error:</p>
 										<span wicket:id="feedback"></span>
@@ -240,7 +239,6 @@ $("#fecha").datepicker();
 					                    	<button id="btnCancelar" type="button" class="btn btn-danger" wicket:id="cancelar"><span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar</button>
 					                    	<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Registrarse</button>
 					                           </div>
-					            </form>
 					        </div>
 					    </div>
 					</div>				
