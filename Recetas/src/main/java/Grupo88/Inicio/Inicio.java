@@ -1,11 +1,16 @@
 package Grupo88.Inicio;
 
+import java.util.ArrayList;
+
+import master.ErrorPage;
 import master.MasterPage;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.CompoundPropertyModel;
 
+import Database.DAORecetas;
 import Grupo88.Componentes.ListaDeRecetas;
+import ObjetosDB.Receta;
 
 
 public class Inicio extends MasterPage {
@@ -13,6 +18,7 @@ public class Inicio extends MasterPage {
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
 	private FrmInicio frmInicio;
+	private DAORecetas daoRecetas;
 	
 	public Inicio(){
 		super();
@@ -26,8 +32,16 @@ public class Inicio extends MasterPage {
 		public FrmInicio(String id) {
 			super(id);			
 			setDefaultModel(new CompoundPropertyModel<FrmInicio>(this));
+			daoRecetas = new DAORecetas(getSessionBD());
+			ArrayList<Receta> recetas;
+			try {
+				recetas = new ArrayList<Receta>(daoRecetas.mejoresCalificadas());
+			} catch (Exception e) {
+				setResponsePage(new ErrorPage("ops parece que hubo un problema "+ e.getMessage()));
+				return;
+			}
 			
-			add(new ListaDeRecetas("recetasHome", getUsuarioActual().cargarHome(),getUsuarioActual()));
+			add(new ListaDeRecetas("recetasHome", recetas ,getUsuarioActual()));
 		}
 		
 		@Override

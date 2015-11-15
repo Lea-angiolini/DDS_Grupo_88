@@ -2,6 +2,8 @@ package Database;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -93,6 +95,7 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 		//Session session = sessionFactory.getCurrentSession();
 		
 		try{
+
 		session.beginTransaction();
 		String stringQuery = "from Receta r where (r.caloriasTotales between :caloriasMin AND :caloriasMax) ";
 		
@@ -110,8 +113,8 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 			stringQuery += " and (r.temporada.idTemporada = "+items.getTemporada().getIdTemporada()+" ) ";
 		}
 		
-		if (items.getCalificacion() != null) {
-			stringQuery += " and ((r.puntajeTotal / r.vecesCalificada) = "+items.getCalificacion().getValor()+") "; //TOFIX if vecesCalificada = 0?
+		if (items.getCalificacion() != 0) {
+			stringQuery += " and (select cast(sum(c.calificacion)/count(c.calificacion) as int) from Calificacion c where c.receta.idreceta = r.idreceta) = "+items.getCalificacion()+") "; //TOFIX if vecesCalificada = 0?
 		}
 		
 		if (items.getGrupoAlimenticio() != null){
@@ -177,6 +180,70 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 		
 		 throw new RuntimeException(ex);
 	 }
+	}
+	
+	public List<Receta> mejoresCalificadas() throws Exception {
+		
+		List<Receta> recetas;
+		try{
+			session.beginTransaction();
+			Query query = session.createQuery("from Receta r where r.idreceta in (select c.receta.idreceta from Calificacion c "+ 
+													"group by c.receta.idreceta order by sum(c.calificacion) desc)");
+			query.setMaxResults(10);
+			recetas = (List<Receta>) query.list();
+			session.getTransaction().commit();
+			return recetas;
+		}
+		catch (javax.validation.ConstraintViolationException cve) {
+			 try {
+				 if (session.getTransaction().isActive()) {
+					 session.getTransaction().rollback();
+				 }
+			 } 
+			 catch (Exception exc) {
+				 exc.printStackTrace();
+				 System.out.println("Falló al hacer un rollback");
+			 }
+			 throw new Exception(cve);
+		 } 
+		 catch (org.hibernate.exception.ConstraintViolationException cve) {
+			 try {
+				 if (session.getTransaction().isActive()) {
+					 session.getTransaction().rollback();
+				 }
+			 } 
+			 catch (Exception exc) {
+				 exc.printStackTrace();
+				 System.out.println("Falló al hacer un rollback");
+			 }
+			 throw new Exception(cve);
+		 } 
+		 catch (RuntimeException ex) {
+			 try {
+				 if (session.getTransaction().isActive()) {
+					 session.getTransaction().rollback();
+				 }
+			 } 
+			 catch (Exception exc) {
+				 exc.printStackTrace();
+				 System.out.println("Falló al hacer un rollback");
+			 }
+			 throw ex;
+		 } 
+		 catch (Exception ex) {
+			 try {
+				 if (session.getTransaction().isActive()) {
+					 session.getTransaction().rollback();
+				 }
+			 } 
+			 catch (Exception exc) {
+				 exc.printStackTrace();
+				 System.out.println("Falló al hacer un rollback");
+			 }
+			
+			 throw new RuntimeException(ex);
+		 }
+		
 	}
 	
 	public void agregarAHistorial(int idReceta, String username) throws DBExeption{

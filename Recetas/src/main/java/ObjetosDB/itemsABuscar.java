@@ -3,7 +3,7 @@ package ObjetosDB;
 public class itemsABuscar {
 	
 	public itemsABuscar() {
-		calificacion = new Calificacion("Todas", -1);
+		calificacion = 0;
 		grupoAlimenticio = new GruposAlimenticios(-1, "");
 		ingredientePrincipal = new Ingredientes(-1, "", 0, 0);
 		temporada = new Temporadas(-1, "");
@@ -19,13 +19,13 @@ public class itemsABuscar {
 	private Temporadas temporada;
 	private Dificultades dificultad;
 	
-	private Calificacion calificacion;
+	private int calificacion;
 	
 	
-	public Calificacion getCalificacion() {
+	public int getCalificacion() {
 		return calificacion;
 	}
-	public void setCalificacion(Calificacion calificacion) {
+	public void setCalificacion(int calificacion) {
 		this.calificacion = calificacion;
 	}
 	public int getCaloriasMin() {

@@ -26,6 +26,7 @@
      <mapping class="ObjetosDB.Grupo"/>
      <mapping class="ObjetosDB.Pasos"/>
      <mapping class="ObjetosDB.Receta"/>
+     <mapping class="ObjetosDB.Calificacion"/>
      
 
   </session-factory>

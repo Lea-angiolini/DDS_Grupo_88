@@ -102,8 +102,6 @@ CREATE TABLE Grupo88.Recetas(
     grupoAlimenticio INT, -- REFERENCES grupoalim,
     temporada INT, -- REFERENCES temporadas,
     ingredientePrincipal INT, -- REFERENCES ingredientes,
-    puntajeTotal INT DEFAULT 0,
-    vecesCalificada INT DEFAULT 0,
     foto LONGBLOB DEFAULT NULL,
     idTipoReceta INT,
     FOREIGN KEY (creador) REFERENCES Grupo88.Usuarios(nombreUsuario),
@@ -112,6 +110,15 @@ CREATE TABLE Grupo88.Recetas(
     FOREIGN KEY (temporada) REFERENCES Grupo88.temporadas(idTemporada),
     FOREIGN KEY (ingredientePrincipal) REFERENCES Grupo88.ingredientes(idIngrediente),
     FOREIGN KEY (idTipoReceta) REFERENCES Grupo88.tipoReceta(idTipoReceta)
+);
+
+CREATE TABLE Grupo88.calificaciones(
+	idCalificacion int auto_increment primary key,
+    userCalificador varchar(30) not null,
+    idReceta int not null,
+    calificacion int check(calificacion >= 1 and calificacion <= 5),
+    FOREIGN KEY (idReceta) REFERENCES Grupo88.recetas(idReceta),
+    FOREIGN KEY (userCalificador) REFERENCES Grupo88.usuarios(nombreUsuario)
 );
 
 CREATE TABLE Grupo88.Grupos(
@@ -218,7 +225,7 @@ CREATE TABLE Grupo88.relDietaTipoIngNoComestible(
     PRIMARY KEY(idDieta, idTipoIngNoComestible)
 );
 
-USE Grupo88;
+/*USE Grupo88;
 
 CREATE VIEW V_recetas
 	AS
@@ -236,7 +243,7 @@ CREATE VIEW V_recetas
 	ON tmp.idTemporada = r.temporada
 	JOIN ingredientes ing
 	ON ing.IdINgrediente = r.ingredientePrincipal;
-
+*/
 
 -- ----------------------------------- INSERT EN TABLAS
 

@@ -58,7 +58,7 @@ public class BuscarReceta extends MasterPage {
     		ArrayList<Temporadas> temporadas;
     		ArrayList<Ingredientes> ingredientes;
     		ArrayList<GruposAlimenticios> grpAlim;
-    		ArrayList<Calificacion> calificaciones;
+    		ArrayList<Integer> calificaciones;
 			try {
 				dificultades = (ArrayList<Dificultades>) daodificultades.findAll();
 				
@@ -68,10 +68,9 @@ public class BuscarReceta extends MasterPage {
 	    		
 	    		grpAlim =  (ArrayList<GruposAlimenticios>) daogruposalimenticios.findAll();
 	    		
-	    		calificaciones = new ArrayList<Calificacion>();
-	    		calificaciones.add(new Calificacion("Sin calificar", 0));
-	    		for(int i = 1; i<= 5;i++){
-	    			calificaciones.add(new Calificacion(String.valueOf(i), i));
+	    		calificaciones = new ArrayList<Integer>();
+	    		for(int i = 0; i<= 5;i++){
+	    			calificaciones.add(i);
 	    		}
 				
 			} catch (DBExeption e) {
@@ -110,11 +109,7 @@ public class BuscarReceta extends MasterPage {
     		add(dropdownTemporadas);
     		//
     		
-    		DropDownChoice<Calificacion> dropdownCalificacion = new DropDownChoice<Calificacion>("calificaciones",new PropertyModel<Calificacion>(items, "calificacion"), calificaciones, new ChoiceRenderer("calificacion","valor")){
-    			protected String getNullValidDisplayValue(){
-    				return "Todas";
-    			}
-    		};
+    		DropDownChoice<Integer> dropdownCalificacion = new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), calificaciones);
     		dropdownCalificacion.setNullValid(true);
     		add(dropdownCalificacion);
     		//
@@ -128,9 +123,12 @@ public class BuscarReceta extends MasterPage {
         	add(dropdownGruposAlimenticios);
         	//
         	
-        	
-        	add(new NumberTextField<Integer>("caloriasMin", new PropertyModel<Integer>(items, "caloriasMin"), Integer.class));
-        	add(new NumberTextField<Integer>("caloriasMax", new PropertyModel<Integer>(items, "caloriasMax"), Integer.class));
+        	NumberTextField<Integer> caloriasMin = new NumberTextField<Integer>("caloriasMin", new PropertyModel<Integer>(items, "caloriasMin"), Integer.class);
+        	caloriasMin.setRequired(true);
+        	add(caloriasMin);
+        	NumberTextField<Integer> caloriasMax = new NumberTextField<Integer>("caloriasMax", new PropertyModel<Integer>(items, "caloriasMax"), Integer.class);
+        	caloriasMax.setRequired(true);
+        	add(caloriasMax);
     		
         	add(new Button("botonBuscar") {
         		public void onSubmit() {

@@ -71,11 +71,14 @@ public class Receta implements Serializable{
 	@IndexColumn(name="numeroPaso")
 	private List<Pasos> pasos;
 	
-	@Column(name = "puntajeTotal")
+	/*@Column(name = "puntajeTotal")
 	private int puntajeTotal;
 	
 	@Column(name = "vecesCalificada")
-	private int vecesCalificada;
+	private int vecesCalificada;*/
+	
+	@OneToMany(mappedBy="receta",cascade= CascadeType.ALL,fetch=FetchType.LAZY)
+	private List<Calificacion> calificaciones;
 	
 	@Column(name = "foto")
 	private byte[] fotoPrincipal;
@@ -194,10 +197,7 @@ public class Receta implements Serializable{
 	}
 	
 	public int getCalificacion() {
-		if(vecesCalificada == 0){
-			return 0;
-		}
-		return (int)(puntajeTotal/vecesCalificada);
+		return 0;
 	}
 	
 	public byte[] getFotoPrincipal() {

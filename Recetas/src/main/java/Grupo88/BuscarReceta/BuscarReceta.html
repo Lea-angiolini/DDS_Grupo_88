@@ -34,8 +34,8 @@
 												<label>Min:</label>
 												</div>
 												<div class="col-sm-3">
-													<input type="number" class="form-control" id="caloriasMin" style="width: 71px;"
-														wicket:id="caloriasMin" placeholder="Min">
+													<input type="number" min="0" class="form-control" id="caloriasMin" style="width: 71px;"
+														wicket:id="caloriasMin" placeholder="Min" required="required" >
 														</div>
 												</div>
 												<div class="col-sm-3" style="margin-left: 7px;">
@@ -45,7 +45,7 @@
 												</div>
 												<div class="col-sm-3" >
 													<input type="number" class="form-control" id="caloriasMax" style="width: 80px;"
-														wicket:id="caloriasMax" placeholder="Max">
+														wicket:id="caloriasMax" placeholder="Max", required="required" min="0">
 														</div>
 												
 												</div>

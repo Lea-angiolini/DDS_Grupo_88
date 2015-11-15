@@ -37,8 +37,8 @@ public class Usuario implements Serializable{
 	private static final long serialVersionUID = -5724134759517737833L;
 
 	@Id
-	@NotNull
-	@Size(min=1, max=30)
+	@NotNull(message="El nombre de usuario no puede estar vacio")
+	@Size(min=1, max=30, message="El nombre de usuario debe tener entre 1 y 30 caracteres")
 	@Column(name="nombreUsuario")
 	private String username;
 	
@@ -53,7 +53,7 @@ public class Usuario implements Serializable{
 	@Column(name="mail", unique= true)
 	private String email;
 	
-	@NotNull
+	@NotNull(message="El nombre no debe ser vacio")
 	@Size(min=1, max=30)
 	@Column(name="nombre")
 	private String nombre;

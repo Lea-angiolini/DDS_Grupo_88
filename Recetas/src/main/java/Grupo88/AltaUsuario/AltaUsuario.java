@@ -3,6 +3,8 @@ package Grupo88.AltaUsuario;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JOptionPane;
+
 import master.ErrorPage;
 import master.MasterPage;
 
@@ -30,6 +32,7 @@ import Database.DAOPreferenciasAlimenticias;
 import Database.DAORutinas;
 import Database.DAOUsuarios;
 import Database.DBExeption;
+import Grupo88.Inicio.Inicio;
 import Grupo88.Login.Login;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
@@ -84,7 +87,7 @@ public class AltaUsuario extends MasterPage {
 			
 			try {
 	
-				add((new TextField<String>("username", new PropertyModel<String>(usuario, "username")).add(new StringValidator(1,30))).setRequired(true));
+				add(new TextField<String>("username", new PropertyModel<String>(usuario, "username")));
 				add(password);
 				add(repPassword);
 				add(new EqualPasswordInputValidator(password, repPassword));
@@ -106,12 +109,12 @@ public class AltaUsuario extends MasterPage {
 			}
 		   		    
 		    add(new Link<Object>("cancelar"){
-				private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 8895339676060670334L;
 
 				@Override
 				public void onClick() {
 				
-					setResponsePage(Login.class);
+					setResponsePage(Inicio.class);
 					
 				}
 			});	
@@ -134,9 +137,11 @@ public class AltaUsuario extends MasterPage {
 				catch (org.hibernate.exception.ConstraintViolationException cve) {
 					info(cve.getMessage());
 				}
+				finally{
 				error.setVisible(true);
+				}
 			} catch (Exception e) {
-				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde"));
+				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "+e.getMessage()));
 				
 			}
 		}
