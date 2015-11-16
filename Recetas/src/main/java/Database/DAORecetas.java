@@ -182,14 +182,18 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 	 }
 	}
 	
-	public List<Receta> mejoresCalificadas() throws Exception {
+	public List<Receta> ultimasConsultadas(Usuario user, int cantidad) throws Exception{
+		return recetas_in("select h.receta.idreceta FROM Historial h where h.usuario.username = '"+user.getUsername()+"'" +
+							"order by h.idHistorial desc",cantidad);
+	}
+	public List<Receta> mejoresCalificadas(int cantidad) throws Exception {
 		return recetas_in("select c.key.receta.idreceta from Calificacion c "+ 
-								"group by c.key.receta.idreceta order by sum(c.calificacion) desc", 10);
+								"group by c.key.receta.idreceta order by sum(c.calificacion) desc", cantidad);
 	}
 	
-	public List<Receta> ultimasConfirmadas(Usuario user) throws Exception {
-		return recetas_in("select c.IdConfirmacion from Confirmacion c where c.user.username = '"+user.getUsername()+"' "+
-	                        "order by c.IdConfirmacion desc",10);
+	public List<Receta> ultimasConfirmadas(Usuario user, int cantidad) throws Exception {
+		return recetas_in("select c.receta.idreceta from Confirmacion c where c.user.username = '"+user.getUsername()+"' "+
+	                        "order by c.IdConfirmacion desc",cantidad);
 	}
 	public List<Receta> recetas_in(String select, int cantidad) throws Exception {
 		

@@ -18,7 +18,7 @@ public class Historial {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idHistorico")
-	private int idHistial;
+	private int idHistorial;
 	
 	@Column(name="fecha")
 	private String fecha;
@@ -45,12 +45,12 @@ public class Historial {
 
 	public int getIdHistial() {
 		
-		return idHistial;
+		return idHistorial;
 	}
 	
 	public void setIdHistial(int idHistial) {
 		
-		this.idHistial = idHistial;
+		this.idHistorial = idHistial;
 	}
 	
 	public String getFecha() {

@@ -341,12 +341,18 @@ public class Usuario implements Serializable{
 		DAORecetas daoRecetas = new DAORecetas(session);
 		List<Receta> recetas;
 		try {
-			recetas = daoRecetas.ultimasConfirmadas(this);
-			if(recetas.size() != 0){
-				return new ArrayList<Receta>(recetas);
-			}
-		recetas = daoRecetas.mejoresCalificadas();
-		return new ArrayList<Receta>(recetas);
+			recetas = daoRecetas.ultimasConfirmadas(this,10);
+				if(recetas.size() != 0){
+					return new ArrayList<Receta>(recetas);
+				}
+				
+			recetas = daoRecetas.ultimasConsultadas(this, 10);
+				if(recetas.size() != 0){
+					return new ArrayList<Receta>(recetas);
+				}
+				
+			recetas = daoRecetas.mejoresCalificadas(10);
+			return new ArrayList<Receta>(recetas);
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e.getMessage());
