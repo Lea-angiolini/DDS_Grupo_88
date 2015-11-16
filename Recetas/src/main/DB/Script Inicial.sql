@@ -113,12 +113,12 @@ CREATE TABLE Grupo88.Recetas(
 );
 
 CREATE TABLE Grupo88.calificaciones(
-	idCalificacion int auto_increment primary key,
     userCalificador varchar(30) not null,
     idReceta int not null,
     calificacion int check(calificacion >= 1 and calificacion <= 5),
     FOREIGN KEY (idReceta) REFERENCES Grupo88.recetas(idReceta),
-    FOREIGN KEY (userCalificador) REFERENCES Grupo88.usuarios(nombreUsuario)
+    FOREIGN KEY (userCalificador) REFERENCES Grupo88.usuarios(nombreUsuario),
+    PRIMARY KEY(UserCalificador,idReceta)
 );
 
 CREATE TABLE Grupo88.Grupos(
@@ -147,13 +147,11 @@ CREATE TABLE Grupo88.amigos(
     
 );
 
-CREATE TABLE Grupo88.Historial(
-	idHistorial INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE Grupo88.Confirmadas(
+	idConfirmada INT AUTO_INCREMENT PRIMARY KEY,
     fecha DATETIME NOT NULL,
     idReceta INT NOT NULL,
-    usuario VARCHAR(30), --  REFERENCES usuarios,
-    cantVecesUsada INT,
-    calificacionUsuario INT default 0,
+    usuario VARCHAR(30),
     FOREIGN KEY (usuario) REFERENCES Grupo88.usuarios(nombreUsuario),
     FOREIGN KEY (idReceta) REFERENCES Grupo88.recetas(idReceta)
 );
@@ -329,7 +327,7 @@ VALUES('Pollo al horno','carlos',2,1000,2,1,31),
       ('Pollo a la parrilla','carlos',2,940,2,2,31);
     
 
-INSERT INTO Grupo88.Historial(fecha,idReceta,usuario)
+INSERT INTO Grupo88.confirmadas(fecha,idReceta,usuario)
 VALUES ('2013-08-27',3,'jorge'),
 	   ('2013-08-29', 1, 'jorge');
 
@@ -369,6 +367,12 @@ VALUES (4,6),(4,7),(4,8),(4,28),(4,29),(4,31),(4,32),(4,33),(4,34),(4,35),(4,36)
 
 INSERT INTO Grupo88.preferenciasalimenticias(descripcion)
 VALUES ('Comidas calientes'),('Comidas Frias'),('Dulce'),('Salado'),('Rapida'),('Elaborada');
+
+
+INSERT INTO Grupo88.calificaciones (userCalificador,idReceta,calificacion) 
+VALUES ('jorge',1,3),('maria',1,4),('jorge',2,1),('carlos',2,1),('jorge',3,5),('maria',3,5),
+		('carlos',3,4);
+
 -- ------------------------------------------------STORE PROCEDURES
 
 DELIMITER $$
@@ -381,7 +385,7 @@ BEGIN
 	SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensaje;
 END $$
 
-
+/*
 CREATE PROCEDURE `ObtenerRecetas` (IN nombreBuscar VARCHAR(45))
 BEGIN
     SELECT *
@@ -1039,3 +1043,4 @@ BEGIN
                         
 END$$
 DELIMITER $$
+*/
