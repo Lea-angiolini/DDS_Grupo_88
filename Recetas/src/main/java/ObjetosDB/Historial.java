@@ -1,21 +1,48 @@
 package ObjetosDB;
 
-import java.util.Date;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-
+@Entity
+@Table(name="historicoConsultas")
 public class Historial {
 	
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idHistorico")
 	private int idHistial;
-	private Date fecha;
+	
+	@Column(name="fecha")
+	private String fecha;
+	
+	@NotNull
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="idReceta")
 	private Receta receta;
-	private Usuario usuario;
-	private int cantVecesUsada;
-	private int calificacionUsuario;
+	
+	@NotNull
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="username")
+	private Usuario usuario;	
+	
+	public Historial() {	}
 	
 	
+	public Historial(String fecha, Receta receta, Usuario usuario) {
+		this.fecha = fecha;
+		this.receta = receta;
+		this.usuario = usuario;
+	}
+
+
 	public int getIdHistial() {
 		
 		return idHistial;
@@ -26,12 +53,12 @@ public class Historial {
 		this.idHistial = idHistial;
 	}
 	
-	public Date getFecha() {
+	public String getFecha() {
 		
 		return fecha;
 	}
 	
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		
 		this.fecha = fecha;
 	}
@@ -55,26 +82,5 @@ public class Historial {
 		
 		this.usuario = usuario;
 	}
-	
-	public int getCantVecesUsada() {
-		
-		return cantVecesUsada;
-	}
-	
-	public void setCantVecesUsada(int cantVecesUsada) {
-		
-		this.cantVecesUsada = cantVecesUsada;
-	}
-	
-	public int getCalificacionUsuario() {
-		
-		return calificacionUsuario;
-	}
-	
-	public void setCalificacionUsuario(int calificacionUsuario) {
-		
-		this.calificacionUsuario = calificacionUsuario;
-	}
-
 	
 }

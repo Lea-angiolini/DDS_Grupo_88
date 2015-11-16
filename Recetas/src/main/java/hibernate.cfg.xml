@@ -27,8 +27,8 @@
      <mapping class="ObjetosDB.Pasos"/>
      <mapping class="ObjetosDB.Receta"/>
      <mapping class="ObjetosDB.Calificacion"/>
-     
-
+     <mapping class="ObjetosDB.Confirmacion"/>
+	 <mapping class="ObjetosDB.Historial"/>
   </session-factory>
  </hibernate-configuration>
  

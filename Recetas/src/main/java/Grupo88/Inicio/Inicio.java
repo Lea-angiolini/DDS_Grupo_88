@@ -35,7 +35,7 @@ public class Inicio extends MasterPage {
 			daoRecetas = new DAORecetas(getSessionBD());
 			ArrayList<Receta> recetas;
 			try {
-				recetas = new ArrayList<Receta>(daoRecetas.mejoresCalificadas());
+				recetas = new ArrayList<Receta>(getUsuarioActual().cargarHome(getSessionBD()));
 			} catch (Exception e) {
 				setResponsePage(new ErrorPage("ops parece que hubo un problema "+ e.getMessage()));
 				return;

@@ -183,12 +183,20 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 	}
 	
 	public List<Receta> mejoresCalificadas() throws Exception {
+		return recetas_in("select c.key.receta.idreceta from Calificacion c "+ 
+								"group by c.key.receta.idreceta order by sum(c.calificacion) desc", 10);
+	}
+	
+	public List<Receta> ultimasConfirmadas(Usuario user) throws Exception {
+		return recetas_in("select c.IdConfirmacion from Confirmacion c where c.user.username = '"+user.getUsername()+"' "+
+	                        "order by c.IdConfirmacion desc",10);
+	}
+	public List<Receta> recetas_in(String select, int cantidad) throws Exception {
 		
 		List<Receta> recetas;
 		try{
 			session.beginTransaction();
-			Query query = session.createQuery("from Receta r where r.idreceta in (select c.receta.idreceta from Calificacion c "+ 
-													"group by c.receta.idreceta order by sum(c.calificacion) desc)");
+			Query query = session.createQuery("from Receta r where r.idreceta in ("+select+")");
 			query.setMaxResults(10);
 			recetas = (List<Receta>) query.list();
 			session.getTransaction().commit();
@@ -251,7 +259,7 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 		try{
 		session.beginTransaction();
 		
-		Query query = session.createSQLQuery("INSERT INTO Grupo88.historial (fecha, idReceta, usuario) "+
+		Query query = session.createSQLQuery("INSERT INTO Grupo88.confirmadas(fecha, idReceta, usuario) "+
                                "VALUES (current_date(), :idReceta, '"+username+"');");
 		query.setParameter("idReceta", idReceta)/*.setParameter("user", username)*/;
 		query.executeUpdate();

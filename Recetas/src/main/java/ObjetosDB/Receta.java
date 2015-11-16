@@ -77,7 +77,7 @@ public class Receta implements Serializable{
 	@Column(name = "vecesCalificada")
 	private int vecesCalificada;*/
 	
-	@OneToMany(mappedBy="receta",cascade= CascadeType.ALL,fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="key.receta",cascade= CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<Calificacion> calificaciones;
 	
 	@Column(name = "foto")

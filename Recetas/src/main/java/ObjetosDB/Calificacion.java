@@ -3,6 +3,8 @@ package ObjetosDB;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,22 +23,10 @@ import javax.validation.constraints.NotNull;
 public class Calificacion implements Serializable{
 
 	private static final long serialVersionUID = -72583039618066790L;
+	
+	@EmbeddedId
+	private Key key;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "idCalificacion")
-	private int idCalificacion;
-	
-	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="userCalificador")
-	private Usuario userCalificador;
-	
-	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idReceta")
-	private Receta receta;
-	
 	@NotNull
 	@Min(value=1)
 	@Max(value=5)
@@ -45,6 +35,15 @@ public class Calificacion implements Serializable{
 	
 	public Calificacion() {	}
 	
+	
+	
+	public Calificacion(Usuario usercalificador, Receta receta, int calificacion) {
+		this.key = new Key(usercalificador,receta);
+		this.calificacion = calificacion;
+	}
+
+
+
 	public int getCalificacion() {
 		return calificacion;
 	}
@@ -53,27 +52,43 @@ public class Calificacion implements Serializable{
 		this.calificacion = calificacion;	
 	}
 
-	public int getIdCalificacion() {
-		return idCalificacion;
-	}
-
-	public void setIdCalificacion(int idCalificacion) {
-		this.idCalificacion = idCalificacion;
-	}
-
 	public Usuario getUserCalificador() {
-		return userCalificador;
+		return key.userCalificador;
 	}
 
 	public void setUserCalificador(Usuario userCalificador) {
-		this.userCalificador = userCalificador;
+		key.userCalificador = userCalificador;
 	}
 
 	public Receta getReceta() {
-		return receta;
+		return key.receta;
 	}
 
 	public void setReceta(Receta receta) {
-		this.receta = receta;
+		key.receta = receta;
+	}
+	
+	@Embeddable
+	protected class Key implements Serializable{
+
+		private static final long serialVersionUID = 114222063731836066L;
+
+		@NotNull
+		@ManyToOne(fetch=FetchType.LAZY)
+	    @JoinColumn(name="userCalificador")
+		public Usuario userCalificador;
+		
+		@NotNull
+		@ManyToOne(fetch=FetchType.LAZY)
+	    @JoinColumn(name="idReceta")
+		public Receta receta;
+
+		public Key(Usuario userCalificador, Receta receta) {
+			this.userCalificador = userCalificador;
+			this.receta = receta;
+		}
+		
+		public Key(){ }
+		
 	}
 }

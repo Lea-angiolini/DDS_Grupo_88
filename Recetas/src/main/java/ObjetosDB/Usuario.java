@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.swing.JOptionPane;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -335,9 +336,22 @@ public class Usuario implements Serializable{
 		return "";
 	}
 	
-	public ArrayList<Receta> cargarHome(){
-		// TODO
-		return new ArrayList<Receta>();
+	public ArrayList<Receta> cargarHome(Session session){
+		
+		DAORecetas daoRecetas = new DAORecetas(session);
+		List<Receta> recetas;
+		try {
+			recetas = daoRecetas.ultimasConfirmadas(this);
+			if(recetas.size() != 0){
+				return new ArrayList<Receta>(recetas);
+			}
+		recetas = daoRecetas.mejoresCalificadas();
+		return new ArrayList<Receta>(recetas);
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			return new ArrayList<Receta>();
+		}
 	}
 	
 	public ArrayList<Receta> filtrarRecetas(ArrayList<Receta> recetas){
