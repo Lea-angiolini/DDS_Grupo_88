@@ -69,7 +69,7 @@ public class Calificacion implements Serializable{
 	}
 	
 	@Embeddable
-	protected class Key implements Serializable{
+	public class Key implements Serializable{
 
 		private static final long serialVersionUID = 114222063731836066L;
 

@@ -34,6 +34,8 @@ public class MasterPage extends WebPage {
 		add(menuPanel = new MenuPanel("menu"));
 		add(footerPanel = new FooterPanel("footer"));	
 		headerPanel.setVisible(false);
+		if(user.getUsername() != "Invitado")
+			session.refresh(user);
 		
     }
 

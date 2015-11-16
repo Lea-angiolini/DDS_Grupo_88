@@ -42,9 +42,6 @@ import ObjetosDB.Usuario;
 
 public class DetalleDeReceta extends MasterPage {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7898970758684629351L;
 	// private TextField<String> txtUsuario;
 	// private PasswordTextField txtPassword;
@@ -53,7 +50,6 @@ public class DetalleDeReceta extends MasterPage {
 	private DAORecetas daoreceta;
 	public DetalleDeReceta(final PageParameters parameters){
 		super();
-		//getMenuPanel().setVisible(false);
 		
 		final Usuario user = getUsuarioActual();
 		final StringValue idReceta;
@@ -75,15 +71,10 @@ public class DetalleDeReceta extends MasterPage {
 				setResponsePage(new ErrorPage(e.getMessage()));
 				return;
 			}
-			
-		//	JOptionPane.showMessageDialog(null, receta.getDificultad().getDificultad());
-			//receta = Browser.cargarReceta(idReceta.toInt(), user);
-		//user.cargarGrupos();
 		
 		add(generar(user,receta));
 		
 		add(frmDetalleDeReceta = new FrmDetalleDeReceta("FrmDetalleDeReceta"));
-		//new CheckBoxMultipleChoice
 		frmDetalleDeReceta.add(new Label("Nombre",receta.getNombre()));
 		EmptyPanel botonCal;
 		if(receta.getCalificacion() == -1){
@@ -92,12 +83,13 @@ public class DetalleDeReceta extends MasterPage {
 			botonCal.setVisible(false);
 		}
 		else{
+			
+			
+			
 		frmDetalleDeReceta.add(new RadioChoice<Integer>("calificacion",new PropertyModel<Integer>(receta,"calificacion"),Arrays.asList(1,2,3,4,5)));
 		
 		frmDetalleDeReceta.add(new Button("confCalificacion"){
-			/**
-			 * 
-			 */
+
 			private static final long serialVersionUID = -6871206486314240822L;
 
 			@Override
@@ -179,6 +171,7 @@ public class DetalleDeReceta extends MasterPage {
 				final PageParameters pars = new PageParameters();
 				pars.add("idReceta",idReceta);
 				try {
+					
 					daoreceta.agregarAHistorial(idReceta.toInt(), user.getUsername());
 				} catch (StringValueConversionException e) {
 					e.printStackTrace();
