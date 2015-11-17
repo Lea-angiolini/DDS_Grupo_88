@@ -1,11 +1,111 @@
 body{
 	background: url("../img/background-pizza.jpg");
-	background-repeat: no-repeat;
-	background-position-y: -25px;
-	background-attachment: fixed;
-	background-size: 100%;
+	background-repeat:no-repeat;
+	background-position:center;
+    background-attachment:  fixed;
+	background-size:100%;
 }
 
+#masterContent{
+	padding-left: 0px;
+	
+}
+@media (min-width: 769px){
+
+	body{
+	background: url("../img/background-pizza.jpg");
+	position: absolute;	 
+background-size:100%;
+background-repeat: inherit;
+
+}
+#leftMenu {
+	position: static;
+	margin-left: 200px;
+	 position: fixed;
+}
+
+
+}
+@media(min-width: 1000px) and (max-width: 1300px){
+		#menu-inicio{
+width: 600px;
+}
+}
+@media(min-width: 1050px) and (max-width: 1060px){
+		div.row{
+width: 300px;
+height: 150px;
+}
+}
+@media(min-width: 1050px) and (max-width: 1060px){
+		div.row{
+width: 300px;
+height: 150px;
+}
+}
+@media(min-width: 700px) and (max-width: 1040px){
+		div.row{
+width: 300px;
+height: 150px;
+}
+#menu-inicio{
+	width: 400px;
+}
+}
+@media (min-width: 481px) and (max-width: 768px){
+	body{
+	background: url("../img/background-pizza.jpg");
+	position: absolute
+background-repeat: no-repeat;
+
+}
+#leftMenu {
+	position: static;
+	margin-left: 200px;
+	 position: fixed;
+}
+	#menu-inicio{
+visibility:hidden;
+}
+
+}
+
+@media (min-width: 321px) and (max-width: 480px){
+
+	body{
+	background: url("../img/background-pizza.jpg");
+	position: absolute;	
+background-repeat: no-repeat;
+}
+
+#leftMenu {
+	position: static;
+	margin-left: 200px;
+	 position: fixed;
+}
+	#menu-inicio{
+	visibility: hidden;
+}
+
+}
+
+
+@media (max-width: 320px){
+
+	body{
+	background: url("../img/background-pizza.jpg");
+	
+background-repeat: no-repeat;
+}
+#leftMenu {
+	position: static;
+	 position: fixed;
+}
+	#menu-inicio{
+width: 600px
+}
+}
 
 .panel-info{
 	background: rgba(255, 255, 255, 0.7); 
@@ -35,20 +135,6 @@ body{
     padding-left: 250px;
 }
 
-#leftMenu {
-    z-index: 1000;
-    position: fixed;
-    left: 250px;
-    width: 0;
-    height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    background: transparent;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
 
 
 #masterBody.toggled #leftMenu{
@@ -618,4 +704,3 @@ body{
 .labelpunta {
      float: left!important; margin: 2px 10px 0 auto!important; cursor: pointer!important;
 }
-
