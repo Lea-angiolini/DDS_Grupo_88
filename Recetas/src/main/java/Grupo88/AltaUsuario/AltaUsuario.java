@@ -43,18 +43,10 @@ import ObjetosDB.Usuario;
 
 public class AltaUsuario extends MasterPage {	
 	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
 	private FrmAltaUsuario frmAltaUsuario;
-	private DAOComplexiones daoComplexiones = new DAOComplexiones(getSessionBD());
-	private DAOCondicionesPreexistentes daoCondicionesPreexistentes = new DAOCondicionesPreexistentes(getSessionBD());
-	private DAODietas daoDietas = new DAODietas(getSessionBD());
-	private DAORutinas daoRutinas = new DAORutinas(getSessionBD());
-	private DAOPreferenciasAlimenticias daoPreferenciasAlimenticias = new DAOPreferenciasAlimenticias(getSessionBD());
-	private DAOUsuarios daoUsuarios;
 	
 	public AltaUsuario(){
 		super();
@@ -65,12 +57,10 @@ public class AltaUsuario extends MasterPage {
 	
 	private class FrmAltaUsuario extends Form<Object> {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
-		private Usuario usuario = new Usuario();
 		private final MarkupContainer error;
+		private DAOUsuarios daoUsuarios;
+		private PanelCampos panelCampos;
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public FrmAltaUsuario(String id) {
 			super(id);		
@@ -82,31 +72,7 @@ public class AltaUsuario extends MasterPage {
 			error.add(new FeedbackPanel("feedback"));
 			error.setOutputMarkupId(true);
 			
-			PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
-			PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of("")); 
-			
-			try {
-	
-				add(new TextField<String>("username", new PropertyModel<String>(usuario, "username")));
-				add(password);
-				add(repPassword);
-				add(new EqualPasswordInputValidator(password, repPassword));
-				add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
-				add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
-				add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));{};
-				add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
-				add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
-				add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
-				add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), daoComplexiones.findAll(), new ChoiceRenderer<Complexiones>("complexion","idComplexion")));		
-				add(new CheckBoxMultipleChoice<PreferenciasAlimenticias>("preferencia",new PropertyModel(usuario,"preferencias"), new ArrayList(daoPreferenciasAlimenticias.findAll()), new ChoiceRenderer("preferencia","idPreferencia")));
-				add(new CheckBoxMultipleChoice<CondicionesPreexistentes>("condPreex",new PropertyModel(usuario,"condiciones"), new ArrayList(daoCondicionesPreexistentes.findAll()), new ChoiceRenderer("condPreex","idCondPreex")));
-				add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),daoRutinas.findAll(), new ChoiceRenderer<Object>("rutina","idRutina")));
-				add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), daoDietas.findAll(), new ChoiceRenderer<Object>("dieta","idDieta")));
-		    } catch (DBExeption e) {
-				e.printStackTrace();
-				setResponsePage(new ErrorPage("error cargar items " + e.getMessage()));
-				return;
-			}
+			add(panelCampos = new PanelCampos("campos", getSessionBD()));
 		   		    
 		    add(new Link<Object>("cancelar"){
 				private static final long serialVersionUID = 8895339676060670334L;
@@ -128,7 +94,7 @@ public class AltaUsuario extends MasterPage {
 			daoUsuarios = new DAOUsuarios(getSessionBD());
 			try {
 				try{
-				daoUsuarios.save(usuario);
+				daoUsuarios.save(panelCampos.getUsuario());
 				setResponsePage(new ErrorPage("Ha sido registrado satisfactoriamente \n Ya puede iniciar sesion"));
 				}
 				catch(javax.validation.ConstraintViolationException cve){
