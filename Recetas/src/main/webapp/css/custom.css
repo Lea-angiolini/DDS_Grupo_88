@@ -1,706 +1,732 @@
-body{
+body {
 	background: url("../img/background-pizza.jpg");
-	background-repeat:no-repeat;
-	background-position:center;
-    background-attachment:  fixed;
-	background-size:100%;
-}
-
-#masterContent{
-	padding-left: 0px;
-	
-}
-@media (min-width: 769px){
-
-	body{
-	background: url("../img/background-pizza.jpg");
-	position: absolute;	 
-background-size:100%;
-background-repeat: inherit;
-
-}
-#leftMenu {
-	position: static;
-	margin-left: 200px;
-	 position: fixed;
-}
-
-
-}
-@media(min-width: 1000px) and (max-width: 1300px){
-		#menu-inicio{
-width: 600px;
-}
-}
-@media(min-width: 1050px) and (max-width: 1060px){
-		div.row{
-width: 300px;
-height: 150px;
-}
-}
-@media(min-width: 1050px) and (max-width: 1060px){
-		div.row{
-width: 300px;
-height: 150px;
-}
-}
-@media(min-width: 700px) and (max-width: 1040px){
-		div.row{
-width: 300px;
-height: 150px;
-}
-#menu-inicio{
-	width: 400px;
-}
-}
-@media (min-width: 481px) and (max-width: 768px){
-	body{
-	background: url("../img/background-pizza.jpg");
-	position: absolute
-background-repeat: no-repeat;
-
-}
-#leftMenu {
-	position: static;
-	margin-left: 200px;
-	 position: fixed;
-}
-	#menu-inicio{
-visibility:hidden;
-}
-
-}
-
-@media (min-width: 321px) and (max-width: 480px){
-
-	body{
-	background: url("../img/background-pizza.jpg");
-	position: absolute;	
-background-repeat: no-repeat;
-}
-
-#leftMenu {
-	position: static;
-	margin-left: 200px;
-	 position: fixed;
-}
-	#menu-inicio{
-	visibility: hidden;
-}
-
-}
-
-
-@media (max-width: 320px){
-
-	body{
-	background: url("../img/background-pizza.jpg");
-	
-background-repeat: no-repeat;
-}
-#leftMenu {
-	position: static;
-	 position: fixed;
-}
-	#menu-inicio{
-width: 600px
-}
-}
-
-.panel-info{
-	background: rgba(255, 255, 255, 0.7); 
-}
-
-.menu-button{
-	width: 100%;
-	height: 100px;
-	font-size: 18px;
-	
-}
-
-.menu-button .glyphicon{
-	font-size: 30px;
-	display:block;
-}
-
-#masterBody {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-
-#masterBody.toggled {
-    padding-left: 250px;
-}
-
-
-
-#masterBody.toggled #leftMenu{
-    width: 250px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: 100%;
 }
 
 #masterContent {
-    width: 100%;
-    position: absolute;
-    padding: 15px;
+	padding-left: 0px;
 }
 
-
-
-#masterBody.toggled #masterContent{
-    position: absolute;
-    margin-right: -250px;
+@media ( min-width : 769px) {
+	body {
+		background: url("../img/background-pizza.jpg");
+		background-size: 100%;
+		background-repeat: inherit;
+	}
+	#leftMenu {
+		position: static;
+		margin-left: 200px;
+		position: fixed;
+	}
+	#menu-inicio {
+		
+		margin-left: 550px;
+	}
+	
 }
 
-
-@media(min-width:768px) {
-    #masterBody {
-        padding-left: 250px;
-    }
-
-    #masterBody.toggled {
-        padding-left: 0;
-    }
-
-    #leftMenu {
-        width: 250px;
-    }
-
-    #masterBody.toggled #leftMenu {
-        width: 0;
-    }
-
-    #masterContent {
-        padding: 20px;
-        position: relative;
-    }
-
-    #masterBody.toggled #masterContent {
-        position: relative;
-        margin-right: 0;
-    }
+@media ( min-width : 1000px) and (max-width: 1300px) {
+	#menu-inicio {
+		width: 600px;
+		margin-left: 550px;
+	}
+	#menu-inicio {
+		
+		margin-left: 550px;
+	}
+	
 }
-<!-- text agregado -->
-#recetas {
-    margin: 0 auto 0 auto;
-    width: 1185px;
-    overflow: hidden;
+
+@media ( min-width : 1050px) and (max-width: 1060px) {
+	div.row {
+		width: 300px;
+		height: 150px;
+	}
+	#menu-inicio {
+		
+		margin-left: 550px;
+	}
+	
+}
+
+@media ( min-width : 1050px) and (max-width: 1060px) {
+	div.row {
+		width: 300px;
+		height: 150px;
+	}
+	#menu-inicio {
+		
+		margin-left: 550px;
+	}
+	
+}
+
+@media ( min-width : 700px) and (max-width: 1040px) {
+	div.row {
+		width: 300px;
+		height: 150px;
+	}
+	#menu-inicio {
+		width: 400px;
+		margin-left: 250px;
+	}
+	
+}
+
+@media ( min-width : 481px) and (max-width: 768px) {
+	body {
+		background: url("../img/background-pizza.jpg");
+		position: absolute background-repeat: no-repeat;
+	}
+	#leftMenu {
+		position: static;
+		margin-left: 20px;
+		position: fixed;
+	}
+	 div #leftMenu{
+	display: none;
+	} 
+
+}
+
+@media ( min-width : 321px) and (max-width: 480px) {
+	body {
+		background: url("../img/background-pizza.jpg");
+		position: absolute;
+		background-repeat: no-repeat;
+	}
+	#leftMenu {
+		position: static;
+		margin-left: 200px;
+		position: fixed;
+	}
+	#altaUsuario {
+		margin-top: 450px;
+		margin-left: 0px;
+		position: absolute;
+		z-index: -1;
+	}
+	div#bodyPanel.panel-body{
+		display: none;
+	}
+}
+
+@media ( max-width : 320px) {
+	body {
+		background: url("../img/background-pizza.jpg");
+		background-repeat: no-repeat;
+	}
+	#leftMenu {
+		position: static;
+		position: fixed;
+	}
+	#menu-inicio {
+		width: 600px
+	}
+	div#bodyPanel.panel-body{
+		display: none;
+	}
+}
+
+.panel-info {
+	background: rgba(255, 255, 255, 0.7);
+}
+
+.menu-button {
+	width: 100%;
+	height: 100px;
+	font-size: 18px;
+}
+
+.menu-button .glyphicon {
+	font-size: 30px;
+	display: block;
+}
+
+#masterBody {
+	padding-left: 0;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+#masterBody.toggled {
+	/*padding-left: 250px;
+	*/
+}
+
+#masterBody.toggled #leftMenu {
+	width: 250px;
+}
+
+#masterContent {
+	width: 100%;
+	position: absolute;
+	padding: 15px;
+}
+
+#masterBody.toggled #masterContent {
+	position: absolute;
+	margin-right: -250px;
+}
+
+@media ( min-width :768px) {
+	#masterBody {
+		/*padding-left: 250px;
+		*/
+	}
+	#masterBody.toggled {
+		padding-left: 0;
+	}
+	#leftMenu {
+		width: 250px;
+	}
+	#masterBody.toggled #leftMenu {
+		width: 0;
+	}
+	#masterContent {
+		padding: 20px;
+		position: absolute;
+		z-index: -1;
+	}
+	#masterBody.toggled #masterContent {
+		position: relative;
+		margin-right: 0;
+	}
+}
+
+<!--
+text agregado -->#recetas {
+	margin: 0 auto 0 auto;
+	width: 1185px;
+	overflow: hidden;
 }
 
 #recetas #central {
-    margin: 15px auto 0 auto;
-    width: 960px;
-    overflow: hidden;
+	margin: 15px auto 0 auto;
+	width: 960px;
+	overflow: hidden;
 }
 
-
 #recetas #central #panelpub {
-    margin: 10px auto 5px auto;
-    width: 958px;
-    height: 55px;
-    float: left;
-    overflow: hidden;
-    border-bottom: 1px solid #DDDDDD;
-    background: url(../funciones/imagenes.func.php?imagen=publicidad.jpg&alto=958&ancho=958) no-repeat 0px -450px;
+	margin: 10px auto 5px auto;
+	width: 958px;
+	height: 55px;
+	float: left;
+	overflow: hidden;
+	border-bottom: 1px solid #DDDDDD;
+	background:
+		url(../funciones/imagenes.func.php?imagen=publicidad.jpg&alto=958&ancho=958)
+		no-repeat 0px -450px;
 }
 
 #recetas #central #panelpub #botonpub {
-    margin: 25px 5px auto;
-    width: 50px;
-    height: 23px;
-    float: right;
-    font-size: 13px;
-    color: #CCC;
-    background-color: #555;
-    overflow: hidden;
-    cursor: pointer;
+	margin: 25px 5px auto;
+	width: 50px;
+	height: 23px;
+	float: right;
+	font-size: 13px;
+	color: #CCC;
+	background-color: #555;
+	overflow: hidden;
+	cursor: pointer;
 }
 
-
 #recetas #central #titulo {
-    margin: 0 auto 0 auto;
-    width: 595px;
-    height: 59px;
-    float: left;
-    overflow: hidden;
+	margin: 0 auto 0 auto;
+	width: 595px;
+	height: 59px;
+	float: left;
+	overflow: hidden;
 }
 
 #recetas #central #titulo img {
-    margin: 0 auto 0 auto;
-    float: right;
+	margin: 0 auto 0 auto;
+	float: right;
 }
 
 #recetas #central #titulo #texto_tit {
-    margin: 11px auto 0 auto;
-    width: auto;
-    height: auto;
-    float: left;
-    overflow: hidden;
-    font-size: 34px;
-    color: #EF511D;
-    font-weight: normal;
-    font-style: italic;
+	margin: 11px auto 0 auto;
+	width: auto;
+	height: auto;
+	float: left;
+	overflow: hidden;
+	font-size: 34px;
+	color: #EF511D;
+	font-weight: normal;
+	font-style: italic;
 }
 
-
 #recetas #central #busca {
-    margin: 11px auto 0 25px;
-    width: 340px;
-    height: 59px;
-    float: left;
-    overflow: hidden;
-    background: url(../imagenes/buscador-interno_recetas.png) no-repeat 5px 0px ; 
+	margin: 11px auto 0 25px;
+	width: 340px;
+	height: 59px;
+	float: left;
+	overflow: hidden;
+	background: url(../imagenes/buscador-interno_recetas.png) no-repeat 5px
+		0px;
 }
 
 #recetas #central #seccionado {
-    margin: 0 auto 0 2px;
-    width: 100%;
-    height: 25px;
-    color: #555;
-    float: left;
-    font-size: 13px;
-    overflow: hidden;
-    font-style: italic;
+	margin: 0 auto 0 2px;
+	width: 100%;
+	height: 25px;
+	color: #555;
+	float: left;
+	font-size: 13px;
+	overflow: hidden;
+	font-style: italic;
 }
 
-#recetas #central #seccionado a{
-    color: #555;
-    text-decoration: none;
+#recetas #central #seccionado a {
+	color: #555;
+	text-decoration: none;
 }
 
-#recetas #central #seccionado a:hover{
-    text-decoration: underline;
+#recetas #central #seccionado a:hover {
+	text-decoration: underline;
 }
 
 #recetas #central #busca input[type=text] {
-    margin: 7px auto 0 80px;
-    width: 240px;
-    height: 23px;
-    float: left;
-    border: 1px solid #555;
-    background-color: #FFF;
-    color: #555;
+	margin: 7px auto 0 80px;
+	width: 240px;
+	height: 23px;
+	float: left;
+	border: 1px solid #555;
+	background-color: #FFF;
+	color: #555;
 }
 
 #recetas #central #paneliz {
-    margin: 15px auto 0 auto;
-    width: 590px;
-    float: left;
-    overflow: hidden;
+	margin: 15px auto 0 auto;
+	width: 590px;
+	float: left;
+	overflow: hidden;
 }
 
 #recetas #central #titseccion {
-    margin: 0px auto 0 auto;
-    width: 100%;
-    float: left;
-    color: #FF111D;
-    overflow: hidden;
-    font-size: 22px;
-    font-style: italic;
+	margin: 0px auto 0 auto;
+	width: 100%;
+	float: left;
+	color: #FF111D;
+	overflow: hidden;
+	font-size: 22px;
+	font-style: italic;
 }
 
 #recetas #central #lineaseccion {
-    margin: 0px auto 0 auto;
-    width: 100%;
-    height: 3px;
-    float: left;
-    border-top: 1px solid #DDD;
+	margin: 0px auto 0 auto;
+	width: 100%;
+	height: 3px;
+	float: left;
+	border-top: 1px solid #DDD;
 }
-
 
 #recetas #central #recheta {
-    margin: 0px auto 0 auto;
-    width: 570px;
-    float: left;
-    overflow: hidden;
+	margin: 0px auto 0 auto;
+	width: 570px;
+	float: left;
+	overflow: hidden;
 }
 
-#recetas #central #recheta p{
-    font-size: 14px;
+#recetas #central #recheta p {
+	font-size: 14px;
 }
 
 #recetas #central #recheta #titureceta {
-    margin: 5px auto 5px 0px;
-    width: 100%;
-    float: left;
-    color: #637CBA;
-    font-size: 20px;
-    overflow: hidden;
+	margin: 5px auto 5px 0px;
+	width: 100%;
+	float: left;
+	color: #637CBA;
+	font-size: 20px;
+	overflow: hidden;
 }
 
 #recetas #central #recheta #imagenreceta {
-    margin: 5px 0 10px 0px;
-    width: 265px;
-    height: 195px;
-    float: left;
-    overflow: hidden;
+	margin: 5px 0 10px 0px;
+	width: 265px;
+	height: 195px;
+	float: left;
+	overflow: hidden;
 }
 
 #recetas #central #recheta #ingrerece {
-    width: 285px;
-    overflow: hidden;
-    float: left;
-    margin: 3px 0px 0 auto;
+	width: 285px;
+	overflow: hidden;
+	float: left;
+	margin: 3px 0px 0 auto;
 }
 
-#recetas #central #recheta #toptextoreceta{
-    margin: 0px 0px 0 auto;
-    width: 271px;
-    height: 35px;
-    float: left;
-    overflow: hidden;
-    color: #3D3D3D;
-    background: #fff7ae url(../imagenes/home_rectas_ingredientes.png) no-repeat;
+#recetas #central #recheta #toptextoreceta {
+	margin: 0px 0px 0 auto;
+	width: 271px;
+	height: 35px;
+	float: left;
+	overflow: hidden;
+	color: #3D3D3D;
+	background: #fff7ae url(../imagenes/home_rectas_ingredientes.png)
+		no-repeat;
 }
 
-#recetas #central #recheta #centextoreceta{
-    margin: -12px 0px 10px auto;
-    width: 291px;
-    float: left;
-    overflow: hidden;
-    color: #3D3D3D;
-    background: #fff7ae;
+#recetas #central #recheta #centextoreceta {
+	margin: -12px 0px 10px auto;
+	width: 291px;
+	float: left;
+	overflow: hidden;
+	color: #3D3D3D;
+	background: #fff7ae;
 }
 
-#recetas #central #recheta #centextoreceta #ingrediente{
-    margin: 6px auto 6px 10px;
-    width: 251px;
-    height: 16px;
-    float: left;
-    overflow: hidden;
-    color: #3D3D3D;
-    font-size: 12px;
+#recetas #central #recheta #centextoreceta #ingrediente {
+	margin: 6px auto 6px 10px;
+	width: 251px;
+	height: 16px;
+	float: left;
+	overflow: hidden;
+	color: #3D3D3D;
+	font-size: 12px;
 }
 
-#recetas #central #recheta #centextoreceta #ingrediente #punto{
-    margin: 8px 5px 0 5px;
-    width: 3px;
-    height: 17px;
-    float: left;
-    overflow: hidden;
-    background: url(../imagenes/home_sin-frame_39.png) no-repeat;
+#recetas #central #recheta #centextoreceta #ingrediente #punto {
+	margin: 8px 5px 0 5px;
+	width: 3px;
+	height: 17px;
+	float: left;
+	overflow: hidden;
+	background: url(../imagenes/home_sin-frame_39.png) no-repeat;
 }
 
-#recetas #central #recheta #centextoreceta #lineasepara{
-    margin: 0px auto 0 10px;
-    width: 261px;
-    height: 2px;
-    float: left;
-    overflow: hidden;
-    color: #3D3D3D;
-    font-size: 15px;
-    background: url(../imagenes/recetas_linea-punteada.png) no-repeat;
+#recetas #central #recheta #centextoreceta #lineasepara {
+	margin: 0px auto 0 10px;
+	width: 261px;
+	height: 2px;
+	float: left;
+	overflow: hidden;
+	color: #3D3D3D;
+	font-size: 15px;
+	background: url(../imagenes/recetas_linea-punteada.png) no-repeat;
 }
 
-#recetas #central #recheta #copetereceta{
-    margin: 3px auto 0 auto;
-    width: 550px;
-    height: 50px;
-    float: left;
-    overflow: hidden;
-    font-size: 12px;
-    color: #3D3D3D;
+#recetas #central #recheta #copetereceta {
+	margin: 3px auto 0 auto;
+	width: 550px;
+	height: 50px;
+	float: left;
+	overflow: hidden;
+	font-size: 12px;
+	color: #3D3D3D;
 }
 
 #recetas #central #adsense {
-    margin: 0 44px 0 0px;
-    width: 300px;
-    float: right;
-    height: 260px;
-    overflow: hidden;
+	margin: 0 44px 0 0px;
+	width: 300px;
+	float: right;
+	height: 260px;
+	overflow: hidden;
 }
 
 #recetas #central #notaz {
-    margin: 0 0px 0 5px;
-    width: 385px;
-    float: left;
-    height: 357px;
-    overflow: hidden;
-    background: url(../imagenes/frame-interno-video-01.png) no-repeat -5px 0px;
+	margin: 0 0px 0 5px;
+	width: 385px;
+	float: left;
+	height: 357px;
+	overflow: hidden;
+	background: url(../imagenes/frame-interno-video-01.png) no-repeat -5px
+		0px;
 }
 
 #recetas #central #notaz #titulonotaz {
-    margin: 30px auto 10px 35px;
-    width: 100%;
-    float: left;
-    height: 25px;
-    overflow: hidden;
-    color: #EF511D;
-    font-style: italic;
-    font-size: 27px;
+	margin: 30px auto 10px 35px;
+	width: 100%;
+	float: left;
+	height: 25px;
+	overflow: hidden;
+	color: #EF511D;
+	font-style: italic;
+	font-size: 27px;
 }
 
 #recetas #central #paginador_videos {
-    margin: 0px 35px 0 0px;
-    width: 35%;
-    float: right;
-    height: 25px;
-    overflow: hidden;
-    color: #888;
-    font-style: italic;
-    font-size: 16px;
-    text-align: right;
+	margin: 0px 35px 0 0px;
+	width: 35%;
+	float: right;
+	height: 25px;
+	overflow: hidden;
+	color: #888;
+	font-style: italic;
+	font-size: 16px;
+	text-align: right;
 }
 
-#recetas #central #paginador_videos a{
-    margin: 0 auto 0 0px;
-    color: #888;
-    font-style: italic;
-    font-size: 16px;
-    text-decoration: none;
+#recetas #central #paginador_videos a {
+	margin: 0 auto 0 0px;
+	color: #888;
+	font-style: italic;
+	font-size: 16px;
+	text-decoration: none;
 }
 
-#recetas #central #paginador_videos a:hover{
-    text-decoration: underline;
+#recetas #central #paginador_videos a:hover {
+	text-decoration: underline;
 }
 
 #recetas #central #lineaseparecetas {
-    margin: 0px auto 10px auto;
-    width: 100%;
-    height: 17px;
-    float: left;
-    background: url(../imagenes/home_linea-zig-zag.png) repeat-x;
+	margin: 0px auto 10px auto;
+	width: 100%;
+	height: 17px;
+	float: left;
+	background: url(../imagenes/home_linea-zig-zag.png) repeat-x;
 }
 
 #recetas #central #links {
-    margin: 0px auto 10px auto;
-    width: 60%;
-    float: left;
+	margin: 0px auto 10px auto;
+	width: 60%;
+	float: left;
 }
 
 #recetas #central #links #face {
-    margin: 0px auto 0px auto;
-    width: 75px;
-    height: 25px;
-    float: left;
+	margin: 0px auto 0px auto;
+	width: 75px;
+	height: 25px;
+	float: left;
 }
 
 #recetas #central #links #twit {
-    margin: 0px auto 0px auto;
-    width: 65px;
-    height: 25px;
-    float: left;
+	margin: 0px auto 0px auto;
+	width: 65px;
+	height: 25px;
+	float: left;
 }
 
-#recetas #central #links #puntajerece{
-    margin: 0px 10px 3px 155px;
-    width: 260px;   
-    height: 20px;
-    float: left;
-    font-size: 13px;
-    overflow: hidden;
+#recetas #central #links #puntajerece {
+	margin: 0px 10px 3px 155px;
+	width: 260px;
+	height: 20px;
+	float: left;
+	font-size: 13px;
+	overflow: hidden;
 }
 
-#recetas #central #links #puntajerece label{
-    text-decoration: none;
-    color: #637CBA;
+#recetas #central #links #puntajerece label {
+	text-decoration: none;
+	color: #637CBA;
 }
 
-#recetas #central #links #puntajerece label:hover{
-    text-decoration: underline;
+#recetas #central #links #puntajerece label:hover {
+	text-decoration: underline;
 }
 
-#recetas #central #links #puntajerece #sartensel{
-    margin: 0 5px 0 auto;
-    width: 33px;
-    height: 17px;
-    float: left;
-    overflow: hidden;
-    background: url(../imagenes/recetas_sarten-llena.png) no-repeat;
+#recetas #central #links #puntajerece #sartensel {
+	margin: 0 5px 0 auto;
+	width: 33px;
+	height: 17px;
+	float: left;
+	overflow: hidden;
+	background: url(../imagenes/recetas_sarten-llena.png) no-repeat;
 }
 
-#recetas #central #links #puntajerece #sartennosel{
-    margin: 0 5px 0 auto;
-    width: 33px;
-    height: 17px;
-    float: left;
-    overflow: hidden;
-    background: url(../imagenes/recetas_sarten-vacia.png) no-repeat;
+#recetas #central #links #puntajerece #sartennosel {
+	margin: 0 5px 0 auto;
+	width: 33px;
+	height: 17px;
+	float: left;
+	overflow: hidden;
+	background: url(../imagenes/recetas_sarten-vacia.png) no-repeat;
 }
 
-#recetas #central #links #puntear{
-    margin: 0px 20px 3px 155px;
-    width: 200px;   
-    height: 20px;
-    float: right;
-    display: none;
-    font-size: 13px;
-    overflow: hidden;
-    color: #637CBA;
+#recetas #central #links #puntear {
+	margin: 0px 20px 3px 155px;
+	width: 200px;
+	height: 20px;
+	float: right;
+	display: none;
+	font-size: 13px;
+	overflow: hidden;
+	color: #637CBA;
 }
 
-#recetas #central #links #puntear #sartensel{
-    margin: 0 5px 0 auto;
-    width: 33px;
-    height: 17px;
-    float: left;
-    overflow: hidden;
-    background: url(../imagenes/recetas_sarten-llena.png) no-repeat;
+#recetas #central #links #puntear #sartensel {
+	margin: 0 5px 0 auto;
+	width: 33px;
+	height: 17px;
+	float: left;
+	overflow: hidden;
+	background: url(../imagenes/recetas_sarten-llena.png) no-repeat;
 }
 
-#recetas #central #links #puntear #sartennosel{
-    margin: 0 5px 0 auto;
-    width: 33px;
-    height: 17px;
-    cursor: pointer;
-    float: left;
-    overflow: hidden;
-    background: url(../imagenes/recetas_sarten-vacia.png) no-repeat;
+#recetas #central #links #puntear #sartennosel {
+	margin: 0 5px 0 auto;
+	width: 33px;
+	height: 17px;
+	cursor: pointer;
+	float: left;
+	overflow: hidden;
+	background: url(../imagenes/recetas_sarten-vacia.png) no-repeat;
 }
 
 #recetas #central #paneliz #titulorelacionadas {
-    margin: 0 auto 0 auto;
-    width: 100%;
-    float: left;
-    height: 25px;
-    overflow: hidden;
-    color: #EF511D;
-    font-style: italic;
-    font-size: 20px;
+	margin: 0 auto 0 auto;
+	width: 100%;
+	float: left;
+	height: 25px;
+	overflow: hidden;
+	color: #EF511D;
+	font-style: italic;
+	font-size: 20px;
 }
 
 #recetas #central #paneliz #linearelacionadas {
-    margin: 0 auto 0 auto;
-    width: 100%;
-    float: left;
-    height: 3px;
-    overflow: hidden;
-    border-top: 1px solid #DDD;
+	margin: 0 auto 0 auto;
+	width: 100%;
+	float: left;
+	height: 3px;
+	overflow: hidden;
+	border-top: 1px solid #DDD;
 }
 
 #recetas #central #paneliz #relacionadas {
-    margin: 0px auto 0 auto;
-    width: 100%;
-    float: left;
-    overflow: hidden;
+	margin: 0px auto 0 auto;
+	width: 100%;
+	float: left;
+	overflow: hidden;
 }
 
-#recetas #central #paneliz #relacionadas ul{
-    margin: 0px auto 0 auto;
-    width: 620px;
-    float: left;
-    padding: 0;
-    list-style: none;
-    overflow: hidden;
+#recetas #central #paneliz #relacionadas ul {
+	margin: 0px auto 0 auto;
+	width: 620px;
+	float: left;
+	padding: 0;
+	list-style: none;
+	overflow: hidden;
 }
 
-#recetas #central #paneliz #relacionadas ul li{
-    margin: 10px 18px 10px 0px;
-    width: 170px;
-    height: 220px;
-    padding: 5px;
-    list-style: none;
-    float: left;
-    overflow: hidden;
-    border: 2px solid #e5e5e5;
+#recetas #central #paneliz #relacionadas ul li {
+	margin: 10px 18px 10px 0px;
+	width: 170px;
+	height: 220px;
+	padding: 5px;
+	list-style: none;
+	float: left;
+	overflow: hidden;
+	border: 2px solid #e5e5e5;
 }
 
-#recetas #central #paneliz #relacionadas ul li #titreceta{
-    margin: 5px auto 0 5px;
-    width: 170px;
-    height: 20px;
-    float: left;
-    overflow: hidden;
+#recetas #central #paneliz #relacionadas ul li #titreceta {
+	margin: 5px auto 0 5px;
+	width: 170px;
+	height: 20px;
+	float: left;
+	overflow: hidden;
 }
 
-#recetas #central #paneliz #relacionadas ul li #titreceta a{
-    color: #637CBA;
-    font-size: 16px;
-    font-style: italic;
-    text-decoration: none;
+#recetas #central #paneliz #relacionadas ul li #titreceta a {
+	color: #637CBA;
+	font-size: 16px;
+	font-style: italic;
+	text-decoration: none;
 }
 
-#recetas #central #paneliz #relacionadas ul li #titreceta a:hover{
-    text-decoration: underline;
+#recetas #central #paneliz #relacionadas ul li #titreceta a:hover {
+	text-decoration: underline;
 }
 
-#recetas #central #paneliz #relacionadas ul li #fotoreceta{
-    margin: 0px auto 0 0px;
-    width: 170px;
-    height: 145px;
-    float: left;
-    overflow: hidden;
+#recetas #central #paneliz #relacionadas ul li #fotoreceta {
+	margin: 0px auto 0 0px;
+	width: 170px;
+	height: 145px;
+	float: left;
+	overflow: hidden;
 }
 
-#recetas #central #paneliz #relacionadas ul li #fotoreceta #lafoto{
-    margin: 0px auto 0 0px;
-    width: 170px;
-    height: 145px;
-    float: left;
-    overflow: hidden;
+#recetas #central #paneliz #relacionadas ul li #fotoreceta #lafoto {
+	margin: 0px auto 0 0px;
+	width: 170px;
+	height: 145px;
+	float: left;
+	overflow: hidden;
 }
 
-#recetas #central #paneliz #relacionadas ul li #textorelacionadas{
-    margin: 0px auto 0 3px;
-    width: 162px;
-    height: 45px;
-    float: left;
-    overflow: hidden;
-    color: #717171;
-    font-size: 12px;
+#recetas #central #paneliz #relacionadas ul li #textorelacionadas {
+	margin: 0px auto 0 3px;
+	width: 162px;
+	height: 45px;
+	float: left;
+	overflow: hidden;
+	color: #717171;
+	font-size: 12px;
 }
-
-
 
 #recetas #central #panelde {
-    margin: -5px auto 0 5px;
-    width: 350px;
-    float: right;
-    overflow: hidden;
+	margin: -5px auto 0 5px;
+	width: 350px;
+	float: right;
+	overflow: hidden;
 }
-
 
 .panelpub {
-    background: none!important;
-    width: 731px!important; 
-    margin-left: 90px!important;
-    height: 100px!important;
+	background: none !important;
+	width: 731px !important;
+	margin-left: 90px !important;
+	height: 100px !important;
 }
 
-.seccionado1{
-    font-style: italic!important;
-    margin: 3px auto 0 auto!important;
+.seccionado1 {
+	font-style: italic !important;
+	margin: 3px auto 0 auto !important;
 }
-.seccionado2{
-    font-style: italic!important;margin: -25px auto -10px auto!important; text-align: right!important; width: 585px!important;
+
+.seccionado2 {
+	font-style: italic !important;
+	margin: -25px auto -10px auto !important;
+	text-align: right !important;
+	width: 585px !important;
 }
-.seccionado3{
-    font-style: italic!important;margin: -5px auto 0 auto!important;
+
+.seccionado3 {
+	font-style: italic !important;
+	margin: -5px auto 0 auto !important;
 }
 
 .paneliz {
-    margin: 0 auto 0 auto!important;
+	margin: 0 auto 0 auto !important;
 }
 
 .paginador {
-    overflow: visible!important; height: 50px!important;
+	overflow: visible !important;
+	height: 50px !important;
 }
 
 .linkseccionado2 {
-    color: #637CBA!important;
+	color: #637CBA !important;
 }
 
 .imagenreceta {
-    float: left!important;border: 5px solid #DDD!important
-}
-.imagenreceta img{
-    margin: 0px 0 0 0px!important;
+	float: left !important;
+	border: 5px solid #DDD !important
 }
 
-.ingrerece{
-    float: right!important;
+.imagenreceta img {
+	margin: 0px 0 0 0px !important;
+}
+
+.ingrerece {
+	float: right !important;
 }
 
 .parra {
-    font-size: 12px!important;
+	font-size: 12px !important;
 }
 
 .ingrediente {
-     height: 3px!important;
+	height: 3px !important;
 }
 
 .labelpunta {
-     float: left!important; margin: 2px 10px 0 auto!important; cursor: pointer!important;
+	float: left !important;
+	margin: 2px 10px 0 auto !important;
+	cursor: pointer !important;
 }
