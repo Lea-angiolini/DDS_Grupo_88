@@ -23,11 +23,17 @@ body {
 	}
 	
 	
-	#menu-inicio {
+	/* #menu-inicio {
 		
 		margin-left: 550px;
-	}
+	} */
+	/* div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 1200px;
 	
+	} */
+	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
+	margin-left: 200px;
+	}
 }
 
 @media ( min-width : 1000px) and (max-width: 1300px) {
@@ -35,12 +41,19 @@ body {
 		width: 600px;
 		margin-left: 550px;
 	}
-	#menu-inicio {
+	/* #menu-inicio {
 		
 		margin-left: 550px;
-	}
+	} */
 	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
 	margin-left: 300px;
+	}
+	/* 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 1200px;
+	
+	} */
+	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
+	margin-left: 200px;
 	}
 }
 
@@ -49,14 +62,20 @@ body {
 		width: 300px;
 		height: 150px;
 	}
-	#menu-inicio {
+	/* #menu-inicio {
 		
 		margin-left: 550px;
-	}
+	} */
 	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
 	margin-left: 300px;
 	}
+	/* 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 1200px;
 	
+	} */
+	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
+	margin-left: 200px;
+	}
 }
 
 @media ( min-width : 1050px) and (max-width: 1060px) {
@@ -64,15 +83,21 @@ body {
 		width: 300px;
 		height: 150px;
 	}
-	#menu-inicio {
+	/* #menu-inicio {
 		
 		margin-left: 550px;
-	}
+	} */
 	
 	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
 	margin-left: 300px;
 	}
+	/* 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 1200px;
 	
+	} */
+	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
+	margin-left: 200px;
+	}
 }
 
 @media ( min-width : 700px) and (max-width: 1040px) {
@@ -88,7 +113,13 @@ body {
 	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
 	margin-left: 300px;
 	}
+	/* 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 1200px;
 	
+	} */
+	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
+	margin-left: 200px;
+	}
 }
 
 @media ( min-width : 481px) and (max-width: 768px) {
@@ -98,7 +129,7 @@ body {
 	}
 	#leftMenu {
 		position: static;
-		margin-left: 20px;
+		margin-left: 100px;
 		position: fixed;
 	}
 	div#bodyPanel.panel-body div p img{
@@ -130,7 +161,7 @@ body {
 	}
 	#leftMenu {
 		position: static;
-		margin-left: 200px;
+		margin-left: 250px;
 		position: fixed;
 	}
 	#altaUsuario {
