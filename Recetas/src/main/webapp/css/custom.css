@@ -88,6 +88,7 @@ body {
 	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
 	margin-left: 300px;
 	}
+	
 }
 
 @media ( min-width : 481px) and (max-width: 768px) {
@@ -109,7 +110,16 @@ body {
 	#masterContent{
 	margin-top: 300px;
 	}
-
+	#logueado{
+	display: none;
+	}
+	#head-logueado{
+	display: none;
+	}
+	#panelLogueadoM{
+	width: 800px;
+	padding-top: 0px;
+	}
 }
 
 @media ( min-width : 321px) and (max-width: 480px) {
@@ -129,8 +139,29 @@ body {
 		position: absolute;
 		z-index: -1;
 	}
+	
+	div#bodyPanel.panel-body div p img{
+	display: none;
+	}
 	div#bodyPanel.panel-body{
-		display: none;
+	height: 230px;
+	}
+	#masterContent{
+	margin-top: 300px;
+	width: 350px;
+	}
+	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 350px;
+	}
+	#logueado{
+	display: none;
+	}
+	#head-logueado{
+	display: none;
+	}
+	#panelLogueadoM{
+	width: 800px;
+	padding-top: 0px;
 	}
 }
 
@@ -146,8 +177,29 @@ body {
 	#menu-inicio {
 		width: 600px
 	}
+	
+	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 350px;
+	}
+	div#bodyPanel.panel-body div p img{
+	display: none;
+	}
 	div#bodyPanel.panel-body{
-		display: none;
+	height: 230px;
+	}
+	#masterContent{
+	margin-top: 300px;
+	width: 350px;
+	}
+	#logueado{
+	display: none;
+	}
+	#head-logueado{
+	display: none;
+	}
+	#panelLogueadoM{
+	width: 800px;
+	padding-top: 0px;
 	}
 }
 
