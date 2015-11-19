@@ -21,6 +21,8 @@ body {
 		margin-left: 200px;
 		position: fixed;
 	}
+	
+	
 	#menu-inicio {
 		
 		margin-left: 550px;
@@ -37,6 +39,23 @@ body {
 		
 		margin-left: 550px;
 	}
+	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
+	margin-left: 300px;
+	}
+}
+
+@media ( min-width : 1050px) and (max-width: 1060px) {
+	div.row {
+		width: 300px;
+		height: 150px;
+	}
+	#menu-inicio {
+		
+		margin-left: 550px;
+	}
+	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
+	margin-left: 300px;
+	}
 	
 }
 
@@ -50,30 +69,25 @@ body {
 		margin-left: 550px;
 	}
 	
-}
-
-@media ( min-width : 1050px) and (max-width: 1060px) {
-	div.row {
-		width: 300px;
-		height: 150px;
-	}
-	#menu-inicio {
-		
-		margin-left: 550px;
+	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
+	margin-left: 300px;
 	}
 	
 }
 
 @media ( min-width : 700px) and (max-width: 1040px) {
 	div.row {
-		width: 300px;
-		height: 150px;
+		/* width: 300px;
+		height: 150px; */
 	}
 	#menu-inicio {
 		width: 400px;
 		margin-left: 250px;
 	}
 	
+	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
+	margin-left: 300px;
+	}
 }
 
 @media ( min-width : 481px) and (max-width: 768px) {
@@ -86,9 +100,15 @@ body {
 		margin-left: 20px;
 		position: fixed;
 	}
-	 div #leftMenu{
+	div#bodyPanel.panel-body div p img{
 	display: none;
-	} 
+	}
+	div#bodyPanel.panel-body{
+	height: 230px;
+	}
+	#masterContent{
+	margin-top: 300px;
+	}
 
 }
 
