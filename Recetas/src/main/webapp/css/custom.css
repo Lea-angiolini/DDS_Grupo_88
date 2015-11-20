@@ -185,6 +185,10 @@ html {
 	}
 	div#bodyPanel.panel-body div p img{
 	display: none;
+	
+	}
+	.panel-body{
+	padding-top: 0px;
 	}
 	div#bodyPanel.panel-body{
 	height: 230px;
@@ -233,6 +237,9 @@ html {
 	
 	div#bodyPanel.panel-body div p img{
 	display: none;
+	}
+	.panel-body{
+	padding-top: 0px;
 	}
 	div#bodyPanel.panel-body{
 	height: 230px;
@@ -289,6 +296,9 @@ html {
 	}
 	div#bodyPanel.panel-body div p img{
 	display: none;
+	}
+	.panel-body{
+	padding-top: 0px;
 	}
 	div#bodyPanel.panel-body{
 	height: 230px;
