@@ -1,20 +1,41 @@
-body {
+/* body {
 	background: url("../img/background-pizza.jpg");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-attachment: fixed;
-	background-size: 100%;
-}
+	background-repeat:no-repeat; 
+background-attachment:fixed; 
+background-position:center; 
+} */
+html {
+
+	        background: url("../img/background-pizza.jpg") no-repeat center center fixed;
+
+	        -webkit-background-size: cover;
+
+	        -moz-background-size: cover;
+
+	        -o-background-size: cover;
+
+	        background-size: cover;
+
+	}
+ 
 
 #masterContent {
 	padding-left: 0px;
 }
 
 @media ( min-width : 769px) {
-	body {
-		background: url("../img/background-pizza.jpg");
-		background-size: 100%;
-		background-repeat: inherit;
+	html {
+
+	        background: url("../img/background-pizza.jpg") no-repeat center center fixed;
+
+	        -webkit-background-size: cover;
+
+	        -moz-background-size: cover;
+
+	        -o-background-size: cover;
+
+	        background-size: cover;
+
 	}
 	#leftMenu {
 		position: static;
@@ -34,9 +55,14 @@ body {
 	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
 	margin-left: 200px;
 	}
+	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 1200px;
+	margin-left: 0px;
+	}
+	
 }
 
-@media ( min-width : 1000px) and (max-width: 1300px) {
+@media ( min-width : 1000px) and (max-width: 1500px) {
 	#menu-inicio {
 		width: 600px;
 		margin-left: 550px;
@@ -55,6 +81,10 @@ body {
 	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
 	margin-left: 200px;
 	}
+	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 700px;
+	margin-left: 230px;
+	}
 }
 
 @media ( min-width : 1050px) and (max-width: 1060px) {
@@ -76,6 +106,10 @@ body {
 	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
 	margin-left: 200px;
 	}
+	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 680px;
+	margin-left: 230px;
+	}
 }
 
 @media ( min-width : 1050px) and (max-width: 1060px) {
@@ -91,6 +125,10 @@ body {
 	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
 	margin-left: 300px;
 	}
+	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 680px;
+	margin-left: 230px;
+	}
 	/* 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
 	width: 1200px;
 	
@@ -100,7 +138,7 @@ body {
 	}
 }
 
-@media ( min-width : 700px) and (max-width: 1040px) {
+@media ( min-width : 800px) and (max-width: 1040px) {
 	div.row {
 		/* width: 300px;
 		height: 150px; */
@@ -109,7 +147,10 @@ body {
 		width: 400px;
 		margin-left: 250px;
 	}
-	
+	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 500px;
+	margin-left: 230px;
+	}
 	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
 	margin-left: 300px;
 	}
@@ -119,13 +160,23 @@ body {
 	} */
 	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
 	margin-left: 200px;
+	
 	}
 }
 
 @media ( min-width : 481px) and (max-width: 768px) {
-	body {
-		background: url("../img/background-pizza.jpg");
-		position: absolute background-repeat: no-repeat;
+	html {
+
+	        background: url("../img/background-pizza.jpg") no-repeat center center fixed;
+
+	        -webkit-background-size: cover;
+
+	        -moz-background-size: cover;
+
+	        -o-background-size: cover;
+
+	        background-size: cover;
+
 	}
 	#leftMenu {
 		position: static;
@@ -151,13 +202,22 @@ body {
 	width: 800px;
 	padding-top: 0px;
 	}
+	
 }
 
 @media ( min-width : 321px) and (max-width: 480px) {
-	body {
-		background: url("../img/background-pizza.jpg");
-		position: absolute;
-		background-repeat: no-repeat;
+	html {
+
+	        background: url("../img/background-pizza.jpg") no-repeat center center fixed;
+
+	        -webkit-background-size: cover;
+
+	        -moz-background-size: cover;
+
+	        -o-background-size: cover;
+
+	        background-size: cover;
+
 	}
 	#leftMenu {
 		position: static;
@@ -182,6 +242,9 @@ body {
 	width: 350px;
 	}
 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	
+	}
+	div#buscoReceta #top-recetas.minbox.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
 	width: 350px;
 	}
 	#logueado{
@@ -197,9 +260,18 @@ body {
 }
 
 @media ( max-width : 320px) {
-	body {
-		background: url("../img/background-pizza.jpg");
-		background-repeat: no-repeat;
+	html {
+
+	        background: url("../img/background-pizza.jpg") no-repeat center center fixed;
+
+	        -webkit-background-size: cover;
+
+	        -moz-background-size: cover;
+
+	        -o-background-size: cover;
+
+	        background-size: cover;
+
 	}
 	#leftMenu {
 		position: static;
@@ -210,6 +282,9 @@ body {
 	}
 	
 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 350px;
+	}
+	div#buscoReceta #top-recetas.minbox.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
 	width: 350px;
 	}
 	div#bodyPanel.panel-body div p img{
