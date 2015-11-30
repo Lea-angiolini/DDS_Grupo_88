@@ -21,8 +21,8 @@ public class Temporadas implements Serializable{
 	@Column(name="idTemporada")
 	private int idTemporada;
 	
-	@NotNull
-	@Size(min=1, max=50)
+	@NotNull(message="La temporada no puede estar vacía")
+	@Size(min=1, max=50, message="La temporada debe contener entre 1 y 50 caracteres")
 	@Column(name="nombreTemporada")
 	private String temporada;
 	

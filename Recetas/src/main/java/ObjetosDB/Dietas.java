@@ -20,8 +20,8 @@ public class Dietas implements Serializable{
 	@Column(name="idDieta")
 	private int idDieta;
 	
-	@NotNull
-	@Size(min=1, max=30)
+	@NotNull(message="La dieta no puede estar vacía")
+	@Size(min=1, max=30,message="La dieta debe contener entre 1 y 30 caracteres")
 	@Column(name="tipoDieta")
 	private String dieta;
 	

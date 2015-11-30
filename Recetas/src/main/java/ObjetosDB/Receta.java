@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
@@ -35,16 +36,17 @@ public class Receta implements Serializable{
 	@Column(name = "idReceta")
 	private int idreceta;
 	
+	@NotNull(message="Ingrese un nombre para la receta")
+	@Size(min=1, max=45, message="El nombre de la receta debe contener entre 1 y 45 caracteres")
 	@Column(name = "nombre")
-	@Size(min=1, max=45)
 	private String nombre;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="creador")
 	private Usuario creador;
 	
+	@Size(min=1, max=200, message="La descripción debe contener entre 1 y 200 caracteres")
 	@Column(name = "descripcion")
-	@Size(min=1, max=200)
 	private String detalle;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -70,12 +72,6 @@ public class Receta implements Serializable{
 	@JoinColumn(name="idReceta")
 	@IndexColumn(name="numeroPaso")
 	private List<Pasos> pasos;
-	
-	/*@Column(name = "puntajeTotal")
-	private int puntajeTotal;
-	
-	@Column(name = "vecesCalificada")
-	private int vecesCalificada;*/
 	
 	@OneToMany(mappedBy="key.receta",cascade= CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<Calificacion> calificaciones;

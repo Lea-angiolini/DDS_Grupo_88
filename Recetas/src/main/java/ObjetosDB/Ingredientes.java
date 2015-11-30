@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.swing.JOptionPane;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -29,9 +32,13 @@ public class Ingredientes extends AlimDeReceta implements Serializable{
 	@Column(name="idIngrediente")
 	private int idIngrediente;
 	
+	@NotNull(message="El ingrediente debe tener un nombre")
+	@Size(min=1, max=30, message="El nombre debe contener entre 1 y 30 caracteres")
 	@Column(name="nombre")
 	private String ingrediente;
 	
+	@NotNull(message="Ingrese las calorías del ingediente")
+	@Min(0)
 	@Column(name="caloriasPorcion")
 	private int calorias;
 	

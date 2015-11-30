@@ -48,7 +48,8 @@ $("#fecha").datepicker();
 				<div class=" row col-md-4" align="left">
 					<input type="text" class="form-control" name="username"
 						id="username" wicket:id="username" placeholder="Nombre de usuario"
-						style="width: 250px; margin-left: 20px;" required />
+						style="width: 250px; margin-left: 20px;" required 
+						oninvalid="setCustomValidity('Ingrese un nombre de usuario')"/>
 				</div>
 			</div>
 			<br>
@@ -111,8 +112,8 @@ $("#fecha").datepicker();
 				<div class=" col-md-2">
 					<input type="text" class="form-control" name="apellido"
 						id="apellido" wicket:id="apellido" placeholder="Apellido"
-						style="width: 176px;" required /> <label
-						style="color: rgba(51, 51, 51, 0.55); font-size: 15px;">apellido</label>
+						style="width: 176px;margin-left: 20px;" required /> <label
+						style="color: rgba(51, 51, 51, 0.55); font-size: 15px;;margin-left: 23px;">apellido</label>
 				</div>
 			</div>
 		</div>

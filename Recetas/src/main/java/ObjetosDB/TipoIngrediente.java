@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="tipoingrediente")
@@ -25,6 +27,8 @@ public class TipoIngrediente {
 	@Column(name="idTipoIngrediente")
 	private int idTipoIngrediente;
 	
+	@NotNull(message="La descripción no puese estar vacía")
+	@Size(min=1, max=30, message="La descripción debe contener entre 1 y 30 caracteres")
 	@Column(name="descripcion")
 	private String descripcion;
 

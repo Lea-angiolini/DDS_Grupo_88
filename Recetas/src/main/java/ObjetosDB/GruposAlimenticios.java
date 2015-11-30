@@ -27,8 +27,8 @@ public class GruposAlimenticios implements Serializable{
 	@Column(name="idGrupoAlim")
 	private int idGrupoAlim;
 	
-	@NotNull
-	@Size(min=1, max=50)
+	@NotNull(message="El grupo alimenticio no puede estar vacío")
+	@Size(min=1, max=50, message="El grupo alimenticio debe contener entre 1 y 50 caracteres")
 	@Column(name="descripcion")
 	private String grupoAlim;
 	

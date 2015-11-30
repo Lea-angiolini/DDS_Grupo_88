@@ -20,8 +20,8 @@ public class Complexiones implements Serializable{
 	@Column(name="idComplexion")
 	private int idComplexion;
 	
-	@NotNull
-	@Size(min=1, max=30)
+	@NotNull(message="La complexión no puede estar vacío")
+	@Size(min=1, max=30, message="La complexión debe contener ente 1 y 30 caracteres")
 	@Column(name="complexion")
 	private String complexion;
 	

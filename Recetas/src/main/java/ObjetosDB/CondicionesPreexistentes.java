@@ -30,8 +30,8 @@ public class CondicionesPreexistentes implements Visitor,Serializable{
 	@Column(name="idCondicion")
 	private int idCondPreex;
 	
-	@NotNull
-	@Size(min=1, max=30)
+	@NotNull(message="La condición no debe estar vacía")
+	@Size(min=1, max=30,message="La complexión debe contener entre 1 y 30 caracteres")
 	@Column(name="condicion")
 	private String condPreex;
 	

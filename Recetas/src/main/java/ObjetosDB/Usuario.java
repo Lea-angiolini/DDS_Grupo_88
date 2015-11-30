@@ -43,36 +43,34 @@ public class Usuario implements Serializable{
 	@Column(name="nombreUsuario")
 	private String username;
 	
-	@NotNull
-	@Size(min=4, max=120)
+	@NotNull(message="Ingrese una contraseña")
+	@Size(min=4, max=120, message="La contraseña debe contener entre 4 y 120 caracteres")
 	@Column(name="clave")
 	private String password;
 	
-	@NotNull
-	//@Email
+	@NotNull(message="Ingrese un Email")
 	@Size(min=1, max=60)
 	@Column(name="mail", unique= true)
 	private String email;
 	
-	@NotNull(message="El nombre no debe ser vacio")
-	@Size(min=1, max=30)
+	@NotNull(message="Ingrese su nombre")
+	@Size(min=1, max=30, message="El nombre debe contener entre 1 y 30 caracteres")
 	@Column(name="nombre")
 	private String nombre;
 	
-	@NotNull
-	@Size(min=1, max=30)
+	@NotNull(message="Ingrese su apellido")
+	@Size(min=1, max=30, message="El apellido debe contener entre 1 y 30 caracteres")
 	@Column(name="apellido")
 	private String apellido;
 	
-	//@Past
 	@Column(name="fechaNac")
 	private String fechaNacimiento;
 	
-	@NotNull
+	@NotNull(message="Seleccione un sexo")
 	@Column(name="sexo")
 	private char sexo;
 	
-	@NotNull
+	@NotNull(message="Ingrese su altura")
 	@Min(0)
 	@Column(name="altura")
 	private int altura;

@@ -28,9 +28,9 @@ public class Pasos implements Serializable{
 	@Column(name="numeroPaso")
 	private int numPaso;
 	
-	@NotNull
+	@NotNull(message="La descripción no puede estar vacía")
 	@Column(name="descripcion")
-	@Size(min=1,max=2000)
+	@Size(min=1,max=2000,message="La descripción debe contener entre 1 y 2000 caracteres")
 	private String descripcionPaso;
 	
 	@Column(name="foto")

@@ -21,8 +21,8 @@ public class Dificultades implements Serializable{
 	@Column(name="idDificultad")
 	private int idDificultad;
 	
-	@NotNull
-	@Size(min=1, max=30)
+	@NotNull(message="La dificultad no puede estar vacía")
+	@Size(min=1, max=30,message="La dificultad debe contener entre 1 y 30 caracteres")
 	@Column(name="descripcion")
 	private String dificultad;
 	

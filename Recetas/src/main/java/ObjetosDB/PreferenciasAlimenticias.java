@@ -26,8 +26,8 @@ public class PreferenciasAlimenticias implements Serializable{
 	@Column(name="idPreferencia")
 	private int idPreferencia;
 	
-	@NotNull
-	@Size(min=1, max=120)
+	@NotNull(message="La descripción no puede ser nula")
+	@Size(min=1, max=120, message="La descripción debe tener entre 1 y 120 caracteres")
 	@Column(name="descripcion")
 	private String preferencia;
 	

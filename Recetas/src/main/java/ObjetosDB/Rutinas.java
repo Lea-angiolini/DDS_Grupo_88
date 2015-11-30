@@ -21,8 +21,8 @@ public class Rutinas implements Serializable{
 	@Column(name="idRutina")
 	private int idRutina;
 	
-	@NotNull
-	@Size(min=1, max=45)
+	@NotNull(message="La rutina no puede estar vacía")
+	@Size(min=1, max=45, message="La rutinna debe contener entre 1 y 45 caracteres")
 	@Column(name="rutina")
 	private String rutina;
 	

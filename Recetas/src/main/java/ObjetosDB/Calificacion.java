@@ -27,9 +27,9 @@ public class Calificacion implements Serializable{
 	@EmbeddedId
 	private Key key;
 
-	@NotNull
-	@Min(value=1)
-	@Max(value=5)
+	@NotNull(message="La calificación no puede estar vacía")
+	@Min(value=1,message="La calificación mínima es 1")
+	@Max(value=5, message="La calificación máxima es 5")
 	@Column(name="calificacion")
 	private int calificacion;
 	
