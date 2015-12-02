@@ -39,10 +39,11 @@ public class BuscarReceta extends MasterPage {
 	private DAOIngredientes daoingredientes = new DAOIngredientes(getSessionBD());
 	private DAOGruposAlimenticios daogruposalimenticios = new DAOGruposAlimenticios(getSessionBD());
 	private DAORecetas daorecetas = new DAORecetas(getSessionBD());
+	private BuscarReceta pagina;
 	
 	public BuscarReceta(){
 		super();
-		
+		pagina = this;
 		add(frmBuscarReceta = new FrmBuscarReceta("FrmBuscarReceta"));
 		
 		}
@@ -69,7 +70,7 @@ public class BuscarReceta extends MasterPage {
 	    		grpAlim =  (ArrayList<GruposAlimenticios>) daogruposalimenticios.findAll();
 	    		
 	    		calificaciones = new ArrayList<Integer>();
-	    		for(int i = 0; i<= 5;i++){
+	    		for(int i = 1; i<= 5;i++){
 	    			calificaciones.add(i);
 	    		}
 				
@@ -109,7 +110,11 @@ public class BuscarReceta extends MasterPage {
     		add(dropdownTemporadas);
     		//
     		
-    		DropDownChoice<Integer> dropdownCalificacion = new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), calificaciones);
+    		DropDownChoice<Integer> dropdownCalificacion = new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), calificaciones){
+    			protected String getNullValidDisplayValue() {
+    				return "Todas";
+    			}
+    		};
     		dropdownCalificacion.setNullValid(true);
     		add(dropdownCalificacion);
     		//
@@ -153,7 +158,7 @@ public class BuscarReceta extends MasterPage {
 				markupPorvider.remove(id);
 	        	
 	        	add(new Label("nombreGrilla"," Resultados"));
-	        	add(new ListaDeRecetas("listaRecetas", recetas, getUsuarioActual()));
+	        	add(new ListaDeRecetas("listaRecetas", recetas, getUsuarioActual(), pagina));
 			} catch (DBExeption e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

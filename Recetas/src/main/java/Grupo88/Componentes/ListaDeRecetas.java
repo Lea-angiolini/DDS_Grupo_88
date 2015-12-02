@@ -2,6 +2,8 @@ package Grupo88.Componentes;
 
 import java.util.ArrayList;
 
+import master.MasterPage;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -21,7 +23,7 @@ public class ListaDeRecetas extends Panel {
 	private static final long serialVersionUID = 1L;
 
 @SuppressWarnings("unchecked")
-public ListaDeRecetas(String id, ArrayList<ObjetosDB.Receta> arrayList, final Usuario user) {
+public ListaDeRecetas(String id, ArrayList<ObjetosDB.Receta> arrayList, final Usuario user, final MasterPage pagina) {
 	// TODO Auto-generated constructor stub
 	super(id);
 	
@@ -48,7 +50,7 @@ public ListaDeRecetas(String id, ArrayList<ObjetosDB.Receta> arrayList, final Us
 				public void onClick() {
 					// TODO Auto-generated method stub
 					recetas.consulta(user);
-					setResponsePage(DetalleDeReceta.class,pars);
+					setResponsePage(new DetalleDeReceta(pars, pagina));
 				}
 				
 			};

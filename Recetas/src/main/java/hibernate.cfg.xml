@@ -29,6 +29,7 @@
      <mapping class="ObjetosDB.Calificacion"/>
      <mapping class="ObjetosDB.Confirmacion"/>
 	 <mapping class="ObjetosDB.Historial"/>
+	 <mapping class="ObjetosDB.TipoReceta"/>
   </session-factory>
  </hibernate-configuration>
  

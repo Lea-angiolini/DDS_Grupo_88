@@ -192,8 +192,9 @@ public class Receta implements Serializable{
 		this.pasos.add(paso);
 	}
 	
-	public int getCalificacion() {
-		return 0;
+	public int getCalorias() {
+		calcularCalorias();
+		return caloriasTotales;
 	}
 	
 	public byte[] getFotoPrincipal() {
@@ -208,12 +209,7 @@ public class Receta implements Serializable{
 		// TODO
 		//Browser.agregarHistConsultas(getIdreceta(),user.getUsername());
 	}
-	
-	public boolean calificar(Usuario user){
-		//return Browser.calUltimaConfirmacion(idreceta,user,getCalificacion());
-		// TODO
-		return true;
-	}
+
 	
 	public boolean aceptaCond(Set<CondicionesPreexistentes> list){
 		

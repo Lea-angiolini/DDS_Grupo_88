@@ -113,8 +113,8 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> {
 			stringQuery += " and (r.temporada.idTemporada = "+items.getTemporada().getIdTemporada()+" ) ";
 		}
 		
-		if (items.getCalificacion() != 0) {
-			stringQuery += " and (select cast(sum(c.calificacion)/count(c.calificacion) as int) from Calificacion c where c.receta.idreceta = r.idreceta) = "+items.getCalificacion()+") "; //TOFIX if vecesCalificada = 0?
+		if (items.getCalificacion() != null) {
+			stringQuery += " and (select cast(sum(c.calificacion)/count(c.calificacion) as int) from Calificacion c where c.key.receta.idreceta = r.idreceta) = "+items.getCalificacion()+") "; //TOFIX if vecesCalificada = 0?
 		}
 		
 		if (items.getGrupoAlimenticio() != null){

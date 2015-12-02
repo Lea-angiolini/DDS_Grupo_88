@@ -36,4 +36,51 @@ public class Confirmacion implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="usuario")
 	private Usuario user;
+	
+	@NotNull
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="tipoRecetaConf")
+	private TipoReceta tipoReceta;
+
+	public int getIdConfirmacion() {
+		return IdConfirmacion;
+	}
+
+	public void setIdConfirmacion(int idConfirmacion) {
+		IdConfirmacion = idConfirmacion;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	public Receta getReceta() {
+		return receta;
+	}
+
+	public void setReceta(Receta receta) {
+		this.receta = receta;
+	}
+
+	public Usuario getUser() {
+		return user;
+	}
+
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+
+	public TipoReceta getTipoReceta() {
+		return tipoReceta;
+	}
+
+	public void setTipoReceta(TipoReceta tipoReceta) {
+		this.tipoReceta = tipoReceta;
+	}
+	
+	
 }

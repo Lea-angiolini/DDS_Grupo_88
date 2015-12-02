@@ -17,10 +17,11 @@ public class MisRecetas extends RegisteredPage {
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
 	private FrmMisRecetas frmMisRecetas;
+	private MisRecetas pagina;
 	
 	public MisRecetas(){
 		super();
-		
+		pagina = this;
 		add(frmMisRecetas = new FrmMisRecetas("frmMisRecetas"));
 	
 	}
@@ -32,7 +33,7 @@ public class MisRecetas extends RegisteredPage {
 		public FrmMisRecetas(String id) {
 			super(id);			
 
-			add(new ListaDeRecetas("listaMisRecetas", new ArrayList<Receta>(getUsuarioActual().cargarMisRecetas(getSessionBD())) , getUsuarioActual()));
+			add(new ListaDeRecetas("listaMisRecetas", new ArrayList<Receta>(getUsuarioActual().cargarMisRecetas(getSessionBD())) , getUsuarioActual(), pagina));
 			
 			add(new Link<Object>("cancelar"){
  

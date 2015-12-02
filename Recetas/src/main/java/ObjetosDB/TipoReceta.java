@@ -1,5 +1,7 @@
 package ObjetosDB;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +12,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="tipoReceta")
-public class TipoReceta {
+public class TipoReceta implements Serializable{
 	
+	private static final long serialVersionUID = -4256124775328751346L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idTipoReceta")
@@ -23,12 +27,12 @@ public class TipoReceta {
 
 	public TipoReceta() {}
 
-	public int getIdTipoIngrediente() {
+	public int getIdTipoReceta() {
 		return idTipoReceta;
 	}
 
-	public void setIdTipoIngrediente(int idTipoIngrediente) {
-		this.idTipoReceta = idTipoIngrediente;
+	public void setIdTipoReceta(int idTipoReceta) {
+		this.idTipoReceta = idTipoReceta;
 	}
 
 	public String getDescripcion() {

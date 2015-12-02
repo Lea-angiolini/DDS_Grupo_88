@@ -33,7 +33,9 @@ public class Calificacion implements Serializable{
 	@Column(name="calificacion")
 	private int calificacion;
 	
-	public Calificacion() {	}
+	public Calificacion() {
+		key = new Key();
+	}
 	
 	
 	
@@ -69,7 +71,7 @@ public class Calificacion implements Serializable{
 	}
 	
 	@Embeddable
-	public class Key implements Serializable{
+	public static class Key implements Serializable{
 
 		private static final long serialVersionUID = 114222063731836066L;
 
@@ -82,13 +84,15 @@ public class Calificacion implements Serializable{
 		@ManyToOne(fetch=FetchType.LAZY)
 	    @JoinColumn(name="idReceta")
 		public Receta receta;
-
+		
+		protected Key(){ }
+		
 		public Key(Usuario userCalificador, Receta receta) {
 			this.userCalificador = userCalificador;
 			this.receta = receta;
 		}
 		
-		public Key(){ }
+		
 		
 	}
 }

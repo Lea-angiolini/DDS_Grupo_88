@@ -27,10 +27,12 @@ public class DetalleGrupo extends RegisteredPage {
 	private FrmDetalleGrupo frmDetalleGrupo;
 	private StringValue idGrupo;
 	private Grupo grupo;
+	private DetalleGrupo pagina;
 	//private DAOGrupos daogrupos;
 	
 	public DetalleGrupo(final PageParameters parameters){
 		super();
+		pagina = this;
 		//getMenuPanel().setVisible(false);
 		if(parameters.getNamedKeys().contains("idGrupo")){
 			idGrupo = parameters.get("idGrupo");
@@ -60,7 +62,7 @@ public class DetalleGrupo extends RegisteredPage {
 			
 			add(new Label("nombreGrupo", grupo.getNombre()));
 			
-			add(new ListaDeRecetas("listaRecetas",new ArrayList<Receta>(grupo.obtenerRecetas()),getUsuarioActual()));
+			add(new ListaDeRecetas("listaRecetas",new ArrayList<Receta>(grupo.obtenerRecetas()),getUsuarioActual(), pagina));
 			
 			RepeatingView usuariosGrupo = new RepeatingView("listaUsuarios");
 			

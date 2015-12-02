@@ -19,9 +19,11 @@ public class Inicio extends MasterPage {
 	@SuppressWarnings("unused")
 	private FrmInicio frmInicio;
 	private DAORecetas daoRecetas;
+	private Inicio pagina;
 	
 	public Inicio(){
 		super();
+		pagina = this;
 		add(frmInicio = new FrmInicio("FrmInicio"));
 	}
 	
@@ -41,7 +43,7 @@ public class Inicio extends MasterPage {
 				return;
 			}
 			
-			add(new ListaDeRecetas("recetasHome", recetas ,getUsuarioActual()));
+			add(new ListaDeRecetas("recetasHome", recetas ,getUsuarioActual(),pagina));
 		}
 		
 		@Override

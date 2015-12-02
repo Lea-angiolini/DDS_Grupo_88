@@ -148,7 +148,6 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 catch (HibernateException exc) {
 			     
 				 exc.printStackTrace();
-				 JOptionPane.showMessageDialog(null, "porque???");
 				 throw new Exception(exc.getMessage());
 			 }
 		

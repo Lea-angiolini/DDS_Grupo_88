@@ -13,89 +13,19 @@
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
  <script>
 
- 
- function abrirDialogo(){
-   $(document).ready(function(){
-	    	 $( "#dialog" ).dialog();
-	}) ;};
-	
- function cerrarDialogo(){
-	$(document).ready(function(){
-	    	 $( "#dialog" ).dialog("close");
-	}) ;};
-	
-function cambiarTexto(a){
-	document.getElementById("textBton"+a).innerHTML = "Compartido";
-};
-
-
-function cambiarClase(a){
-	document.getElementById(a).className = "btn btn-success disabled";
-};
 
   </script>
-
-<div id="dialog" title="Compartir" style="display: none;">
-		<div wicket:id="iterador">
-			<div id="grupo">
-				<label wicket:id="nombre">Grupo</label>
-				<a  wicket:id="bton" class="btn btn-primary"><label id="textBton" wicket:id="textBton"></label></a>
-			</div>
-		</div>
-	</div>
-
-
-		<div>
-			<form id="frmDetalleDeReceta" wicket:id="FrmDetalleDeReceta" method="post">
-				<fieldset id="detalleReceta" class="center">
-				<div  class="mainbox col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" style="background-color:rgba(255,255,255,0.6)">
-					<h1 wicket:id="Nombre">Detalle de Receta</h1>								
-					
-
-
-<div class="container">			
-
-	<div class="well well-sm text-center">
-
-		<h3>PUNTAJE</h3>
-		
-		<div class="btn-group" data-toggle="buttons">
-	
-
-			<label class="btn btn-primary">
-				<input type="radio" name="options" id="option1" autocomplete="off">
-				<span class="glyphicon glyphicon-ok">1</span>
-			</label>
-
-			<label class="btn btn-info">
-				<input type="radio" name="options" id="option2" autocomplete="off">
-				<span class="glyphicon glyphicon-ok">2</span>
-			</label>
-
-			<label class="btn btn-default">
-				<input type="radio" name="options" id="option2" autocomplete="off">
-				<span class="glyphicon glyphicon-ok">3</span>
-			</label>
-
-			<label class="btn btn-warning">
-				<input type="radio" name="options" id="option2" autocomplete="off">
-				<span class="glyphicon glyphicon-ok">4</span>
-			</label>
-
-			<label class="btn btn-danger">
-				<input type="radio" name="options" id="option2" autocomplete="off">
-				<span class="glyphicon glyphicon-ok">5</span>
-			</label>
-		
-		</div>
-</div>
-
-	</div>
-					
-					<div valign="top" wicket:id="calificacion"></div><button wicket:id="confCalificacion">¡Calificar!</button>
+  
+  
+	<div class="mainbox col-md-9 col-md-offset-1 col-sm-9 col-sm-offset-1" style="background-color:rgba(255,255,255,0.6)">
+	<section style="width: 50%; float: left;">
+		<form id="frmDetalleDeReceta" wicket:id="FrmDetalleDeReceta" method="post">
+		<fieldset id="detalleReceta" class="center">		
+				
+					<h1 wicket:id="Nombre">Detalle de Receta</h1>													
 					<h3>Dificultad <label wicket:id="dif"></label></h3>
 					<h3>Temporada <label wicket:id="tem"></label></h3>
-					<h3>Calorias</h3>
+					<h3>Calorias <label wicket:id="cal"> </label></h3>
 					<img style="height: 350px" wicket:id="imgPrinc">
 					<br>
 					<div class="container">
@@ -113,118 +43,41 @@ function cambiarClase(a){
 						<ul>
 						<li wicket:id="listaIngredientes"style="list-style-type: none;"><span style="color: #DD1919; font-size: 50px;" >.</span><span wicket:id="unIngrediente" ></span>
 						<div style="border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"></div></li>
-<!-- 					<li style="list-style-type: none; border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"><span style="color: #DD1919; font-size: 50px" >.</span>remolacha</li> -->
-<!-- 					<li style="list-style-type: none; border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"><span style="color: #DD1919; font-size: 50px" >.</span>papa</li> -->
-<!-- 					<li style="list-style-type: none; border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"><span style="color: #DD1919; font-size: 50px" >.</span>perejil</li> -->
 						</ul>
 						<br>
 						<label style="margin-top: 20px">Condimentos</label>
 						<ul>
 						<li wicket:id="listaCondimentos" style="list-style-type: none;"><span style="color: #DD1919; font-size: 50px;" >.</span><span wicket:id="unCondimento"></span>
 						<div style="border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"></div></li>
-<!-- 					<li style="list-style-type: none; border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"><span style="color: #DD1919; font-size: 50px" >.</span>remolacha</li>  -->
-<!-- 					<li style="list-style-type: none; border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"><span style="color: #DD1919; font-size: 50px" >.</span>papa</li> -->
-<!-- 					<li style="list-style-type: none; border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"><span style="color: #DD1919; font-size: 50px" >.</span>perejil</li> -->
 						</ul>
 						</div>
-					
-<!-- 						<div class="col-md-4" style="background:#FFF7AE; height: 400px; font-family: cursive; border-radius:20px"> -->
-<!-- 						<label>Ingredientes</label> -->
-<!-- 						<ul wicket:id="listaIngredientes"> -->
-<!-- 						<li style="list-style-type: none; border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;" wicket:id="unIngrediente"><span style="color: #DD1919; font-size: 50px" >.</span></li> -->
-						
-<!-- 						</ul> -->
-<!-- 						<br> -->
-<!-- 						<label>Condimentos</label> -->
-<!-- 						<ul wicket:id="listaCondimentos"> -->
-<!-- 						<li wicket:id="unCondimento"></li> -->
-<!-- 						</ul> -->
-<!-- 						</div> -->
 						</div>
 					</div>
 					
-					
-					<button type="button" name="btnConfirmar" wicket:id="confirmar">Confirmar</button>		
-					<button type="button" id="p" name="btnCompartir" wicket:id="compartir">Compartir</button>	
-				</div>
-				</fieldset>
-			</form>
-		</div>
+					</fieldset>
+					</form>
+	<a class="btn btn-primary" wicket:id="volver">Volver</a>
+	</section>
+	<aside style="background-color: red; width: 30%; float: right;">
+	
+		<form wicket:id="formCalificar" method="post">
+			<div valign="top" wicket:id="calificacion"></div>
+			<button wicket:id="confCalificacion">¡Calificar!</button>
+		</form>
 		
+		<form wicket:id="formConfirmar" method="post">
+			<button class="" name="btnConfirmar" wicket:id="confirmar">Confirmar</button>
+			<span wicket:id="comida">Seleccione</span>
+		</form>	
 		
-	<script>	
-(function($) { 
-    window.addEventListener('message', receiveMessage, false);
-    function receiveMessage(evt)
-    {
-        if (evt.origin !== 'http://bootsnipp.com') return;
-        
-        if ((evt.data != undefined) && (evt.data) && (typeof evt.data === "number"))
-            if(evt.data >= 500) {
-                $('#playground-container').css('height', evt.data+30+'px');    
-            }
-    }
-
-    var htmleditor = ace.edit("editor-html");
-    var jseditor = ace.edit("editor-js");
-    var csseditor = ace.edit("editor-css");
-
-    $('#theme_chooser').change(function(){
-        whichCSS = $(this).val();
-        document.getElementById('snippet-preview').contentWindow.changeCSS(whichCSS);
-    });
-
-    function setEditorOptions(editor, type){
-        editor.setTheme("ace/theme/clouds");
-        editor.setHighlightActiveLine(false);
-        editor.setReadOnly(true);
-        editor.getSession().setMode("ace/mode/"+type);
-    };
-
-    setEditorOptions(htmleditor,'html');
-    setEditorOptions(jseditor,'javascript');
-    setEditorOptions(csseditor,'css');
-
-    function markActive(el)
-    {
-       $(el).siblings().removeClass('active');
-       $(el).addClass('active'); 
-    }
-
-    $('#show-html').click(function(e){
-        e.preventDefault();
-        $('#editor-html').show().siblings().hide();
-        markActive(this);
-        $('#preview-container').hide();
-        htmleditor.resize();
-    });
-
-    $('#show-js').click(function(e){
-        e.preventDefault();
-        $('#editor-js').show().siblings().hide();
-        $('#preview-container').hide();
-        markActive(this);
-        jseditor.resize();
-    });
-
-    $('#show-css').click(function(e){
-        e.preventDefault();
-        $('#editor-css').show().siblings().hide();
-        $('#preview-container').hide();
-        markActive(this);
-        csseditor.resize();
-    });
-
-    $('#show-preview').click(function(e){
-        e.preventDefault();
-        $('#preview-container').show();
-        $('.playground-editor').hide();
-        markActive(this);
-    });
-
-    
-})(jQuery);
-			</script>	
+		<form wicket:id="formCompartir" method="post">			
+			<button type="submit" id="p" name="btnCompartir" wicket:id="compartir">Compartir</button>
+			<span wicket:id="grupos"></span>
+		</form>
+		
+	</aside>
+	</div>
+				
 	</wicket:extend>
 	
 </body>

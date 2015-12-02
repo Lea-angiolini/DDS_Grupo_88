@@ -152,8 +152,10 @@ CREATE TABLE Grupo88.Confirmadas(
     fecha DATETIME NOT NULL,
     idReceta INT NOT NULL,
     usuario VARCHAR(30),
+    tipoRecetaConf INT,
     FOREIGN KEY (usuario) REFERENCES Grupo88.usuarios(nombreUsuario),
-    FOREIGN KEY (idReceta) REFERENCES Grupo88.recetas(idReceta)
+    FOREIGN KEY (idReceta) REFERENCES Grupo88.recetas(idReceta),
+    FOREIGN KEY (tipoRecetaConf) REFERENCES Grupo88.tiporeceta(idTipoReceta)
 );
 
 

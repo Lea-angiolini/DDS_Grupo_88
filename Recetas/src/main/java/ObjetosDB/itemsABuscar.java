@@ -19,10 +19,10 @@ public class itemsABuscar {
 	private Temporadas temporada;
 	private Dificultades dificultad;
 	
-	private int calificacion;
+	private Integer calificacion;
 	
 	
-	public int getCalificacion() {
+	public Integer getCalificacion() {
 		return calificacion;
 	}
 	public void setCalificacion(int calificacion) {
