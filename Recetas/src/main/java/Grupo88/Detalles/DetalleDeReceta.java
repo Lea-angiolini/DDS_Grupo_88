@@ -1,28 +1,18 @@
 package Grupo88.Detalles;
 
-import java.awt.CheckboxGroup;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import master.ErrorPage;
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
 
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
-import org.apache.wicket.markup.html.form.CheckboxMultipleChoiceSelector;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RadioChoice;
@@ -31,7 +21,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -46,7 +35,6 @@ import Database.DAOGrupos;
 import Database.DAORecetas;
 import Database.DAOTipoReceta;
 import Database.DBExeption;
-import Grupo88.BuscarReceta.BuscarReceta;
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Calificacion;
 import ObjetosDB.Condimentos;
@@ -67,6 +55,7 @@ public class DetalleDeReceta extends MasterPage {
 	private StringValue idReceta;
 	private Receta receta;
 	private Confirmacion confirmacion;
+	private DAOTipoReceta daoTipoReceta;
 	
 	public DetalleDeReceta(final PageParameters parameters){
 		super();
@@ -100,6 +89,8 @@ public class DetalleDeReceta extends MasterPage {
 	private void iniciar(PageParameters parameters){
 		
 		daoreceta = new DAORecetas(getSessionBD());
+		daoTipoReceta = new DAOTipoReceta(getSessionBD());
+		
 		user = getUsuarioActual();
 		receta = null;
 		
@@ -108,14 +99,15 @@ public class DetalleDeReceta extends MasterPage {
 			try {
 				receta = daoreceta.get(idReceta.toInt());
 			} catch (NullPointerException e){
-				setResponsePage(new ErrorPage(e.getMessage()));
+				setResponsePage(ErrorPage.ErrorIngresoInvalidoDatos());
 				return;
 			}
 			catch (StringValueConversionException e) {
-				setResponsePage(new ErrorPage(e.getMessage()));
+				setResponsePage(ErrorPage.ErrorIngresoInvalidoDatos());
 				return;
+				
 			} catch (DBExeption e) {
-				setResponsePage(new ErrorPage(e.getMessage()));
+				setResponsePage(ErrorPage.ErrorEnLaDB());
 				return;
 			}
 		
@@ -218,12 +210,18 @@ public class DetalleDeReceta extends MasterPage {
 			super(id);
 			
 			confirmacion = new Confirmacion();
+			ArrayList<TipoReceta> todosTipoReceta; 
+			
 			try {
-				add(new RadioChoice("comida", new PropertyModel(confirmacion, "tipoReceta"), (new DAOTipoReceta(getSessionBD()).findAll()),new ChoiceRenderer("descripcion","idTipoReceta")));
+				
+			todosTipoReceta= new ArrayList<TipoReceta>(daoTipoReceta.findAll());
+
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				setResponsePage(new ErrorPage("ups"));
+				setResponsePage(ErrorPage.ErrorCargaDatos());
+				return;
 			}
+			
+			add(new RadioChoice("comida", new PropertyModel(confirmacion, "tipoReceta"), todosTipoReceta,new ChoiceRenderer("descripcion","idTipoReceta")));
 			add(new Button("confirmar"){
 				
 				private static final long serialVersionUID = 8149758093736016771L;
@@ -239,18 +237,23 @@ public class DetalleDeReceta extends MasterPage {
 						
 						try {
 							daoConfirmar.save(confirmacion);
-						} catch (ConstraintViolationException e) {
-							// TODO Auto-generated catch block
+							
+						} 
+						
+						catch (ConstraintViolationException e) {
 							e.printStackTrace();
-							JOptionPane.showMessageDialog(null, e.getMessage());
-						} catch (javax.validation.ConstraintViolationException e) {
-							// TODO Auto-generated catch block
+							setResponsePage(ErrorPage.ErrorEnLaDB());
+							
+						} 
+						
+						catch (javax.validation.ConstraintViolationException e) {
 							e.printStackTrace();
-							JOptionPane.showMessageDialog(null, e.getMessage());
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
+							setResponsePage(ErrorPage.ErrorEnLaDB());
+						}
+						
+						catch (Exception e) {
 							e.printStackTrace();
-							setResponsePage(new ErrorPage("ups"));
+							setResponsePage(ErrorPage.ErrorRandom());
 						}
 					
 					setResponsePage(DetalleDeReceta.class,pars);
@@ -280,7 +283,8 @@ public class DetalleDeReceta extends MasterPage {
 					calificacion.setUserCalificador(user);
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				setResponsePage(ErrorPage.ErrorRandom());
+
 			}
 			
 			EmptyPanel botonCal;
@@ -305,18 +309,19 @@ public class DetalleDeReceta extends MasterPage {
 						super.onSubmit();
 						try {
 							daoCalificacion.saveOrUpdate(calificacion);
-						} catch (ConstraintViolationException e) {
-							// TODO Auto-generated catch block
+							
+						} catch (ConstraintViolationException e) { 
 							e.printStackTrace();
-							JOptionPane.showMessageDialog(null, e.getMessage());
+							setResponsePage(ErrorPage.ErrorEnLaDB());
+							
 						} catch (javax.validation.ConstraintViolationException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
-							JOptionPane.showMessageDialog(null, e.getMessage());
+							setResponsePage(ErrorPage.ErrorEnLaDB());
+							
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
-							JOptionPane.showMessageDialog(null, e.getMessage());
+							setResponsePage(ErrorPage.ErrorRandom());
+							
 						}
 					}
 				});
@@ -324,7 +329,8 @@ public class DetalleDeReceta extends MasterPage {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+				setResponsePage(ErrorPage.ErrorRandom());
+				
 			}
 			
 		}
@@ -340,8 +346,11 @@ public class DetalleDeReceta extends MasterPage {
 			
 			try {
 				add(new CheckBoxMultipleChoice("grupos", new Model(gruposselect),new ArrayList(daoGrupos.gruposde(getUsuarioActual())),new ChoiceRenderer("nombre","idGrupo")));
+				
 			} catch (Exception e) {
 				e.printStackTrace();
+				setResponsePage(ErrorPage.ErrorRandom());
+				
 				add(new EmptyPanel("grupos"));
 			}
 			
@@ -355,14 +364,17 @@ public class DetalleDeReceta extends MasterPage {
 						try {
 							daoGrupos.saveOrUpdate(grupo);
 						} catch (ConstraintViolationException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
+							setResponsePage(ErrorPage.ErrorEnLaDB());
+							
 						} catch (javax.validation.ConstraintViolationException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
+							setResponsePage(ErrorPage.ErrorEnLaDB());
+							
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
+							setResponsePage(ErrorPage.ErrorRandom());
+							
 						}
 					}
 					

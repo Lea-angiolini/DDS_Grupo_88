@@ -11,9 +11,6 @@ import Grupo88.Inicio.Inicio;
 
 public class GestionarRecetas extends RegisteredPage {	
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private FrmGestionarRecetas frmGestionarRecetas;
 	

@@ -39,7 +39,7 @@ public class Inicio extends MasterPage {
 			try {
 				recetas = new ArrayList<Receta>(getUsuarioActual().cargarHome(getSessionBD()));
 			} catch (Exception e) {
-				setResponsePage(new ErrorPage("ops parece que hubo un problema "+ e.getMessage()));
+				setResponsePage(ErrorPage.ErrorRandom());
 				return;
 			}
 			

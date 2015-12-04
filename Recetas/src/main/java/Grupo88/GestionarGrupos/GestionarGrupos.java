@@ -48,9 +48,6 @@ public class GestionarGrupos extends MasterPage {
 	
 	private class FrmGestionarGrupos extends Form<Object> {
 		
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		public FrmGestionarGrupos(String id) {
@@ -61,9 +58,6 @@ public class GestionarGrupos extends MasterPage {
 			
 			add(new Link<Object>("cancelar"){
 				
-				/**
-				 * 
-				 */
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -211,7 +205,7 @@ public class GestionarGrupos extends MasterPage {
 					
 					}
 					catch (Exception e) {
-						setResponsePage(new ErrorPage("Parece que hubo un error intentalo mas tarde"+e.getMessage()));
+						setResponsePage(ErrorPage.ErrorRandom());
 					}
 				
 					esteFrag.addOrReplace(new Label("etiquetaConf", msg ) );
@@ -285,7 +279,6 @@ public class GestionarGrupos extends MasterPage {
 							daogrupos.saveOrUpdate(grupoActual);
 							target.appendJavaScript("noAdherido('"+i+"');");
 						} catch (Exception/*DBExeption*/ e) {
-							JOptionPane.showMessageDialog(null, e.getMessage());
 							e.printStackTrace();
 							grupoActual.getUsuarios().remove(getUsuarioActual());
 						}
@@ -297,6 +290,8 @@ public class GestionarGrupos extends MasterPage {
 								target.appendJavaScript("adherido('"+i+"');");
 							} catch (Exception e) {
 								e.printStackTrace();
+								setResponsePage(ErrorPage.ErrorCargaDatos());
+								
 							}
 						}						
 					}

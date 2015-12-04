@@ -33,7 +33,6 @@ import Database.DAORutinas;
 import Database.DAOUsuarios;
 import Database.DBExeption;
 import Grupo88.Inicio.Inicio;
-import Grupo88.Login.Login;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
@@ -101,13 +100,14 @@ public class AltaUsuario extends MasterPage {
 					info(cve.getConstraintViolations().iterator().next().getMessage());
 				}
 				catch (org.hibernate.exception.ConstraintViolationException cve) {
+					//TODO ver tema errores controlar en la DB (ej este usuario ya existe)
 					info(cve.getMessage());
 				}
 				finally{
 				error.setVisible(true);
 				}
 			} catch (Exception e) {
-				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "+e.getMessage()));
+				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "));
 				
 			}
 		}
