@@ -23,8 +23,8 @@ public class ErrorPage extends MasterPage {
 	}
 	
 	public static ErrorPage ErrorCargaDatos(){
-	//	return new ErrorPage("Oops! Hubo algun problema interno, por favor vuelva a intentar mas tarde");
-		return new ErrorPage("Oops! La cagaste... Cerra todo antes de que se den cuenta");
+		return new ErrorPage("Oops! Hubo algun problema interno, por favor vuelva a intentar mas tarde");
+	//	return new ErrorPage("Oops! La cagaste... Cerra todo antes de que se den cuenta");
 	}
 
 	public static ErrorPage ErrorEnLaDB(){

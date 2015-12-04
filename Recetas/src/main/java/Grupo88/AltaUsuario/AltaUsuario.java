@@ -100,13 +100,14 @@ public class AltaUsuario extends MasterPage {
 					info(cve.getConstraintViolations().iterator().next().getMessage());
 				}
 				catch (org.hibernate.exception.ConstraintViolationException cve) {
+					//TODO ver tema errores controlar en la DB (ej este usuario ya existe)
 					info(cve.getMessage());
 				}
 				finally{
 				error.setVisible(true);
 				}
 			} catch (Exception e) {
-				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "+e.getMessage()));
+				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "));
 				
 			}
 		}

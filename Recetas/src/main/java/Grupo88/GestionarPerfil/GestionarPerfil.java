@@ -78,7 +78,7 @@ public class GestionarPerfil extends RegisteredPage {
 				error.setVisible(true);
 				}
 			} catch (Exception e) {
-				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "+e.getMessage()));
+				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "));
 				
 			}
 		}
