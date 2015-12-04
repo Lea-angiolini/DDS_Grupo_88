@@ -23,7 +23,7 @@ html {
 	padding-left: 0px;
 }
 
-@media ( min-width : 769px) {
+@media ( min-width : 769px) and (max-width: 2000px){
 	html {
 
 	        background: url("../img/background-pizza.jpg") no-repeat center center fixed;
@@ -42,7 +42,10 @@ html {
 		margin-left: 200px;
 		position: fixed;
 	}
-	
+	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 1200px;
+	/*margin-left: 230px;*/
+	}
 	
 	/* #menu-inicio {
 		
@@ -56,21 +59,23 @@ html {
 	margin-left: 200px;
 	}
 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
-	width: 1200px;
+	
 	margin-left: 0px;
 	}
-	
+	#masterContent{
+		margin-left:250px;
+	}
 }
 
-@media ( min-width : 1000px) and (max-width: 1500px) {
+@media ( min-width : 1061px) and (max-width: 1500px) {
 	#menu-inicio {
 		width: 600px;
 		margin-left: 550px;
 	}
-	/* #menu-inicio {
+	 #masterContent {
 		
-		margin-left: 550px;
-	} */
+		margin-left: 250px;
+	} 
 	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
 	margin-left: 300px;
 	}
@@ -80,37 +85,18 @@ html {
 	} */
 	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
 	margin-left: 200px;
+	
 	}
 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
 	width: 700px;
-	margin-left: 230px;
+	/*margin-left: 230px;*/
+	}
+	#masterContent{
+		margin-left:250px;
 	}
 }
 
-@media ( min-width : 1050px) and (max-width: 1060px) {
-	div.row {
-		width: 300px;
-		height: 150px;
-	}
-	/* #menu-inicio {
-		
-		margin-left: 550px;
-	} */
-	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
-	margin-left: 300px;
-	}
-	/* 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
-	width: 1200px;
-	
-	} */
-	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
-	margin-left: 200px;
-	}
-	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
-	width: 680px;
-	margin-left: 230px;
-	}
-}
+
 
 @media ( min-width : 1050px) and (max-width: 1060px) {
 	div.row {
@@ -126,8 +112,8 @@ html {
 	margin-left: 300px;
 	}
 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
-	width: 680px;
-	margin-left: 230px;
+	width: 400px;
+	/*margin-left: 230px;*/
 	}
 	/* 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
 	width: 1200px;
@@ -136,9 +122,12 @@ html {
 	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
 	margin-left: 200px;
 	}
+	#masterContent{
+		margin-left:250px;
+	}
 }
 
-@media ( min-width : 800px) and (max-width: 1040px) {
+@media ( min-width : 801px) and (max-width: 1040px) {
 	div.row {
 		/* width: 300px;
 		height: 150px; */
@@ -148,23 +137,26 @@ html {
 		margin-left: 250px;
 	}
 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
-	width: 500px;
-	margin-left: 230px;
+	
+	/*margin-left: 230px;*/
 	}
 	div #signupbox .mainbox .col-md-8 .col-md-offset-2 .col-sm-8 .col-sm-offset-2{
 	margin-left: 300px;
 	}
-	/* 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
-	width: 1200px;
+	 div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 470px;
 	
-	} */
+	} 
 	div#singupbox.minbox.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2{
 	margin-left: 200px;
 	
 	}
+	#masterContent{
+		margin-left:250px;
+	}
 }
 
-@media ( min-width : 481px) and (max-width: 768px) {
+@media ( min-width : 481px) and (max-width: 800px) {
 	html {
 
 	        background: url("../img/background-pizza.jpg") no-repeat center center fixed;
@@ -195,6 +187,7 @@ html {
 	}
 	#masterContent{
 	margin-top: 300px;
+	margin-left:0px;
 	}
 	#logueado{
 	display: none;
@@ -206,7 +199,10 @@ html {
 	width: 800px;
 	padding-top: 0px;
 	}
+	 div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
+	width: 500px;
 	
+	}
 }
 
 @media ( min-width : 321px) and (max-width: 480px) {
@@ -248,9 +244,7 @@ html {
 	margin-top: 300px;
 	width: 350px;
 	}
-	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
 	
-	}
 	div#buscoReceta #top-recetas.minbox.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
 	width: 350px;
 	}
@@ -289,7 +283,7 @@ html {
 	}
 	
 	div.mainbox.minPrin.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
-	width: 350px;
+
 	}
 	div#buscoReceta #top-recetas.minbox.col-md-10.col-md-offset-1.col-sm-10.col-sm-offset-1{
 	width: 350px;
@@ -355,6 +349,7 @@ html {
 	width: 100%;
 	position: absolute;
 	padding: 15px;
+	
 }
 
 #masterBody.toggled #masterContent {
