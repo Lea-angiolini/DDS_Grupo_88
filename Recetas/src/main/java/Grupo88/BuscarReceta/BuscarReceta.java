@@ -34,15 +34,22 @@ import ObjetosDB.itemsABuscar;
 public class BuscarReceta extends MasterPage {
 	
 	private FrmBuscarReceta frmBuscarReceta;
-	private DAODificultades daodificultades = new DAODificultades(getSessionBD());
-	private DAOTemporadas daotemporadas = new DAOTemporadas(getSessionBD());
-	private DAOIngredientes daoingredientes = new DAOIngredientes(getSessionBD());
-	private DAOGruposAlimenticios daogruposalimenticios = new DAOGruposAlimenticios(getSessionBD());
-	private DAORecetas daorecetas = new DAORecetas(getSessionBD());
+	private DAODificultades daodificultades;
+	private DAOTemporadas daotemporadas;
+	private DAOIngredientes daoingredientes;
+	private DAOGruposAlimenticios daogruposalimenticios;
+	private DAORecetas daorecetas;
 	private BuscarReceta pagina;
 	
 	public BuscarReceta(){
 		super();
+		
+		daodificultades = new DAODificultades(getSessionBD());
+		daotemporadas = new DAOTemporadas(getSessionBD());
+		daoingredientes = new DAOIngredientes(getSessionBD());
+		daogruposalimenticios = new DAOGruposAlimenticios(getSessionBD());
+		daorecetas = new DAORecetas(getSessionBD());
+		
 		pagina = this;
 		add(frmBuscarReceta = new FrmBuscarReceta("FrmBuscarReceta"));
 		
@@ -50,16 +57,16 @@ public class BuscarReceta extends MasterPage {
 	
 	private class FrmBuscarReceta extends Form {
 		
+		final itemsABuscar items = new itemsABuscar();
+		private ArrayList<Dificultades> dificultades;
+		private ArrayList<Temporadas> temporadas;
+		private ArrayList<Ingredientes> ingredientes;
+		private ArrayList<GruposAlimenticios> grpAlim;
+		private ArrayList<Integer> calificaciones;
 		
 		public FrmBuscarReceta(String id) {
 			super(id);			
 			
-    		final itemsABuscar items = new itemsABuscar();
-    		ArrayList<Dificultades> dificultades;
-    		ArrayList<Temporadas> temporadas;
-    		ArrayList<Ingredientes> ingredientes;
-    		ArrayList<GruposAlimenticios> grpAlim;
-    		ArrayList<Integer> calificaciones;
 			try {
 				dificultades = (ArrayList<Dificultades>) daodificultades.findAll();
 				

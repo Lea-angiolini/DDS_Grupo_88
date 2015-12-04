@@ -22,9 +22,6 @@ import ObjetosDB.Usuario;
 
 public class Login extends MasterPage {
 
-/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	//	private TextField<String> txtUsuario;
 //	private PasswordTextField txtPassword;
