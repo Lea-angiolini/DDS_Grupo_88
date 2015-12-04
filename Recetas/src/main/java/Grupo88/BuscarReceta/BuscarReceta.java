@@ -69,11 +69,8 @@ public class BuscarReceta extends MasterPage {
 			
 			try {
 				dificultades = (ArrayList<Dificultades>) daodificultades.findAll();
-				
 				temporadas = (ArrayList<Temporadas>) daotemporadas.findAll();
-	    		
 	    		ingredientes = (ArrayList<Ingredientes>) daoingredientes.findAll();
-	    		
 	    		grpAlim =  (ArrayList<GruposAlimenticios>) daogruposalimenticios.findAll();
 	    		
 	    		calificaciones = new ArrayList<Integer>();
@@ -82,8 +79,8 @@ public class BuscarReceta extends MasterPage {
 	    		}
 				
 			} catch (DBExeption e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				setResponsePage(ErrorPage.ErrorCargaDatos());
 				return;
 			}
 			
@@ -169,7 +166,7 @@ public class BuscarReceta extends MasterPage {
 			} catch (DBExeption e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				setResponsePage(new ErrorPage("upss"));
+				setResponsePage(new ErrorPage("Oops!"));
 			}	
     		
         	

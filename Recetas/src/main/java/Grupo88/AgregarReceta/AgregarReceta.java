@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import master.ErrorPage;
 import master.RegisteredPage;
 
 import org.apache.wicket.MarkupContainer;
@@ -135,8 +136,8 @@ public class AgregarReceta extends RegisteredPage {
 				todosCondimentos= new ArrayList<Condimentos>(daoCondimentos.findAll());
 				todosTipoReceta = new ArrayList<TipoReceta>(daoTipoReceta.findAll());
 			} catch (DBExeption e2) {
-				// error no podes cargar las listas
 				e2.printStackTrace();
+				setResponsePage(ErrorPage.ErrorCargaDatos());
 			}
 		
 			add(nombreReceta = new TextField<String>("nombreReceta", new PropertyModel<String>(nuevareceta, "nombre")));
@@ -285,8 +286,16 @@ public class AgregarReceta extends RegisteredPage {
 			}
 		} catch (HeadlessException e) {
 			e.printStackTrace();
+			error("Formato de archivo no soportado");
+			return;
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
+			error("Formato de archivo no soportado");
+			return;
+			
+			
 		}}
 		
 		if(idFrmPaso < fragmentos.size()-1){
@@ -297,7 +306,7 @@ public class AgregarReceta extends RegisteredPage {
 				daoreceta.saveOrUpdate(nuevareceta);
 				setResponsePage(MisRecetas.class);
 			} catch (Exception e) {
-				error("error");
+				error("Algo andubo mal.. Intente de vuelta por favor");
 			}			
 			}
 		}
