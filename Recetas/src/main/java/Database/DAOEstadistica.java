@@ -38,5 +38,5 @@ public abstract class DAOEstadistica implements Serializable{
 	
 	public void setSession(Session session) {
 		this.session = session;
-	}
+	}	
 }

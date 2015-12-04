@@ -1,5 +1,6 @@
 package Grupo88.Componentes;
 
+import master.ErrorPage;
 import objetosWicket.ModelUsuario;
 import objetosWicket.SesionUsuario;
 
@@ -9,16 +10,13 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.hibernate.Session;
 
 import Database.DAOEstadisticaPorSexo;
-import Database.FactoryEstSegunDificultad;
-import Database.FactoryEstSegunMasConsultadas;
-import Database.FactoryEstSegunSexo;
-import Database.FactoryRepConsultasPeriodo;
+import Database.DAOEstadisticasPorDificultad;
+import Database.DAORecetasMasConsultadas;
 import Grupo88.BuscarReceta.BuscarReceta;
 import Grupo88.Estadisticas.Estadisticas;
 import Grupo88.GestionarGrupos.GestionarGrupos;
 import Grupo88.GestionarPerfil.GestionarPerfil;
 import Grupo88.MisRecetas.MisRecetas;
-import Grupo88.Reportes.Reportes;
 
 public class PanelLinks extends Panel {
 
@@ -75,21 +73,21 @@ public class PanelLinks extends Panel {
 			add(new Link("consultasDificultad"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(new DAOEstadisticaPorSexo(sessionDB)));
+					setResponsePage(new Estadisticas(new DAOEstadisticasPorDificultad(sessionDB)));
 				}
 			});
 			
 			add(new Link("topRecetasConsultadas"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(new DAOEstadisticaPorSexo(sessionDB)));
+					setResponsePage(new Estadisticas(new DAORecetasMasConsultadas(sessionDB,10)));
 				}
 			});
 			
 			add(new Link("recetasConsultadas"){
 				
 				public void onClick() {
-					setResponsePage(new Reportes(new FactoryRepConsultasPeriodo()));
+					setResponsePage(new ErrorPage("aun no echo"));
 				}
 			});
 		}
