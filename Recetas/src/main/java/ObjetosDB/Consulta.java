@@ -1,7 +1,10 @@
 package ObjetosDB;
 
-public class Consulta {
+import java.io.Serializable;
 
+public class Consulta implements Serializable{
+
+	private static final long serialVersionUID = -4587004292357743112L;
 	private int id;
 	private String nombre;
 	private int cantidad;

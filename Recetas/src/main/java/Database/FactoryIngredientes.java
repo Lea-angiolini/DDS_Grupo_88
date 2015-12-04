@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +11,9 @@ import javax.swing.JOptionPane;
 
 import ObjetosDB.Ingredientes;
 
-public class FactoryIngredientes {
+public class FactoryIngredientes implements Serializable{
 	
+	private static final long serialVersionUID = 7501263341252581344L;
 	private Factory fab;
 	private String tableName = "ingredientes ";
 	private String principalSelect = "select * from "+tableName;

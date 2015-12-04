@@ -22,6 +22,8 @@ import javax.validation.constraints.Size;
 @Table(name="GrupoAlim")
 public class GruposAlimenticios implements Serializable{
 	
+	private static final long serialVersionUID = 1172146341984150771L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idGrupoAlim")

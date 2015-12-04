@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +11,9 @@ import javax.swing.JOptionPane;
 import ObjetosDB.Consulta;
 import ObjetosDB.Usuario;
 
-public class FactoryRepConsultasPeriodo extends StrategyReportes{
+public class FactoryRepConsultasPeriodo extends StrategyReportes implements Serializable{
 	
+	private static final long serialVersionUID = -7634948234570843059L;
 	private Factory fab;
 	
 	public FactoryRepConsultasPeriodo() {

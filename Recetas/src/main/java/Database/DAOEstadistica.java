@@ -13,7 +13,7 @@ import ObjetosDB.Estadistico;
 
 public abstract class DAOEstadistica implements Serializable{
 	
-	private static final long serialVersionUID = 2312698746280710314L;
+	private static final long serialVersionUID = -6992049224059077581L;
 	protected Session session;
 	protected int dias;
 	

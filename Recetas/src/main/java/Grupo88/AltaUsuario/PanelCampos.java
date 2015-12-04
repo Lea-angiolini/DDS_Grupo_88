@@ -35,6 +35,7 @@ import ObjetosDB.Dietas;
 import ObjetosDB.PreferenciasAlimenticias;
 import ObjetosDB.Rutinas;
 import ObjetosDB.Sexo;
+import ObjetosDB.Temporadas;
 import ObjetosDB.Usuario;
 
 public class PanelCampos extends Panel {
@@ -60,23 +61,48 @@ public class PanelCampos extends Panel {
 	}
 	
 	public void adherirCamposPersonales(){
+		
+		DropDownChoice<Sexo> sexo;
+		DropDownChoice<Complexiones> complexion;
+		CheckBoxMultipleChoice<PreferenciasAlimenticias> preferencias;
+		CheckBoxMultipleChoice<CondicionesPreexistentes> condiciones;
+		DropDownChoice<Rutinas> rutina;
+		DropDownChoice<Dietas> dieta;
+		
+		ArrayList<Sexo> todosSexos;
+		ArrayList<Complexiones> todasComplexiones;
+		ArrayList<PreferenciasAlimenticias> todasPreferenciasAlim;
+		ArrayList<CondicionesPreexistentes> todasCondiciones;
+		ArrayList<Rutinas> todasRutinas;
+		ArrayList<Dietas> todasDietas;
+		
+		
 		try {
-			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
-			add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
-			add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));{};
-			add(new DropDownChoice<Sexo>("sexo", new PropertyModel<Sexo>(usuario, "sexo"), new ArrayList<Sexo>(daoSexo.findAll()), new ChoiceRenderer<Sexo>("descripcion","idSexo")));
-			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
-			add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
-			add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), daoComplexiones.findAll(), new ChoiceRenderer<Complexiones>("complexion","idComplexion")));		
-			add(new CheckBoxMultipleChoice<PreferenciasAlimenticias>("preferencia",new PropertyModel(usuario,"preferencias"), new ArrayList(daoPreferenciasAlimenticias.findAll()), new ChoiceRenderer("preferencia","idPreferencia")));
-			add(new CheckBoxMultipleChoice<CondicionesPreexistentes>("condPreex",new PropertyModel(usuario,"condiciones"), new ArrayList(daoCondicionesPreexistentes.findAll()), new ChoiceRenderer("condPreex","idCondPreex")));
-			add(new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),daoRutinas.findAll(), new ChoiceRenderer<Object>("rutina","idRutina")));
-			add(new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), daoDietas.findAll(), new ChoiceRenderer<Object>("dieta","idDieta")));
+			
+			todosSexos =  new ArrayList<Sexo>(daoSexo.findAll());
+			todasComplexiones = new ArrayList<Complexiones>(daoComplexiones.findAll());
+			todasPreferenciasAlim = new ArrayList<PreferenciasAlimenticias>(daoPreferenciasAlimenticias.findAll());
+			todasCondiciones = new ArrayList<CondicionesPreexistentes>(daoCondicionesPreexistentes.findAll());
+			todasRutinas = new ArrayList<Rutinas>(daoRutinas.findAll());
+			todasDietas = new ArrayList<Dietas>(daoDietas.findAll());
+			
 	    } catch (DBExeption e) {
 			e.printStackTrace();
-			setResponsePage(new ErrorPage("error cargar items " + e.getMessage()));
+			setResponsePage(ErrorPage.ErrorCargaDatos()); 
 			return;
 		}
+		
+		add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
+		add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
+		add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));{};
+		add(sexo = new DropDownChoice<Sexo>("sexo", new PropertyModel<Sexo>(usuario, "sexo"), todosSexos, new ChoiceRenderer<Sexo>("descripcion", "idSexo")));
+		add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
+		add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
+		add(complexion = new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), todasComplexiones, new ChoiceRenderer<Complexiones>("complexion","idComplexion")));
+		add(preferencias = new CheckBoxMultipleChoice<PreferenciasAlimenticias>("preferencia",new PropertyModel(usuario,"preferencias"), todasPreferenciasAlim, new ChoiceRenderer("preferencia","idPreferencia")));
+		add(condiciones = new CheckBoxMultipleChoice<CondicionesPreexistentes>("condPreex",new PropertyModel(usuario,"condiciones"), todasCondiciones, new ChoiceRenderer("condPreex","idCondPreex")));
+		add(rutina = new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),todasRutinas, new ChoiceRenderer<Object>("rutina","idRutina")));
+		add(dieta = new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), todasDietas, new ChoiceRenderer<Object>("dieta","idDieta")));
 	}
 	
 	public PanelCampos(String id, Session session) {

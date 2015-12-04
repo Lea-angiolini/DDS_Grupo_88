@@ -16,6 +16,8 @@ import javax.validation.constraints.Size;
 
 public class Temporadas implements Serializable{
 	
+	private static final long serialVersionUID = 5819129719841400985L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idTemporada")

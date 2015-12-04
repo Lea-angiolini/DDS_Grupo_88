@@ -12,7 +12,8 @@ import ObjetosDB.Sexo;
 
 public class DAOEstadisticaPorSexo extends DAOEstadistica implements Serializable{
 	
-	private static final long serialVersionUID = 7370437163550199871L;
+
+	private static final long serialVersionUID = -7953169414586587316L;
 	public DAOEstadisticaPorSexo(Session session) {
 		super(session);
 	}

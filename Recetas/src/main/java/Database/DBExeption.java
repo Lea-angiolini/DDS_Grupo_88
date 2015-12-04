@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -11,9 +12,10 @@ import org.apache.wicket.util.parse.metapattern.parsers.WordParser;
 
 
 
-public class DBExeption extends Exception {
+public class DBExeption extends Exception implements Serializable{
 
-		     private Set<DBMessage> dbMessages = new TreeSet<DBMessage>();
+	private static final long serialVersionUID = -8081707391565888130L;
+			private Set<DBMessage> dbMessages = new TreeSet<DBMessage>();
 		
 		     public DBExeption(List<DBMessage> dbMessages) {
 		         this.dbMessages.addAll(dbMessages);

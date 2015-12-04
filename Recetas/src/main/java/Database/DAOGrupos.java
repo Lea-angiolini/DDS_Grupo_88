@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -8,7 +9,9 @@ import org.hibernate.Session;
 import ObjetosDB.Grupo;
 import ObjetosDB.Usuario;
 
-public class DAOGrupos extends DAOGenerico<Grupo,Integer>{
+public class DAOGrupos extends DAOGenerico<Grupo,Integer> implements Serializable{
+
+	private static final long serialVersionUID = 4630445719633300126L;
 
 	public DAOGrupos(Session session) {
 		// TODO Auto-generated constructor stub
