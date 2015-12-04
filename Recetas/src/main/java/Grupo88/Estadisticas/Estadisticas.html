@@ -4,11 +4,18 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 </head>
-<style>
-</style>
+
 <body>
 	<wicket:extend>
-
+	<style>
+		table, th, td {
+		    border: 1px solid black;
+		    border-collapse: collapse;
+		}
+		th, td {
+		    padding: 5px;
+		}
+	</style>
 		<div>
 			<form id="frmEstadisticas" wicket:id="frmEstadisticas" method="get">
 				<fieldset id="misRecetas" class="center">
@@ -19,10 +26,20 @@
 					            	<div class="panel-title"><span class="glyphicon glyphicon-home"></span> Estadísticas</div>
 					            </div>     
 								<div class="panel-body" style="padding: 20px 20px 20px 20px;">
-								
-								
-								<div wicket:id="estadisticasMes"></div>
-								<div wicket:id="estadisticasSemana"></div>
+	
+								<div>
+									<table wicket:id="iteradorTabla">
+									<label wicket:id="estadistica"></label>
+									<div wicket:id="iteradorCol">
+										<tr>
+										</tr> 
+										<tr> 
+											<th wicket:id="tiempo"></th>
+											<td><div wicket:id="panel"></div></td>
+										</tr>
+										</div>
+									</table>
+								</div>
 								</div>
 							</div>
 						</div>

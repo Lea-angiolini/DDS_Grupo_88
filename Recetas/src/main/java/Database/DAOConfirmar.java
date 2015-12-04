@@ -1,6 +1,7 @@
 package Database;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -10,7 +11,9 @@ import ObjetosDB.Confirmacion;
 import ObjetosDB.Receta;
 import ObjetosDB.Usuario;
 
-public class DAOConfirmar extends DAOGenerico<Confirmacion, Integer> {
+public class DAOConfirmar extends DAOGenerico<Confirmacion, Integer> implements Serializable{
+
+	private static final long serialVersionUID = -4125216434616689370L;
 
 	public DAOConfirmar(Session session) {
 		super(session);

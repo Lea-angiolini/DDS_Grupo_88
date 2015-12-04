@@ -27,6 +27,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @javax.persistence.Table(name = "ingredientes")
 public class Ingredientes extends AlimDeReceta implements Serializable{
 	
+	private static final long serialVersionUID = 8600966783603252487L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idIngrediente")

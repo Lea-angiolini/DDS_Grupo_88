@@ -1,5 +1,7 @@
 package ObjetosDB;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +15,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="historicoConsultas")
-public class Historial {
+public class Historial implements Serializable{
 	
+	private static final long serialVersionUID = -1556291704058412473L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idHistorico")

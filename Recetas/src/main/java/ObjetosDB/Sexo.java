@@ -11,7 +11,6 @@ import javax.persistence.Table;
 @Table(name="sexos")
 public class Sexo implements Serializable{
 
-
 	private static final long serialVersionUID = -1070071942432362168L;
 	
 	@Id

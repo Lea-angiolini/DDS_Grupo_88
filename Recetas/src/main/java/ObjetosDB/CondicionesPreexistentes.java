@@ -25,6 +25,8 @@ import javax.validation.constraints.Size;
 
 public class CondicionesPreexistentes implements Visitor,Serializable{
 	
+	private static final long serialVersionUID = 779689368484044234L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idCondicion")

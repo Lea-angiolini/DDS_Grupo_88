@@ -13,8 +13,10 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
 
+
 //import paquete AltaUsuario
 import Grupo88.AltaUsuario.AltaUsuario;
+import Grupo88.BuscarReceta.BuscarReceta;
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Usuario;
 
@@ -28,10 +30,6 @@ public class PanelLogin extends Panel {
 		add(new FrmLogin("FrmLogin"));
 		
 	}
-
-		
-		
-		
 		public class Login extends Fragment {
 
 			public Login(String id, String markupId, MarkupContainer markupProvider) {
@@ -50,11 +48,9 @@ public class PanelLogin extends Panel {
 				
 			}
 		}
-	
+		
 	public class FrmLogin extends Form {
 		
-		
-	
 		private Usuario usuario;
 		private String lblError;
 		
@@ -78,8 +74,13 @@ public class PanelLogin extends Panel {
 					setResponsePage(AltaUsuario.class);
 				}
 			});
-		
 			
+			add(new Link("buscarRecetas"){
+				@Override
+					public void onClick() {
+						setResponsePage(BuscarReceta.class);
+					}
+				});
 		}
 		
 		
@@ -121,9 +122,7 @@ public class PanelLogin extends Panel {
 			
 			
 		}
+
 	}
 	
-	
-	
-		
 }

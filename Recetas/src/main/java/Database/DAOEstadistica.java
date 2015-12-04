@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,8 +11,9 @@ import org.hibernate.Session;
 
 import ObjetosDB.Estadistico;
 
-public abstract class DAOEstadistica {
+public abstract class DAOEstadistica implements Serializable{
 	
+	private static final long serialVersionUID = -6992049224059077581L;
 	protected Session session;
 	protected int dias;
 	
@@ -20,6 +22,8 @@ public abstract class DAOEstadistica {
 	}
 	
 	public abstract ArrayList<Estadistico> obtenerEstadistica(int dias) throws Exception;
+	
+	public abstract String descripcionEst();
 	
 	protected String fechaAterior(int dias){
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

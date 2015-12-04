@@ -48,9 +48,6 @@ public class GestionarGrupos extends MasterPage {
 	
 	private class FrmGestionarGrupos extends Form<Object> {
 		
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		public FrmGestionarGrupos(String id) {
@@ -61,9 +58,6 @@ public class GestionarGrupos extends MasterPage {
 			
 			add(new Link<Object>("cancelar"){
 				
-				/**
-				 * 
-				 */
 				private static final long serialVersionUID = 1L;
 
 				@Override

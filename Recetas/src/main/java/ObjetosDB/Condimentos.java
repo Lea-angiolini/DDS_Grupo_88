@@ -20,6 +20,8 @@ import javax.validation.constraints.Size;
 @Table(name="Condimento")
 public class Condimentos extends AlimDeReceta implements Serializable{
 	
+	private static final long serialVersionUID = -5424071477330807568L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idCondimento")

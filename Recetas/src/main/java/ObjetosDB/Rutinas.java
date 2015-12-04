@@ -16,6 +16,8 @@ import javax.validation.constraints.Size;
 
 public class Rutinas implements Serializable{
 	
+	private static final long serialVersionUID = 217780805653343759L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idRutina")

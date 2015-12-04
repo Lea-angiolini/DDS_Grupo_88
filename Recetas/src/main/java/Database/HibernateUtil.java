@@ -1,5 +1,7 @@
 package Database;
 
+import java.io.Serializable;
+
 import javax.swing.JOptionPane;
 
 import org.hibernate.Session;
@@ -11,10 +13,10 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 
 
-public class HibernateUtil {
+public class HibernateUtil implements Serializable{
 	
-
-	   private static SessionFactory sessionFactory = null;
+	private static final long serialVersionUID = 6164875537581831612L;
+	private static SessionFactory sessionFactory = null;
 	  
 	       public static synchronized void buildSessionFactory() {
 	           if (sessionFactory == null) {
