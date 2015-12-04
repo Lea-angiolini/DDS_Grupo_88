@@ -27,12 +27,14 @@ import Database.DAOCondicionesPreexistentes;
 import Database.DAODietas;
 import Database.DAOPreferenciasAlimenticias;
 import Database.DAORutinas;
+import Database.DAOSexo;
 import Database.DBExeption;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
 import ObjetosDB.PreferenciasAlimenticias;
 import ObjetosDB.Rutinas;
+import ObjetosDB.Sexo;
 import ObjetosDB.Usuario;
 
 public class PanelCampos extends Panel {
@@ -44,6 +46,7 @@ public class PanelCampos extends Panel {
 	private DAODietas daoDietas;
 	private DAORutinas daoRutinas;
 	private DAOPreferenciasAlimenticias daoPreferenciasAlimenticias;
+	private DAOSexo daoSexo;
 	private Usuario usuario;
 	
 	public void crearDaos(Session session){
@@ -52,7 +55,8 @@ public class PanelCampos extends Panel {
 		daoCondicionesPreexistentes = new DAOCondicionesPreexistentes(session);
 		daoDietas = new DAODietas(session);
 		daoRutinas = new DAORutinas(session);
-		daoPreferenciasAlimenticias = new DAOPreferenciasAlimenticias(session); 	
+		daoPreferenciasAlimenticias = new DAOPreferenciasAlimenticias(session);
+		daoSexo = new DAOSexo(session);
 	}
 	
 	public void adherirCamposPersonales(){
@@ -60,7 +64,7 @@ public class PanelCampos extends Panel {
 			add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
 			add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
 			add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));{};
-			add(new DropDownChoice<Character>("sexo", new PropertyModel<Character>(usuario, "sexo"), Arrays.asList('M', 'F')));
+			add(new DropDownChoice<Sexo>("sexo", new PropertyModel<Sexo>(usuario, "sexo"), new ArrayList<Sexo>(daoSexo.findAll()), new ChoiceRenderer<Sexo>("descripcion","idSexo")));
 			add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
 			add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
 			add(new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), daoComplexiones.findAll(), new ChoiceRenderer<Complexiones>("complexion","idComplexion")));		

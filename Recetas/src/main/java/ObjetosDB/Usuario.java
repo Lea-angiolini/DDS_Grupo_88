@@ -67,8 +67,9 @@ public class Usuario implements Serializable{
 	private String fechaNacimiento;
 	
 	@NotNull(message="Seleccione un sexo")
-	@Column(name="sexo")
-	private char sexo;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="sexo")
+	private Sexo sexo;
 	
 	@NotNull(message="Ingrese su altura")
 	@Min(0)
@@ -170,12 +171,12 @@ public class Usuario implements Serializable{
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public char getSexo() {
+	public Sexo getSexo() {
 		return sexo;
 	}
 
 
-	public void setSexo(char sexo) {
+	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
 

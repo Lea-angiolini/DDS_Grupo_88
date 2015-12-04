@@ -74,6 +74,11 @@ CREATE TABLE Grupo88.tipoReceta(
     descripcion VARCHAR(30) NOT NULL
 );
 
+CREATE TABLE Grupo88.sexos(
+	idSexo INT auto_increment PRIMARY KEY,
+    descripcion varchar(30)
+);
+
 
 CREATE TABLE Grupo88.Usuarios(
 	nombreUsuario VARCHAR(30) PRIMARY KEY,
@@ -82,14 +87,15 @@ CREATE TABLE Grupo88.Usuarios(
     apellido VARCHAR(30) NOT NULL,
     mail VARCHAR(60) NOT NULL UNIQUE,
     fechaNac DATE,
-    sexo CHAR(1) NOT NULL,
+    sexo int not null,
     altura INT NOT NULL,
     idComplexion INT, -- REFERENCES Complexiones,
     idDieta INT, -- REFERENCES dietas,
     idRutina INT, -- REFERENCES Rutinas
     FOREIGN KEY (idComplexion) REFERENCES Grupo88.Complexion(idComplexion),
     FOREIGN KEY (idDieta) REFERENCES Grupo88.dietas(idDieta),
-    FOREIGN KEY (idRutina) REFERENCES Grupo88.rutinas(idRutina)
+    FOREIGN KEY (idRutina) REFERENCES Grupo88.rutinas(idRutina),
+    FOREIGN KEY (sexo) REFERENCES Grupo88.sexos(idSexo)
 );
 
 CREATE TABLE Grupo88.Recetas(
@@ -252,7 +258,12 @@ VALUES('Facil'),
 	  ('Media'),
 	  ('Dificil');
       
-       
+INSERT INTO Grupo88.sexos(descripcion)
+VALUES ('Masculino'),
+		('Femenino'),
+        ('Travesti'),
+        ('Marco');
+        
 INSERT INTO Grupo88.condimento (nombre)
 VALUES ('Sal'),('Pimienta Negra'),('Paprika'),('Oregano'),('Laurel'),('Aji Molido'),('Azafran');
       
@@ -314,9 +325,9 @@ VALUES ('Desayuno'),
        ('Cena');
 
 INSERT INTO Grupo88.usuarios()
-VALUES('jorge','pass','Jorge','Gomez','jorge@gmail.com','1989/05/12','M',170,3,2,1),
-	  ('maria','pass','Maria','Rodriguez','maria@gmail.com','1975/12/18','F',150,1,4,2),
-      ('carlos', 'pass', 'Carlos', 'Batata','carlos@gmail.com','1965/04/19','M', 160, 2, 1, 3);
+VALUES('jorge','pass','Jorge','Gomez','jorge@gmail.com','1989/05/12',1,170,3,2,1),
+	  ('maria','pass','Maria','Rodriguez','maria@gmail.com','1975/12/18',2,150,1,4,2),
+      ('carlos', 'pass', 'Carlos', 'Batata','carlos@gmail.com','1965/04/19',3, 160, 2, 1, 3);
 
 INSERT INTO Grupo88.Recetas(nombre,creador,idDificultad,caloriasTotales,grupoAlimenticio,temporada,ingredientePrincipal)
 VALUES('Pollo al horno','carlos',2,1000,2,1,31),
