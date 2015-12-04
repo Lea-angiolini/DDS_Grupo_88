@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -20,13 +22,15 @@ public class DropList<T extends AlimDeReceta> extends Panel {
 
 
 	private static final long serialVersionUID = 1L;
-	MarkupContainer contIng1;
-	MarkupContainer contIng2;
-	final ArrayList<Estado<T>> estados = new ArrayList<Estado<T>>();
-	final Model<String> filtroIngText;
+	private MarkupContainer contIng1;
+	private MarkupContainer contIng2;
+	private final ArrayList<Estado<T>> estados;
+	private final Model<String> filtroIngText;
 	
 	public DropList(String id, ArrayList<T> lista) {
 		super(id);
+		
+		estados = new ArrayList<Estado<T>>();
 		
 		for(T prod : lista){
 			estados.add(new Estado<T>(prod));
@@ -34,16 +38,13 @@ public class DropList<T extends AlimDeReceta> extends Panel {
 		
 		filtroIngText = new Model<String>();
 		final TextField<String> filtroIng = new TextField<String>("filtroIng", filtroIngText);
+		
 		filtroIng.add(new AjaxFormComponentUpdatingBehavior ("onkeyup") {
 			
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
-				//target.add(filtroIng);
 				
 				MarkupContainer nvoCont1;
 				contIng1.replaceWith(nvoCont1 = generarListaIng(filtrarProductos(estados, filtroIngText),"contIng", false));
@@ -60,12 +61,15 @@ public class DropList<T extends AlimDeReceta> extends Panel {
 		add(contIng2 = generarListaIng(estados,"contIng2", true));
 		
 	}
+	
+	
 	private ArrayList<Estado<T>> filtrarProductos(ArrayList<Estado<T>> productos, Model<String> filtro){
-		ArrayList<Estado<T>> filtrados = new ArrayList<Estado<T>>(); 
-		
+
 		if(filtro.getObject() == null){
 			return productos;
 		}
+		
+		ArrayList<Estado<T>> filtrados = new ArrayList<Estado<T>>(); 
 		
 		for(Estado<T> prod : estados ){
 			if(prod.getName().toLowerCase().startsWith(filtro.getObject().toLowerCase())){
@@ -74,13 +78,12 @@ public class DropList<T extends AlimDeReceta> extends Panel {
 		}
 		return filtrados;
 	}
+	
+	
 	private MarkupContainer generarListaIng(final ArrayList<Estado<T>> productos, String containerID, boolean estad){
 		
 		final MarkupContainer contenedor = new MarkupContainer(containerID){
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;};
 		
 		RepeatingView ingRep = new RepeatingView("ingSel");
@@ -100,7 +103,7 @@ public class DropList<T extends AlimDeReceta> extends Panel {
 					contIng1 = nvoCont1;
 					
 					MarkupContainer nvoCont2;
-					contIng2.replaceWith(nvoCont2 = generarListaIng(filtrarProductos(productos, filtroIngText),"contIng2", true));
+					contIng2.replaceWith(nvoCont2 = generarListaIng(filtrarProductos(productos, new Model<String>("")),"contIng2", true));
 					target.add(nvoCont2);
 					contIng2 = nvoCont2;
 				}

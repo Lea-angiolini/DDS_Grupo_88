@@ -81,9 +81,15 @@ public class Receta implements Serializable{
 	
 	@Column(name = "caloriasTotales")
 	private int caloriasTotales;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idTipoReceta")
+	private TipoReceta tipoReceta;
 
 	public Receta(){
-		
+		ingredientesRelacionados = new HashSet<Receta_Ingrediente>();
+		condimentos = new HashSet<Condimentos>();
+		pasos = new ArrayList<Pasos>();
 	}
 	
 	public Receta(int id, String nom, Usuario crea, Dificultades difi, Temporadas temp, Ingredientes ingPrin){

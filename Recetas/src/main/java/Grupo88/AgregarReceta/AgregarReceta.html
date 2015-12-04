@@ -12,7 +12,7 @@
 </style>
 	
 		<div>
-		<div wicket:id="feedback"></div>
+		<div wicket:id="feedback" class="alert alert-danger"></div>
 			<div id="frmAgregarReceta" class="form-horizontal" method="post">
 				<fieldset id="AgregarReceta" class="center">
 					
@@ -40,31 +40,35 @@
 			
 			<div class="form-group">
 				<label class="col-md-3">Nombre Receta</label>
-				<input type="text" class="col-md-5" wicket:id="nombreReceta">
+				<input required="required" type="text" class="col-md-5" wicket:id="nombreReceta">
 			</div>
 			<div class="form-group">
 				<label class="col-md-3">Breve detalle</label>
-				<textarea type="text" class="col-md-5" wicket:id="descripcion" cols="7"></textarea>
+				<textarea required="required" type="text" class="col-md-5" wicket:id="descripcion" cols="7"></textarea>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3">Foto descriptiva</label>
-				<input class="col-md-5" wicket:id="fileUpload" type="file"/>
+				<input required="required" class="col-md-5" wicket:id="fileUpload" type="file"/>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-md-3">Temporada</label>
-				<select class="col-md-5" wicket:id="temporada"></select>
+				<select required="required" class="col-md-5" wicket:id="temporada"></select>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3">Dificultad</label>
-				<select class="col-md-5" wicket:id="dificultad"></select>
+				<select required="required" class="col-md-5" wicket:id="dificultad"></select>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3">Ingrediente principal</label>
-				<select class="col-md-5" wicket:id="ingPrinc"></select>
+				<select required="required" class="col-md-5" wicket:id="ingPrinc"></select>
 			</div>
 			<div class="form-group">
-				<label class="col-md-3">Ingredientes</label>
+				<label class="col-md-3">Receta recomendada para</label>
+				<select required="required" class="col-md-5" wicket:id="tipoRecomendado"></select>
+			</div>
+			<div class="form-group">
+				<label  class="col-md-3">Ingredientes</label>
 			</div>
 			<div wicket:id="dropIngredientes"></div>
 			

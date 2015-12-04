@@ -33,6 +33,7 @@ import Database.DAODificultades;
 import Database.DAOIngredientes;
 import Database.DAORecetas;
 import Database.DAOTemporadas;
+import Database.DAOTipoReceta;
 import Database.DBExeption;
 import Grupo88.Componentes.DropList;
 import Grupo88.MisRecetas.MisRecetas;
@@ -42,38 +43,52 @@ import ObjetosDB.Ingredientes;
 import ObjetosDB.Pasos;
 import ObjetosDB.Receta;
 import ObjetosDB.Temporadas;
+import ObjetosDB.TipoReceta;
 import ObjetosDB.Usuario;
 
 public class AgregarReceta extends RegisteredPage {
 	
 
 	private static final long serialVersionUID = 1L;
-	private Usuario user = getUsuarioActual();
-	private final Receta nuevareceta = new Receta(0, "", user, new Dificultades(), new Temporadas(), new Ingredientes());
-	private List<Fragmento> fragmentos = new ArrayList<Fragmento>(); 
-	private DropList<Ingredientes> dropIng;
-	private DropList<Condimentos> dropCond;
-	private final DAOIngredientes daoIgredientes = new DAOIngredientes(getSessionBD());
-	private DAOCondimentos daoCondimentos = new DAOCondimentos(getSessionBD());
-	private DAODificultades daoDificultades = new DAODificultades(getSessionBD());
-	private DAOTemporadas daoTemporadas = new DAOTemporadas(getSessionBD());
-	DAORecetas daoreceta = new DAORecetas(getSessionBD());
-//	private static final ResourceReference RESOURCE_REF = new PackageResourceReference(AgregarReceta.class, "default.jpg");
-
-	//private Fragmento frm
+	private Usuario user;
+	private final Receta nuevareceta;
+	private List<Fragmento> fragmentos; 
+	private final DAOIngredientes daoIngredientes;
+	private DAOCondimentos daoCondimentos;
+	private DAODificultades daoDificultades;
+	private DAOTemporadas daoTemporadas;
+	private DAORecetas daoreceta;
+	private DAOTipoReceta daoTipoReceta;
 	
 	public AgregarReceta(){
 		super();
 		
+		user =  getUsuarioActual();
+		nuevareceta = new Receta();
+		nuevareceta.setCreador(user);
+		fragmentos = new ArrayList<Fragmento>();
+		daoIngredientes = new DAOIngredientes (getSessionBD());
+		daoCondimentos = new DAOCondimentos(getSessionBD());
+		daoDificultades = new DAODificultades(getSessionBD());
+		daoTemporadas = new DAOTemporadas(getSessionBD());
+		daoreceta = new DAORecetas (getSessionBD());
+		daoTipoReceta = new DAOTipoReceta(getSessionBD());
+		
+		generarFragmentos();
+		
+		add(fragmentos.get(0));
+		
+		add(new FeedbackPanel("feedback").setOutputMarkupId(true));
+		
+	}
+	
+	private void generarFragmentos(){
+		nuevareceta.setPasos(new ArrayList<Pasos>());
 		fragmentos.add(new Fragmento("areaForms","fragmentoInicial",this,new FrmDatosReceta("frmDatosBasicos")));
 		for(int i = 1; i<= 5; i++){
 			nuevareceta.agregarPaso(new Pasos(i, ""));
 			fragmentos.add(new Fragmento("areaForms","fragmentoPaso",pagina(), new FrmPaso("frmPasos",i)));
 		}
-		add(fragmentos.get(0));
-		
-		add(new FeedbackPanel("feedback").setOutputMarkupId(true));
-		
 	}
 	
 	protected AgregarReceta pagina(){
@@ -82,9 +97,6 @@ public class AgregarReceta extends RegisteredPage {
 	
 	public class Fragmento extends Fragment{
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		public Fragmento(String id, String markupId, MarkupContainer markupProvider, Form<?> form) {
@@ -99,65 +111,106 @@ public class AgregarReceta extends RegisteredPage {
 
 		private static final long serialVersionUID = 1L;
 		private FileUploadField fileUpload;
+		private TextField<String> nombreReceta;
+		private TextArea<String> descripcion;
+		private DropDownChoice<Ingredientes> ingPrinc;
+		private DropDownChoice<Temporadas> temporada;
+		private DropDownChoice<Dificultades> dificultad;
+		private DropDownChoice<TipoReceta> tiposReceta;
+		private DropList<Ingredientes> dropIng;
+		private DropList<Condimentos> dropCond;
+		private ArrayList<Ingredientes> todosIngredientes;
+		private ArrayList<Condimentos> todosCondimentos;
+		private ArrayList<Temporadas> todasTemporadas;
+		private ArrayList<Dificultades> todasDificultades;
+		private ArrayList<TipoReceta> todosTipoReceta;
+		
 		public FrmDatosReceta(String id) {
 			super(id);
-		//final TextField<String> nombre;
-		add(new TextField<String>("nombreReceta", new PropertyModel<String>(nuevareceta, "nombre")));
-		add(new TextArea<String>("descripcion", new PropertyModel<String>(nuevareceta, "detalle")));
+			
+			try {
+				todosIngredientes = new ArrayList<Ingredientes>(daoIngredientes.findAll());
+				todasTemporadas =  new ArrayList<Temporadas>(daoTemporadas.findAll());
+				todasDificultades = new ArrayList<Dificultades>(daoDificultades.findAll());
+				todosCondimentos= new ArrayList<Condimentos>(daoCondimentos.findAll());
+				todosTipoReceta = new ArrayList<TipoReceta>(daoTipoReceta.findAll());
+			} catch (DBExeption e2) {
+				// error no podes cargar las listas
+				e2.printStackTrace();
+			}
 		
-		try {
-			add(new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), daoIgredientes.findAll(), new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
-			add(new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), daoTemporadas.findAll(), new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
-			add(new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"), daoDificultades.findAll(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
-		} catch (DBExeption e1) {
-			e1.printStackTrace();
+			add(nombreReceta = new TextField<String>("nombreReceta", new PropertyModel<String>(nuevareceta, "nombre")));
+			add(descripcion = new TextArea<String>("descripcion", new PropertyModel<String>(nuevareceta, "detalle")));
+			add(ingPrinc = new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), todosIngredientes, new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
+			add(temporada = new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), todasTemporadas, new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
+			add(dificultad = new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"),todasDificultades, new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
+			add(tiposReceta = new DropDownChoice<TipoReceta>("tipoRecomendado", new PropertyModel<TipoReceta>(nuevareceta, "tipoReceta"), todosTipoReceta, new ChoiceRenderer<TipoReceta>("descripcion","idTipoReceta")));
+			add(fileUpload = new FileUploadField("fileUpload"));
+			add(dropIng = new DropList<Ingredientes>("dropIngredientes",todosIngredientes));
+			add(dropCond = new DropList<Condimentos>("dropCondimentos",todosCondimentos));
+			
+			nombreReceta.setRequired(true);
+			descripcion.setRequired(true);
+			ingPrinc.setRequired(true);
+			ingPrinc.setNullValid(true);
+			dificultad.setRequired(true);
+			dificultad.setNullValid(true);
+			temporada.setRequired(true);
+			temporada.setNullValid(true);
+			tiposReceta.setRequired(true);
+			tiposReceta.setNullValid(true);
+			fileUpload.setRequired(true);
+		
 		}
 		
-		add(fileUpload = new FileUploadField("fileUpload"));
-		fileUpload.setRequired(true);
+		private boolean cargarIngyCond(){
+			
+			nuevareceta.agregarIngrediente(nuevareceta.getIngredientePrincipal(), 1);
+//			if(dropIng.getElegidos().size()> 0){
+				
+				for(Ingredientes ing : dropIng.getElegidos())
+					if(ing.getId() != nuevareceta.getIngredientePrincipal().getId())
+						nuevareceta.agregarIngrediente(ing,1);
+				
+				return true;
+//			}
 		
-		try {
-			add(dropIng = new DropList<Ingredientes>("dropIngredientes",(ArrayList<Ingredientes>)daoIgredientes.findAll()));
-			add(dropCond = new DropList<Condimentos>("dropCondimentos",(ArrayList<Condimentos>)daoCondimentos.findAll()));
-		} catch (DBExeption e) {
-			e.printStackTrace();
+//			return false;
+			
 		}
-		
-		}
-		
 		@Override
 		protected void onSubmit() {
-		// Va a conectarse con BD y comprobar las validaciones
-		super.onSubmit();
-		pagina().addOrReplace(fragmentos.get(1));
-		
-		for(Ingredientes ing : dropIng.getElegidos())
-			nuevareceta.agregarIngrediente(ing,1);
-		
-		
-		nuevareceta.setCondimentos(dropCond.getElegidos());
-		
-		if(fileUpload.getFileUpload() != null){		
+			super.onSubmit();
+			
+			if(!cargarIngyCond()){
+				error("Debe elegir un ingrediente minimo");
+				return;
+			}
+				
+			nuevareceta.setCondimentos(dropCond.getElegidos());
+			
+			if(fileUpload.getFileUpload() != null){		
 				try {
+					
 					if(ImageIO.read(fileUpload.getFileUpload().getInputStream()) == null){
 						error("Formato de archivo no soportado");
 						return;
 					}
-					else{
-						nuevareceta.setFotoPrincipal(fileUpload.getFileUpload().getBytes());
-					}
+					
+					nuevareceta.setFotoPrincipal(fileUpload.getFileUpload().getBytes());
+					
 				} catch (IOException e) {
-					e.printStackTrace();
+					error("Formato de archivo no soportado");
+					return;
 				}
-		}
+			}
+			
+			pagina().addOrReplace(fragmentos.get(1));
 		}
 	}
 	
 	public class FrmPaso extends Form<Object> {
 		
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 		private TextArea<String> detallePaso;
 		private int idFrmPaso;
@@ -171,15 +224,16 @@ public class AgregarReceta extends RegisteredPage {
 			StringValidator vText = new StringValidator(5, 2000);
 			add(new Label("numPaso",idPaso));
 			add(detallePaso = new TextArea<String>("paso", new PropertyModel<String>(nuevareceta.getPasos().get(idPaso-1), "descripcionPaso")));
+			add(imagen = new Image("img", new SharedResourceReference(AgregarReceta.class, "default.jpg")));
+			add(fileUpload = new FileUploadField("fileUpload"));
+			
 			detallePaso.add(vText);
 			detallePaso.setRequired(true);
 			setMultiPart(true);
 			setMaxSize(Bytes.megabytes(15));
 			
-			add(imagen = new Image("img", new SharedResourceReference(AgregarReceta.class, "default.jpg")));
 			imagen.setOutputMarkupId(true);	
 			
-			add(fileUpload = new FileUploadField("fileUpload"));
 			fileUpload.setOutputMarkupId(true);
 			
 			
@@ -218,10 +272,7 @@ public class AgregarReceta extends RegisteredPage {
 				
 				Image newImage;
 				imagen.replaceWith(newImage = new Image("img",new DynamicImageResource() {
-					
-					/**
-					 * 
-					 */
+
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -238,7 +289,6 @@ public class AgregarReceta extends RegisteredPage {
 			e.printStackTrace();
 		}}
 		
-		
 		if(idFrmPaso < fragmentos.size()-1){
 		pagina().addOrReplace(fragmentos.get(idFrmPaso+1));	
 		}
@@ -247,10 +297,8 @@ public class AgregarReceta extends RegisteredPage {
 				daoreceta.saveOrUpdate(nuevareceta);
 				setResponsePage(MisRecetas.class);
 			} catch (Exception e) {
-				error("error"/*e.getMessage()*/);
-			}
-			//nuevareceta.guardarReceta();
-			
+				error("error");
+			}			
 			}
 		}
 	}

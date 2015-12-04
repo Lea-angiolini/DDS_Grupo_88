@@ -65,21 +65,21 @@ public class PanelLinks extends Panel {
 			add(new Link("estadisticas"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(new FactoryEstSegunSexo()));
+					setResponsePage(new Estadisticas());
 				}
 			});
 
 			add(new Link("consultasDificultad"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(new FactoryEstSegunDificultad()));
+					setResponsePage(new Estadisticas());
 				}
 			});
 			
 			add(new Link("topRecetasConsultadas"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(new FactoryEstSegunMasConsultadas()));
+					setResponsePage(new Estadisticas());
 				}
 			});
 			

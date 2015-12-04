@@ -152,7 +152,7 @@ public class DetalleDeReceta extends MasterPage {
 			}));
 
 			RepeatingView ingredientes = new RepeatingView("listaIngredientes");
-			
+
 			for (Receta_Ingrediente ingrediente : receta.getRelacionIngredientes()) {
 				
 				AbstractItem item = new AbstractItem(ingredientes.newChildId());

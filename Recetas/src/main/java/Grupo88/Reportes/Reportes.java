@@ -1,10 +1,10 @@
 package Grupo88.Reportes;
 
+import master.RegisteredPage;
+
 import org.apache.wicket.markup.html.form.Form;
 
 import Database.StrategyReportes;
-import Grupo88.Estadisticas.PanelDeEstadisticas;
-import master.RegisteredPage;
 
 public class Reportes extends RegisteredPage{
 	
@@ -26,7 +26,7 @@ public class Reportes extends RegisteredPage{
 		public FormReporte(String id,StrategyReportes fabReporte) {
 			super(id);
 			// TODO Auto-generated constructor stub
-			add(new PanelDeEstadisticas("panelReporte", fabReporte.obtenerReporte(getUsuarioActual(), "2015-03-21", "2015-10-21")));
+			//add(new PanelDeEstadisticas("panelReporte", fabReporte.obtenerReporte(getUsuarioActual(), "2015-03-21", "2015-10-21")));
 		}
 		
 	}
