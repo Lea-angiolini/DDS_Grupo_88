@@ -21,6 +21,8 @@ import javax.validation.constraints.Size;
 
 public class PreferenciasAlimenticias implements Serializable{
 	
+	private static final long serialVersionUID = 8934938305645546409L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idPreferencia")

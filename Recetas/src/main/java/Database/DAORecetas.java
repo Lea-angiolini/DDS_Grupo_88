@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -11,8 +12,10 @@ import ObjetosDB.Receta;
 import ObjetosDB.Usuario;
 import ObjetosDB.itemsABuscar;
 
-public class DAORecetas extends DAOGenerico<Receta,Integer> {
+public class DAORecetas extends DAOGenerico<Receta,Integer> implements Serializable{
 	
+	private static final long serialVersionUID = -3242079439533262957L;
+
 	public DAORecetas(Session session) {
 		// TODO Auto-generated constructor stub
 		super(session);

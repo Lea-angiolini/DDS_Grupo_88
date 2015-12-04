@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,8 +16,9 @@ import org.hibernate.Session;
 import ObjetosDB.Estadistico;
 import ObjetosDB.Sexo;
 
-public class DAOEstadisticaPorSexo extends DAOEstadistica{
+public class DAOEstadisticaPorSexo extends DAOEstadistica implements Serializable{
 	
+	private static final long serialVersionUID = -7953169414586587316L;
 	public DAOEstadisticaPorSexo(Session session) {
 		super(session);
 		

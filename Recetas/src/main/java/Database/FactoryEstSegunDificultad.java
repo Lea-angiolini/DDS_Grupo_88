@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +10,9 @@ import javax.swing.JOptionPane;
 
 import ObjetosDB.Consulta;
 
-public class FactoryEstSegunDificultad extends StrategyEstadisticas {
+public class FactoryEstSegunDificultad extends StrategyEstadisticas implements Serializable{
 
+	private static final long serialVersionUID = -7096808652615386082L;
 	private Factory fab;
 	
 	public FactoryEstSegunDificultad(){

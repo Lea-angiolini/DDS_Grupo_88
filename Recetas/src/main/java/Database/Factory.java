@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,8 +18,9 @@ import org.junit.internal.builders.IgnoredBuilder;
 import ObjetosDB.*;
 
 
-public class Factory {
+public class Factory implements Serializable{
 	
+	private static final long serialVersionUID = 8112127760209116047L;
 	static private Connection con;
 	
 	public Factory(){

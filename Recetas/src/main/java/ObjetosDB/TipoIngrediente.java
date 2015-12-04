@@ -1,5 +1,6 @@
 package ObjetosDB;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,8 +21,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="tipoingrediente")
-public class TipoIngrediente {
+public class TipoIngrediente implements Serializable{
 	
+	private static final long serialVersionUID = -6025401808564192712L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idTipoIngrediente")

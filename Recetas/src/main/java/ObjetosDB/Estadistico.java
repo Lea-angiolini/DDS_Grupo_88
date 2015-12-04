@@ -1,7 +1,10 @@
 package ObjetosDB;
 
-public class Estadistico {
+import java.io.Serializable;
 
+public class Estadistico implements Serializable{
+
+	private static final long serialVersionUID = 2538411953657168487L;
 	private String Descripcion;
 	private String valor;
 	

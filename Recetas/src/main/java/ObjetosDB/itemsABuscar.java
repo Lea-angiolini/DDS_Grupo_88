@@ -1,7 +1,12 @@
 package ObjetosDB;
 
-public class itemsABuscar {
+import java.io.Serializable;
+
+public class itemsABuscar implements Serializable{
 	
+	private static final long serialVersionUID = 5844765918859505658L;
+
+
 	public itemsABuscar() {
 		calificacion = 0;
 		grupoAlimenticio = new GruposAlimenticios(-1, "");
