@@ -23,6 +23,8 @@ public abstract class DAOEstadistica implements Serializable{
 	
 	public abstract ArrayList<Estadistico> obtenerEstadistica(int dias) throws Exception;
 	
+	public abstract String descripcionEst();
+	
 	protected String fechaAterior(int dias){
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();

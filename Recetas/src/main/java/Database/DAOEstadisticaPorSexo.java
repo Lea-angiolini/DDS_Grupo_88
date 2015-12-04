@@ -1,14 +1,8 @@
 package Database;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,11 +12,17 @@ import ObjetosDB.Sexo;
 
 public class DAOEstadisticaPorSexo extends DAOEstadistica implements Serializable{
 	
+
 	private static final long serialVersionUID = -7953169414586587316L;
 	public DAOEstadisticaPorSexo(Session session) {
 		super(session);
-		
 	}
+	
+	@Override
+	public String descripcionEst() {
+		return "Estadisticas por Sexo";
+	}
+	
 	@Override
 	public ArrayList<Estadistico> obtenerEstadistica(int dias) throws Exception{
 		
@@ -53,7 +53,7 @@ public class DAOEstadisticaPorSexo extends DAOEstadistica implements Serializabl
 		}
 	}
 	private String consulta(int dias, int sexo){
-		return "select new ObjetosDB.Estadistico(STR(h.usuario.sexo.descripcion),concat(STR(h.receta.tipoReceta.descripcion),STR(count(*)))) from Historial h "+
+		return "select new ObjetosDB.Estadistico(STR(h.usuario.sexo.descripcion),STR(h.receta.tipoReceta.descripcion)) from Historial h "+
 				"where fecha > '"+fechaAterior(dias)+"' and h.usuario.sexo.idSexo = '"+sexo+"' group by h.usuario.sexo, h.receta.tipoReceta.descripcion "+
 				"order by count(*) desc";
 	}

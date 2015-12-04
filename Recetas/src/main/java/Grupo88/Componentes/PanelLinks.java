@@ -6,7 +6,9 @@ import objetosWicket.SesionUsuario;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.hibernate.Session;
 
+import Database.DAOEstadisticaPorSexo;
 import Database.FactoryEstSegunDificultad;
 import Database.FactoryEstSegunMasConsultadas;
 import Database.FactoryEstSegunSexo;
@@ -22,6 +24,7 @@ public class PanelLinks extends Panel {
 
 	ModelUsuario mUsuario;
 	SesionUsuario sesion = (SesionUsuario)getSession();
+	Session sessionDB = sesion.getSession();
 	
 	public PanelLinks(String id) {
 		super(id);
@@ -65,21 +68,21 @@ public class PanelLinks extends Panel {
 			add(new Link("estadisticas"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas());
+					setResponsePage(new Estadisticas(new DAOEstadisticaPorSexo(sessionDB)));
 				}
 			});
 
 			add(new Link("consultasDificultad"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas());
+					setResponsePage(new Estadisticas(new DAOEstadisticaPorSexo(sessionDB)));
 				}
 			});
 			
 			add(new Link("topRecetasConsultadas"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas());
+					setResponsePage(new Estadisticas(new DAOEstadisticaPorSexo(sessionDB)));
 				}
 			});
 			
