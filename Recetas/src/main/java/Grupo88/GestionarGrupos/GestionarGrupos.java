@@ -180,13 +180,12 @@ public class GestionarGrupos extends MasterPage {
 					try {
 						nuevoGrupo.setCreador(getUsuarioActual());
 						daogrupos.saveOrUpdate(nuevoGrupo);
-						getUsuarioActual().agregarGrupo(nuevoGrupo);
-						daoUsuarios.saveOrUpdate(getUsuarioActual());
 						msg = "Su grupo ha sido creado!";
 						getSessionBD().refresh(getUsuarioActual());
 					}
 					catch (javax.validation.ConstraintViolationException cve){
 						msg = cve.getConstraintViolations().iterator().next().getMessage();
+						
 						}
 					catch (org.hibernate.exception.ConstraintViolationException cve){
 						msg = cve.getMessage();

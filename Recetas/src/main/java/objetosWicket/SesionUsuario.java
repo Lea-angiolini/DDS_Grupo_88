@@ -1,5 +1,7 @@
 package objetosWicket;
 
+import javax.swing.JOptionPane;
+
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
@@ -44,6 +46,7 @@ public class SesionUsuario extends WebSession {
 			} catch (DBExeption e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 			
 		}

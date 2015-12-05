@@ -5,6 +5,7 @@ import objetosWicket.SesionUsuario;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.*;
+import org.apache.wicket.request.http.WebResponse;
 import org.hibernate.Session;
 import org.omg.CORBA.PRIVATE_MEMBER;
 
@@ -54,6 +55,14 @@ public class MasterPage extends WebPage {
 	}
 	
 	
-	
+	@Override
+	protected void configureResponse(WebResponse response) {
+		// TODO Auto-generated method stub
+		super.configureResponse(response);
+		response.setHeader("Cache-Control", 
+	             "no-cache, max-age=0,must-revalidate, no-store");
+		response.setHeader("Expires","-1");
+		response.setHeader("Pragma","no-cache");
+	}
 	
 }
