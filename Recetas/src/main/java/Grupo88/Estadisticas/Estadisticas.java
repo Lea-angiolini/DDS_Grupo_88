@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import master.RegisteredPage;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -15,13 +13,9 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.markup.repeater.data.DataView;
-import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 
 import Database.DAOEstadistica;
-import Database.DAOEstadisticaPorSexo;
-import Database.StrategyEstadisticas;
-import ObjetosDB.Consulta;
 
 public class Estadisticas extends RegisteredPage{
 
