@@ -126,9 +126,7 @@ public class GestionarGrupos extends MasterPage {
 	}
 	
 	private class FragmentoMisGrupos extends Fragment {
-        /**
-		 * 
-		 */
+
 		private static final long serialVersionUID = 1L;
 
 		public FragmentoMisGrupos(String id, String markupId, MarkupContainer markupPorvider, List<Grupo> grupos) {
@@ -140,10 +138,8 @@ public class GestionarGrupos extends MasterPage {
         	RepeatingView iterGrupos = new RepeatingView("iterGrupos");
         	
         		int i = 0;
-        		//for (int i = 0; i < grupos.size(); i++)
 				
 				for (Grupo grupo:grupos) {
-					
 					
 					AbstractItem item = new AbstractItem(iterGrupos.newChildId());
 					Grupo grupoActual = grupo;
@@ -159,15 +155,10 @@ public class GestionarGrupos extends MasterPage {
 				add(iterGrupos);
 				iterGrupos.setOutputMarkupId(true);
         	}
-        	
-            
-        
 	}
 	
 	private class FragmentoGrupoNuevo extends Fragment {
-		/**
-		 * 
-		 */
+
 		private static final long serialVersionUID = 1L;
 
 		public FragmentoGrupoNuevo (String id, String markupId, MarkupContainer markupPorvider){
@@ -279,7 +270,8 @@ public class GestionarGrupos extends MasterPage {
 						}
 					}
 					else{
-						if(grupoActual.getUsuarios().remove(getUsuarioActual())){
+						//if(grupoActual.getUsuarios().remove(getUsuarioActual())){
+						if(grupoActual.getUsuarios().add(getUsuarioActual())){
 							try {
 								daogrupos.saveOrUpdate(grupoActual);
 								target.appendJavaScript("adherido('"+i+"');");

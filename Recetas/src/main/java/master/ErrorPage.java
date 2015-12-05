@@ -24,7 +24,6 @@ public class ErrorPage extends MasterPage {
 	
 	public static ErrorPage ErrorCargaDatos(){
 		return new ErrorPage("Oops! Hubo algun problema interno, por favor vuelva a intentar mas tarde");
-	//	return new ErrorPage("Oops! La cagaste... Cerra todo antes de que se den cuenta");
 	}
 
 	public static ErrorPage ErrorEnLaDB(){
@@ -32,7 +31,7 @@ public class ErrorPage extends MasterPage {
 	}
 	
 	public static ErrorPage ErrorRandom(){
-		return new ErrorPage("Si estas viendo este error es porque hiciste magia y rompiste la pagina, proba de vuelta");
+		return new ErrorPage("Oops! La cagaste... Cerra todo antes de que se den cuenta");
 	}
 	
 	
