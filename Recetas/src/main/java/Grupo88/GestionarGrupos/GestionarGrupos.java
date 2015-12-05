@@ -69,9 +69,7 @@ public class GestionarGrupos extends MasterPage {
 			});	
 			
 			add(new Link<Object>("todosGrupos"){
-				/**
-				 * 
-				 */
+				
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -83,6 +81,7 @@ public class GestionarGrupos extends MasterPage {
 						todosGrupos = (List<Grupo>) daogrupos.findAll();
 					} catch (DBExeption e) {
 						e.printStackTrace();
+						setResponsePage(ErrorPage.ErrorCargaDatos());
 					};
 		        	if (!todosGrupos.isEmpty())
 		        	{
