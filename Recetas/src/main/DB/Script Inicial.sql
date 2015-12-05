@@ -329,15 +329,17 @@ VALUES('jorge','pass','Jorge','Gomez','jorge@gmail.com','1989/05/12',1,170,3,2,1
 	  ('maria','pass','Maria','Rodriguez','maria@gmail.com','1975/12/18',2,150,1,4,2),
       ('carlos', 'pass', 'Carlos', 'Batata','carlos@gmail.com','1965/04/19',3, 160, 2, 1, 3);
 
-INSERT INTO Grupo88.Recetas(nombre,creador,idDificultad,caloriasTotales,grupoAlimenticio,temporada,ingredientePrincipal)
-VALUES('Pollo al horno','carlos',2,1000,2,1,31),
-	  ('milanesas napolitana','maria',1,800,2,3,34),
-      ('Pulpo en su tinta',null,3,1200,2,5,35),
-      ('Ñoquis','maria',2,760,6,4,3),
-      ('Pan con queso',null,1,1000,1,1,29),
-      ('Pizza','jorge',1,1150,6,2,3),
-      ('Asado','carlos',2,940,2,2,32),
-      ('Pollo a la parrilla','carlos',2,940,2,2,31);
+INSERT INTO Grupo88.Recetas(nombre,creador,idDificultad,caloriasTotales,grupoAlimenticio,temporada,ingredientePrincipal, idTipoReceta)
+VALUES('Pollo al horno','carlos',2,1000,2,1,31, 4),
+	  ('milanesas napolitana','maria',1,800,2,3,34,4),
+      ('Pulpo en su tinta',null,3,1200,2,5,35,2),
+      ('Ñoquis','maria',2,760,6,4,3,2),
+      ('Pan con queso',null,1,1000,1,1,29,1),
+      ('Pizza','jorge',1,1150,6,2,3,4),
+      ('Asado','carlos',2,940,2,2,32,2),
+      ('Pollo a la parrilla','carlos',2,940,2,2,31,3),
+      ('Medialunas','carlos',2,1200,6,2,31,3);
+      
     
 
 INSERT INTO Grupo88.confirmadas(fecha,idReceta,usuario)
@@ -354,6 +356,13 @@ INSERT INTO Grupo88.grupos(nombreGrupo,creador,detalle)
 VALUES('Locos del asado','jorge','Las mejores recetas de carne. No se admiten vegetarianos'),
 		('Pizzamania','maria','Mil y una pizzas, ideales para cualquier ocasión'),
 		('Todo pasta','carlos','Ideal para domingo en familia');
+        
+INSERT INTO Grupo88.historicoconsultas(idReceta,username,fecha)
+VALUES(1,'jorge','2015-11-10'),(2,'maria','2015-11-15'),
+		(1,'jorge','2015-11-25'),(1,'maria','2015-11-29'),
+        (6,'carlos','2015-11-30'),(1,'jorge','2015-12-01'),
+        (2,'maria','2015-12-02'),(3,'jorge','2015-12-03'),
+        (5,'carlos','2015-12-04'),(3,'maria','2015-12-04');
         
 INSERT INTO Grupo88.relusuariocondicion()
 VALUES ('jorge',1),('jorge',3);

@@ -58,20 +58,26 @@
 					</form>
 	<a class="btn btn-primary" wicket:id="volver">Volver</a>
 	</section>
-	<aside style="background-color: red; width: 30%; float: right;">
+	<aside style="background-color: rgba(252,125,150,0.3); width: 30%; float: right;">
 	
 		<form wicket:id="formCalificar" method="post">
 			<div valign="top" wicket:id="calificacion"></div>
-			<button wicket:id="confCalificacion">¡Calificar!</button>
+			<button class="btn btn-info" wicket:id="confCalificacion">
+			<span class="glyphicon glyphicon-star-empty"></span>
+			¡Calificar!
+			</button>
 		</form>
 		
 		<form wicket:id="formConfirmar" method="post">
-			<button class="" name="btnConfirmar" wicket:id="confirmar">Confirmar</button>
+			<button class=" btn btn-warning" name="btnConfirmar" wicket:id="confirmar"> 
+			<span class= "glyphicon glyphicon-heart-empty"></span>
+			Confirmar</button>
 			<span wicket:id="comida">Seleccione</span>
 		</form>	
 		
 		<form wicket:id="formCompartir" method="post">			
-			<button type="submit" id="p" name="btnCompartir" wicket:id="compartir">Compartir</button>
+			<button type="submit" class="btn btn-success" id="p" name="btnCompartir" wicket:id="compartir">
+			¡Compartir!</button>
 			<span wicket:id="grupos"></span>
 		</form>
 		
