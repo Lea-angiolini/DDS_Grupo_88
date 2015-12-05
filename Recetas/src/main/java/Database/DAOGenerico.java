@@ -4,18 +4,14 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import objetosWicket.SesionUsuario;
-
 import org.hibernate.HibernateException;
-import org.hibernate.JDBCException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
-public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, ID> {
+public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, ID>, Serializable {
 	
+
+	private static final long serialVersionUID = 7802092408107142015L;
 	Session session;
 	
 	public DAOGenerico(Session session) {
@@ -23,7 +19,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 	}
 	
 	public void limpiarSesion(){
-		session.clear();
+		//session.clear();
 	}
 	
 	@Override
@@ -65,7 +61,6 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 				 System.out.println("Falló al hacer un rollback");
 				 throw new Exception(exc.getLocalizedMessage());
 			 }
-			 limpiarSesion();
 			 throw cve;
 		 } 
 		 catch (org.hibernate.exception.ConstraintViolationException cve) {
@@ -77,11 +72,8 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 catch (HibernateException exc) {
 			     
 				 exc.printStackTrace();
-				 JOptionPane.showMessageDialog(null, "porque???");
 				 throw new Exception(exc.getMessage());
 			 }
-		
-			limpiarSesion();
 			throw cve;
 			 
 		 } 

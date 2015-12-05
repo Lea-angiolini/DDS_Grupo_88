@@ -3,6 +3,7 @@ package objetosWicket;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
+import org.hibernate.FlushMode;
 
 import Database.DAOUsuarios;
 import Database.DBExeption;
@@ -22,6 +23,7 @@ public class SesionUsuario extends WebSession {
 		this.usuario = invitado;
 		setAttribute("usuario", invitado);
 		session = HibernateUtil.getSessionFactory().openSession();
+		session.setFlushMode(FlushMode.MANUAL);
 		daousuario = new DAOUsuarios(session);
 		
 		

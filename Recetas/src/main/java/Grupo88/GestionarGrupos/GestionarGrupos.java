@@ -3,8 +3,6 @@ package Grupo88.GestionarGrupos;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import master.ErrorPage;
 import master.MasterPage;
 
@@ -33,15 +31,14 @@ import ObjetosDB.Grupo;
 
 public class GestionarGrupos extends MasterPage {	
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private FrmGestionarGrupos frmGestionarGrupos;
 	private DAOGrupos daogrupos;
+	private DAOUsuarios daoUsuarios;
 	public GestionarGrupos(){
 		super();
 		daogrupos = new DAOGrupos(getSessionBD());
+		daoUsuarios = new DAOUsuarios(getSessionBD());
 		add(frmGestionarGrupos = new FrmGestionarGrupos("frmGestionarGrupos"));
 
 	}
@@ -193,6 +190,8 @@ public class GestionarGrupos extends MasterPage {
 					try {
 						nuevoGrupo.setCreador(getUsuarioActual());
 						daogrupos.saveOrUpdate(nuevoGrupo);
+						getUsuarioActual().agregarGrupo(nuevoGrupo);
+						daoUsuarios.saveOrUpdate(getUsuarioActual());
 						msg = "Su grupo ha sido creado!";
 						getSessionBD().refresh(getUsuarioActual());
 					}
@@ -219,9 +218,6 @@ public class GestionarGrupos extends MasterPage {
 	
 	private class Botones extends MarkupContainer{
 		
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 		final String labelActual;
 		final String verActual;

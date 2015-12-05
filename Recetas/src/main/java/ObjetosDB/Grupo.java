@@ -108,7 +108,6 @@ public class Grupo implements Serializable{
 	
 	public void setUsuario(Usuario usuario) {
 		this.usuarios.add(usuario);
-		usuario.agregarGrupo(this);
 	}
 
 	public boolean agregarUsuario(Usuario user){
