@@ -16,113 +16,114 @@
 						<div class="panel panel-info">
 							<div class="panel-heading">
 								<div class="panel-title">
-									<span class="glyphicon glyphicon-list-alt"></span><span> Buscar
-										Receta</span>
+									<span class="glyphicon glyphicon-list-alt"></span><span> Buscar Receta</span>
 								</div>
 							</div>
 
 							<div class="panel-body" style="padding: 0px 20px 20px 20px;">
 								<div
 									style="background: transparent; border-radius: 2px; margin: 10px 0px;">
-									<div class="row">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="calorias" class="control-label" style="font-size: 20px;">Calorías</label><br>
-												<div class="col-sm-3">
-												<div class="col-sm-3" >
-												
-												<label>Min:</label>
-												</div>
-												<div class="col-sm-3">
-													<input type="number" min="0" class="form-control" id="caloriasMin" style="width: 71px;"
-														wicket:id="caloriasMin" placeholder="Min" required="required" >
+									<div>
+										<div class="row">
+											<div class="col-lg-4 col-md-6">
+												<div class="form-group">
+													<label for="calorias" class="control-label" style="font-size: 20px;">Calorías</label><br>
+													<div style="margin-top:7px;">
+														<div class="col-lg-3"style="margin-bottom: 10px;padding-left: 0px;padding-right: 0px;">
+															<div class="col-lg-3" style="margin-top:7px;padding-left: 0px;">
+																<label>Min:</label>
+															</div>
+															<div class="col-lg-3">
+																<input type="number" min="0" class="form-control" id="caloriasMin" style="width: 71px;"
+																wicket:id="caloriasMin" placeholder="Min" required="required" >
+															</div>
 														</div>
-												</div>
-												<div class="col-sm-3" style="margin-left: 7px;">
-												<div class="col-sm-3" style="margin-top:7px">
-												
-												<label>Máx:</label>
-												</div>
-												<div class="col-sm-3" >
-													<input type="number" class="form-control" id="caloriasMax" style="width: 80px;"
-														wicket:id="caloriasMax" placeholder="Max", required="required" min="0">
+														<div class="col-lg-3" style="margin-left: 0px;margin-bottom: 10px;margin-right: 0px;padding-right: 0px;width: 133px;padding-left: 30px;">
+															<div class="col-lg-3" style="margin-top:7px">
+																<label>Máx:</label>
+															</div>
+															<div class="col-lg-3" style="padding-left: 18px";>
+																<input type="number" class="form-control" id="caloriasMax" style="width: 80px;"
+																wicket:id="caloriasMax" placeholder="Max", required="required" min="0">
+															</div>
+														
 														</div>
-												
+													</div>
+													<br>
 												</div>
-												<br>
+											</div>
+											<div class="col-lg-4">
+												<div class="form-group">
+													<label for="grupoAlimenticio" class="control-label" style="font-size: 20px;margin-bottom: 10px">Grupo
+														Alimenticio</label>
+													<div>
+														<select class="form-control" id="grupoAlimenticio" style="width: 275.818182px;"
+															wicket:id="grupoAlim" placeholder="Seleccione uno...">
+															<option value="cargar"></option>
+														</select>
+													</div>
+													<br>
+												</div>
+											</div>
+											<div class="col-lg-4">
+												<div class="form-group">
+													<label for="calificacion" class="control-label" style="font-size: 20px;margin-bottom: 10px;padding-left: 40px;";>Calificacion
+														de usuarios</label>
+													<div style="padding-left: 40px;">
+														<select class="form-control" id="calificacion" style="width: 122.81818200000001px;"
+															wicket:id="calificaciones"
+															placeholder="Seleccione una calificacion...">
+															<option value="cargar"></option>
+														</select>
+													</div>
+													<br>
+												</div>
 											</div>
 										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="grupoAlimenticio" class="control-label" style="font-size: 20px;margin-bottom: 10px">Grupo
-													Alimenticio</label>
-												<div>
-													<select class="form-control" id="grupoAlimenticio" style="width: 275.818182px;"
-														wicket:id="grupoAlim" placeholder="Seleccione uno...">
-														<option value="cargar"></option>
-													</select>
+										<div class="row">
+											<div class="col-lg-4">
+												<div class="form-group">
+													<label for="ingredientePrincipal" class="control-label" style="font-size: 20px;margin-bottom: 10px;">Ingrediente
+														Principal</label>
+													<div>
+														<select class="form-control" wicket:id="ingrediente" style="width: 207px;"
+															id="ingredientePrincipal" placeholder="Seleccione uno...">
+															<option value="cargar"></option>
+														</select>
+													</div>
+													<br>
 												</div>
-												<br>
 											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="calificacion" class="control-label" style="font-size: 20px;margin-bottom: 10px">Calificacion
-													de usuarios</label>
-												<div>
-													<select class="form-control" id="calificacion" style="width: 122.81818200000001px;"
-														wicket:id="calificaciones"
-														placeholder="Seleccione una calificacion...">
-														<option value="cargar"></option>
-													</select>
+											<div class="col-lg-4">
+												<div class="form-group">
+													<label for="temporada" class="control-label" style="font-size: 20px;margin-bottom: 10px">Temporada</label>
+													<div>
+														<select class="form-control" wicket:id="temporada" style="width: 275.818182px;"
+															id="temporada" placeholder="Seleccione una temporada...">
+															<option value="cargar"></option>
+														</select>
+													</div>
+													<br>
 												</div>
-												<br>
+											</div>
+											<div class="col-lg-4">
+												<div class="form-group">
+													<label for="dificultad" class="control-label" style="font-size: 20px;margin-bottom: 10px;padding-left: 40px;">Dificultad</label>
+													<div style="padding-left: 40px;">
+														<select class="form-control" wicket:id="dificultad" style=" width: 122.81818200000001px;"
+															id="dificultad" placeholder="Seleccione una...">
+															<option value="cargar"></option>
+														</select>
+													</div>
+													<br>
+												</div>
 											</div>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="ingredientePrincipal" class="control-label" style="font-size: 20px;margin-bottom: 10px;">Ingrediente
-													Principal</label>
-												<div>
-													<select class="form-control" wicket:id="ingrediente" style="width: 207px;"
-														id="ingredientePrincipal" placeholder="Seleccione uno...">
-														<option value="cargar"></option>
-													</select>
-												</div>
-												<br>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="temporada" class="control-label" style="font-size: 20px;margin-bottom: 10px">Temporada</label>
-												<div>
-													<select class="form-control" wicket:id="temporada" style="width: 275.818182px;"
-														id="temporada" placeholder="Seleccione una temporada...">
-														<option value="cargar"></option>
-													</select>
-												</div>
-												<br>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="dificultad" class="control-label" style="font-size: 20px;margin-bottom: 10px">Dificultad</label>
-												<div>
-													<select class="form-control" wicket:id="dificultad" style=" width: 122.81818200000001px;"
-														id="dificultad" placeholder="Seleccione una...">
-														<option value="cargar"></option>
-													</select>
-												</div>
-												<br>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-10"></div>
-										<div class="col-md-2 col-sm-2 col-xs-2">
-											<button id="botonbuscar" wicket:id="botonBuscar" class="btn btn-success" ><span class="glyphicon glyphicon-search"></span> Buscar
+										<div class="col-lg-10"></div>
+										<div class="col-lg-12">
+											<button id="botonbuscar" wicket:id="botonBuscar" class="btn btn-success" style="width: 100%;height: 40px;font-size: large;"><span class="glyphicon glyphicon-search"></span> Buscar
 												Recetas</button>
 										</div>
 									</div>
