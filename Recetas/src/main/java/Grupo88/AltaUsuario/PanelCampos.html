@@ -83,7 +83,30 @@ $("#fecha").datepicker();
 	<br>
 	<fieldset style="border: 1px solid #ccc; padding: 10px;">
 		<legend>Datos personales</legend>
+		
 		<div class="form-group">
+			<div class="row">
+				<label style="font-size: 16px" align=left for="icode"
+					class="col-md-4 control-label">Nombre Completo <label
+					style="color: red;">*</label></label>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<input type="text" class="form-control" name="nombre" id="nombre"
+						wicket:id="nombre" placeholder="Nombre"
+						style="width: 176px;; margin-left: 20px;" required /> <label
+						style="color: rgba(51, 51, 51, 0.55); font-size: 15px;; margin-left: 23px;">nombre</label>
+				</div>
+				<div class=" col-md-4">
+					<input type="text" class="form-control" name="apellido"
+						id="apellido" wicket:id="apellido" placeholder="Apellido"
+						style="width: 176px;margin-left: 20px;" required /> <label
+						style="color: rgba(51, 51, 51, 0.55); font-size: 15px;;margin-left: 23px;">apellido</label>
+				</div>
+			</div>
+			&nbsp; <br>
+			
+			<div class="form-group">
 			<div class="row">
 				<label style="font-size: 16px" for="icode"
 					class="col-md-4 control-label">E-mail <label
@@ -95,27 +118,7 @@ $("#fecha").datepicker();
 					style="margin-left: 20px; width: 331px;" required />
 			</div>
 		</div>
-		&nbsp; <br>
-		<div class="form-group">
-			<div class="row">
-				<label style="font-size: 16px" align=left for="icode"
-					class="col-md-4 control-label">Nombre Completo <label
-					style="color: red;">*</label></label>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<input type="text" class="form-control" name="nombre" id="nombre"
-						wicket:id="nombre" placeholder="Nombre"
-						style="width: 176px;; margin-left: 20px;" required /> <label
-						style="color: rgba(51, 51, 51, 0.55); font-size: 15px;; margin-left: 23px;">nombre</label>
-				</div>
-				<div class=" col-md-2">
-					<input type="text" class="form-control" name="apellido"
-						id="apellido" wicket:id="apellido" placeholder="Apellido"
-						style="width: 176px;margin-left: 20px;" required /> <label
-						style="color: rgba(51, 51, 51, 0.55); font-size: 15px;;margin-left: 23px;">apellido</label>
-				</div>
-			</div>
+		&nbsp; <br>	
 		</div>
 
 		<div class="form-group">
@@ -127,8 +130,7 @@ $("#fecha").datepicker();
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-6">
 					<label style="font-size: 16px; " align=left
-						for="icode" class="col-md-4 control-label">Fecha
-						nacimiento <label style="color: red;">*</label>
+						for="icode" class="col-md-9 control-label">Fecha nacimiento <label style="color: red;">*</label>
 					</label>
 				</div>
 			</div>
@@ -146,7 +148,6 @@ $("#fecha").datepicker();
 						 required />
 				</div>
 			</div>
-
 		</div>
 
 		<div class="form-group">
