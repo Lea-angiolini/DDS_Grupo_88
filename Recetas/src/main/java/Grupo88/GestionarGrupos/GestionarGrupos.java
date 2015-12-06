@@ -6,28 +6,25 @@ import java.util.List;
 import master.ErrorPage;
 import master.MasterPage;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
-import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import Database.DAOGrupos;
 import Database.DAOUsuarios;
-import Database.DBExeption;
-import Grupo88.Detalles.DetalleGrupo;
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Grupo;
+
 
 public class GestionarGrupos extends MasterPage {	
 	
@@ -35,11 +32,29 @@ public class GestionarGrupos extends MasterPage {
 	private FrmGestionarGrupos frmGestionarGrupos;
 	private DAOGrupos daogrupos;
 	private DAOUsuarios daoUsuarios;
+	private final VentanaCrearGrupo window;
+	
 	public GestionarGrupos(){
 		super();
 		daogrupos = new DAOGrupos(getSessionBD());
 		daoUsuarios = new DAOUsuarios(getSessionBD());
 		add(frmGestionarGrupos = new FrmGestionarGrupos("frmGestionarGrupos"));
+		
+		window = new VentanaCrearGrupo("ventana","holaa") {
+			@Override
+			protected void onOpen(AjaxRequestTarget target) {
+				// TODO Auto-generated method stub
+				super.onOpen(target);
+			}
+			
+			@Override
+			public void onClose(AjaxRequestTarget target) {
+				// TODO Auto-generated method stub
+				super.onClose(target);
+			}
+		};
+		
+		add(window);
 
 	}
 	
@@ -50,8 +65,8 @@ public class GestionarGrupos extends MasterPage {
 		public FrmGestionarGrupos(String id) {
 			super(id);		
 			setOutputMarkupId(true);
-
-			add(new EmptyPanel("areaGrupos"));
+			
+			add(new EmptyPanel("areaGrupos").setOutputMarkupId(true));
 			
 			add(new Link<Object>("cancelar"){
 				
@@ -65,51 +80,58 @@ public class GestionarGrupos extends MasterPage {
 				}
 			});	
 			
-			add(new Link<Object>("todosGrupos"){
-				
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void onClick() {
-					
-					
-		        	List<Grupo> todosGrupos = null;
-					try {
-						todosGrupos = (List<Grupo>) daogrupos.findAll();
-					} catch (DBExeption e) {
-						e.printStackTrace();
-						setResponsePage(ErrorPage.ErrorCargaDatos());
-					};
-		        	if (!todosGrupos.isEmpty())
-		        	{
-		        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, todosGrupos).setOutputMarkupId(true));
-		        	}
-		        	else
-		        	{
-		        		frmGestionarGrupos.addOrReplace(new Label("areaGrupos","No existen grupos"));
-		        	}
-		        }
-			}.setOutputMarkupId(true));
+			final List<Grupo> todosGrupos;
 			
-			add(new Link<Object>("btnMisGrupos"){
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
+			try {
+				todosGrupos = (List<Grupo>) daogrupos.findAll();
+			} catch (Exception e) {
+				e.printStackTrace();
+				setResponsePage(ErrorPage.ErrorCargaDatos());
+				return;
+			};
+			
+        	if (todosGrupos != null)
+        	{
+        		addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, new ArrayList<Grupo>( todosGrupos)).setOutputMarkupId(true));
+        	}
+        	else
+        	{
+        		addOrReplace(new Label("areaGrupos","No existen grupos"));
+        	}
+			
+        	final Label checkLabel = new Label("elegirLabel","Ver grupos que estoy adherido");
+        	checkLabel.setOutputMarkupId(true);
+        	
+			AjaxCheckBox check = new AjaxCheckBox("elegir", Model.of(Boolean.FALSE)) {
+				
 				@Override
-				public void onClick() {
+				protected void onUpdate(AjaxRequestTarget target) {
+					FragmentoMisGrupos fragmento;
 					
-		        	if (!getUsuarioActual().getMisGrupos().isEmpty())
-		        	{
-		        		frmGestionarGrupos.addOrReplace(new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, new ArrayList<Grupo>( getUsuarioActual().getMisGrupos())).setOutputMarkupId(true).setOutputMarkupId(true));
-		        	}
-		        	else
-		        	{
-		        		frmGestionarGrupos.addOrReplace(new Label("areaGrupos","Usteded no tiene grupos"));
-		        	}
-		        }
-			});
+					if(getModelObject()){
+						fragmento = new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, new ArrayList<Grupo>( getUsuarioActual().getMisGrupos()));
+						checkLabel.setDefaultModelObject("Ver todos los grupos");
+					}
+					else{
+						fragmento = new FragmentoMisGrupos("areaGrupos", "fragmentGrupos", frmGestionarGrupos, new ArrayList<Grupo>( todosGrupos));
+						checkLabel.setDefaultModelObject("Ver grupos que estoy adherido");
+					}
+					fragmento.setOutputMarkupId(true);
+					frmGestionarGrupos.addOrReplace(fragmento);
+					target.add(fragmento);
+					target.add(checkLabel);
+				}
+				
+			};
+			
+			check.setOutputMarkupId(true);
+			
+			if(getUsuarioActual().getMisGrupos().size() < 1){
+				check.setEnabled(false);
+				checkLabel.setDefaultModelObject("Usted no esta adherido a ningun grupo");
+			}
+			add(check);
+			add(checkLabel);
 			
 			add(new Link<Object>("btnCrearGrupo"){
 
@@ -121,6 +143,13 @@ public class GestionarGrupos extends MasterPage {
 				}
 			});
 			
+			add(new AjaxLink("abriVentana") {
+				@Override
+				public void onClick(AjaxRequestTarget target) {
+					window.open(target);
+					
+				}
+			});
 			
 		}
 	}
@@ -132,29 +161,8 @@ public class GestionarGrupos extends MasterPage {
 		public FragmentoMisGrupos(String id, String markupId, MarkupContainer markupPorvider, List<Grupo> grupos) {
         	
         	super(id, markupId, markupPorvider);
-    		
-        	//markupPorvider.remove(id);
-        	
-        	RepeatingView iterGrupos = new RepeatingView("iterGrupos");
-        	
-        		int i = 0;
-				
-				for (Grupo grupo:grupos) {
-					
-					AbstractItem item = new AbstractItem(iterGrupos.newChildId());
-					Grupo grupoActual = grupo;
-
-					item.add(new Label("nombre", grupoActual.getNombre()));
-					item.add(new Label("creador", grupoActual.getCreador().getUsername()));
-					item.add(new Label("detalle", grupoActual.getDetalle()));
-					item.add(new Botones("botones", i, grupoActual));
-					iterGrupos.add(item);
-					
-					i++;
-				}
-				add(iterGrupos);
-				iterGrupos.setOutputMarkupId(true);
-        	}
+        	add(new VistaGrupos("vista", new ArrayList<Grupo>(grupos)));
+		}
 	}
 	
 	private class FragmentoGrupoNuevo extends Fragment {
@@ -201,93 +209,6 @@ public class GestionarGrupos extends MasterPage {
 				}
 				
 			});
-		}
-	}
-	
-	
-	private class Botones extends MarkupContainer{
-		
-		private static final long serialVersionUID = 1L;
-		final String labelActual;
-		final String verActual;
-		final Label label;
-		final Link<?> verGrupo;
-		AjaxLink<?> entrarsalir;
-		
-		public Botones(String id, final int i, final Grupo grupoActual) {
-			
-			super(id);
-			labelActual = "label"+i;
-			verActual = "verGrupo"+i;
-			
-			verGrupo = new Link<Object>("verGrupo") {
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void onClick() {
-					final PageParameters pars = new PageParameters();
-					pars.add("idGrupo",grupoActual.getIdGrupo());
-					setResponsePage(DetalleGrupo.class,pars);
-				}
-			};
-			
-			if(grupoActual.getUsuarios().contains(getUsuarioActual())){
-				label = new Label("textoEntrar/salir","Salir");
-				label.add(new AttributeModifier("class","btn btn-danger"));
-				verGrupo.add(new AttributeModifier("style", "visibility: visible"));
-			}
-			else{
-				label = new Label("textoEntrar/salir","Adherirse");
-				label.add(new AttributeModifier("class","btn btn-success"));
-				verGrupo.add(new AttributeModifier("style", "visibility: hidden"));
-			}
-			
-			label.add(new AttributeModifier("id",labelActual));
-			verGrupo.add(new AttributeModifier("id",verActual));
-			
-			entrarsalir = new AjaxLink<Object>("entrar/salir") {
-				
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void onClick(AjaxRequestTarget target) {
-		            
-					if(grupoActual.getUsuarios().contains(getUsuarioActual())){
-						grupoActual.setUsuario(getUsuarioActual());
-						try {
-							daogrupos.saveOrUpdate(grupoActual);
-							target.appendJavaScript("noAdherido('"+i+"');");
-						} catch (Exception/*DBExeption*/ e) {
-							e.printStackTrace();
-							grupoActual.getUsuarios().remove(getUsuarioActual());
-						}
-					}
-					else{
-						//if(grupoActual.getUsuarios().remove(getUsuarioActual())){
-						if(grupoActual.getUsuarios().add(getUsuarioActual())){
-							try {
-								daogrupos.saveOrUpdate(grupoActual);
-								target.appendJavaScript("adherido('"+i+"');");
-							} catch (Exception e) {
-								e.printStackTrace();
-								setResponsePage(ErrorPage.ErrorCargaDatos());
-								
-							}
-						}						
-					}
-
-				}
-			};
-			
-			entrarsalir.add(label);
-			add(entrarsalir);
-			add(verGrupo);
 		}
 	}
 }
