@@ -45,10 +45,10 @@ $("#fecha").datepicker();
 						class="col-md-4 control-label">Nombre de usuario</label><br>
 
 				</div>
-				<div class=" row col-md-4" align="left">
+				<div class=" row col-md-6" align="left">
 					<input type="text" class="form-control" name="username"
 						id="username" wicket:id="username" placeholder="Nombre de usuario"
-						style="width: 250px; margin-left: 20px;" required 
+						style="width: 90%; margin-left: 20px;" required 
 						oninvalid="setCustomValidity('Ingrese un nombre de usuario')"/>
 				</div>
 			</div>
@@ -58,10 +58,10 @@ $("#fecha").datepicker();
 					<label style="width: 180px; font-size: 16px" for="password"
 						class="col-md-4 control-label">Contraseña</label>
 				</div>
-				<div class=" row  col-md-4">
+				<div class=" row  col-md-6">
 					<input type="password" class="form-control" name="password"
 						id="password" wicket:id="password" placeholder="Contraseña"
-						style="width: 250px; margin-left: 20px;" required />
+						style="width: 90%; margin-left: 20px;" required />
 				</div>
 			</div>
 			<br>
@@ -71,11 +71,11 @@ $("#fecha").datepicker();
 						class="col-md-4 control-label">Repetir contraseña <label
 						style="color: red;">*</label></label>
 				</div>
-				<div class="row  col-md-4">
+				<div class="row  col-md-6">
 					<input type="password" class="form-control" name="repPassword"
 						id="repPassword" wicket:id="repPassword"
 						placeholder="Repetir contraseña"
-						style="width: 250px; margin-left: 20px;" required />
+						style="width: 90%; margin-left: 20px;" required />
 				</div>
 			</div>
 		</fieldset>
@@ -83,95 +83,99 @@ $("#fecha").datepicker();
 	<br>
 	<fieldset style="border: 1px solid #ccc; padding: 10px;">
 		<legend>Datos personales</legend>
+
+
 		
-		<div class="form-group">
-			<div class="row">
+<div class="form-group">
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-xs-6">
 				<label style="font-size: 16px" align=left for="icode"
-					class="col-md-4 control-label">Nombre Completo <label
+					class=" control-label">Nombre Completo <label
 					style="color: red;">*</label></label>
-			</div>
-			<div class="row">
-				<div class="col-md-8">
-					<input type="text" class="form-control" name="nombre" id="nombre"
-						wicket:id="nombre" placeholder="Nombre"
-						style="width: 176px;; margin-left: 20px;" required /> <label
-						style="color: rgba(51, 51, 51, 0.55); font-size: 15px;; margin-left: 23px;">nombre</label>
-				</div>
-				<div class=" col-md-4">
-					<input type="text" class="form-control" name="apellido"
-						id="apellido" wicket:id="apellido" placeholder="Apellido"
-						style="width: 176px;margin-left: 20px;" required /> <label
-						style="color: rgba(51, 51, 51, 0.55); font-size: 15px;;margin-left: 23px;">apellido</label>
-				</div>
-			</div>
-			&nbsp; <br>
-			
-			<div class="form-group">
-			<div class="row">
+					
+			<input type="text" class="form-control"  name="nombre" id="nombre"
+							wicket:id="nombre" placeholder="Nombre"
+							style="width: 90%; margin-left: 20px;" required /> <label
+							style="color: rgba(51, 51, 51, 0.55); font-size: 15px;; margin-left: 23px;">nombre</label>		
+							
+			<input type="text" class="form-control"  name="apellido"
+							id="apellido" wicket:id="apellido"  placeholder="Apellido"
+							style="width: 90%;margin-left: 20px;" required /> <label
+							style="color: rgba(51, 51, 51, 0.55); font-size: 15px;;margin-left: 23px;">apellido</label>				
+					
+		</div>
+		
+		<div class="col-md-6 col-sm-6 col-xs-6">
 				<label style="font-size: 16px" for="icode"
-					class="col-md-4 control-label">E-mail <label
+					class=" control-label">E-mail <label
 					style="color: red;">*</label></label>
+				<input type="email" class="form-control"  name="email" id="email"
+					wicket:id="email" placeholder="E-mail" style="width: 90%;margin-left: 20px;" required />	
 			</div>
-			<div class="row  col-md-8">
-				<input type="email" class="form-control" name="email" id="email"
-					wicket:id="email" placeholder="E-mail"
-					style="margin-left: 20px; width: 331px;" required />
-			</div>
-		</div>
+		
+	</div>
+
+
+</div>
+			
 		&nbsp; <br>	
-		</div>
+		
 
 		<div class="form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="col-md-6 col-sm-6 col-xs-6">
-					<label style="font-size: 16px; " align=left
-						for="icode" class="col-md-4 control-label">Sexo <label
-						style="color: red;">*</label></label>
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<label style="font-size: 16px; padding-left: 0px" align=left
+								for="icode" class="col-md-4 control-label">Sexo <label
+								style="color: red;">*</label></label>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<label style="font-size: 16px; padding-left:0px " align=left
+								for="icode" class="col-md-9 control-label">Fecha nacimiento <label style="color: red;">*</label>
+							</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<select class="form-control" name="sexo" id="sexo"
+								wicket:id="sexo" style="width: 90%;margin-left: 20px;"
+								placeholder="Sexo">
+								<option disabled="disabled" selected="selected" required ></option>
+							</select>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<input type="text" id="fecha" class="form-control" value="" style= "width: 90%; margin-left:20px;"
+								placeholder="aaaa/mm/dd"  wicket:id="fechaNac"
+								 required />
+						</div>
+					</div>
 				</div>
-				<div class="col-md-6 col-sm-6 col-xs-6">
-					<label style="font-size: 16px; " align=left
-						for="icode" class="col-md-9 control-label">Fecha nacimiento <label style="color: red;">*</label>
-					</label>
-				</div>
-			</div>
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="col-md-6 col-sm-6 col-xs-6">
-					<select class="form-control" name="sexo" id="sexo"
-						wicket:id="sexo"
-						placeholder="Sexo">
-						<option disabled="disabled" selected="selected" required></option>
-					</select>
-				</div>
-				<div class="col-md-6 col-sm-6 col-xs-6">
-					<input type="text" id="fecha" class="form-control" value=""
-						placeholder="aaaa/mm/dd" wicket:id="fechaNac"
-						 required />
-				</div>
-			</div>
-		</div>
+
+
+	&nbsp; <br>
 
 		<div class="form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
+		
+			<div class="row">
 				<div class="col-md-6 col-sm-6 col-xs-6">
-					<label align=left for="icode" class="col-md- control-label"
-						style="font-size: 16px">Altura <sub>cm</sub>
+					<label align=left for="icode" class="col-md- control-label" 
+						style="font-size: 16px; padding-left:0px;">Altura <sub>cm</sub>
 					</label>
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-6">
 					<label align=left for="complexion" class="col-md-4 control-label"
-						style="font-size: 16px">Complexión</label>
+						style="font-size: 16px; padding-left:0px;">Complexión</label>
 				</div>
 
 			</div>
-			<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="row">
 				<div class="col-md-6 col-sm-6 col-xs-6">
 					<input type="number" class="form-control" name="altura" id="altura"
-						wicket:id="altura" placeholder="Altura"
+						wicket:id="altura" placeholder="Altura" style="width: 90%;margin-left: 20px;"
 						 required />
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-6">
 					<select class="form-control" id="complexion" wicket:id="complexion"
-						placeholder="Complexion" 
+						placeholder="Complexion" style="width: 90%;margin-left: 20px;"
 						required>
 						<option value="cargar"></option>
 					</select>
@@ -179,52 +183,61 @@ $("#fecha").datepicker();
 
 			</div>
 		</div>
+		
+		
+	&nbsp; <br>
+		
 		<div class="form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="row">
 				<div class="col-md-6 col-sm-6 col-xs-6">
-					<label align=left for="icode" class="col-md-4 control-label"
-						style="font-size: 16px; ">Preferencias
-						alimenticias</label>
+					<label align=left 	for="icode" class="col-md-8 control-label"
+						style="font-size: 16px; padding-left:0px; ">Preferencias alimenticias</label>
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-6">
-					<label align=left for="icode" class="col-md-4 control-label"
-						style="font-size: 16px;">Condiciones
-						Preexistentes</label>
+					<label align=left for="icode" class="col-md-8 control-label"
+						style="font-size: 16px; padding-left:0px;">Condiciones Preexistentes</label>
 				</div>
 			</div>
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="col-md-6 col-sm-6 col-xs-6">
-					<div id="preferencia" wicket:id="preferencia" required></div>
+			<div class="row"  style="margin-left:5px;  margin-right:5px;" >
+				<div class="col-md-6 col-sm-6 col-xs-6"
+					style="background-color:rgba(255,255,255,0.4); border-radius:15px;">
+					<div id="preferencia" wicket:id="preferencia"  required ></div>
 				</div>
-				<div class="col-md-6 col-sm-6 col-xs-6" style="">
-					<div id="condicion" wicket:id="condPreex"></div>
+				<div class="col-md-6 col-sm-6 col-xs-6" 
+					style="background-color:rgba(255,255,255,0.4); border-radius:15px; padding-left:15px;">
+					<div id="condicion" wicket:id="condPreex" style="padding-left:15px;"></div>
 				</div>
 			</div>
 		</div>
+	
+	
+	&nbsp; <br>
+	
 		<div class="form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="row">
 
 				<div class="col-md-6 col-sm-6 col-xs-6">
 					<label align=left for="icode" class="col-md-4 control-label"
-						style="font-size: 16px">Dieta</label>
+						style="font-size: 16px; padding-left:0px;" >Dieta</label>
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-6">
 					<label align=left for="icode" class="col-md-4 control-label"
-						style="font-size: 16px">Rutina</label>
+						style="font-size: 16px; padding-left:0px;">Rutina</label>
 				</div>
 			</div>
-			<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="row">
 
 				<div class="col-md-6 col-sm-6 col-xs-6" >
 					<select class="form-control" name="dieta" id="dieta"
-						wicket:id="dieta" placeholder="dieta"
-						
+						wicket:id="dieta" placeholder="dieta" 
+						style="width: 90%;margin-left: 20px;"
 						required>
 					</select>
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-6" >
 					<select class="form-control" name="rutina" id="rutina"
 						wicket:id="rutina" placeholder="rutina"
+						style="width: 90%;margin-left: 20px;"
 						 required>
 					</select>
 				</div>
