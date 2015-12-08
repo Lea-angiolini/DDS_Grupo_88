@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Crear nuevo grupo</title>
+</head>
+<body>
+	<wicket:extend>
+		<div>
+			<form id="formCrearNuevoGrupo" wicket:id="formCrearNuevoGrupo"
+				method="post">
+				<fieldset id="gestionarGrupos" class="center">
+					<div id="signupbox" style="display: block; margin-top: 50px"
+						class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<div class="panel-title">
+									<span class="glyphicon glyphicon-edit"></span>&nbsp;<span>Grupos</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="form-group">
+										<label for="nombre" class="control-label col-md-3">Nombre
+											del grupo</label>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="nombreGrupo"
+												wicket:id="nombreGrupoNuevo">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="detalle" class="control-label col-md-3">Descripcion
+											Breve</label>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="detalleGrupo"
+												wicket:id="detalleGrupoNuevo">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<button type="submit" class="btn btn-success"
+								wicket:id="btnConfirmarNvoGrupo">
+								<span class="glyphicon">Crear!</span>
+							</button>
+
+							<label wicket:id="etiquetaConf"></label>
+
+							<button id="btnCancelar" type="button" class="btn btn-danger"
+								wicket:id="cancelar">
+								<span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar
+							</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</wicket:extend>
+</body>
+</html>

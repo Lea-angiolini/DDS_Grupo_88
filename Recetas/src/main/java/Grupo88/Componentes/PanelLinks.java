@@ -14,6 +14,7 @@ import Database.DAOEstadisticasPorDificultad;
 import Database.DAORecetasMasConsultadas;
 import Grupo88.BuscarReceta.BuscarReceta;
 import Grupo88.Estadisticas.Estadisticas;
+import Grupo88.GestionarGrupos.CrearNuevoGrupo;
 import Grupo88.GestionarGrupos.GestionarGrupos;
 import Grupo88.GestionarPerfil.GestionarPerfil;
 import Grupo88.MisRecetas.MisRecetas;
@@ -49,13 +50,20 @@ public class PanelLinks extends Panel {
 				}
 			});
 			
-			add(new Link("grupos"){
+			add(new Link("buscarGrupos"){
 				
 				public void onClick() {
 					setResponsePage(GestionarGrupos.class);
 				}
 			});
 			
+			add(new Link("CrearNuevoGrupo"){
+				
+				public void onClick() {
+					setResponsePage(CrearNuevoGrupo.class);
+				}
+			});
+
 			add(new Link("misRecetas"){
 				
 				public void onClick() {

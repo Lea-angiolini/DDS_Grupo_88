@@ -32,30 +32,12 @@ public class GestionarGrupos extends MasterPage {
 	private FrmGestionarGrupos frmGestionarGrupos;
 	private DAOGrupos daogrupos;
 	private DAOUsuarios daoUsuarios;
-	private final VentanaCrearGrupo window;
 	
 	public GestionarGrupos(){
 		super();
 		daogrupos = new DAOGrupos(getSessionBD());
 		daoUsuarios = new DAOUsuarios(getSessionBD());
 		add(frmGestionarGrupos = new FrmGestionarGrupos("frmGestionarGrupos"));
-		
-		window = new VentanaCrearGrupo("ventana","holaa") {
-			@Override
-			protected void onOpen(AjaxRequestTarget target) {
-				// TODO Auto-generated method stub
-				super.onOpen(target);
-			}
-			
-			@Override
-			public void onClose(AjaxRequestTarget target) {
-				// TODO Auto-generated method stub
-				super.onClose(target);
-			}
-		};
-		
-		add(window);
-
 	}
 	
 	private class FrmGestionarGrupos extends Form<Object> {
@@ -133,24 +115,6 @@ public class GestionarGrupos extends MasterPage {
 			add(check);
 			add(checkLabel);
 			
-			add(new Link<Object>("btnCrearGrupo"){
-
-				private static final long serialVersionUID = 5863814327655189500L;
-
-				@Override
-				public void onClick() {
-					frmGestionarGrupos.addOrReplace(new FragmentoGrupoNuevo ("areaGrupos", "fragmentCrearGrupo", frmGestionarGrupos));
-				}
-			});
-			
-			add(new AjaxLink("abriVentana") {
-				@Override
-				public void onClick(AjaxRequestTarget target) {
-					window.open(target);
-					
-				}
-			});
-			
 		}
 	}
 	
@@ -162,53 +126,6 @@ public class GestionarGrupos extends MasterPage {
         	
         	super(id, markupId, markupPorvider);
         	add(new VistaGrupos("vista", new ArrayList<Grupo>(grupos)));
-		}
-	}
-	
-	private class FragmentoGrupoNuevo extends Fragment {
-
-		private static final long serialVersionUID = 1L;
-
-		public FragmentoGrupoNuevo (String id, String markupId, MarkupContainer markupPorvider){
-			super (id, markupId, markupPorvider);
-			
-			final FragmentoGrupoNuevo esteFrag = this;
-			final Grupo nuevoGrupo = new Grupo(0,"","");
-			add(new TextField<String>("nombreGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "nombre")));
-			add(new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
-			add(new EmptyPanel("etiquetaConf"));
-			add(new Button("btnConfirmarNvoGrupo") {
-	
-				private static final long serialVersionUID = -2840007213453451497L;
-
-				@Override
-				public void onSubmit() {
-					String msg = "";
-					try{
-					try {
-						nuevoGrupo.setCreador(getUsuarioActual());
-						daogrupos.saveOrUpdate(nuevoGrupo);
-						msg = "Su grupo ha sido creado!";
-						getSessionBD().refresh(getUsuarioActual());
-					}
-					catch (javax.validation.ConstraintViolationException cve){
-						msg = cve.getConstraintViolations().iterator().next().getMessage();
-						
-						}
-					catch (org.hibernate.exception.ConstraintViolationException cve){
-						msg = cve.getMessage();
-						}
-					
-					}
-					catch (Exception e) {
-						setResponsePage(ErrorPage.ErrorRandom());
-					}
-				
-					esteFrag.addOrReplace(new Label("etiquetaConf", msg ) );
-
-				}
-				
-			});
 		}
 	}
 }

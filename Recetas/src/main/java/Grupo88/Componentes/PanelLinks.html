@@ -17,7 +17,13 @@
     <a  wicket:id="recetas" class="list-group-item list-group-item-success"><span class="glyphicon glyphicon-list-alt"></span> Recetas</a>
     
     <a class="list-group-item list-group-item-success icon-chevron-right" wicket:id="perfil"><span class="glyphicon glyphicon-user"></span> Perfil</a>
-     <a class="list-group-item list-group-item-success" wicket:id="grupos"><span class="glyphicon glyphicon-globe"></span> Grupos</a>
+    
+      <a href="#demo3"  class="list-group-item list-group-item-success"  data-toggle="collapse" ><span class="glyphicon glyphicon-tasks"></span> Grupos</a>
+	    <div class="collapse" id="demo3">
+	      <a wicket:id="buscarGrupos" class="list-group-item"> Buscar/Ver grupos</a>
+	      <a wicket:id="CrearNuevoGrupo" class="list-group-item"> Crear nuevo grupo</a>
+	    </div>
+     
      <a class="list-group-item list-group-item-success" wicket:id="misRecetas"><span class="glyphicon glyphicon-list"></span> Mis Recetas</a>
    
   <a href="#demo4"  class="list-group-item list-group-item-success"  data-toggle="collapse" ><span class="glyphicon glyphicon-tasks"></span> Estadisticas</a>
