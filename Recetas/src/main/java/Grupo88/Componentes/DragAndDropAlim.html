@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<wicket:panel>
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-xs-6" wicket:id="listaNO">
+			<div id="drag" wicket:id="listado">
+				<label wicket:id="name" id="drag1" draggable="true" width="336" height="69" style="background-color: white;"></label>
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-6 col-xs-6" style="background-color: white;" wicket:id="listaSI">
+			hjn<div wicket:id="listadoAcept">
+				<label draggable="true" wicket:id="name" width="336" height="69" style="background-color: white;"></label>
+			</div>
+		</div>		
+	</div>
+	
+	<div id="div1" wicket:id="container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br>
+
+<label id="drag1" draggable="true" ondragstart="drag(event)" width="336" height="69" style="background-color: white;">fd</label>
+
+<style>
+#div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+</style>
+<script>
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
+</script>
+</wicket:panel>
+</body>
+</html>

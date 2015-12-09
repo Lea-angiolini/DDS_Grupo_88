@@ -11,22 +11,22 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import Grupo88.Detalles.DetalleDeReceta;
-import ObjetosDB.Historial;
+import ObjetosDB.Confirmacion;
 
-public class PanelListaRecetas extends Panel{
+public class PanelListaConfirmaciones extends Panel{
 	
 	private static final long serialVersionUID = -2078421217794424583L;
 
-	public PanelListaRecetas(String id, List<Historial> lista) {
+	public PanelListaConfirmaciones(String id, List<Confirmacion> lista) {
 		super(id);
 		
-		DataView<Historial> dataView = new DataView<Historial>("recetas", new ListDataProvider<Historial>(lista)) {
+		DataView<Confirmacion> dataView = new DataView<Confirmacion>("recetas", new ListDataProvider<Confirmacion>(lista)) {
 		
 			private static final long serialVersionUID = -290147668025817794L;
 
 			@Override
-			protected void populateItem(Item<Historial> item) {
-				Historial historial = (Historial) item.getModelObject();
+			protected void populateItem(Item<Confirmacion> item) {
+				Confirmacion historial = (Confirmacion) item.getModelObject();
 				
 				final PageParameters pars = new PageParameters();
 				pars.add("idReceta", historial.getReceta().getIdreceta());
@@ -38,7 +38,7 @@ public class PanelListaRecetas extends Panel{
 					}
 				};
 				link.add(new Label("nombre", historial.getReceta().getNombre()));
-				link.add(new Label("fecha", historial.getFecha()));
+				link.add(new Label("calorias", historial.getReceta().getCalorias()));
 				item.add(link);
 			}
 		};

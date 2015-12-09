@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<style>
+</style>
+<body>
+	<wicket:extend>
+		<div>
+			<form id="formNuevasRecetas" wicket:id="formNuevasRecetas" method="get">
+				<fieldset id="Reporte" class="center">
+					<div class="container">    
+						<div  class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">                    
+					    	<div class="panel panel-info">
+					        	<div class="panel-heading">
+					            	<div class="panel-title"><span class="glyphicon glyphicon-home"></span> Reporte nuevas recetas</div>
+					            </div>     
+								<div class="panel-body" style="padding: 20px 20px 20px 20px;">
+									<div wicket:id="recetasCreadas">
+										<a wicket:id="receta"><label wicket:id="nombre"></label></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</fieldset>
+				</form>
+			</div>
+	</wicket:extend>
+</body>
+</html>
