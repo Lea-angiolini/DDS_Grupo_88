@@ -12,18 +12,21 @@ import org.hibernate.Session;
 import Database.DAOEstadisticaPorSexo;
 import Database.DAOEstadisticasPorDificultad;
 import Database.DAORecetasMasConsultadas;
+import Database.DAOReportesPeriodo;
 import Grupo88.BuscarReceta.BuscarReceta;
 import Grupo88.Estadisticas.Estadisticas;
 import Grupo88.GestionarGrupos.CrearNuevoGrupo;
 import Grupo88.GestionarGrupos.GestionarGrupos;
 import Grupo88.GestionarPerfil.GestionarPerfil;
 import Grupo88.MisRecetas.MisRecetas;
+import Grupo88.Reportes.Reportes;
+import ObjetosDB.Usuario;
 
 public class PanelLinks extends Panel {
 
-	ModelUsuario mUsuario;
 	SesionUsuario sesion = (SesionUsuario)getSession();
 	Session sessionDB = sesion.getSession();
+	Usuario user = sesion.getUsuario();
 	
 	public PanelLinks(String id) {
 		super(id);
@@ -95,7 +98,7 @@ public class PanelLinks extends Panel {
 			add(new Link("recetasConsultadas"){
 				
 				public void onClick() {
-					setResponsePage(new ErrorPage("aun no echo"));
+					setResponsePage(new Reportes(new DAOReportesPeriodo(sessionDB, user)));
 				}
 			});
 		}

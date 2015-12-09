@@ -1,44 +1,15 @@
 package Grupo88.AltaUsuario;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.swing.JOptionPane;
-
 import master.ErrorPage;
 import master.MasterPage;
 
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.NumberTextField;
-import org.apache.wicket.markup.html.form.PasswordTextField;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.validation.validator.EmailAddressValidator;
-import org.apache.wicket.validation.validator.StringValidator;
 
-import Database.DAOComplexiones;
-import Database.DAOCondicionesPreexistentes;
-import Database.DAODietas;
-import Database.DAOPreferenciasAlimenticias;
-import Database.DAORutinas;
 import Database.DAOUsuarios;
-import Database.DBExeption;
 import Grupo88.Inicio.Inicio;
-import ObjetosDB.Complexiones;
-import ObjetosDB.CondicionesPreexistentes;
-import ObjetosDB.Dietas;
-import ObjetosDB.PreferenciasAlimenticias;
-import ObjetosDB.Rutinas;
-import ObjetosDB.Usuario;
 
 public class AltaUsuario extends MasterPage {	
 	

@@ -54,11 +54,11 @@
 			<artifactId>wicket-core</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.googlecode.wicket-jquery-ui</groupId>
-			<artifactId>wicket-kendo-ui</artifactId>
-			<version>6.19.0</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.googlecode.wicket-jquery-ui</groupId> -->
+<!-- 			<artifactId>wicket-kendo-ui</artifactId> -->
+<!-- 			<version>6.19.0</version> -->
+<!-- 		</dependency> -->
 		
 <!-- 		<dependency> -->
 <!-- 		    <groupId>com.googlecode.wicket-jquery-ui</groupId> -->
@@ -70,11 +70,11 @@
 <!-- 			<artifactId>wicket-jquery-ui-theme-uilightness</artifactId> -->
 <!-- 			<version>6.20.0</version> -->
 <!-- 		</dependency> -->
-		<dependency>
-			<groupId>com.googlecode.wicket-jquery-ui</groupId>
-			<artifactId>wicket-kendo-ui-theme-default</artifactId>
-			<version>6.20.0</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.googlecode.wicket-jquery-ui</groupId> -->
+<!-- 			<artifactId>wicket-kendo-ui-theme-default</artifactId> -->
+<!-- 			<version>6.20.0</version> -->
+<!-- 		</dependency> -->
 		<!-- OPTIONAL DEPENDENCY
 		<dependency>
 			<groupId>org.apache.wicket</groupId>

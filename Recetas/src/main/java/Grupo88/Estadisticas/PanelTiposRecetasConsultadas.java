@@ -2,10 +2,13 @@ package Grupo88.Estadisticas;
 
 import java.util.ArrayList;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
+
 
 import ObjetosDB.Estadistico;
 
@@ -17,7 +20,7 @@ public class PanelTiposRecetasConsultadas extends Panel {
 		super(id);
 		
 		RepeatingView vista = new RepeatingView("iterador");
-		
+
 		for(Estadistico est : estadisticos){
 			AbstractItem item = new AbstractItem(vista.newChildId());
 			item.add(new Label("descripcion", est.getDescripcion()));

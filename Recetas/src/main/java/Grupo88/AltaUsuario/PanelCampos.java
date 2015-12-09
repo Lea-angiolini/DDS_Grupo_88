@@ -1,7 +1,6 @@
 package Grupo88.AltaUsuario;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import master.ErrorPage;
 
@@ -35,7 +34,6 @@ import ObjetosDB.Dietas;
 import ObjetosDB.PreferenciasAlimenticias;
 import ObjetosDB.Rutinas;
 import ObjetosDB.Sexo;
-import ObjetosDB.Temporadas;
 import ObjetosDB.Usuario;
 
 public class PanelCampos extends Panel {

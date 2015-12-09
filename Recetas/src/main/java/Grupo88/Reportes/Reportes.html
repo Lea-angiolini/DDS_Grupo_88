@@ -8,7 +8,39 @@
 </style>
 <body>
 	<wicket:extend>
-
+	
+		<link rel="stylesheet"
+		href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<script>
+$(function () {
+$("#fecha").datepicker();
+});
+</script>
+	<script>
+ $.datepicker.regional['es'] = {
+ closeText: 'Cerrar',
+ prevText: '<Ant',
+ nextText: 'Sig>',
+ currentText: 'Hoy',
+ monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+ monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+ dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+ dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+ dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+ weekHeader: 'Sm',
+ dateFormat: 'yy/mm/dd',
+ firstDay: 1,
+ isRTL: false,
+ showMonthAfterYear: false,
+ yearSuffix: ''
+ };
+ $.datepicker.setDefaults($.datepicker.regional['es']);
+$(function () {
+$("#fecha").datepicker();
+});
+</script>
 		<div>
 			<form id="frmReportes" wicket:id="frmReportes" method="get">
 				<fieldset id="Reporte" class="center">
@@ -20,12 +52,37 @@
 					            </div>     
 								<div class="panel-body" style="padding: 20px 20px 20px 20px;">
 								
-								
-<!-- 								<div wicket:id="grupoReporte" class="row"> -->
-								<div wicket:id="panelReporte" class="container col-md-12 col-sm-12 col-xs-12">    
-								</div>
-								
-<!-- 								</div> -->
+									<div class="form-group">
+									<div class="row">
+									<div class="col-md-4 col-sm-4 col-xs-4">
+										<label style="font-size: 16px; padding-left:0px " align=left
+											for="icode" class="col-md-9 control-label">Desde: <label style="color: red;">*</label>
+										</label>
+									</div>
+									<div class="col-md-8 col-sm-8 col-xs-8">
+										<input type="text" id="fecha" class="form-control" value="" style= "width: 90%; margin-left:20px;"
+											placeholder="aaaa/mm/dd"  wicket:id="desde"
+											 required />
+									</div>
+									</div>
+									<div class="row">									
+									<div class="col-md-4 col-sm-4 col-xs-4">
+										<label style="font-size: 16px; padding-left:0px " align="rigth"
+											for="icode" class="col-md-9 control-label">Hasta: <label style="color: red;">*</label>
+										</label>
+									</div>
+									<div class="col-md-8 col-sm-8 col-xs-8">
+										<input type="text" id="fecha" class="form-control" value="" style= "width: 90%; margin-left:20px;"
+											placeholder="aaaa/mm/dd"  wicket:id="hasta"
+											 required />
+									</div>
+									</div>
+									</div>
+									<div class="row">
+									<button type="submit" class="btn-success">Reporte</button>
+									</div>																
+									<div wicket:id="AreaRecetas" class="container col-md-12 col-sm-12 col-xs-12">    
+									</div>
 								</div>
 							</div>
 						</div>
