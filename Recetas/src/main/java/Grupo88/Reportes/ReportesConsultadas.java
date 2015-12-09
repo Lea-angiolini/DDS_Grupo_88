@@ -6,29 +6,24 @@ import javax.swing.JOptionPane;
 
 import master.RegisteredPage;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.PropertyModel;
 
 import Database.DAOReportes;
-import Database.DAOReportesPeriodo;
 import ObjetosDB.Historial;
-import ObjetosDB.Receta;
 
-public class Reportes extends RegisteredPage{
+public class ReportesConsultadas extends RegisteredPage{
 	
 
 	private static final long serialVersionUID = 1L;
 	private DAOReportes daoReportes;
 
-	public Reportes(DAOReportes daoReportes) {
+	public ReportesConsultadas() {
 		add(new FormReporte("frmReportes"));
-		this.daoReportes = daoReportes;
+		this.daoReportes = new DAOReportes(getSessionBD(), getUsuarioActual());
 	}
-	
 	
 	private class FormReporte extends Form<Object>{
 

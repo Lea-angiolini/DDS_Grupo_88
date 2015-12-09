@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<style>
+</style>
+<body>
+	<wicket:extend>
+	
+		<div>
+			<form id="frmReportes" wicket:id="frmReportes" method="get">
+				<fieldset id="Reporte" class="center">
+					<div class="container">    
+						<div  class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">                    
+					    	<div class="panel panel-info">
+					        	<div class="panel-heading">
+					            	<div class="panel-title"><span class="glyphicon glyphicon-home"></span> Reporte recetas confirmadas por calorias</div>
+					            </div>     
+								<div class="panel-body" style="padding: 20px 20px 20px 20px;">
+								
+									<div class="form-group">
+									<div class="row">
+									<div class="col-md-4 col-sm-4 col-xs-4">
+										<label style="font-size: 16px; padding-left:0px " align=left
+											for="icode" class="col-md-9 control-label">Minimas: <label style="color: red;">*</label>
+										</label>
+									</div>
+									<div class="col-md-8 col-sm-8 col-xs-8">
+										<input type="number" id="calorias" class="form-control" value="" style= "width: 90%; margin-left:20px;"
+											placeholder="min"  wicket:id="desde"
+											 required />
+									</div>
+									</div>
+									<div class="row">									
+									<div class="col-md-4 col-sm-4 col-xs-4">
+										<label style="font-size: 16px; padding-left:0px " align="rigth"
+											for="icode" class="col-md-9 control-label">Maximas: <label style="color: red;">*</label>
+										</label>
+									</div>
+									<div class="col-md-8 col-sm-8 col-xs-8">
+										<input type="number" id=""calorias"" class="form-control" value="" style= "width: 90%; margin-left:20px;"
+											placeholder="max"  wicket:id="hasta"
+											 required />
+									</div>
+									</div>
+									</div>
+									<div class="row">
+									<button type="submit" class="btn-success">Reporte</button>
+									</div>																
+									<div wicket:id="AreaRecetas" class="container col-md-12 col-sm-12 col-xs-12">    
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</fieldset>
+				</form>
+			</div>
+	</wicket:extend>
+</body>
+</html>

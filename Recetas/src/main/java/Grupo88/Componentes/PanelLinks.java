@@ -1,7 +1,5 @@
 package Grupo88.Componentes;
 
-import master.ErrorPage;
-import objetosWicket.ModelUsuario;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.markup.html.form.Form;
@@ -12,14 +10,15 @@ import org.hibernate.Session;
 import Database.DAOEstadisticaPorSexo;
 import Database.DAOEstadisticasPorDificultad;
 import Database.DAORecetasMasConsultadas;
-import Database.DAOReportesPeriodo;
 import Grupo88.BuscarReceta.BuscarReceta;
 import Grupo88.Estadisticas.Estadisticas;
 import Grupo88.GestionarGrupos.CrearNuevoGrupo;
 import Grupo88.GestionarGrupos.GestionarGrupos;
 import Grupo88.GestionarPerfil.GestionarPerfil;
 import Grupo88.MisRecetas.MisRecetas;
-import Grupo88.Reportes.Reportes;
+import Grupo88.Reportes.ReporteNuevasRecetas;
+import Grupo88.Reportes.ReporteSegunCalorias;
+import Grupo88.Reportes.ReportesConsultadas;
 import ObjetosDB.Usuario;
 
 public class PanelLinks extends Panel {
@@ -98,7 +97,21 @@ public class PanelLinks extends Panel {
 			add(new Link("recetasConsultadas"){
 				
 				public void onClick() {
-					setResponsePage(new Reportes(new DAOReportesPeriodo(sessionDB, user)));
+					setResponsePage(new ReportesConsultadas());
+				}
+			});
+			
+			add(new Link("recetasNuevas"){
+				
+				public void onClick() {
+					setResponsePage(new ReporteNuevasRecetas());
+				}
+			});
+			
+			add(new Link("recetasCalorias"){
+				
+				public void onClick() {
+					setResponsePage(new ReporteSegunCalorias());
 				}
 			});
 		}
