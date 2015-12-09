@@ -11,12 +11,19 @@
 #div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;background-color: white;}
 </style>
 	
-		<div>
-		<div wicket:id="feedback" class="alert alert-danger"></div>
-			<div id="frmAgregarReceta" class="form-horizontal" method="post">
-				<fieldset id="AgregarReceta" class="center">
-					
-					<div id="agregarRecetaBox" style="margin-top:20px;" class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">                    
+	<div>
+	
+		<div class="row">
+			<div wicket:id="feedback" class="alert alert-danger col-md-8 col-sm-8 col-xs-8 col-lg-8" role="alert" >
+			</div>
+		</div>
+		
+		<div id="frmAgregarReceta" class="form-horizontal" method="post">
+	
+		<fieldset id="AgregarReceta" class="center" >
+	
+	<div class="row">				
+					<div id="agregarRecetaBox" style="margin-top:20px;" class="row col-lg-8 col-md-8 col-sm-8 col-xs-8">                    
 						<div class="panel panel-info">
 					    	<div class="panel-heading">
 					        	<div class="panel-title"><span class="glyphicon glyphicon-plus"></span> Agregar Receta</div>
@@ -25,86 +32,112 @@
 
 
 							<div wicket:id="areaForms"></div>
-
-
-					        	
+		</div>			        	
 				 	 		</div>
 				 	 	</div>
 				 	 </div>
 				</fieldset>
+				
 			</div>
 		</div>
+		
+		
 		<wicket:fragment wicket:id="fragmentoInicial">
-		<form wicket:id="frmDatosBasicos" method="post">
-			<label>Datos Receta</label>
+			<form wicket:id="frmDatosBasicos" method="post">
 			
-			<div class="form-group">
-				<label class="col-md-3">Nombre Receta</label>
-				<input required="required" type="text" class="col-md-5" wicket:id="nombreReceta">
-			</div>
-			<div class="form-group">
-				<label class="col-md-3">Breve detalle</label>
-				<textarea required="required" type="text" class="col-md-5" wicket:id="descripcion" cols="7"></textarea>
-			</div>
-			<div class="form-group">
-				<label class="col-md-3">Foto descriptiva</label>
-				<input required="required" class="col-md-5" wicket:id="fileUpload" type="file"/>
-			</div>
+				<fieldset style="border: 1px solid #ccc; padding: 5px;">
+					<legend>Datos Receta</legend>
 			
-			<div class="form-group">
-				<label class="col-md-3">Temporada</label>
-				<select required="required" class="col-md-5" wicket:id="temporada"></select>
-			</div>
-			<div class="form-group">
-				<label class="col-md-3">Dificultad</label>
-				<select required="required" class="col-md-5" wicket:id="dificultad"></select>
-			</div>
-			<div class="form-group">
-				<label class="col-md-3">Ingrediente principal</label>
-				<select required="required" class="col-md-5" wicket:id="ingPrinc"></select>
-			</div>
-			<div class="form-group">
-				<label class="col-md-3">Receta recomendada para</label>
-				<select required="required" class="col-md-5" wicket:id="tipoRecomendado"></select>
-			</div>
-			<div class="form-group">
-				<label  class="col-md-3">Ingredientes</label>
-			</div>
-			<div wicket:id="dropIngredientes"></div>
+					<div class="form-group">
+						<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Nombre Receta</label>
+						<input required="required" type="text" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" wicket:id="nombreReceta">
+					</div>
+					<br>
+					<div class="form-group">
+						<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Breve detalle</label>
+						<textarea required="required" type="text" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" wicket:id="descripcion"></textarea>
+					</div>
+					<br>
+					<div class="form-group">
+						<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Foto descriptiva</label>
+						<input required="required" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" wicket:id="fileUpload" type="file"/>
+					</div>
+					<br>
+					<div class="form-group">
+						<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Temporada</label>
+						<select required="required" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" wicket:id="temporada"></select>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Dificultad</label>
+						<select required="required" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" wicket:id="dificultad"></select>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Ingrediente principal</label>
+						<select required="required" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" wicket:id="ingPrinc"></select>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3">Receta recomendada para</label>
+						<select required="required" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" wicket:id="tipoRecomendado"></select>
+					</div>
+					<br><br>
+					
+					
+					<div class="form-group">
+						<label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><u>Ingredientes</u></label>
+					</div>
+					
+					<div wicket:id="dropIngredientes"></div>
 			
-			<div class="form-group">
-				<label class="col-md-3">Condimentos</label>
-			</div>
-			<div wicket:id="dropCondimentos"></div>
-			<br><br>
-			<button type="submit">Siguiente</button>
+			&nbsp; <br><br>
+			
+					<div class="form-group">
+						<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><u>Condimentos</u></label>
+					</div>
+					<div wicket:id="dropCondimentos"></div>
+					
+					<br><br>
+			
+					
+					<button type="submit" class="btn btn-primary">Siguiente</button>
+			</fieldset>
+			
 		</form>
 
 		</wicket:fragment>
 		
 		
-				<wicket:fragment wicket:id="fragmentoPaso">
+		<wicket:fragment wicket:id="fragmentoPaso">
 		<form wicket:id="frmPasos">
+		
 		<h1 claass="panel-title">Paso <span wicket:id="numPaso"></span>/5</h1>
 		
-		<div class="form-group">
-				<label class="col-md-3">Procedimiento</label>
-				<textarea rows="10" class="col-md-8" wicket:id="paso" style="font-weight:bold"></textarea>
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">	
+			
+				<div class="form-group">
+						<legend class="col-md-2">Procedimiento</legend>
+						<textarea rows="10" class="col-md-10" wicket:id="paso" style="font-weight:bold"></textarea>
+				</div>
+				
 			</div>
-			<div class="form-group">
-			<label class="col-md-3">Imagen</label>
-				<div class="col-xs-6 col-md-3">
-      					<img wicket:id="img" src="..." alt="Seleccione una imagen" style="height: 180px; width: 100%; display: block;">
-   						<input wicket:id="fileUpload" type="file"/>
-      			
-   					 
-  				</div>
-  			</div>
-  			<a wicket:id="pasoAnt">Paso anterior</a>
-			<button type="submit"><span wicket:id = "sigPaso">Siguiente Paso</span>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">	
+				<div class="form-group">
+				<label style="font-size:18px; font-weight:bold; padding-left:10px;">Imagen</label>
+<!-- 						<div> -->
+		      					<img wicket:id="img" src="..." alt="Seleccione una imagen" style="height: 70%; width: 70%; display: block; padding-left:50px;">
+		   						<br>
+		   						<input wicket:id="fileUpload" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" type="file"/>
+<!-- 		  				</div> -->	
+	  			</div>
+		  	</div>
+		  			<br>
+		  	<a wicket:id="pasoAnt" class="btn btn-info">Paso anterior</a>
+			<button type="submit" class="btn btn-primary"><span wicket:id = "sigPaso" >Siguiente Paso</span>
 			</button>
+				
+		</div>	
 		</form>
-
 		</wicket:fragment>
 
 	</wicket:extend>
