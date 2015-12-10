@@ -54,8 +54,6 @@ public class DetalleDeReceta extends MasterPage {
 	private Usuario user;
 	private StringValue idReceta;
 	private Receta receta;
-	private Confirmacion confirmacion;
-	private DAOTipoReceta daoTipoReceta;
 	
 	public DetalleDeReceta(final PageParameters parameters){
 		super();
@@ -89,7 +87,6 @@ public class DetalleDeReceta extends MasterPage {
 	private void iniciar(PageParameters parameters){
 		
 		daoreceta = new DAORecetas(getSessionBD());
-		daoTipoReceta = new DAOTipoReceta(getSessionBD());
 		
 		user = getUsuarioActual();
 		receta = null;
@@ -114,9 +111,9 @@ public class DetalleDeReceta extends MasterPage {
 		add(new FrmDetalleDeReceta("FrmDetalleDeReceta"));
 		
 		if(getUsuarioActual().getUsername() != "Invitado"){
-			add(new FormCalificar("formCalificar"));
-			add(new FormConfirmar("formConfirmar"));
-			add(new FormCompartir("formCompartir"));
+			add(new FormCalificar("formCalificar",getSessionBD(),receta,getUsuarioActual()));
+			add(new FormConfirmar("formConfirmar",getSessionBD(),getUsuarioActual(),receta));
+			add(new FormCompartir("formCompartir",getSessionBD(),getUsuarioActual(),receta));
 		}
 		else{
 			add(new EmptyPanel("formCalificar"));
@@ -196,196 +193,12 @@ public class DetalleDeReceta extends MasterPage {
 				
 			}
 			add(pasos);
-
-
 		}
 
 		@Override
 		protected void onSubmit() {
 			// Va a conectarse con BD y comprobar las validaciones
 			super.onSubmit();
-		}
-	}
-	
-	private class FormConfirmar extends Form{
-
-		private static final long serialVersionUID = 3482226522671170037L;
-
-		public FormConfirmar(String id) {
-			super(id);
-			
-			confirmacion = new Confirmacion();
-			ArrayList<TipoReceta> todosTipoReceta; 
-			
-			try {
-				
-			todosTipoReceta= new ArrayList<TipoReceta>(daoTipoReceta.findAll());
-
-			} catch (Exception e1) {
-				setResponsePage(ErrorPage.ErrorCargaDatos());
-				return;
-			}
-			
-			add(new RadioChoice("comida", new PropertyModel(confirmacion, "tipoReceta"), todosTipoReceta,new ChoiceRenderer("descripcion","idTipoReceta")));
-			add(new Button("confirmar"){
-				
-				private static final long serialVersionUID = 8149758093736016771L;
-
-				public void onSubmit() {
-					final PageParameters pars = new PageParameters();
-					pars.add("idReceta",idReceta);
-					DAOConfirmar daoConfirmar = new DAOConfirmar(getSessionBD());
-					confirmacion.setReceta(receta);
-					confirmacion.setUser(user);
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-					confirmacion.setFecha(dateFormat.format(new Date()));
-						
-						try {
-							daoConfirmar.save(confirmacion);
-							
-						} 
-						
-						catch (ConstraintViolationException e) {
-							e.printStackTrace();
-							setResponsePage(ErrorPage.ErrorEnLaDB());
-							
-						} 
-						
-						catch (javax.validation.ConstraintViolationException e) {
-							e.printStackTrace();
-							setResponsePage(ErrorPage.ErrorEnLaDB());
-						}
-						
-						catch (Exception e) {
-							e.printStackTrace();
-							setResponsePage(ErrorPage.ErrorRandom());
-						}
-					
-					setResponsePage(DetalleDeReceta.class,pars);
-				}
-			}.setVisible(SesionUsuario.get().estaLogueado()));
-
-		}
-	}
-
-	private class FormCalificar extends Form{
-
-		private static final long serialVersionUID = -7463688006174588993L;
-		
-		private DAOCalificacion daoCalificacion = new DAOCalificacion(getSessionBD());
-		private DAOConfirmar daoConfirmar = new DAOConfirmar(getSessionBD());
-		private Calificacion calificacion;
-		
-		public FormCalificar(String id) {
-			super(id);
-			
-			try {
-				calificacion = daoCalificacion.calificacionDe(receta, user);
-				
-				if(calificacion == null){
-					calificacion = new Calificacion();
-					calificacion.setReceta(receta);
-					calificacion.setUserCalificador(user);
-				}
-			} catch (Exception e) {
-				setResponsePage(ErrorPage.ErrorRandom());
-
-			}
-			
-			EmptyPanel botonCal;
-			try {
-				if(!daoConfirmar.userConfirmo(receta, user)){
-					add(new EmptyPanel("calificacion"));
-					add(botonCal = new EmptyPanel("confCalificacion"));
-					botonCal.setVisible(false);
-				}
-				else{
-					
-					
-					RadioChoice<Integer> choices = new RadioChoice<Integer>("calificacion",new PropertyModel<Integer>(calificacion,"calificacion"),Arrays.asList(1,2,3,4,5));
-					choices.setSuffix("");
-					add(choices);
-				
-				add(new Button("confCalificacion"){
-
-					private static final long serialVersionUID = -6871206486314240822L;
-
-					@Override
-					public void onSubmit() {
-						super.onSubmit();
-						try {
-							daoCalificacion.saveOrUpdate(calificacion);
-							
-						} catch (ConstraintViolationException e) { 
-							e.printStackTrace();
-							setResponsePage(ErrorPage.ErrorEnLaDB());
-							
-						} catch (javax.validation.ConstraintViolationException e) {
-							e.printStackTrace();
-							setResponsePage(ErrorPage.ErrorEnLaDB());
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-							setResponsePage(ErrorPage.ErrorRandom());
-							
-						}
-					}
-				});
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				setResponsePage(ErrorPage.ErrorRandom());
-				
-			}
-			
-		}
-	}
-
-	private class FormCompartir extends Form{
-		
-		private DAOGrupos daoGrupos = new DAOGrupos(getSessionBD());
-		public FormCompartir(String id) {
-			super(id);
-			
-			final ArrayList<Grupo> gruposselect = new ArrayList<Grupo>();
-			
-			try {
-				add(new CheckBoxMultipleChoice("grupos", new Model(gruposselect),new ArrayList(daoGrupos.gruposde(getUsuarioActual())),new ChoiceRenderer("nombre","idGrupo")));
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-				setResponsePage(ErrorPage.ErrorRandom());
-				
-				add(new EmptyPanel("grupos"));
-			}
-			
-			add(new Button("compartir"){
-				@Override
-				public void onSubmit() {
-					super.onSubmit();
-					
-					for (Grupo grupo : gruposselect) {
-						grupo.agregarReceta(receta);
-						try {
-							daoGrupos.saveOrUpdate(grupo);
-						} catch (ConstraintViolationException e) {
-							e.printStackTrace();
-							setResponsePage(ErrorPage.ErrorEnLaDB());
-							
-						} catch (javax.validation.ConstraintViolationException e) {
-							e.printStackTrace();
-							setResponsePage(ErrorPage.ErrorEnLaDB());
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-							setResponsePage(ErrorPage.ErrorRandom());
-							
-						}
-					}
-					
-				}
-			});
 		}
 	}
 }
