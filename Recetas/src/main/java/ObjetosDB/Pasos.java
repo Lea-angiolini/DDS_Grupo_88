@@ -75,6 +75,12 @@ public class Pasos implements Serializable{
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
-	
-	
+
+	public Receta getReceta() {
+		return receta;
+	}
+
+	public void setReceta(Receta receta) {
+		this.receta = receta;
+	}
 }

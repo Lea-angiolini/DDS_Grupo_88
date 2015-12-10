@@ -87,7 +87,9 @@ public class AgregarReceta extends RegisteredPage {
 		nuevareceta.setPasos(new ArrayList<Pasos>());
 		fragmentos.add(new Fragmento("areaForms","fragmentoInicial",this,new FrmDatosReceta("frmDatosBasicos")));
 		for(int i = 1; i<= 5; i++){
-			nuevareceta.agregarPaso(new Pasos(i, ""));
+			Pasos paso;
+			nuevareceta.agregarPaso(paso = new Pasos(i, ""));
+			paso.setReceta(nuevareceta);
 			fragmentos.add(new Fragmento("areaForms","fragmentoPaso",pagina(), new FrmPaso("frmPasos",i)));
 		}
 	}

@@ -137,7 +137,7 @@ CREATE TABLE Grupo88.Grupos(
 
 CREATE TABLE Grupo88.Pasos(
 	idPaso INT auto_increment PRIMARY KEY,
-	idReceta INT(11), -- REFERENCES Recetas,
+	idReceta INT(11) not null, -- REFERENCES Recetas,
     numeroPaso INT,
     descripcion VARCHAR(2000) NOT NULL,
     foto LONGBLOB NULL,
