@@ -1,49 +1,27 @@
 package Grupo88.Detalles;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-
 import master.ErrorPage;
 import master.MasterPage;
-import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.DynamicImageResource;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.string.StringValueConversionException;
-import org.hibernate.exception.ConstraintViolationException;
 
-import Database.DAOCalificacion;
-import Database.DAOConfirmar;
-import Database.DAOGrupos;
 import Database.DAORecetas;
-import Database.DAOTipoReceta;
 import Database.DBExeption;
 import Grupo88.Inicio.Inicio;
-import ObjetosDB.Calificacion;
 import ObjetosDB.Condimentos;
-import ObjetosDB.Confirmacion;
-import ObjetosDB.Grupo;
 import ObjetosDB.Pasos;
 import ObjetosDB.Receta;
 import ObjetosDB.Receta_Ingrediente;
-import ObjetosDB.TipoReceta;
 import ObjetosDB.Usuario;
 
 public class DetalleDeReceta extends MasterPage {
@@ -111,9 +89,9 @@ public class DetalleDeReceta extends MasterPage {
 		add(new FrmDetalleDeReceta("FrmDetalleDeReceta"));
 		
 		if(getUsuarioActual().getUsername() != "Invitado"){
-			add(new FormCalificar("formCalificar",getSessionBD(),receta,getUsuarioActual()));
-			add(new FormConfirmar("formConfirmar",getSessionBD(),getUsuarioActual(),receta));
-			add(new FormCompartir("formCompartir",getSessionBD(),getUsuarioActual(),receta));
+			add(new FormCalificarPanel("formCalificar",getSessionBD(),receta,getUsuarioActual()));
+			add(new FormConfirmarPanel("formConfirmar",getSessionBD(),getUsuarioActual(),receta));
+			add(new FormCompartirPanel("formCompartir",getSessionBD(),getUsuarioActual(),receta));
 		}
 		else{
 			add(new EmptyPanel("formCalificar"));
