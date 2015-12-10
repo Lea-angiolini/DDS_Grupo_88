@@ -32,57 +32,65 @@
 					<h3>Calorias <label wicket:id="cal"> </label></h3>
 					<img style="height: 350px" wicket:id="imgPrinc">
 					<br>
+				</div>
+				</div>
+				
 				<div class="row"> 
-					 <div class="col-xs-12 col-sm-6 col-md-7">
+					 <div class="col-xs-8 col-sm-8 col-md-8">
 							<div wicket:id="pasos">
 							<h3 wicket:id="nro">Paso </h3>
-							<p wicket:id="paso" style="font-weight:bold"></p><br>
+							<p wicket:id="paso" style="font-weight:bold; display:block; word-wrap:break-word;"></p><br>
 							<img style="height: 350px" wicket:id="img">
 							</div>
 						</div>
 							
-					 <div class="col-xs-6 col-sm-6 col-md-5" style="background:#FFF7AE; height: 400px; font-family: cursive; border-radius:20px;width: 260px;">
+					 <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3" style="background:#FFF7AE;margin-left:50px; height:auto; font-family: cursive; border-radius:20px;">
 							<label style="margin-top: 20px">Ingredientes</label>
 							<ul>
 							<li wicket:id="listaIngredientes"style="list-style-type: none;"><span style="color: #DD1919; font-size: 50px;" >.</span><span wicket:id="unIngrediente" ></span>
-							<div style="border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"></div></li>
+							<div style="border-bottom-style: dotted;border-bottom-color: #A0A020;"></div></li>
 							</ul>
 							<br>
 							<label style="margin-top: 20px">Condimentos</label>
 							<ul>
 							<li wicket:id="listaCondimentos" style="list-style-type: none;"><span style="color: #DD1919; font-size: 50px;" >.</span><span wicket:id="unCondimento"></span>
-							<div style="border-bottom-style: dotted;border-bottom-color: #A0A020;height: 32.727272748947144px;"></div></li>
+							<div style="border-bottom-style: dotted;border-bottom-color: #A0A020;"></div></li>
 							</ul>
 						</div>
 							
 					</div>		
 					</div>
-					</div>
-					</div>
+					
 					</fieldset>
 					</form>
 	<a class="btn btn-primary" wicket:id="volver">Volver</a>
 	</section>
-	<aside style="background-color: rgba(252,125,150,0.3); width: 30%; float: right;">
+	<aside style="background-color: rgba(185, 237, 211,0.3); width: 30%; float: right;">
 	
 		<form wicket:id="formCalificar" method="post">
-			<div valign="top" wicket:id="calificacion"></div>
+		<br>
+			<div valign="top"  wicket:id="calificacion"></div>
 			<button class="btn btn-info" wicket:id="confCalificacion">
 			<span class="glyphicon glyphicon-star-empty"></span>
 			¡Calificar!
 			</button>
+			<br>
 		</form>
 		
 		<form wicket:id="formConfirmar" method="post">
+		&nbsp;<br><br>
 			<button class=" btn btn-warning" name="btnConfirmar" wicket:id="confirmar"> 
 			<span class= "glyphicon glyphicon-heart-empty"></span>
 			Confirmar</button>
+			<br>
 			<span wicket:id="comida">Seleccione</span>
 		</form>	
 		
-		<form wicket:id="formCompartir" method="post">			
+		<form wicket:id="formCompartir" method="post">		
+			<br>	
 			<button type="submit" class="btn btn-success" id="p" name="btnCompartir" wicket:id="compartir">
 			¡Compartir!</button>
+			&nbsp;<br><br>	
 			<span wicket:id="grupos"></span>
 		</form>
 		

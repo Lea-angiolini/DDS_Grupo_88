@@ -297,8 +297,9 @@ public class DetalleDeReceta extends MasterPage {
 				else{
 					
 					
-					
-				add(new RadioChoice<Integer>("calificacion",new PropertyModel<Integer>(calificacion,"calificacion"),Arrays.asList(1,2,3,4,5)));
+					RadioChoice<Integer> choices = new RadioChoice<Integer>("calificacion",new PropertyModel<Integer>(calificacion,"calificacion"),Arrays.asList(1,2,3,4,5));
+					choices.setSuffix("");
+					add(choices);
 				
 				add(new Button("confCalificacion"){
 
