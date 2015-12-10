@@ -112,12 +112,17 @@ public class DetalleDeReceta extends MasterPage {
 			}
 		
 		add(new FrmDetalleDeReceta("FrmDetalleDeReceta"));
-
-		add(new FormCalificar("formCalificar"));
-
-		add(new FormConfirmar("formConfirmar"));
 		
-		add(new FormCompartir("formCompartir"));
+		if(getUsuarioActual().getUsername() != "Invitado"){
+			add(new FormCalificar("formCalificar"));
+			add(new FormConfirmar("formConfirmar"));
+			add(new FormCompartir("formCompartir"));
+		}
+		else{
+			add(new EmptyPanel("formCalificar"));
+			add(new EmptyPanel("formConfirmar"));
+			add(new EmptyPanel("formCompartir"));
+		}
 		
 	}
 	}
