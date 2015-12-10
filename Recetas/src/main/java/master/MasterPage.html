@@ -33,12 +33,20 @@
 	</head>
 	<body>
 		<div id="header" wicket:id="header" >header</div>
-		<div id="masterBody" style="padding-left: 0px">
-			<div id="leftMenu" style="margin-left: 0px; left: 0px; overflow-y:auto;" wicket:id="menu">menu</div>
-			<div id="masterContent" style="margin-left: 200px; left: 100px; overflow:hidden;"  >
-				<wicket:child/>
+		<div class="row"> 
+		<div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
+			<div id="masterBody" style="padding-left: 0px">
+				<div style="margin-left: 0px; left: 0px; overflow-y:auto;" wicket:id="menu">menu</div>
 			</div>
-		</div>		
+		</div>
+		<div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">	
+				<div  id="masterContent" style="overflow:hidden;"  >
+					<wicket:child/>
+				</div>
+		</div>	
+			
+		</div>
+				
 		<div id="footer" wicket:id="footer">footer</div>
 		
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
