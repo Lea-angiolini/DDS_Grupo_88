@@ -17,14 +17,15 @@
   </script>
   
   
-	<div class="mainbox col-md-9 col-sm-9" style="background-color:rgba(255,255,255,0.6)">
-	<section style="width: 50%; float: left;">
+	<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12" style="background-color:rgba(255,255,255,0.6)">
+	<section style="width: 70%; float: left;">
 		<form id="frmDetalleDeReceta" wicket:id="FrmDetalleDeReceta" method="post">
 		<fieldset id="detalleReceta" class="center">		
 			
 			<div class="container">	
 			
 			<div class="row ">
+				<div>
 					<h1 wicket:id="Nombre">Detalle de Receta</h1>													
 					<h3>Dificultad <label wicket:id="dif"></label></h3>
 					<h3>Temporada <label wicket:id="tem"></label></h3>
@@ -41,8 +42,8 @@
 							<img style="height: 350px" wicket:id="img">
 							</div>
 						</div>
-							
-					 <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3" style="background:#FFF7AE;margin-left:50px; height:auto; font-family: cursive; border-radius:20px;">
+						
+					 <div class="col-xs-5 col-sm-5 col-lg-3 col-md-5" style="background:#FFF7AE; height:auto; font-family: cursive; border-radius:20px;">
 							<label style="margin-top: 20px">Ingredientes</label>
 							<ul>
 							<li wicket:id="listaIngredientes"style="list-style-type: none;"><span style="color: #DD1919; font-size: 50px;" >.</span><span wicket:id="unIngrediente" ></span>
@@ -54,15 +55,17 @@
 							<li wicket:id="listaCondimentos" style="list-style-type: none;"><span style="color: #DD1919; font-size: 50px;" >.</span><span wicket:id="unCondimento"></span>
 							<div style="border-bottom-style: dotted;border-bottom-color: #A0A020;"></div></li>
 							</ul>
-						</div>
-							
-					</div>		
 					</div>
-					
+				</div>		
+				</div>
+					</div>
 					</fieldset>
 					</form>
-	<a class="btn btn-primary" wicket:id="volver">Volver</a>
+			<a class="btn btn-primary" wicket:id="volver">Volver</a>
 	</section>
+	
+	
+	
 	<aside style="background-color: rgba(185, 237, 211,0.3); width: 30%; float: right;">
 	
 		<div wicket:id="formCalificar">
