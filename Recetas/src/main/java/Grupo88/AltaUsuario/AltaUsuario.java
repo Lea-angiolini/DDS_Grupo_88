@@ -1,5 +1,7 @@
 package Grupo88.AltaUsuario;
 
+import javax.swing.JOptionPane;
+
 import master.ErrorPage;
 import master.MasterPage;
 
@@ -29,11 +31,13 @@ public class AltaUsuario extends MasterPage {
 
 		private static final long serialVersionUID = 1L;
 		private final MarkupContainer error;
-		private DAOUsuarios daoUsuarios;
 		private PanelCampos panelCampos;
+		private NegocioAltaUsuario negocio;
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public FrmAltaUsuario(String id) {
 			super(id);		
+			
+			negocio = new NegocioAltaUsuario(getSessionBD());
 			
 			add(error = new MarkupContainer("error"){
 				private static final long serialVersionUID = 6315760448959379801L;});
@@ -42,7 +46,8 @@ public class AltaUsuario extends MasterPage {
 			error.add(new FeedbackPanel("feedback"));
 			error.setOutputMarkupId(true);
 			
-			add(panelCampos = new PanelCampos("campos", getSessionBD()));
+			
+			add(panelCampos = new PanelCampos("campos", negocio));
 		   		    
 		    add(new Link<Object>("cancelar"){
 				private static final long serialVersionUID = 8895339676060670334L;
@@ -61,23 +66,28 @@ public class AltaUsuario extends MasterPage {
 		protected void onSubmit() {
 			super.onSubmit();
 			
-			daoUsuarios = new DAOUsuarios(getSessionBD());
 			try {
 				try{
-				daoUsuarios.save(panelCampos.getUsuario());
+				negocio.guardarUsuario(panelCampos.getUsuario());
 				setResponsePage(new ErrorPage("Ha sido registrado satisfactoriamente \n Ya puede iniciar sesion"));
 				}
+				
 				catch(javax.validation.ConstraintViolationException cve){
 					info(cve.getConstraintViolations().iterator().next().getMessage());
+					return;
 				}
+				
+			
 				catch (org.hibernate.exception.ConstraintViolationException cve) {
 					//TODO ver tema errores controlar en la DB (ej este usuario ya existe)
 					info(cve.getMessage());
+					return;
 				}
 				finally{
 				error.setVisible(true);
 				}
 			} catch (Exception e) {
+				JOptionPane.showConfirmDialog(null, e.getMessage()+panelCampos.getUsuario().getAltura());
 				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "));
 				
 			}

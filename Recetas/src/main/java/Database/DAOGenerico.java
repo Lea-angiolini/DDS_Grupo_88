@@ -126,7 +126,8 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 				 
 				 exc.printStackTrace();
 				 System.out.println("Falló al hacer un rollback");
-				 throw new Exception(exc.getLocalizedMessage());
+				 
+				 throw new Exception(exc);
 			 }
 			 limpiarSesion();
 			 throw cve;

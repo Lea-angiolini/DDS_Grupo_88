@@ -1,5 +1,6 @@
 package Grupo88.AltaUsuario;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import master.ErrorPage;
@@ -21,13 +22,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.hibernate.Session;
 
-import Database.DAOComplexiones;
-import Database.DAOCondicionesPreexistentes;
-import Database.DAODietas;
-import Database.DAOPreferenciasAlimenticias;
-import Database.DAORutinas;
-import Database.DAOSexo;
-import Database.DBExeption;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
@@ -36,27 +30,13 @@ import ObjetosDB.Rutinas;
 import ObjetosDB.Sexo;
 import ObjetosDB.Usuario;
 
-public class PanelCampos extends Panel {
+public class PanelCampos extends Panel implements Serializable{
 
 	private static final long serialVersionUID = 8239928352700688677L;
 	
-	private DAOComplexiones daoComplexiones;
-	private DAOCondicionesPreexistentes daoCondicionesPreexistentes;
-	private DAODietas daoDietas;
-	private DAORutinas daoRutinas;
-	private DAOPreferenciasAlimenticias daoPreferenciasAlimenticias;
-	private DAOSexo daoSexo;
 	private Usuario usuario;
+	private NegocioAltaUsuario negocio;
 	
-	public void crearDaos(Session session){
-		
-		daoComplexiones =  new DAOComplexiones(session);
-		daoCondicionesPreexistentes = new DAOCondicionesPreexistentes(session);
-		daoDietas = new DAODietas(session);
-		daoRutinas = new DAORutinas(session);
-		daoPreferenciasAlimenticias = new DAOPreferenciasAlimenticias(session);
-		daoSexo = new DAOSexo(session);
-	}
 	
 	public void adherirCamposPersonales(){
 		
@@ -67,57 +47,38 @@ public class PanelCampos extends Panel {
 		DropDownChoice<Rutinas> rutina;
 		DropDownChoice<Dietas> dieta;
 		
-		ArrayList<Sexo> todosSexos;
-		ArrayList<Complexiones> todasComplexiones;
-		ArrayList<PreferenciasAlimenticias> todasPreferenciasAlim;
-		ArrayList<CondicionesPreexistentes> todasCondiciones;
-		ArrayList<Rutinas> todasRutinas;
-		ArrayList<Dietas> todasDietas;
+		if(!negocio.cargarListas())
+			setResponsePage(ErrorPage.ErrorCargaDatos());
 		
-		
-		try {
-			
-			todosSexos =  new ArrayList<Sexo>(daoSexo.findAll());
-			todasComplexiones = new ArrayList<Complexiones>(daoComplexiones.findAll());
-			todasPreferenciasAlim = new ArrayList<PreferenciasAlimenticias>(daoPreferenciasAlimenticias.findAll());
-			todasCondiciones = new ArrayList<CondicionesPreexistentes>(daoCondicionesPreexistentes.findAll());
-			todasRutinas = new ArrayList<Rutinas>(daoRutinas.findAll());
-			todasDietas = new ArrayList<Dietas>(daoDietas.findAll());
-			
-	    } catch (DBExeption e) {
-			e.printStackTrace();
-			setResponsePage(ErrorPage.ErrorCargaDatos()); 
-			return;
-		}
 		
 		add(new EmailTextField("email", new PropertyModel<String>(usuario, "email")).add(EmailAddressValidator.getInstance()));
 		add(new TextField<String>("nombre", new PropertyModel<String>(usuario, "nombre")));
 		add(new TextField<String>("apellido", new PropertyModel<String>(usuario, "apellido")));{};
-		add(sexo = new DropDownChoice<Sexo>("sexo", new PropertyModel<Sexo>(usuario, "sexo"), todosSexos, new ChoiceRenderer<Sexo>("descripcion", "idSexo")));
+		add(sexo = new DropDownChoice<Sexo>("sexo", new PropertyModel<Sexo>(usuario, "sexo"), negocio.getTodosSexos(), new ChoiceRenderer<Sexo>("descripcion", "idSexo")));
 		add(new TextField<String>("fechaNac", new PropertyModel<String>(usuario, "fechaNacimiento")));
 		add(new NumberTextField<Integer>("altura", new PropertyModel<Integer>(usuario, "altura"), Integer.class));
-		add(complexion = new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), todasComplexiones, new ChoiceRenderer<Complexiones>("complexion","idComplexion")));
-		add(preferencias = new CheckBoxMultipleChoice<PreferenciasAlimenticias>("preferencia",new PropertyModel(usuario,"preferencias"), todasPreferenciasAlim, new ChoiceRenderer("preferencia","idPreferencia")));
-		add(condiciones = new CheckBoxMultipleChoice<CondicionesPreexistentes>("condPreex",new PropertyModel(usuario,"condiciones"), todasCondiciones, new ChoiceRenderer("condPreex","idCondPreex")));
-		add(rutina = new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),todasRutinas, new ChoiceRenderer<Object>("rutina","idRutina")));
-		add(dieta = new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), todasDietas, new ChoiceRenderer<Object>("dieta","idDieta")));
+		add(complexion = new DropDownChoice<Complexiones>("complexion", new PropertyModel<Complexiones>(usuario, "complexion"), negocio.getTodasComplexiones(), new ChoiceRenderer<Complexiones>("complexion","idComplexion")));
+		add(preferencias = new CheckBoxMultipleChoice<PreferenciasAlimenticias>("preferencia",new PropertyModel(usuario,"preferencias"), negocio.getTodasPreferenciasAlim(), new ChoiceRenderer("preferencia","idPreferencia")));
+		add(condiciones = new CheckBoxMultipleChoice<CondicionesPreexistentes>("condPreex",new PropertyModel(usuario,"condiciones"), negocio.getTodasCondiciones(), new ChoiceRenderer("condPreex","idCondPreex")));
+		add(rutina = new DropDownChoice<Rutinas>("rutina", new PropertyModel<Rutinas>(usuario, "rutina"),negocio.getTodasRutinas(), new ChoiceRenderer<Object>("rutina","idRutina")));
+		add(dieta = new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), negocio.getTodasDietas(), new ChoiceRenderer<Object>("dieta","idDieta")));
 	}
 	
-	public PanelCampos(String id, Session session) {
+	public PanelCampos(String id, NegocioAltaUsuario negocio) {
 		super(id);
 		this.usuario = new Usuario();
+		this.negocio = negocio;
 		
-		crearDaos(session);
 		add(new fragmentoDatosCuenta("DatosCuenta", "camposCuenta", this));
 		adherirCamposPersonales();
 		
 	}
 	
-	public PanelCampos(String id, Session session, Usuario usuario) {
+	public PanelCampos(String id, NegocioAltaUsuario negocio, Usuario usuario) {
 		super(id);
 		this.usuario = usuario;
 		
-		crearDaos(session);
+		this.negocio = negocio;
 		add(new EmptyPanel("DatosCuenta"));
 		adherirCamposPersonales();
 		

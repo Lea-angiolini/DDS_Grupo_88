@@ -34,21 +34,12 @@ import ObjetosDB.itemsABuscar;
 public class BuscarReceta extends MasterPage {
 	
 	private FrmBuscarReceta frmBuscarReceta;
-	private DAODificultades daodificultades;
-	private DAOTemporadas daotemporadas;
-	private DAOIngredientes daoingredientes;
-	private DAOGruposAlimenticios daogruposalimenticios;
-	private DAORecetas daorecetas;
 	private BuscarReceta pagina;
-	
+	private NegocioBuscarReceta negocio;
 	public BuscarReceta(){
 		super();
 		
-		daodificultades = new DAODificultades(getSessionBD());
-		daotemporadas = new DAOTemporadas(getSessionBD());
-		daoingredientes = new DAOIngredientes(getSessionBD());
-		daogruposalimenticios = new DAOGruposAlimenticios(getSessionBD());
-		daorecetas = new DAORecetas(getSessionBD());
+		negocio = new NegocioBuscarReceta(getSessionBD());
 		
 		pagina = this;
 		add(frmBuscarReceta = new FrmBuscarReceta("FrmBuscarReceta"));
@@ -58,34 +49,14 @@ public class BuscarReceta extends MasterPage {
 	private class FrmBuscarReceta extends Form {
 		
 		final itemsABuscar items = new itemsABuscar();
-		private ArrayList<Dificultades> dificultades;
-		private ArrayList<Temporadas> temporadas;
-		private ArrayList<Ingredientes> ingredientes;
-		private ArrayList<GruposAlimenticios> grpAlim;
-		private ArrayList<Integer> calificaciones;
-		
 		public FrmBuscarReceta(String id) {
 			super(id);			
 			
-			try {
-				dificultades = (ArrayList<Dificultades>) daodificultades.findAll();
-				temporadas = (ArrayList<Temporadas>) daotemporadas.findAll();
-	    		ingredientes = (ArrayList<Ingredientes>) daoingredientes.findAll();
-	    		grpAlim =  (ArrayList<GruposAlimenticios>) daogruposalimenticios.findAll();
-	    		
-	    		calificaciones = new ArrayList<Integer>();
-	    		for(int i = 1; i<= 5;i++){
-	    			calificaciones.add(i);
-	    		}
-				
-			} catch (DBExeption e) {
-				e.printStackTrace();
+			if(!negocio.cargarListas())
 				setResponsePage(ErrorPage.ErrorCargaDatos());
-				return;
-			}
 			
-			//
-			DropDownChoice<Dificultades> dropdownDificultades = new DropDownChoice<Dificultades>("dificultad",new PropertyModel<Dificultades>(items,"dificultad"), dificultades ,new ChoiceRenderer("dificultad","idDificultad")){
+			
+			DropDownChoice<Dificultades> dropdownDificultades = new DropDownChoice<Dificultades>("dificultad",new PropertyModel<Dificultades>(items,"dificultad"), negocio.getDificultades() ,new ChoiceRenderer("dificultad","idDificultad")){
     			@Override
     			protected String getNullValidDisplayValue() {
     				// TODO Auto-generated method stub
@@ -96,7 +67,7 @@ public class BuscarReceta extends MasterPage {
     		add(dropdownDificultades);
     		
     		//
-    		DropDownChoice<Ingredientes> dropdownIngredientes = new DropDownChoice<Ingredientes>("ingrediente",new PropertyModel<Ingredientes>(items,"ingredientePrincipal"), ingredientes,new ChoiceRenderer("ingrediente","idIngrediente")){
+    		DropDownChoice<Ingredientes> dropdownIngredientes = new DropDownChoice<Ingredientes>("ingrediente",new PropertyModel<Ingredientes>(items,"ingredientePrincipal"), negocio.getIngredientes(),new ChoiceRenderer("ingrediente","idIngrediente")){
     			
     			protected String getNullValidDisplayValue() {
     				return "Todos";
@@ -105,7 +76,7 @@ public class BuscarReceta extends MasterPage {
     		dropdownIngredientes.setNullValid(true);
     		add(dropdownIngredientes);
     		//
-    		DropDownChoice<Temporadas> dropdownTemporadas = new DropDownChoice<Temporadas>("temporada",new PropertyModel<Temporadas>(items,"temporada"), temporadas,new ChoiceRenderer("temporada","idTemporada")){
+    		DropDownChoice<Temporadas> dropdownTemporadas = new DropDownChoice<Temporadas>("temporada",new PropertyModel<Temporadas>(items,"temporada"), negocio.getTemporadas(),new ChoiceRenderer("temporada","idTemporada")){
     			protected String getNullValidDisplayValue(){
     				return "Todas";
     			}
@@ -114,7 +85,7 @@ public class BuscarReceta extends MasterPage {
     		add(dropdownTemporadas);
     		//
     		
-    		DropDownChoice<Integer> dropdownCalificacion = new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), calificaciones){
+    		DropDownChoice<Integer> dropdownCalificacion = new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), negocio.getCalificaciones()){
     			protected String getNullValidDisplayValue() {
     				return "Todas";
     			}
@@ -123,7 +94,7 @@ public class BuscarReceta extends MasterPage {
     		add(dropdownCalificacion);
     		//
     		
-    		DropDownChoice<GruposAlimenticios> dropdownGruposAlimenticios = new DropDownChoice<GruposAlimenticios>("grupoAlim",new PropertyModel<GruposAlimenticios>(items,"grupoAlimenticio"), grpAlim ,new ChoiceRenderer("grupoAlim","idGrupoAlim")){
+    		DropDownChoice<GruposAlimenticios> dropdownGruposAlimenticios = new DropDownChoice<GruposAlimenticios>("grupoAlim",new PropertyModel<GruposAlimenticios>(items,"grupoAlimenticio"), negocio.getGrpAlim() ,new ChoiceRenderer("grupoAlim","idGrupoAlim")){
     			protected String getNullValidDisplayValue(){
     				return "Todos";
     			}
@@ -158,7 +129,7 @@ public class BuscarReceta extends MasterPage {
         	
         	ArrayList<Receta> recetas;
 			try {
-				recetas = getUsuarioActual().filtrarRecetas((ArrayList<Receta>)daorecetas.buscarReceta(queBuscar));
+				recetas= negocio.buscarPorFiltros(getUsuarioActual(), queBuscar);
 				markupPorvider.remove(id);
 	        	
 	        	add(new Label("nombreGrilla"," Resultados"));
