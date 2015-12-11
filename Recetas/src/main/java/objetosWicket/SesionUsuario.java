@@ -25,7 +25,7 @@ public class SesionUsuario extends WebSession {
 		this.usuario = invitado;
 		setAttribute("usuario", invitado);
 		session = HibernateUtil.getSessionFactory().openSession();
-		session.setFlushMode(FlushMode.MANUAL);
+		session.setFlushMode(FlushMode.COMMIT);
 		daousuario = new DAOUsuarios(session);
 		
 		

@@ -29,13 +29,6 @@ import org.apache.wicket.request.resource.SharedResourceReference;
 import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import Database.DAOCondimentos;
-import Database.DAODificultades;
-import Database.DAOIngredientes;
-import Database.DAORecetas;
-import Database.DAOTemporadas;
-import Database.DAOTipoReceta;
-import Database.DBExeption;
 import Grupo88.Componentes.DropList;
 import Grupo88.MisRecetas.MisRecetas;
 import ObjetosDB.Condimentos;
@@ -53,14 +46,9 @@ public class AgregarReceta extends RegisteredPage {
 	private static final long serialVersionUID = 1L;
 	private Usuario user;
 	private final Receta nuevareceta;
-	private List<Fragmento> fragmentos; 
-	private final DAOIngredientes daoIngredientes;
-	private DAOCondimentos daoCondimentos;
-	private DAODificultades daoDificultades;
-	private DAOTemporadas daoTemporadas;
-	private DAORecetas daoreceta;
-	private DAOTipoReceta daoTipoReceta;
-	
+	private List<Fragmento> fragmentos;
+	private NegocioAgregarReceta negocio;
+
 	public AgregarReceta(){
 		super();
 		
@@ -68,12 +56,7 @@ public class AgregarReceta extends RegisteredPage {
 		nuevareceta = new Receta();
 		nuevareceta.setCreador(user);
 		fragmentos = new ArrayList<Fragmento>();
-		daoIngredientes = new DAOIngredientes (getSessionBD());
-		daoCondimentos = new DAOCondimentos(getSessionBD());
-		daoDificultades = new DAODificultades(getSessionBD());
-		daoTemporadas = new DAOTemporadas(getSessionBD());
-		daoreceta = new DAORecetas (getSessionBD());
-		daoTipoReceta = new DAOTipoReceta(getSessionBD());
+		negocio = new NegocioAgregarReceta(getSessionBD());
 		
 		generarFragmentos();
 		
@@ -122,35 +105,23 @@ public class AgregarReceta extends RegisteredPage {
 		private DropDownChoice<TipoReceta> tiposReceta;
 		private DropList<Ingredientes> dropIng;
 		private DropList<Condimentos> dropCond;
-		private ArrayList<Ingredientes> todosIngredientes;
-		private ArrayList<Condimentos> todosCondimentos;
-		private ArrayList<Temporadas> todasTemporadas;
-		private ArrayList<Dificultades> todasDificultades;
-		private ArrayList<TipoReceta> todosTipoReceta;
 		
 		public FrmDatosReceta(String id) {
 			super(id);
 			
-			try {
-				todosIngredientes = new ArrayList<Ingredientes>(daoIngredientes.findAll());
-				todasTemporadas =  new ArrayList<Temporadas>(daoTemporadas.findAll());
-				todasDificultades = new ArrayList<Dificultades>(daoDificultades.findAll());
-				todosCondimentos= new ArrayList<Condimentos>(daoCondimentos.findAll());
-				todosTipoReceta = new ArrayList<TipoReceta>(daoTipoReceta.findAll());
-			} catch (DBExeption e2) {
-				e2.printStackTrace();
+			if(!negocio.cargarListas())
 				setResponsePage(ErrorPage.ErrorCargaDatos());
-			}
-		
+			
+			
 			add(nombreReceta = new TextField<String>("nombreReceta", new PropertyModel<String>(nuevareceta, "nombre")));
 			add(descripcion = new TextArea<String>("descripcion", new PropertyModel<String>(nuevareceta, "detalle")));
-			add(ingPrinc = new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), todosIngredientes, new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
-			add(temporada = new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), todasTemporadas, new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
-			add(dificultad = new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"),todasDificultades, new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
-			add(tiposReceta = new DropDownChoice<TipoReceta>("tipoRecomendado", new PropertyModel<TipoReceta>(nuevareceta, "tipoReceta"), todosTipoReceta, new ChoiceRenderer<TipoReceta>("descripcion","idTipoReceta")));
+			add(ingPrinc = new DropDownChoice<Ingredientes>("ingPrinc", new PropertyModel<Ingredientes>(nuevareceta, "ingredientePrincipal"), negocio.getTodosIngredientes(), new ChoiceRenderer<Ingredientes>("ingrediente", "idIngrediente")));
+			add(temporada = new DropDownChoice<Temporadas>("temporada", new PropertyModel<Temporadas>(nuevareceta, "temporada"), negocio.getTodasTemporadas(), new ChoiceRenderer<Temporadas>("temporada", "idTemporada")));
+			add(dificultad = new DropDownChoice<Dificultades>("dificultad", new PropertyModel<Dificultades>(nuevareceta, "dificultad"),negocio.getTodasDificultades(), new ChoiceRenderer<Dificultades>("dificultad", "idDificultad")));
+			add(tiposReceta = new DropDownChoice<TipoReceta>("tipoRecomendado", new PropertyModel<TipoReceta>(nuevareceta, "tipoReceta"), negocio.getTodosTipoReceta(), new ChoiceRenderer<TipoReceta>("descripcion","idTipoReceta")));
 			add(fileUpload = new FileUploadField("fileUpload"));
-			add(dropIng = new DropList<Ingredientes>("dropIngredientes",todosIngredientes));
-			add(dropCond = new DropList<Condimentos>("dropCondimentos",todosCondimentos));
+			add(dropIng = new DropList<Ingredientes>("dropIngredientes",negocio.getTodosIngredientes()));
+			add(dropCond = new DropList<Condimentos>("dropCondimentos",negocio.getTodosCondimentos()));
 			
 			nombreReceta.setRequired(true);
 			descripcion.setRequired(true);
@@ -166,32 +137,15 @@ public class AgregarReceta extends RegisteredPage {
 		
 		}
 		
-		private boolean cargarIngyCond(){
-			
-			nuevareceta.agregarIngrediente(nuevareceta.getIngredientePrincipal(), 1);
-//			if(dropIng.getElegidos().size()> 0){
-				
-				for(Ingredientes ing : dropIng.getElegidos())
-					if(ing.getId() != nuevareceta.getIngredientePrincipal().getId())
-						nuevareceta.agregarIngrediente(ing,1);
-				
-				return true;
-//			}
-		
-//			return false;
-			
-		}
 		@Override
 		protected void onSubmit() {
 			super.onSubmit();
 			
-			if(!cargarIngyCond()){
+			if(!negocio.cargarIngyCond(nuevareceta, dropIng.getElegidos(), dropCond.getElegidos())){
 				error("Debe elegir un ingrediente minimo");
 				return;
 			}
 				
-			nuevareceta.setCondimentos(dropCond.getElegidos());
-			
 			if(fileUpload.getFileUpload() != null){		
 				try {
 					
@@ -304,12 +258,11 @@ public class AgregarReceta extends RegisteredPage {
 		pagina().addOrReplace(fragmentos.get(idFrmPaso+1));	
 		}
 		else{
-			try {
-				daoreceta.saveOrUpdate(nuevareceta);
+			if(negocio.guardarReceta(nuevareceta)){
 				setResponsePage(MisRecetas.class);
-			} catch (Exception e) {
-				error("Algo andubo mal.. Intente de vuelta por favor");
-			}			
+			}
+				
+			error("Algo andubo mal.. Intente de vuelta por favor");
 			}
 		}
 	}
