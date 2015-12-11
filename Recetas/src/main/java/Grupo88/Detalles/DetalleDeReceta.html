@@ -25,14 +25,12 @@
 			<div class="container">	
 			
 			<div class="row ">
-				<div class="col-sm-9">
 					<h1 wicket:id="Nombre">Detalle de Receta</h1>													
 					<h3>Dificultad <label wicket:id="dif"></label></h3>
 					<h3>Temporada <label wicket:id="tem"></label></h3>
 					<h3>Calorias <label wicket:id="cal"> </label></h3>
 					<img style="height: 350px" wicket:id="imgPrinc">
 					<br>
-				</div>
 				</div>
 				
 				<div class="row"> 
@@ -67,8 +65,8 @@
 	</section>
 	<aside style="background-color: rgba(185, 237, 211,0.3); width: 30%; float: right;">
 	
-		<form wicket:id="formCalificar" method="post">
-		</form>
+		<div wicket:id="formCalificar">
+		</div>
 		
 		<div wicket:id="formConfirmar">
 		</div>	

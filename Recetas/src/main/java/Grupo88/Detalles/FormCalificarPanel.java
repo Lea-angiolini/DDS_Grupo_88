@@ -2,6 +2,8 @@ package Grupo88.Detalles;
 
 import java.util.Arrays;
 
+import javax.swing.JOptionPane;
+
 import master.ErrorPage;
 
 import org.apache.wicket.markup.html.form.Button;
@@ -83,7 +85,6 @@ public class FormCalificarPanel extends Panel{
 						super.onSubmit();
 						try {
 							daoCalificacion.saveOrUpdate(calificacion);
-							
 						} catch (ConstraintViolationException e) { 
 							e.printStackTrace();
 							setResponsePage(ErrorPage.ErrorEnLaDB());
