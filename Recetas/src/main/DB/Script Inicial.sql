@@ -4,7 +4,7 @@ CREATE DATABASE Grupo88 CHARACTER SET utf8 COLLATE utf8_bin;
 DROP USER 'llevaYtrae'@'localhost';
 
 CREATE USER 'llevaYtrae'@'localhost' IDENTIFIED BY 'gil';
-GRANT SELECT, UPDATE, DELETE, INSERT, EXECUTE ON grupo88.* TO 'llevaYtrae'@'localhost';
+GRANT SELECT, UPDATE, DELETE, INSERT, CREATE, DROP, ALTER, EXECUTE ON grupo88.* TO 'llevaYtrae'@'localhost';
 
 -- ----------------------------------  CREACION DE TABLAS
 

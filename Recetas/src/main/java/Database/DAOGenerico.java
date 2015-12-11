@@ -43,7 +43,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 	 
 	 @Override
 	 public void saveOrUpdate(T entity) throws javax.validation.ConstraintViolationException,org.hibernate.exception.ConstraintViolationException, Exception {
-
+		 	
 		 try {
 			 session.beginTransaction();
 			 session.saveOrUpdate(entity);
@@ -73,6 +73,7 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			     
 				 exc.printStackTrace();
 				 throw new Exception(exc.getMessage());
+				 
 			 }
 			throw cve;
 			 
@@ -81,7 +82,6 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
-					 
 				 }
 			 } 
 			 catch (Exception exc) {
@@ -96,7 +96,6 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 			 try {
 				 if (session.getTransaction().isActive()) {
 					 session.getTransaction().rollback();
-					 
 				 }
 			 } 
 			 catch (Exception exc) {

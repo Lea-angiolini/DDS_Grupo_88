@@ -18,8 +18,9 @@ public class CrearNuevoGrupo extends RegisteredPage{
 
 	private static final long serialVersionUID = 6553979241575620871L;
 	private FormCrearNuevoGrupo formCrearNuevoGrupo;
-	private DAOGrupos daoGrupos;
+	private NegocioGrupos negocio;
 	public CrearNuevoGrupo() {
+		negocio = new NegocioGrupos(getSessionBD());
 		add(formCrearNuevoGrupo = new FormCrearNuevoGrupo("formCrearNuevoGrupo"));
 		
 	}
@@ -32,7 +33,7 @@ public class CrearNuevoGrupo extends RegisteredPage{
 			super(id);
 	
 			final Grupo nuevoGrupo = new Grupo(0,"","");
-			daoGrupos = new DAOGrupos(getSessionBD());
+			nuevoGrupo.setCreador(getUsuarioActual());
 			add(new TextField<String>("nombreGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "nombre")));
 			add(new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
 			add(new EmptyPanel("etiquetaConf"));
@@ -42,29 +43,11 @@ public class CrearNuevoGrupo extends RegisteredPage{
 	
 				@Override
 				public void onSubmit() {
-					String msg = "";
-					try{
-					try {
-						nuevoGrupo.setCreador(getUsuarioActual());
-						daoGrupos.saveOrUpdate(nuevoGrupo);
-						msg = "¡Su grupo ha sido creado!";
-						getSessionBD().refresh(getUsuarioActual());
-						setResponsePage(new ErrorPage(msg));
-					}
-					catch (javax.validation.ConstraintViolationException cve){
-						msg = cve.getConstraintViolations().iterator().next().getMessage();
-						
-						}
-					catch (org.hibernate.exception.ConstraintViolationException cve){
-						msg = cve.getMessage();
-						}
-					
-					}
-					catch (Exception e) {
-						setResponsePage(ErrorPage.ErrorRandom());
-					}
-				
-					formCrearNuevoGrupo.addOrReplace(new Label("etiquetaConf", msg ) );
+					String msg = new String();
+					if(!negocio.nuevoGrupo(nuevoGrupo, getUsuarioActual(), msg))
+						formCrearNuevoGrupo.addOrReplace(new Label("etiquetaConf", negocio.getError()));
+					else
+						formCrearNuevoGrupo.addOrReplace(new Label("etiquetaConf", "¡Su grupo ha sido creado!" ) );
 	
 				}
 				

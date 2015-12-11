@@ -3,6 +3,8 @@ package Database;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -17,6 +19,23 @@ public class DAOGrupos extends DAOGenerico<Grupo,Integer> implements Serializabl
 		// TODO Auto-generated constructor stub
 		super(session);
 	}
+	
+	private void validacion(Grupo entity) throws org.hibernate.exception.ConstraintViolationException{
+		Query query;
+		query = session.createQuery("from Grupo u where nombre = '" +entity.getNombre()+"'");
+		if(query.list().size() != 0){
+			throw new org.hibernate.exception.ConstraintViolationException("El grupo con este nombre ya existe", null, "");
+		}
+	}
+	
+	@Override
+	public void save(Grupo entity) throws ConstraintViolationException,
+			org.hibernate.exception.ConstraintViolationException, Exception {
+		
+		validacion(entity);
+		super.save(entity);
+	}
+	
 	
 	public List<Grupo> gruposde(Usuario user) throws Exception{
 		

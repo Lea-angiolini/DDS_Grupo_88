@@ -1,5 +1,7 @@
 package Grupo88.AltaUsuario;
 
+import javax.swing.JOptionPane;
+
 import master.ErrorPage;
 import master.MasterPage;
 
@@ -78,6 +80,7 @@ public class AltaUsuario extends MasterPage {
 				error.setVisible(true);
 				}
 			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
 				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "));
 				
 			}

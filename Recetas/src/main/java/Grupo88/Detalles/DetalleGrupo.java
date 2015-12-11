@@ -13,6 +13,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 
 import Grupo88.Componentes.ListaDeRecetas;
+import Grupo88.GestionarGrupos.NegocioGrupos;
+import Grupo88.GestionarGrupos.PanelAdherirse;
 import ObjetosDB.Grupo;
 import ObjetosDB.Receta;
 import ObjetosDB.Usuario;
@@ -20,31 +22,34 @@ import ObjetosDB.Usuario;
 public class DetalleGrupo extends RegisteredPage {
 
 	private static final long serialVersionUID = -4226255942815446132L;
-	// private TextField<String> txtUsuario;
-	// private PasswordTextField txtPassword;
-	//
 	@SuppressWarnings("unused")
 	private FrmDetalleGrupo frmDetalleGrupo;
 	private StringValue idGrupo;
 	private Grupo grupo;
 	private DetalleGrupo pagina;
-	//private DAOGrupos daogrupos;
+	private NegocioGrupos negocio;
 	
 	public DetalleGrupo(final PageParameters parameters){
 		super();
 		pagina = this;
-		//getMenuPanel().setVisible(false);
+		negocio = new NegocioGrupos(getSessionBD());
+		
 		if(parameters.getNamedKeys().contains("idGrupo")){
 			idGrupo = parameters.get("idGrupo");
 		
 	
-//		FactoryGrupo fabGrupo = new FactoryGrupo(getUsuarioActual());
-		grupo = getUsuarioActual().getGrupoPorID(idGrupo.toInt());
+		grupo = negocio.grupoPorId(idGrupo.toInt());
+		
 		if(grupo == null){
-			 setResponsePage(new ErrorPage("No se encontro el Grupo o no esta autorizado"));
+			 setResponsePage(new ErrorPage("No se encontro el Grupo"));
 			 return;
 		}
-	
+		
+		if(!negocio.admiteUsuario(grupo, getUsuarioActual())){
+			setResponsePage(new PanelAdherirse(negocio,grupo));
+			return;
+		}
+		
 		add(new FrmDetalleGrupo("frmDetalleGrupo"));
 		
 	}	
@@ -52,9 +57,7 @@ public class DetalleGrupo extends RegisteredPage {
 	
 
 	private class FrmDetalleGrupo extends Form<Object>{
-		/**
-		 * 
-		 */
+
 		private static final long serialVersionUID = -2951767968039503061L;
 
 		public FrmDetalleGrupo(String id) {

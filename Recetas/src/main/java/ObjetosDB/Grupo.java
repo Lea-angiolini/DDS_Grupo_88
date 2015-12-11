@@ -27,7 +27,7 @@ public class Grupo implements Serializable{
 	private static final long serialVersionUID = -6889197720307310421L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="idGrupo")
 	private int idGrupo;
 	
@@ -46,7 +46,7 @@ public class Grupo implements Serializable{
 	@Column(name="detalle")
 	private String detalle;
 	
-	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="grupos", fetch=FetchType.EAGER) //cambiar a lazy
+	@ManyToMany(cascade={CascadeType.ALL}, mappedBy="grupos", fetch=FetchType.LAZY) //cambiar a lazy
 	private Set<Usuario> usuarios;
 	
 	@ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
