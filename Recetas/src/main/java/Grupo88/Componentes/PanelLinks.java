@@ -7,11 +7,9 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.hibernate.Session;
 
-import Database.DAOEstadisticaPorSexo;
-import Database.DAOEstadisticasPorDificultad;
-import Database.DAORecetasMasConsultadas;
 import Grupo88.BuscarReceta.BuscarReceta;
 import Grupo88.Estadisticas.Estadisticas;
+import Grupo88.Estadisticas.NegocioEstadistica;
 import Grupo88.GestionarGrupos.CrearNuevoGrupo;
 import Grupo88.GestionarGrupos.GestionarGrupos;
 import Grupo88.GestionarPerfil.GestionarPerfil;
@@ -23,12 +21,17 @@ import ObjetosDB.Usuario;
 
 public class PanelLinks extends Panel {
 
-	SesionUsuario sesion = (SesionUsuario)getSession();
-	Session sessionDB = sesion.getSession();
-	Usuario user = sesion.getUsuario();
+	private static final long serialVersionUID = -6539107446596515L;
+	private SesionUsuario sesion;
+	private Session sessionDB;
+	private Usuario user;
 	
 	public PanelLinks(String id) {
 		super(id);
+		
+		sesion = (SesionUsuario)getSession();
+		sessionDB = sesion.getSession();
+		user = sesion.getUsuario();
 		add(new FrmLinks("FrmLinks"));
 		
 	}
@@ -76,21 +79,21 @@ public class PanelLinks extends Panel {
 			add(new Link("estadisticas"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(new DAOEstadisticaPorSexo(sessionDB)));
+					setResponsePage(new Estadisticas(NegocioEstadistica.porSexo(sessionDB)));
 				}
 			});
 
 			add(new Link("consultasDificultad"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(new DAOEstadisticasPorDificultad(sessionDB)));
+					setResponsePage(new Estadisticas(NegocioEstadistica.porDificultad(sessionDB)));
 				}
 			});
 			
 			add(new Link("topRecetasConsultadas"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(new DAORecetasMasConsultadas(sessionDB,10)));
+					setResponsePage(new Estadisticas(NegocioEstadistica.recetasMasconsultadas(sessionDB)));
 				}
 			});
 			

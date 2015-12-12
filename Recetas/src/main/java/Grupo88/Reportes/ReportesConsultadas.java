@@ -18,11 +18,11 @@ public class ReportesConsultadas extends RegisteredPage{
 	
 
 	private static final long serialVersionUID = 1L;
-	private DAOReportes daoReportes;
+	private NegocioReportes negocio;
 
 	public ReportesConsultadas() {
 		add(new FormReporte("frmReportes"));
-		this.daoReportes = new DAOReportes(getSessionBD(), getUsuarioActual());
+		negocio = new NegocioReportes(getSessionBD(), getUsuarioActual());
 	}
 	
 	private class FormReporte extends Form<Object>{
@@ -49,7 +49,7 @@ public class ReportesConsultadas extends RegisteredPage{
 			super.onSubmit();
 			List<Historial> listaHistorial;
 			try {
-				listaHistorial = daoReportes.recetasmasconsultadas(fechaDesde, fechaHasta);
+				listaHistorial = negocio.getDaoReportes().recetasmasconsultadas(fechaDesde, fechaHasta);
 				addOrReplace(new PanelListaRecetas("AreaRecetas", listaHistorial));
 			} catch (Exception e) {
 				e.printStackTrace();

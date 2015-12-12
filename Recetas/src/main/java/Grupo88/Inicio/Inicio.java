@@ -18,7 +18,6 @@ public class Inicio extends MasterPage {
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
 	private FrmInicio frmInicio;
-//	private DAORecetas daoRecetas;
 	private Inicio pagina;
 	
 	public Inicio(){
@@ -33,8 +32,6 @@ public class Inicio extends MasterPage {
 
 		public FrmInicio(String id) {
 			super(id);			
-			setDefaultModel(new CompoundPropertyModel<FrmInicio>(this));
-//			daoRecetas = new DAORecetas(getSessionBD());
 			ArrayList<Receta> recetas;
 			try {
 				recetas = new ArrayList<Receta>(getUsuarioActual().cargarHome(getSessionBD()));
@@ -48,7 +45,6 @@ public class Inicio extends MasterPage {
 		
 		@Override
 		protected void onSubmit() {
-			// Va a conectarse con BD y comprobar las validaciones
 			super.onSubmit();
 		}
 	}

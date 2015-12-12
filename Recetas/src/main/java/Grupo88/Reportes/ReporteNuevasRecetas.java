@@ -20,10 +20,11 @@ public class ReporteNuevasRecetas extends RegisteredPage {
 
 	private static final long serialVersionUID = -4968503463362404667L;
 	private FormNuevasRecetas formNuevasRecetas;
-	private DAOReportes daoReportes;
+	private NegocioReportes negocio;
 	
 	public ReporteNuevasRecetas() {
-		daoReportes = new DAOReportes(getSessionBD(), getUsuarioActual());
+		negocio = new NegocioReportes(getSessionBD(), getUsuarioActual());
+		
 		add(formNuevasRecetas = new FormNuevasRecetas("formNuevasRecetas"));
 	}
 	
@@ -36,7 +37,7 @@ public class ReporteNuevasRecetas extends RegisteredPage {
 			
 			ArrayList<Receta> listaRecetas;
 			try {
-				listaRecetas = new ArrayList<Receta>(daoReportes.recetasCreadas());
+				listaRecetas = new ArrayList<Receta>(negocio.getDaoReportes().recetasCreadas());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -61,9 +62,6 @@ public class ReporteNuevasRecetas extends RegisteredPage {
 					
 					link.add(new Label("nombre",receta.getNombre()));
 					item.add(link);
-					
-					
-					
 				}
 			};
 			

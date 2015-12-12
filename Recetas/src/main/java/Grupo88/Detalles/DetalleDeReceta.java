@@ -15,8 +15,6 @@ import org.apache.wicket.request.resource.DynamicImageResource;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.string.StringValueConversionException;
 
-import Database.DAORecetas;
-import Database.DBExeption;
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Condimentos;
 import ObjetosDB.Pasos;
@@ -28,7 +26,7 @@ public class DetalleDeReceta extends MasterPage {
 
 	private static final long serialVersionUID = 7898970758684629351L;
 
-	private DAORecetas daoreceta;
+	private NegocioRecetas negocio;
 	private Usuario user;
 	private StringValue idReceta;
 	private Receta receta;
@@ -63,16 +61,16 @@ public class DetalleDeReceta extends MasterPage {
 	
 
 	private void iniciar(PageParameters parameters){
-		
-		daoreceta = new DAORecetas(getSessionBD());
-		
+
+		negocio = new NegocioRecetas(getSessionBD());
 		user = getUsuarioActual();
 		receta = null;
-		
+
 		if(parameters.getNamedKeys().contains("idReceta")){
 			idReceta = parameters.get("idReceta");
+
 			try {
-				receta = daoreceta.get(idReceta.toInt());
+				receta = negocio.getReceta(idReceta.toInt());
 			} catch (NullPointerException e){
 				setResponsePage(ErrorPage.ErrorIngresoInvalidoDatos());
 				return;
@@ -81,17 +79,17 @@ public class DetalleDeReceta extends MasterPage {
 				setResponsePage(ErrorPage.ErrorIngresoInvalidoDatos());
 				return;
 				
-			} catch (DBExeption e) {
+			} catch (Exception e) {
 				setResponsePage(ErrorPage.ErrorEnLaDB());
 				return;
 			}
-		
+
 		add(new FrmDetalleDeReceta("FrmDetalleDeReceta"));
 		
 		if(getUsuarioActual().getUsername() != "Invitado"){
-			add(new FormCalificarPanel("formCalificar",getSessionBD(),receta,getUsuarioActual()));
-			add(new FormConfirmarPanel("formConfirmar",getSessionBD(),getUsuarioActual(),receta));
-			add(new FormCompartirPanel("formCompartir",getSessionBD(),getUsuarioActual(),receta));
+			add(new FormCalificarPanel("formCalificar",getSessionBD(),receta,getUsuarioActual(),negocio));
+			add(new FormConfirmarPanel("formConfirmar",getSessionBD(),getUsuarioActual(),receta,negocio));
+			add(new FormCompartirPanel("formCompartir",getSessionBD(),getUsuarioActual(),receta,negocio));
 		}
 		else{
 			add(new EmptyPanel("formCalificar"));
@@ -100,6 +98,9 @@ public class DetalleDeReceta extends MasterPage {
 		}
 		
 	}
+		else{
+			setResponsePage(ErrorPage.ErrorIngresoInvalidoDatos());
+		}
 	}
 	private class FrmDetalleDeReceta extends Form<Object> {
 
@@ -108,7 +109,7 @@ public class DetalleDeReceta extends MasterPage {
 
 		public FrmDetalleDeReceta(String id) {
 			super(id);
-			
+
 			add(new Label("Nombre",receta.getNombre()));
 			add(new Label("dif",receta.getDificultad().getDificultad()));
 			add(new Label("tem",receta.getTemporada().getTemporada()));
@@ -171,12 +172,6 @@ public class DetalleDeReceta extends MasterPage {
 				
 			}
 			add(pasos);
-		}
-
-		@Override
-		protected void onSubmit() {
-			// Va a conectarse con BD y comprobar las validaciones
-			super.onSubmit();
 		}
 	}
 }

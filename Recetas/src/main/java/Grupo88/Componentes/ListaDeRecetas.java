@@ -56,8 +56,6 @@ public ListaDeRecetas(String id, ArrayList<ObjetosDB.Receta> arrayList, final Us
 			};
 			
 			
-			//item.addOrReplace(new Label("indice",item.getIndex()));
-			
 			Usuario usercreador = recetas.getCreador();
 			String creador = "";
 			if(usercreador != null) creador = usercreador.getUsername();

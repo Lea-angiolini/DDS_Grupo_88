@@ -76,7 +76,7 @@ public class GestionarGrupos extends MasterPage {
 					VistaGrupos fragmento;
 					
 					if(getModelObject()){
-						fragmento = new VistaGrupos("areaGrupos", new ArrayList<Grupo>(getUsuarioActual().getMisGrupos()));
+						fragmento = new VistaGrupos("areaGrupos", new ArrayList<Grupo>(getUsuarioActual().getGrupos()));
 						checkLabel.setDefaultModelObject("Ver todos los grupos");
 					}
 					else{
