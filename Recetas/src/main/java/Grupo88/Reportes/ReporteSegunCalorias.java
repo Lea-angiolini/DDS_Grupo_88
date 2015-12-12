@@ -20,11 +20,11 @@ import ObjetosDB.Historial;
 		
 
 		private static final long serialVersionUID = 1L;
-		private DAOReportes daoReportes;
+		private NegocioReportes negocio;
 
 		public ReporteSegunCalorias() {
 			add(new FormReporte("frmReportes"));
-			this.daoReportes = new DAOReportes(getSessionBD(), getUsuarioActual());
+			negocio = new NegocioReportes(getSessionBD(), getUsuarioActual());
 		}
 		
 		private class FormReporte extends Form<Object>{
@@ -51,7 +51,7 @@ import ObjetosDB.Historial;
 				super.onSubmit();
 				List<Confirmacion> listaHistorial;
 				try {
-					listaHistorial = daoReportes.recetasConfirmadas(calMin.toString(), calMax.toString());
+					listaHistorial = negocio.getDaoReportes().recetasConfirmadas(calMin.toString(), calMax.toString());
 					addOrReplace(new PanelListaConfirmaciones("AreaRecetas", listaHistorial));
 				} catch (Exception e) {
 					e.printStackTrace();

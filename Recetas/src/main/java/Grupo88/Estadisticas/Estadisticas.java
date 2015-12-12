@@ -20,19 +20,14 @@ import Database.DAOEstadistica;
 public class Estadisticas extends RegisteredPage{
 
 	private static final long serialVersionUID = 1L;
-	private DAOEstadistica daoEstadistica;
 	@SuppressWarnings("unused")
 	private FrmEstadisticas frmEstadisticas;
-	private ArrayList<DAOEstadistica> listaDAO;
-	private List<Integer> fechas;
+	private NegocioEstadistica negocio;
 	
-	
-	public Estadisticas(DAOEstadistica dao){
+	public Estadisticas(NegocioEstadistica negocio){
 		super();
-		listaDAO = new ArrayList<DAOEstadistica>();
-		listaDAO.add(dao);
+		this.negocio = negocio;
 		add(frmEstadisticas = new FrmEstadisticas("frmEstadisticas"));
-		fechas = Arrays.asList(10,30);
 	}
 	
 	public class FrmEstadisticas extends Form<Object>{
@@ -42,33 +37,22 @@ public class Estadisticas extends RegisteredPage{
 		public FrmEstadisticas(String id) {
 			super(id);
 			
-			final DataView<Object> dataView = new DataView<Object>("iteradorTabla", new ListDataProvider(
-	                listaDAO)) {
-
-				private static final long serialVersionUID = -4285846135742773862L;
-
-				protected void populateItem(final Item item){
-	            	final DAOEstadistica dao = (DAOEstadistica) item.getModelObject();
-	                item.add(new Label("estadistica", dao.descripcionEst()));
-	         
+			add(new Label("estadistica", negocio.getDAO().descripcionEst()));
 	                RepeatingView col = new RepeatingView("iteradorCol");
 	                	
-	                	for(Integer f : fechas){
+	                	for(Integer f : negocio.getFechas()){
 	                		AbstractItem celda = new AbstractItem(col.newChildId());
 	                		
 	                		try {
 	                			celda.add(new Label("tiempo", f+" dias"));
-								celda.add(new PanelTiposRecetasConsultadas("panel", dao.obtenerEstadistica(f)));
+								celda.add(new PanelTiposRecetasConsultadas("panel", negocio.getDAO().obtenerEstadistica(f)));
 							} catch (Exception e) {
 								celda.add(new EmptyPanel("panel"));
 							}
 	                		col.add(celda);
 	                	}
-	                item.add(col);
+	                add(col);
 	            }
-	        };
-	        
-	        add(dataView);	
+
 	}
-}
 }
