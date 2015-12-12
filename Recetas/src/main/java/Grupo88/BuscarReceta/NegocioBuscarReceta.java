@@ -63,12 +63,13 @@ public boolean cargarListas(){
 
 public ArrayList<Receta> buscarPorFiltros(Usuario usuario, itemsABuscar queBuscar ) throws DBExeption{
 	
+	ArrayList<Receta> aceptadas = new ArrayList<Receta>();
+	
 	for(Receta rec : daorecetas.buscarReceta(queBuscar)){
-		for(CondicionesPreexistentes cond : usuario.getCondiciones()){
-			
-		}
+		if(usuario.esAdecuada(rec))
+			aceptadas.add(rec);
 	}
-	return (ArrayList<Receta>)daorecetas.buscarReceta(queBuscar);
+	return aceptadas;
 	
 }
 

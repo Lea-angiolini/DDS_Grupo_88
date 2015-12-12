@@ -261,8 +261,8 @@ VALUES('Facil'),
 INSERT INTO Grupo88.sexos(descripcion)
 VALUES ('Masculino'),
 		('Femenino'),
-        ('Travesti'),
-        ('Marco');
+        ('Transexual'),
+        ('Otro');
         
 INSERT INTO Grupo88.condimento (nombre)
 VALUES ('Sal'),('Pimienta Negra'),('Paprika'),('Oregano'),('Laurel'),('Aji Molido'),('Azafran');

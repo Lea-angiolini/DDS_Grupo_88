@@ -17,6 +17,7 @@ import org.apache.wicket.util.string.StringValueConversionException;
 
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Condimentos;
+import ObjetosDB.Historial;
 import ObjetosDB.Pasos;
 import ObjetosDB.Receta;
 import ObjetosDB.Receta_Ingrediente;
@@ -65,7 +66,7 @@ public class DetalleDeReceta extends MasterPage {
 		negocio = new NegocioRecetas(getSessionBD());
 		user = getUsuarioActual();
 		receta = null;
-
+				
 		if(parameters.getNamedKeys().contains("idReceta")){
 			idReceta = parameters.get("idReceta");
 
@@ -86,6 +87,8 @@ public class DetalleDeReceta extends MasterPage {
 
 		add(new FrmDetalleDeReceta("FrmDetalleDeReceta"));
 		
+		negocio.guardarConsulta(new Historial("", receta, getUsuarioActual()),getUsuarioActual());
+
 		if(getUsuarioActual().getUsername() != "Invitado"){
 			add(new FormCalificarPanel("formCalificar",getSessionBD(),receta,getUsuarioActual(),negocio));
 			add(new FormConfirmarPanel("formConfirmar",getSessionBD(),getUsuarioActual(),receta,negocio));

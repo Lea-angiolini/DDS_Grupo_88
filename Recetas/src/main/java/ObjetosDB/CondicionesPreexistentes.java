@@ -98,7 +98,7 @@ public class CondicionesPreexistentes implements Visitor,Serializable{
 	public boolean visitarRecera(Receta receta) {
 		
 		for(Receta_Ingrediente ing : receta.getRelacionIngredientes()){
-			if(getIngredientesNoComestible().contains(ing))
+			if(getIngredientesNoComestible().contains(ing.getIngrediente()))
 				return false;
 		}
 		return true;

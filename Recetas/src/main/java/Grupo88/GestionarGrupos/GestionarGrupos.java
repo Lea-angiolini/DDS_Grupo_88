@@ -98,7 +98,7 @@ public class GestionarGrupos extends MasterPage {
 			
 			check.setOutputMarkupId(true);
 			
-			if(getUsuarioActual().getMisGrupos().size() < 1){
+			if(getUsuarioActual().getGrupos().size() < 1){
 				check.setEnabled(false);
 				checkLabel.setDefaultModelObject("Usted no esta adherido a ningun grupo");
 			}
