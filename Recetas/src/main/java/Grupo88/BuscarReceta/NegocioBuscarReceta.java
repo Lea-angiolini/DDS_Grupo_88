@@ -12,6 +12,7 @@ import Database.DAOIngredientes;
 import Database.DAORecetas;
 import Database.DAOTemporadas;
 import Database.DBExeption;
+import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dificultades;
 import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
@@ -61,7 +62,13 @@ public boolean cargarListas(){
 }
 
 public ArrayList<Receta> buscarPorFiltros(Usuario usuario, itemsABuscar queBuscar ) throws DBExeption{
-	return usuario.filtrarRecetas((ArrayList<Receta>)daorecetas.buscarReceta(queBuscar));
+	
+	for(Receta rec : daorecetas.buscarReceta(queBuscar)){
+		for(CondicionesPreexistentes cond : usuario.getCondiciones()){
+			
+		}
+	}
+	return (ArrayList<Receta>)daorecetas.buscarReceta(queBuscar);
 	
 }
 

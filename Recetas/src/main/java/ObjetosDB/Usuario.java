@@ -359,18 +359,18 @@ public class Usuario implements Serializable{
 		}
 	}
 	
-	public ArrayList<Receta> filtrarRecetas(ArrayList<Receta> recetas){
-		
-		ArrayList<Receta> recetasFiltradas = new ArrayList<Receta>();
-		
-		for(Receta receta : recetas )
-		{
-			if(receta.aceptaCond(getCondiciones())){
-				recetasFiltradas.add(receta);
-			}
-			
-		}
- 		
-		return recetasFiltradas;
-	}
+//	public ArrayList<Receta> filtrarRecetas(ArrayList<Receta> recetas){
+//		
+//		ArrayList<Receta> recetasFiltradas = new ArrayList<Receta>();
+//		
+//		for(Receta receta : recetas )
+//		{
+//			if(receta.aceptaCond(getCondiciones())){
+//				recetasFiltradas.add(receta);
+//			}
+//			
+//		}
+// 		
+//		return recetasFiltradas;
+//	}
 }

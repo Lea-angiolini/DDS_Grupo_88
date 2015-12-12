@@ -27,7 +27,7 @@ import org.hibernate.annotations.IndexColumn;
 
 @Entity
 @Table(name = "recetas")
-public class Receta implements Serializable{
+public class Receta implements Serializable, Visitable{
 	
 	private static final long serialVersionUID = -394756840419765018L;
 
@@ -217,16 +217,8 @@ public class Receta implements Serializable{
 	}
 
 	
-	public boolean aceptaCond(Set<CondicionesPreexistentes> list){
-		
-		for(CondicionesPreexistentes cond : list){
-			for(Receta_Ingrediente ingrel : getRelacionIngredientes()){
-				if(!ingrel.getIngrediente().accept(cond)){
-					return false;}
-			}
-		}
-		
-		return true;
+	public boolean accept(Visitor visitor){
+		return visitor.visitarRecera(this);
 	}
 	
 	public void calcularCalorias(){

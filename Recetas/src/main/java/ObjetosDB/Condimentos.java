@@ -72,12 +72,5 @@ public class Condimentos extends AlimDeReceta implements Serializable{
 		// TODO Auto-generated method stub
 		return condimento;
 	}
-
-	@Override
-	public boolean accept(Visitor visitor) {
-		// TODO Auto-generated method stub
-		return visitor.visitarCondimento(this);
-	}
-
 	
 }

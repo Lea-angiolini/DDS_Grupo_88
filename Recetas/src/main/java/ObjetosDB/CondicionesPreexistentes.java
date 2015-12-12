@@ -93,25 +93,14 @@ public class CondicionesPreexistentes implements Visitor,Serializable{
 	public void setCondPreex(String condPreex) {
 		this.condPreex = condPreex;
 	}
-
+	
 	@Override
-	public boolean visitarIngrediente(Ingredientes ing) {
-		// TODO Auto-generated method stub
-		for(Ingredientes ingNocomestible : ingredientesNoComestible){
-		if(ingNocomestible.getId() == ing.getId())
-			return false;
+	public boolean visitarRecera(Receta receta) {
+		
+		for(Receta_Ingrediente ing : receta.getRelacionIngredientes()){
+			if(getIngredientesNoComestible().contains(ing))
+				return false;
 		}
-		return true;
-
-	}
-
-	@Override
-	public boolean visitarCondimento(Condimentos cond) {
-		/*// TODO Auto-generated method stub
-		for(int condNocomestible : condimentosNoComestible){
-		if(condNocomestible == cond.getId())
-			return false;
-		}*/
 		return true;
 	}
 

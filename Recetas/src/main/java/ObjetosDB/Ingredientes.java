@@ -117,12 +117,5 @@ public class Ingredientes extends AlimDeReceta implements Serializable{
 		// TODO Auto-generated method stub
 		return ingrediente;
 	}
-
-	@Override
-	public boolean accept(Visitor visitor) {
-		// TODO Auto-generated method stub
-		return visitor.visitarIngrediente(this);
-	}
-	
 	
 }

@@ -52,8 +52,9 @@ public class CrearNuevoGrupo extends RegisteredPage{
 				public void onSubmit() {
 					if(!negocio.nuevoGrupo(nuevoGrupo, getUsuarioActual()))
 						formCrearNuevoGrupo.addOrReplace(new Label("etiquetaConf", negocio.getError()));
-					else
-						formCrearNuevoGrupo.addOrReplace(new Label("etiquetaConf", "¡Su grupo ha sido creado!" ) );
+					else{
+						setResponsePage(new ErrorPage("¡Su grupo ha sido creado!"));
+					}
 	
 				}
 				
