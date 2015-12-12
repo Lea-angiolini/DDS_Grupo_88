@@ -330,15 +330,15 @@ VALUES('jorge','pass','Jorge','Gomez','jorge@gmail.com','1989/05/12',1,170,3,2,1
       ('carlos', 'pass', 'Carlos', 'Batata','carlos@gmail.com','1965/04/19',3, 160, 2, 1, 3);
 
 INSERT INTO Grupo88.Recetas(nombre,creador,idDificultad,caloriasTotales,grupoAlimenticio,temporada,ingredientePrincipal, idTipoReceta)
-VALUES('Pollo al horno','carlos',2,1000,2,1,31, 4),
-	  ('milanesas napolitana','maria',1,800,2,3,34,4),
-      ('Pulpo en su tinta',null,3,1200,2,5,35,2),
-      ('Ñoquis','maria',2,760,6,4,3,2),
-      ('Pan con queso',null,1,1000,1,1,29,1),
-      ('Pizza','jorge',1,1150,6,2,3,4),
-      ('Asado','carlos',2,940,2,2,32,2),
-      ('Pollo a la parrilla','carlos',2,940,2,2,31,3),
-      ('Medialunas','carlos',2,1200,6,2,31,3);
+VALUES('Pollo al horno','carlos',2,789,2,1,31, 4),
+	  ('milanesas napolitana','maria',1,690,2,3,34,4),
+      ('Pulpo en su tinta',null,3,859,2,5,35,2),
+      ('Ñoquis','maria',2,150,6,4,3,2),
+      ('Pan con queso',null,1,395,1,1,29,1),
+      ('Pizza','jorge',1,150,6,2,3,4),
+      ('Asado','carlos',2,1200,2,2,32,2),
+      ('Pollo a la parrilla','carlos',2,789,2,2,31,3),
+      ('Medialunas','carlos',2,820,6,2,31,3);
       
     
 
@@ -349,7 +349,7 @@ VALUES ('2013-08-27',3,'jorge'),
 
 INSERT INTO  Grupo88.pasos(idReceta,numeroPaso,descripcion)
 VALUES (1,0,'Descongelar el pollo'),(1,1,'Sacarle lo que no sirve'),
-		(1,2,'Mandarlo al horno'),(1,3,'Agregar papa si se quiere'),
+		(1,2,'Mandarlo al horno'),(1,3,'Agregar limon si se quiere'),
         (1,4,'Disfrutar del pollo');
         
 INSERT INTO Grupo88.grupos(nombreGrupo,creador,detalle)
@@ -368,7 +368,7 @@ INSERT INTO Grupo88.relusuariocondicion()
 VALUES ('jorge',1),('jorge',3);
 
 INSERT INTO Grupo88.relusuariogrupo()
-VALUES ('maria',1),('carlos',1),('carlos',2);
+VALUES ('maria',1),('maria',2),('carlos',1),('carlos',2),('carlos',3),('jorge',1);
 
 INSERT INTO Grupo88.relgruporeceta()
 VALUES (1,1),(1,7),(2,6);
@@ -377,7 +377,7 @@ INSERT INTO Grupo88.relRecetaIngredientes (idReceta,idIngrediente,cantidad)
 VALUES (1,31,1),(1,21,1),
 	   (3,34,1),(3,13,5),
        (4,3,2),(6,3,2),
-       (2,34,1);
+       (2,34,1), (9,38,2), (9,3,2), (8,31,2), (8,21,1), (7,32,2),(5,29,2),(5,3,2);
        
        
 INSERT INTO Grupo88.relCondPreexIngNoComestible()

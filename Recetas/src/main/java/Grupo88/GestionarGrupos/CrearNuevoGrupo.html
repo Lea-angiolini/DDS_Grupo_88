@@ -11,42 +11,55 @@
 				method="post">
 				<fieldset id="gestionarGrupos" class="center">
 					<div id="signupbox" style="display: block; margin-top: 50px"
-						class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-						<div class="panel panel-info">
+						class="mainbox col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="panel panel-info ">
 							<div class="panel-heading">
 								<div class="panel-title">
 									<span class="glyphicon glyphicon-edit"></span>&nbsp;<span>Grupos</span>
 								</div>
 							</div>
-							<div class="form-group">
+							&nbsp;<br>
+							<div class="form-group ">
 								<div class="row">
-									<div class="form-group">
-										<label for="nombre" class="control-label col-md-3">Nombre
-											del grupo</label>
-										<div class="col-md-9">
-											<input type="text" class="form-control" id="nombreGrupo"
-												wicket:id="nombreGrupoNuevo">
-										</div>
+								
+									<div class = "col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									
+											<label style="padding-left: 10px"  for="nombre" class="control-label">Nombre
+												del grupo</label>
+									</div>			
+									
+									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+												<input type="text" class="form-control" id="nombreGrupo"
+													wicket:id="nombreGrupoNuevo">
 									</div>
-									<div class="form-group">
-										<label for="detalle" class="control-label col-md-3">Descripcion
+								
+									&nbsp;<br>
+								</div>
+								
+								<div class="row">	
+									<div class=" col-lg-3 col-md-3 col-sm-3 col-xs-3">
+										<label style="padding-left: 10px" for="detalle" class="control-label">Descripcion
 											Breve</label>
-										<div class="col-md-9">
+									</div>		
+									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
 											<input type="text" class="form-control" id="detalleGrupo"
 												wicket:id="detalleGrupoNuevo">
-										</div>
 									</div>
 								</div>
+									
+									
 							</div>
-
-							<button type="submit" class="btn btn-success"
+							
+							&nbsp;<br><br>
+							
+							<button style="width:30%; margin-left: 10px;" type="submit" class="btn btn-success"
 								wicket:id="btnConfirmarNvoGrupo">
-								<span class="glyphicon">Crear!</span>
+								<span style="font-size:18px" class="glyphicon">Crear!</span>
 							</button>
 
 							<label wicket:id="etiquetaConf"></label>
 
-							<button id="btnCancelar" type="button" class="btn btn-danger"
+							<button style="width:30%; margin-left: 10px" id="btnCancelar" type="button" class="btn btn-danger"
 								wicket:id="cancelar">
 								<span class="glyphicon glyphicon-remove"></span>&nbsp;Cancelar
 							</button>
