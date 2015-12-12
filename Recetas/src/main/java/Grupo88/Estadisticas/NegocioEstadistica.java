@@ -33,7 +33,7 @@ public class NegocioEstadistica {
 	}
 	
 	public List<Integer> getFechas(){
-		return Arrays.asList(70,30);
+		return Arrays.asList(7,30);
 	}
 	
 	public DAOEstadistica getDAO() {

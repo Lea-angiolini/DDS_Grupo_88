@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import master.ErrorPage;
 import master.MasterPage;
 
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.Model;
@@ -22,11 +25,13 @@ public class GestionarGrupos extends MasterPage {
 	private static final long serialVersionUID = 1L;
 	private FrmGestionarGrupos frmGestionarGrupos;
 	private NegocioGrupos negocio;
+	private TextField<String> buscar;
+	private Model<String> textoBuscar;
 	
 	public GestionarGrupos(){
 		super();
 		negocio = new NegocioGrupos(getSessionBD());
-		
+		textoBuscar = new Model<String>();
 		if(!negocio.cargarListas()){
 			setResponsePage(ErrorPage.ErrorCargaDatos());
 		}
@@ -80,7 +85,7 @@ public class GestionarGrupos extends MasterPage {
 						checkLabel.setDefaultModelObject("Ver todos los grupos");
 					}
 					else{
-						fragmento = new VistaGrupos("areaGrupos", new ArrayList<Grupo>(negocio.getTodosGrupos()));
+						fragmento = new VistaGrupos("areaGrupos", new ArrayList<Grupo>(negocio.getGruposCon(textoBuscar.getObject())));
 						checkLabel.setDefaultModelObject("Ver grupos que estoy adherido");
 					}
 					fragmento.setOutputMarkupId(true);
@@ -100,6 +105,16 @@ public class GestionarGrupos extends MasterPage {
 			add(check);
 			add(checkLabel);
 			
+			
+			add(buscar = new TextField("buscar", textoBuscar));
+			buscar.add(new AjaxFormComponentUpdatingBehavior ("onkeyup"){
+				@Override
+				protected void onUpdate(AjaxRequestTarget target) {
+					VistaGrupos nuevaVista;
+					frmGestionarGrupos.addOrReplace(nuevaVista = new VistaGrupos("areaGrupos", new ArrayList<Grupo>( negocio.getGruposCon(textoBuscar.getObject()))));
+					target.add(nuevaVista);
+				}
+			});
 		}
 	}
 }

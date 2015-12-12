@@ -1,6 +1,7 @@
 package Grupo88.GestionarGrupos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -42,9 +43,41 @@ public class NegocioGrupos implements Serializable {
 	public List<Grupo> getTodosGrupos() {
 		return todosGrupos;
 	}
-
+	
+	public List<Grupo> getGruposCon(String nom){
+		if(nom == null)
+			return todosGrupos;
+		
+		try {
+			return daogrupos.gruposCon(nom);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<Grupo>();
+	}
+	
 	public void setTodosGrupos(List<Grupo> todosGrupos) {
 		this.todosGrupos = todosGrupos;
+	}
+	public boolean sacarUsuario(Usuario user, Grupo grupo){
+		user.getGrupos().remove(grupo);
+		grupo.getUsuarios().remove(user);
+		
+		try {
+			daoUsuarios.saveOrUpdate(user);
+			return true;
+		} catch (ConstraintViolationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (javax.validation.ConstraintViolationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	public boolean agregarUsuario(Usuario user, Grupo grupo){
@@ -69,7 +102,7 @@ public class NegocioGrupos implements Serializable {
 		return false;
 	}
 	
-	public boolean nuevoGrupo(Grupo grupo, Usuario user, String msg){
+	public boolean nuevoGrupo(Grupo grupo, Usuario user){
 		
 		try{
 			try {

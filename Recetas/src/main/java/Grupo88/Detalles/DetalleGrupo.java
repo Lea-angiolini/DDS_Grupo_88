@@ -7,12 +7,14 @@ import master.RegisteredPage;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 
 import Grupo88.Componentes.ListaDeRecetas;
+import Grupo88.GestionarGrupos.GestionarGrupos;
 import Grupo88.GestionarGrupos.NegocioGrupos;
 import Grupo88.GestionarGrupos.PanelAdherirse;
 import ObjetosDB.Grupo;
@@ -79,6 +81,28 @@ public class DetalleGrupo extends RegisteredPage {
 			}
 			
 			add(usuariosGrupo);
+			
+			
+			add(new Link<Object>("dejarGrupo"){
+				
+				private static final long serialVersionUID = 9034426688328890681L;
+
+				@Override
+				public void onClick() {
+					negocio.sacarUsuario(getUsuarioActual(), grupo);
+					setResponsePage(GestionarGrupos.class);
+				}
+			});
+			
+			add(new Link<Object>("volver"){
+				
+				private static final long serialVersionUID = -2571727525708390025L;
+
+				@Override
+				public void onClick() {
+					setResponsePage(GestionarGrupos.class);
+				}
+			});
 		}
 	
 	}

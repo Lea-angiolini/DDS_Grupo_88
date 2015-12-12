@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.validation.validator.StringValidator;
 
 import Database.DAOGrupos;
 import Grupo88.Inicio.Inicio;
@@ -28,14 +29,20 @@ public class CrearNuevoGrupo extends RegisteredPage{
 	private class FormCrearNuevoGrupo extends Form<Object>{
 
 		private static final long serialVersionUID = 2888529345683241531L;
-
+		
+		private TextField<String> nombreGrupo;
+		private TextField<String> detalle;
 		public FormCrearNuevoGrupo(String id) {
 			super(id);
 	
 			final Grupo nuevoGrupo = new Grupo(0,"","");
 			nuevoGrupo.setCreador(getUsuarioActual());
-			add(new TextField<String>("nombreGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "nombre")));
-			add(new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
+			add(nombreGrupo = new TextField<String>("nombreGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "nombre")));
+			add(detalle = new TextField<String>("detalleGrupoNuevo", new PropertyModel<String>(nuevoGrupo, "detalle")));
+			
+			nombreGrupo.add(new StringValidator(3, 30));
+			detalle.add(new StringValidator(1,255));
+			
 			add(new EmptyPanel("etiquetaConf"));
 			add(new Button("btnConfirmarNvoGrupo") {
 	
@@ -43,8 +50,7 @@ public class CrearNuevoGrupo extends RegisteredPage{
 	
 				@Override
 				public void onSubmit() {
-					String msg = new String();
-					if(!negocio.nuevoGrupo(nuevoGrupo, getUsuarioActual(), msg))
+					if(!negocio.nuevoGrupo(nuevoGrupo, getUsuarioActual()))
 						formCrearNuevoGrupo.addOrReplace(new Label("etiquetaConf", negocio.getError()));
 					else
 						formCrearNuevoGrupo.addOrReplace(new Label("etiquetaConf", "¡Su grupo ha sido creado!" ) );

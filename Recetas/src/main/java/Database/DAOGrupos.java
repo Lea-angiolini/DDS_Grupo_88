@@ -3,6 +3,7 @@ package Database;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.validation.ConstraintViolationException;
 
 import org.hibernate.Query;
@@ -43,6 +44,28 @@ public class DAOGrupos extends DAOGenerico<Grupo,Integer> implements Serializabl
 			session.beginTransaction();
 			Query query = session.createQuery("from Grupo g where :user in elements(g.usuarios)");
 			query.setParameter("user", user);
+			
+			List<Grupo> grupos = query.list();
+			session.getTransaction().commit();
+			
+			return grupos;
+		}
+		catch(Exception ex){
+			if(session.getTransaction().isActive()){
+				session.getTransaction().rollback();
+			}
+			throw ex;	
+			
+		}
+	}
+	
+	
+	public List<Grupo> gruposCon(String nom) throws Exception{
+		
+		try{
+			session.beginTransaction();
+			Query query = session.createQuery("from Grupo g where lower(nombre) like :nom");
+			query.setParameter("nom", "%" + nom.toLowerCase() +"%");
 			
 			List<Grupo> grupos = query.list();
 			session.getTransaction().commit();

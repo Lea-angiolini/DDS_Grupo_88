@@ -251,7 +251,6 @@ public class DAOGenerico<T, ID extends Serializable> implements IDAOGenerico<T, 
 	
 	@Override
 	public void delete(ID id) throws DBExeption {
-		//Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			@SuppressWarnings("unchecked")

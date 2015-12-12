@@ -19,7 +19,6 @@ public class GestionarPerfil extends RegisteredPage {
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
 	private FrmModifUsuario frmModifUsuario;
-//	private DAOUsuarios daoUsuarios;
 	public GestionarPerfil(){
 		super();
 		
@@ -68,7 +67,7 @@ public class GestionarPerfil extends RegisteredPage {
 			try {
 				try{
 					
-					negocio.guardarUsuario(getUsuarioActual());
+					negocio.actualizarUsuario(getUsuarioActual());
 					setResponsePage(new ErrorPage("Su perfil ha sido actualizado"));
 				}
 				catch(javax.validation.ConstraintViolationException cve){

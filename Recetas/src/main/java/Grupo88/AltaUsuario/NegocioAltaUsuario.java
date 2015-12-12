@@ -72,8 +72,13 @@ public class NegocioAltaUsuario implements Serializable {
 	
 	public void guardarUsuario(Usuario usuario) throws ConstraintViolationException, javax.validation.ConstraintViolationException, Exception{
 
-			daoUsuarios.saveOrUpdate(usuario);
+			daoUsuarios.save(usuario);
 	}
+	
+	public void actualizarUsuario(Usuario usuario) throws ConstraintViolationException, javax.validation.ConstraintViolationException, Exception{
+
+		daoUsuarios.saveOrUpdate(usuario);
+}
 	
 	
 public ArrayList<Sexo> getTodosSexos() {
