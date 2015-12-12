@@ -16,7 +16,11 @@
   <div class="list-group panel">
     <a  wicket:id="recetas" class="list-group-item list-group-item-success"><span class="glyphicon glyphicon-list-alt"></span> Recetas</a>
     
-    <a class="list-group-item list-group-item-success icon-chevron-right" wicket:id="perfil"><span class="glyphicon glyphicon-user"></span> Perfil</a>
+      <a href="#demo1"  class="list-group-item list-group-item-success"  data-toggle="collapse" ><span class="glyphicon glyphicon-user"></span> Perfil</a>
+    <div class="collapse" id="demo1">
+      <a wicket:id="perfil" class="list-group-item"> Editar perfil</a>
+      <a wicket:id="cambiarPass" class="list-group-item"> Cambiar contraseña</a>
+    </div>
     
       <a href="#demo3"  class="list-group-item list-group-item-success"  data-toggle="collapse" ><span class="glyphicon glyphicon-tasks"></span> Grupos</a>
 	    <div class="collapse" id="demo3">

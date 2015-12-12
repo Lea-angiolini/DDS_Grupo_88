@@ -12,6 +12,7 @@ import Grupo88.Estadisticas.Estadisticas;
 import Grupo88.Estadisticas.NegocioEstadistica;
 import Grupo88.GestionarGrupos.CrearNuevoGrupo;
 import Grupo88.GestionarGrupos.GestionarGrupos;
+import Grupo88.GestionarPerfil.CambioPass;
 import Grupo88.GestionarPerfil.GestionarPerfil;
 import Grupo88.MisRecetas.MisRecetas;
 import Grupo88.Reportes.ReporteNuevasRecetas;
@@ -52,6 +53,13 @@ public class PanelLinks extends Panel {
 				
 				public void onClick() {
 					setResponsePage(GestionarPerfil.class);
+				}
+			});
+			
+			add(new Link("cambiarPass"){
+				
+				public void onClick() {
+					setResponsePage(CambioPass.class);
 				}
 			});
 			
