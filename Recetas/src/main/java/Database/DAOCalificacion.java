@@ -19,20 +19,12 @@ public class DAOCalificacion extends DAOGenerico<Calificacion, Calificacion.Key>
 	
 	public Calificacion calificacionDe(Receta receta, Usuario user) throws Exception{
 		
-		try{
-			session.beginTransaction();
-			Query query = session.createQuery("from Calificacion where key.userCalificador = '"+user.getUsername()
+		session.beginTransaction();
+		Query query = session.createQuery("from Calificacion where key.userCalificador = '"+user.getUsername()
 											+"' and key.receta.idreceta = '"+receta.getIdreceta()+"'");
 			
-			Calificacion calificacion = (Calificacion) query.uniqueResult();
-			session.getTransaction().commit();
-			return calificacion;
-		}
-		catch(Exception ex){
-			if(session.getTransaction().isActive()){
-				session.getTransaction().rollback();
-			}
-			throw ex;
-		}
+		Calificacion calificacion = (Calificacion) query.uniqueResult();
+		session.getTransaction().commit();
+		return calificacion;
 	}
 }

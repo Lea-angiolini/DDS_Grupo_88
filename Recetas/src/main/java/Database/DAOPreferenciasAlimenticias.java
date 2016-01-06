@@ -11,7 +11,6 @@ public class DAOPreferenciasAlimenticias extends DAOGenerico<PreferenciasAliment
 	private static final long serialVersionUID = 8966312785439042734L;
 
 	public DAOPreferenciasAlimenticias(Session session) {
-		
 		super(session);
 	}
 }

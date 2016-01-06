@@ -1,6 +1,7 @@
 package Database;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -17,87 +18,31 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> implements Serializa
 	private static final long serialVersionUID = -3242079439533262957L;
 
 	public DAORecetas(Session session) {
-		// TODO Auto-generated constructor stub
 		super(session);
 	}
 	
 	@Override
 	public void saveOrUpdate(Receta entity) throws Exception {
-		// TODO Auto-generated method stub
 		entity.calcularCalorias();
 		super.saveOrUpdate(entity);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Receta> recetasDeUsuario(Usuario user) throws DBExeption{
+	public List<Receta> recetasDeUsuario(Usuario user) throws Exception{
 		
-		//Session session = sessionFactory.getCurrentSession();
-
-		 try {
-			session.beginTransaction();
-			Query query = session.createQuery("from Receta r where r.creador.username = :user")
+		session.beginTransaction();
+		Query query = session.createQuery("from Receta r where r.creador.username = :user")
 					.setParameter("user", user.getUsername());
 			
-			List<Receta> recetas = (List<Receta>)query.list();
-			session.getTransaction().commit();
-			return recetas;
-		 } 
-		 catch (javax.validation.ConstraintViolationException cve) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			 throw new DBExeption(cve);
-		 } 
-		 catch (org.hibernate.exception.ConstraintViolationException cve) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			 throw new DBExeption(cve);
-		 } 
-		 catch (RuntimeException ex) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			 throw ex;
-		 } 
-		 catch (Exception ex) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			
-			 throw new RuntimeException(ex);
-		 }
+		List<Receta> recetas = (List<Receta>)query.list();
+		session.getTransaction().commit();
+
+		return recetas;
+		 
 	}
 	
 	
-	public List<Receta> buscarReceta (itemsABuscar items) throws DBExeption{
-		//Session session = sessionFactory.getCurrentSession();
-		
-		try{
+	public List<Receta> buscarReceta (itemsABuscar items) throws Exception{
 
 		session.beginTransaction();
 		String stringQuery = "from Receta r where (r.caloriasTotales between :caloriasMin AND :caloriasMax) ";
@@ -132,57 +77,6 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> implements Serializa
 		
 		session.getTransaction().commit();
 		return recetas;
-		
-	 } 
-	 catch (javax.validation.ConstraintViolationException cve) {
-		 try {
-			 if (session.getTransaction().isActive()) {
-				 session.getTransaction().rollback();
-			 }
-		 } 
-		 catch (Exception exc) {
-			 exc.printStackTrace();
-			 System.out.println("Falló al hacer un rollback");
-		 }
-		 throw new DBExeption(cve);
-	 } 
-	 catch (org.hibernate.exception.ConstraintViolationException cve) {
-		 try {
-			 if (session.getTransaction().isActive()) {
-				 session.getTransaction().rollback();
-			 }
-		 } 
-		 catch (Exception exc) {
-			 exc.printStackTrace();
-			 System.out.println("Falló al hacer un rollback");
-		 }
-		 throw new DBExeption(cve);
-	 } 
-	 catch (RuntimeException ex) {
-		 try {
-			 if (session.getTransaction().isActive()) {
-				 session.getTransaction().rollback();
-			 }
-		 } 
-		 catch (Exception exc) {
-			 exc.printStackTrace();
-			 System.out.println("Falló al hacer un rollback");
-		 }
-		 throw ex;
-	 } 
-	 catch (Exception ex) {
-		 try {
-			 if (session.getTransaction().isActive()) {
-				 session.getTransaction().rollback();
-			 }
-		 } 
-		 catch (Exception exc) {
-			 exc.printStackTrace();
-			 System.out.println("Falló al hacer un rollback");
-		 }
-		
-		 throw new RuntimeException(ex);
-	 }
 	}
 	
 	public List<Receta> ultimasConsultadas(Usuario user, int cantidad) throws Exception{
@@ -201,126 +95,31 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> implements Serializa
 	public List<Receta> recetas_in(String select, int cantidad) throws Exception {
 		
 		List<Receta> recetas;
-		try{
-			session.beginTransaction();
-			Query query = session.createQuery("from Receta r where r.idreceta in ("+select+")");
-			query.setMaxResults(10);
-			recetas = (List<Receta>) query.list();
-			session.getTransaction().commit();
-			return recetas;
-		}
-		catch (javax.validation.ConstraintViolationException cve) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			 throw new Exception(cve);
-		 } 
-		 catch (org.hibernate.exception.ConstraintViolationException cve) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			 throw new Exception(cve);
-		 } 
-		 catch (RuntimeException ex) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			 throw ex;
-		 } 
-		 catch (Exception ex) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			
-			 throw new RuntimeException(ex);
-		 }
 		
+		session.beginTransaction();
+		Query query = session.createQuery("from Receta r where r.idreceta in ("+select+")");
+		query.setMaxResults(10);
+	
+		recetas = (List<Receta>) query.list();
+		session.getTransaction().commit();
+	
+		return recetas;
 	}
 	
-	public void agregarAHistorial(int idReceta, String username) throws DBExeption{
+	public void agregarAHistorial(int idReceta, String username) throws Exception{
 		
-		try{
 		session.beginTransaction();
 		
 		Query query = session.createSQLQuery("INSERT INTO Grupo88.confirmadas(fecha, idReceta, usuario) "+
                                "VALUES (current_date(), :idReceta, '"+username+"');");
 		query.setParameter("idReceta", idReceta)/*.setParameter("user", username)*/;
 		query.executeUpdate();
+	
 		session.getTransaction().commit();
-		
-		} 
-		 catch (javax.validation.ConstraintViolationException cve) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			 throw new DBExeption(cve);
-		 } 
-		 catch (org.hibernate.exception.ConstraintViolationException cve) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			 throw new DBExeption(cve);
-		 } 
-		 catch (RuntimeException ex) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			 throw ex;
-		 } 
-		 catch (Exception ex) {
-			 try {
-				 if (session.getTransaction().isActive()) {
-					 session.getTransaction().rollback();
-				 }
-			 } 
-			 catch (Exception exc) {
-				 exc.printStackTrace();
-				 System.out.println("Falló al hacer un rollback");
-			 }
-			
-			 throw new RuntimeException(ex);
-		 }
+
 	}
+	
+	/*public ArrayList<Receta> recetasPara(Usuario user){
+		
+	}*/
 }

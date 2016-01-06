@@ -56,7 +56,7 @@ public class AgregarReceta extends RegisteredPage {
 		nuevareceta = new Receta();
 		nuevareceta.setCreador(user);
 		fragmentos = new ArrayList<Fragmento>();
-		negocio = new NegocioAgregarReceta(getSessionBD());
+		negocio = new NegocioAgregarReceta(getSessionUser());
 		
 		generarFragmentos();
 		
@@ -262,7 +262,7 @@ public class AgregarReceta extends RegisteredPage {
 				setResponsePage(MisRecetas.class);
 			}
 				
-			error("Algo andubo mal.. Intente de vuelta por favor");
+			error(negocio.getError());
 			}
 		}
 	}

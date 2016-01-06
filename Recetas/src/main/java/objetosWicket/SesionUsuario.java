@@ -1,19 +1,19 @@
 package objetosWicket;
 
-import javax.swing.JOptionPane;
-
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.hibernate.FlushMode;
 
 import Database.DAOUsuarios;
-import Database.DBExeption;
 import Database.HibernateUtil;
+import Grupo88.Inicio.Inicio;
 import ObjetosDB.Usuario;
 
 public class SesionUsuario extends WebSession {
 	
+	private static final long serialVersionUID = -8148906114977069921L;
 	private Usuario usuario;
 	private DAOUsuarios daousuario;
 	private org.hibernate.Session session;
@@ -24,13 +24,14 @@ public class SesionUsuario extends WebSession {
 		invitado.setUsername("Invitado");
 		this.usuario = invitado;
 		setAttribute("usuario", invitado);
+		abrirSessionDB();
+	}
+	
+	private void abrirSessionDB(){
 		session = HibernateUtil.getSessionFactory().openSession();
 		session.setFlushMode(FlushMode.COMMIT);
 		daousuario = new DAOUsuarios(session);
-		
-		
 	}
-	
 	public static SesionUsuario get(){
 		return (SesionUsuario)Session.get();
 	}
@@ -43,17 +44,21 @@ public class SesionUsuario extends WebSession {
 				if (logueado != null){
 					return logueado;
 				}
-			} catch (DBExeption e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 			
 		}
 		return null;
 	}
 
-	
+	public void reiniciarSesion(){
+		session.close();
+		abrirSessionDB();
+		usuario = new Usuario();
+		usuario.setUsername("Invitado");
+		RequestCycle.get().setResponsePage(Inicio.class);
+	}
 	public void desloguearUsuario(){
 		session.close();
 		this.invalidateNow();
@@ -76,7 +81,7 @@ public class SesionUsuario extends WebSession {
 		return getUsuario().getUsername() != "Invitado";
 	}
 
-	public org.hibernate.Session getSession() {
+	public org.hibernate.Session getSessionDB() {
 		return session;
 	}
 

@@ -20,38 +20,39 @@ import ObjetosDB.Usuario;
 public class FormCompartirPanel extends Panel{
 	
 	private NegocioRecetas negocio;
-	private Session session;
 	private Usuario user;
 	private Receta receta;
 	
-	public FormCompartirPanel(String id, Session sess, Usuario use, Receta rec, NegocioRecetas negocio) {
+	public FormCompartirPanel(String id, Usuario use, Receta rec, NegocioRecetas negocio) {
 		super(id);
 		
-		this.session = sess;
 		this.user = use;
 		this.receta = rec;
 		this.negocio = negocio;
 		
-		add(new FormCompartir(id, sess, use, rec));
+		add(new FormCompartir(id, use, rec));
 	}
 	private class FormCompartir extends Form{
 		
-
-		
-		public FormCompartir(String id, Session sess, Usuario use, Receta rec) {
+		public FormCompartir(String id, Usuario use, Receta rec) {
 			super(id);
 			
 			final ArrayList<Grupo> gruposselect = new ArrayList<Grupo>();
-			ArrayList<Grupo> todosGrupos;
+			ArrayList<Grupo> todosGrupos = (ArrayList<Grupo>) negocio.gruposde(user);
 			
-			try {
+			if(!todosGrupos.isEmpty())
+				add(new CheckBoxMultipleChoice("grupos", new Model(gruposselect),todosGrupos,new ChoiceRenderer("nombre","idGrupo")));
+			else
+				add(new EmptyPanel("grupos"));
+			
+			/*try {
 				todosGrupos = new ArrayList<Grupo>(negocio.gruposde(user));	
 				add(new CheckBoxMultipleChoice("grupos", new Model(gruposselect),todosGrupos,new ChoiceRenderer("nombre","idGrupo")));
 			} catch (Exception e) {
 				e.printStackTrace();
 				setResponsePage(ErrorPage.ErrorRandom());
 				add(new EmptyPanel("grupos"));
-			}
+			}*/
 
 			add(new Button("compartir"){
 				@Override

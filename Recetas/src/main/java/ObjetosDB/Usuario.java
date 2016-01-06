@@ -1,7 +1,6 @@
 package ObjetosDB;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,18 +17,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.swing.JOptionPane;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.hibernate.Session;
-import org.hibernate.validator.constraints.Email;
 
 import Database.DAORecetas;
-import Database.DBExeption;
 
 @Entity
 @Table(name="Usuarios")
@@ -311,23 +306,8 @@ public class Usuario implements Serializable{
 		
 	}
 	
-	/*public boolean estaEnGrupo(Grupo unGrupo){
-		
-		for(Grupo grupo : grupos){
-			if (grupo.getIdGrupo() == unGrupo.getIdGrupo()){
-				return true;
-			}
-		}
-		
-		return false;
-	}*/
-	
-	public List<Receta> cargarMisRecetas(Session session){
-		DAORecetas daoReceta = new DAORecetas(session);
-		try{
-		return daoReceta.recetasDeUsuario(this);
-		}
-		catch(DBExeption ex){return new ArrayList<Receta>();}
+	public Set<Receta> misRecetas(){
+		return misRecetas;
 	}
 	
 	

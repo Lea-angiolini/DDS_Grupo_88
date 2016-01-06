@@ -35,7 +35,7 @@ public class GestionarPerfil extends RegisteredPage {
 		public FrmModifUsuario(String id) {
 			super(id);			
 			
-			negocio = new NegocioAltaUsuario(getSessionBD());
+			negocio = new NegocioAltaUsuario(getSessionUser());
 			add(error = new MarkupContainer("error"){
 				private static final long serialVersionUID = 6315760448959379801L;});
 			
@@ -63,25 +63,11 @@ public class GestionarPerfil extends RegisteredPage {
 		protected void onSubmit() {
 			super.onSubmit();
 			
-//			daoUsuarios = new DAOUsuarios(getSessionBD());
-			try {
-				try{
-					
-					negocio.actualizarUsuario(getUsuarioActual());
-					setResponsePage(new ErrorPage("Su perfil ha sido actualizado"));
-				}
-				catch(javax.validation.ConstraintViolationException cve){
-					info(cve.getConstraintViolations().iterator().next().getMessage());
-				}
-				catch (org.hibernate.exception.ConstraintViolationException cve) {
-					info(cve.getMessage());
-				}
-				finally{
+			if(negocio.actualizarUsuario(getUsuarioActual()))
+				setResponsePage(new ErrorPage("Su perfil ha sido actualizado"));
+			else {
 				error.setVisible(true);
-				}
-			} catch (Exception e) {
-				setResponsePage(new ErrorPage("Parece que hubo un error. Intentelo mas tarde "));
-				
+				info(negocio.getError());
 			}
 		}
 	}

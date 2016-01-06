@@ -22,22 +22,14 @@ public class DAOEstadisticasPorDificultad extends DAOEstadistica implements Seri
 	public ArrayList<Estadistico> obtenerEstadistica(int dias) throws Exception {
 		
 		ArrayList<Estadistico> estadisticos;
-		try{
-			session.beginTransaction();
-			Query query = session.createQuery("select new ObjetosDB.Estadistico(STR(h.receta.dificultad.dificultad),STR(count(*))) from Historial h "
+
+		session.beginTransaction();
+		Query query = session.createQuery("select new ObjetosDB.Estadistico(STR(h.receta.dificultad.dificultad),STR(count(*))) from Historial h "
 					+"where fecha > '"+fechaAterior(dias)+ "' group by h.receta.dificultad.dificultad order by h.receta.dificultad.idDificultad");
-			estadisticos = (ArrayList<Estadistico>) query.list();
-			session.getTransaction().commit();
+		estadisticos = (ArrayList<Estadistico>) query.list();
+		session.getTransaction().commit();
 			
-			return estadisticos;
-		}
-		catch(Exception ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage());
-			if(session.getTransaction().isActive())
-				session.getTransaction().rollback();
-			session.flush();
-			throw ex;
-		}
+		return estadisticos;
 	}
 	
 	@Override

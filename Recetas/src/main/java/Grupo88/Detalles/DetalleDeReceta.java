@@ -28,7 +28,6 @@ public class DetalleDeReceta extends MasterPage {
 	private static final long serialVersionUID = 7898970758684629351L;
 
 	private NegocioRecetas negocio;
-	private Usuario user;
 	private StringValue idReceta;
 	private Receta receta;
 	
@@ -63,8 +62,7 @@ public class DetalleDeReceta extends MasterPage {
 
 	private void iniciar(PageParameters parameters){
 
-		negocio = new NegocioRecetas(getSessionBD());
-		user = getUsuarioActual();
+		negocio = new NegocioRecetas(getSessionUser());
 		receta = null;
 				
 		if(parameters.getNamedKeys().contains("idReceta")){
@@ -79,20 +77,21 @@ public class DetalleDeReceta extends MasterPage {
 			catch (StringValueConversionException e) {
 				setResponsePage(ErrorPage.ErrorIngresoInvalidoDatos());
 				return;
-				
-			} catch (Exception e) {
-				setResponsePage(ErrorPage.ErrorEnLaDB());
-				return;
 			}
-
+		
+		if(receta == null){
+			info(negocio.getError());
+			setResponsePage(new ErrorPage("La receta que intenta visitar no existe"));
+		}
+		
 		add(new FrmDetalleDeReceta("FrmDetalleDeReceta"));
 		
 		negocio.guardarConsulta(new Historial("", receta, getUsuarioActual()),getUsuarioActual());
 
 		if(getUsuarioActual().getUsername() != "Invitado"){
-			add(new FormCalificarPanel("formCalificar",getSessionBD(),receta,getUsuarioActual(),negocio));
-			add(new FormConfirmarPanel("formConfirmar",getSessionBD(),getUsuarioActual(),receta,negocio));
-			add(new FormCompartirPanel("formCompartir",getSessionBD(),getUsuarioActual(),receta,negocio));
+			add(new FormCalificarPanel("formCalificar",receta,getUsuarioActual(),negocio));
+			add(new FormConfirmarPanel("formConfirmar",getUsuarioActual(),receta,negocio));
+			add(new FormCompartirPanel("formCompartir",getUsuarioActual(),receta,negocio));
 		}
 		else{
 			add(new EmptyPanel("formCalificar"));

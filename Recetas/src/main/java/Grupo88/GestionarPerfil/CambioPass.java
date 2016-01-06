@@ -41,7 +41,7 @@ public class CambioPass extends RegisteredPage {
 			
 			user = getUsuarioActual();
 			
-			negocio = new NegocioGestionarPerfil(getSessionBD());
+			negocio = new NegocioGestionarPerfil(getSessionUser());
 			
 			passAnt = new PasswordTextField("passAnt", mPassAnt); 
 			passNva = new PasswordTextField("passNva", mPassNva);
@@ -71,22 +71,11 @@ public class CambioPass extends RegisteredPage {
 			
 			user.setPassword(passNva.getModelObject());
 			
-			try {
-				negocio.guardarUsuario(user);
+			if(negocio.guardarUsuario(user))
 				setResponsePage(new ErrorPage("Su contraseña ha sido actualizada"));
-			} catch (ConstraintViolationException e) {
-				info(e.getMessage());
-				e.printStackTrace();
-			} catch (javax.validation.ConstraintViolationException e) {
-				info(e.getConstraintViolations().iterator().next().getMessage());
-				e.printStackTrace();
-			} catch (Exception e) {
-				setResponsePage(ErrorPage.ErrorEnLaDB());
-				e.printStackTrace();
+			else {
+				info(negocio.getError());
 			}
-			
-			
-			
 		}
 	}
 	

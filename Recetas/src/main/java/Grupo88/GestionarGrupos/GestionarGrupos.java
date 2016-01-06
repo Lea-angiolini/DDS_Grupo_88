@@ -30,11 +30,8 @@ public class GestionarGrupos extends MasterPage {
 	
 	public GestionarGrupos(){
 		super();
-		negocio = new NegocioGrupos(getSessionBD());
+		negocio = new NegocioGrupos(getSessionUser());
 		textoBuscar = new Model<String>();
-		if(!negocio.cargarListas()){
-			setResponsePage(ErrorPage.ErrorCargaDatos());
-		}
 		
 		add(frmGestionarGrupos = new FrmGestionarGrupos("frmGestionarGrupos"));
 	}
@@ -61,15 +58,10 @@ public class GestionarGrupos extends MasterPage {
 				}
 			});	
 			
-			
-        	if (negocio.getTodosGrupos() != null)
-        	{
+        	if (!negocio.getTodosGrupos().isEmpty())
         		addOrReplace(new VistaGrupos("areaGrupos", new ArrayList<Grupo>( negocio.getTodosGrupos())).setOutputMarkupId(true));
-        	}
         	else
-        	{
         		addOrReplace(new Label("areaGrupos","No existen grupos"));
-        	}
 			
         	final Label checkLabel = new Label("elegirLabel","Ver grupos que estoy adherido");
         	checkLabel.setOutputMarkupId(true);

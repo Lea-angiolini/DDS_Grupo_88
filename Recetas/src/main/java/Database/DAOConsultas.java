@@ -13,5 +13,4 @@ public class DAOConsultas extends DAOGenerico<Historial, Integer> implements Ser
 	public DAOConsultas(Session session) {
 		super(session);
 	}
-	
 }

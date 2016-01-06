@@ -17,7 +17,6 @@ public class DAOGrupos extends DAOGenerico<Grupo,Integer> implements Serializabl
 	private static final long serialVersionUID = 4630445719633300126L;
 
 	public DAOGrupos(Session session) {
-		// TODO Auto-generated constructor stub
 		super(session);
 	}
 	
@@ -25,7 +24,7 @@ public class DAOGrupos extends DAOGenerico<Grupo,Integer> implements Serializabl
 		Query query;
 		query = session.createQuery("from Grupo u where nombre = '" +entity.getNombre()+"'");
 		if(query.list().size() != 0){
-			throw new org.hibernate.exception.ConstraintViolationException("El grupo con este nombre ya existe", null, "");
+			throw new javax.validation.ConstraintViolationException("El grupo con este nombre ya existe", null);
 		}
 	}
 	
@@ -40,44 +39,28 @@ public class DAOGrupos extends DAOGenerico<Grupo,Integer> implements Serializabl
 	
 	public List<Grupo> gruposde(Usuario user) throws Exception{
 		
-		try{
-			session.beginTransaction();
-			Query query = session.createQuery("from Grupo g where :user in elements(g.usuarios)");
-			query.setParameter("user", user);
-			
-			List<Grupo> grupos = query.list();
-			session.getTransaction().commit();
-			
-			return grupos;
-		}
-		catch(Exception ex){
-			if(session.getTransaction().isActive()){
-				session.getTransaction().rollback();
-			}
-			throw ex;	
-			
-		}
+		session.beginTransaction();
+		Query query = session.createQuery("from Grupo g where :user in elements(g.usuarios)");
+		query.setParameter("user", user);
+		
+		List<Grupo> grupos = query.list();
+		session.getTransaction().commit();
+		
+		return grupos;
+
 	}
 	
 	
 	public List<Grupo> gruposCon(String nom) throws Exception{
 		
-		try{
-			session.beginTransaction();
-			Query query = session.createQuery("from Grupo g where lower(nombre) like :nom");
-			query.setParameter("nom", "%" + nom.toLowerCase() +"%");
+		session.beginTransaction();
+		Query query = session.createQuery("from Grupo g where lower(nombre) like :nom");
+		query.setParameter("nom", "%" + nom.toLowerCase() +"%");
+		
+		List<Grupo> grupos = query.list();
+		session.getTransaction().commit();
 			
-			List<Grupo> grupos = query.list();
-			session.getTransaction().commit();
-			
-			return grupos;
-		}
-		catch(Exception ex){
-			if(session.getTransaction().isActive()){
-				session.getTransaction().rollback();
-			}
-			throw ex;	
-			
-		}
+		return grupos;
+
 	}
 }

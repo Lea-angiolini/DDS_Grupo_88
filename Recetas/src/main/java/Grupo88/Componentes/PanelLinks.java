@@ -24,15 +24,15 @@ public class PanelLinks extends Panel {
 
 	private static final long serialVersionUID = -6539107446596515L;
 	private SesionUsuario sesion;
-	private Session sessionDB;
-	private Usuario user;
+	//private Session sessionDB;
+	//private Usuario user;
 	
 	public PanelLinks(String id) {
 		super(id);
 		
 		sesion = (SesionUsuario)getSession();
-		sessionDB = sesion.getSession();
-		user = sesion.getUsuario();
+		//sessionDB = sesion.getSessionDB();
+		//user = sesion.getUsuario();
 		add(new FrmLinks("FrmLinks"));
 		
 	}
@@ -87,21 +87,21 @@ public class PanelLinks extends Panel {
 			add(new Link("estadisticas"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(NegocioEstadistica.porSexo(sessionDB)));
+					setResponsePage(new Estadisticas(NegocioEstadistica.porSexo(sesion)));
 				}
 			});
 
 			add(new Link("consultasDificultad"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(NegocioEstadistica.porDificultad(sessionDB)));
+					setResponsePage(new Estadisticas(NegocioEstadistica.porDificultad(sesion)));
 				}
 			});
 			
 			add(new Link("topRecetasConsultadas"){
 				
 				public void onClick() {
-					setResponsePage(new Estadisticas(NegocioEstadistica.recetasMasconsultadas(sessionDB)));
+					setResponsePage(new Estadisticas(NegocioEstadistica.recetasMasconsultadas(sesion)));
 				}
 			});
 			

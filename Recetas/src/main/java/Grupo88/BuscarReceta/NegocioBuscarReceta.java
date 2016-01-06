@@ -1,18 +1,15 @@
 package Grupo88.BuscarReceta;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import master.ErrorPage;
-
-import org.hibernate.Session;
-
+import master.Negocio;
+import objetosWicket.SesionUsuario;
 import Database.DAODificultades;
 import Database.DAOGruposAlimenticios;
 import Database.DAOIngredientes;
 import Database.DAORecetas;
 import Database.DAOTemporadas;
-import Database.DBExeption;
-import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dificultades;
 import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
@@ -21,8 +18,10 @@ import ObjetosDB.Temporadas;
 import ObjetosDB.Usuario;
 import ObjetosDB.itemsABuscar;
 
-public class NegocioBuscarReceta {
+public class NegocioBuscarReceta extends Negocio implements Serializable{
 
+	private static final long serialVersionUID = 5235761378170319909L;
+	
 	private DAODificultades daodificultades;
 	private DAOTemporadas daotemporadas;
 	private DAOIngredientes daoingredientes;
@@ -35,12 +34,13 @@ public class NegocioBuscarReceta {
 	private ArrayList<GruposAlimenticios> grpAlim;
 	private ArrayList<Integer> calificaciones;
 	
-public NegocioBuscarReceta(Session session){
-	daodificultades = new DAODificultades(session);
-	daotemporadas = new DAOTemporadas(session);
-	daoingredientes = new DAOIngredientes(session);
-	daogruposalimenticios = new DAOGruposAlimenticios(session);
-	daorecetas = new DAORecetas(session);
+public NegocioBuscarReceta(SesionUsuario sesion){
+	super(sesion);
+	daodificultades = new DAODificultades(sesion.getSessionDB());
+	daotemporadas = new DAOTemporadas(sesion.getSessionDB());
+	daoingredientes = new DAOIngredientes(sesion.getSessionDB());
+	daogruposalimenticios = new DAOGruposAlimenticios(sesion.getSessionDB());
+	daorecetas = new DAORecetas(sesion.getSessionDB());
 }
 
 public boolean cargarListas(){
@@ -54,20 +54,26 @@ public boolean cargarListas(){
 		for(int i = 1; i<= 5;i++){
 			calificaciones.add(i);
 		}
+		
 		return true;
-	} catch (DBExeption e) {
-		e.printStackTrace();
+		
+	} catch (Exception e) {
+		setError(manejador.tratarExcepcion(e));
 		return false;
 	}
 }
 
-public ArrayList<Receta> buscarPorFiltros(Usuario usuario, itemsABuscar queBuscar ) throws DBExeption{
+public ArrayList<Receta> buscarPorFiltros(Usuario usuario, itemsABuscar queBuscar ){
 	
 	ArrayList<Receta> aceptadas = new ArrayList<Receta>();
 	
-	for(Receta rec : daorecetas.buscarReceta(queBuscar)){
-		if(usuario.esAdecuada(rec))
-			aceptadas.add(rec);
+	try {
+		for(Receta rec : daorecetas.buscarReceta(queBuscar)){
+			if(usuario.esAdecuada(rec))
+				aceptadas.add(rec);
+		}
+	} catch (Exception e) {
+		setError(manejador.tratarExcepcion(e));
 	}
 	return aceptadas;
 	

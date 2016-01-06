@@ -28,19 +28,17 @@ public class FormConfirmarPanel extends Panel{
 	private Confirmacion confirmacion;
 	private NegocioRecetas negocio;
 	private ArrayList<TipoReceta> todosTipoReceta;
-	private final Session session;
 	private Receta receta;
 	private Usuario user;
 	
-	public FormConfirmarPanel(String id,Session sess, Usuario use, Receta rec, NegocioRecetas negocio) {
+	public FormConfirmarPanel(String id, Usuario use, Receta rec, NegocioRecetas negocio) {
 		super(id);
 		
 		this.user = use;
 		this.receta = rec;
-		this.session = sess;
 		this.negocio = negocio;
 		
-		add(new FormConfirmar(id, sess, use, rec));
+		add(new FormConfirmar(id, use, rec));
 	}
 
 	
@@ -48,20 +46,12 @@ public class FormConfirmarPanel extends Panel{
 	
 		private static final long serialVersionUID = 3482226522671170037L;
 
-		public FormConfirmar(String id,Session sess, Usuario use, Receta rec) {
+		public FormConfirmar(String id, Usuario use, Receta rec) {
 			super(id);
 			
 			confirmacion = new Confirmacion();
-			negocio = new NegocioRecetas(session);
+			todosTipoReceta= negocio.getTiposDeReceta();
 	
-			try {
-				
-				todosTipoReceta= negocio.getTiposDeReceta();
-	
-			} catch (Exception e1) {
-				setResponsePage(ErrorPage.ErrorCargaDatos());
-				return;
-			}
 			
 			add(new RadioChoice("comida", new PropertyModel(confirmacion, "tipoReceta"), todosTipoReceta,new ChoiceRenderer("descripcion","idTipoReceta")));
 			add(new Button("confirmar"){
@@ -77,10 +67,12 @@ public class FormConfirmarPanel extends Panel{
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 					confirmacion.setFecha(dateFormat.format(new Date()));
 						
-						if(!negocio.guardarCOnfirmacion(confirmacion))
-							setResponsePage(ErrorPage.ErrorEnLaDB());
+					if(negocio.guardarCOnfirmacion(confirmacion))
+						setResponsePage(DetalleDeReceta.class,pars);
+					else
+						info(negocio.getError());
 					
-					setResponsePage(DetalleDeReceta.class,pars);
+					
 				}
 			});
 	

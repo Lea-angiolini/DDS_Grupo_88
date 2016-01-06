@@ -11,7 +11,6 @@ public class DAOIngredientes extends DAOGenerico<Ingredientes, Integer> implemen
 	private static final long serialVersionUID = -6520613459685691397L;
 
 	public DAOIngredientes(Session session) {
-		// TODO Auto-generated constructor stub
 		super(session);
 	}
 	

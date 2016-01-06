@@ -23,7 +23,7 @@ public class ReporteNuevasRecetas extends RegisteredPage {
 	private NegocioReportes negocio;
 	
 	public ReporteNuevasRecetas() {
-		negocio = new NegocioReportes(getSessionBD(), getUsuarioActual());
+		negocio = new NegocioReportes(getSessionUser());
 		
 		add(formNuevasRecetas = new FormNuevasRecetas("formNuevasRecetas"));
 	}
@@ -35,16 +35,7 @@ public class ReporteNuevasRecetas extends RegisteredPage {
 		public FormNuevasRecetas(String id) {
 			super(id);
 			
-			ArrayList<Receta> listaRecetas;
-			try {
-				listaRecetas = new ArrayList<Receta>(negocio.getDaoReportes().recetasCreadas());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				setResponsePage(ErrorPage.ErrorCargaDatos());
-				return;
-			}
-			
+			ArrayList<Receta> listaRecetas = negocio.recetasCreadas();	
 			
 			DataView<Receta> dataView = new DataView<Receta>("recetasCreadas", new ListDataProvider<Receta>(listaRecetas)) {
 				@Override

@@ -1,5 +1,7 @@
 package Grupo88.GestionarGrupos;
 
+import javassist.tools.framedump;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -21,7 +23,7 @@ public class CrearNuevoGrupo extends RegisteredPage{
 	private FormCrearNuevoGrupo formCrearNuevoGrupo;
 	private NegocioGrupos negocio;
 	public CrearNuevoGrupo() {
-		negocio = new NegocioGrupos(getSessionBD());
+		negocio = new NegocioGrupos(getSessionUser());
 		add(formCrearNuevoGrupo = new FormCrearNuevoGrupo("formCrearNuevoGrupo"));
 		
 	}
@@ -50,14 +52,13 @@ public class CrearNuevoGrupo extends RegisteredPage{
 	
 				@Override
 				public void onSubmit() {
+					
 					if(!negocio.nuevoGrupo(nuevoGrupo, getUsuarioActual()))
 						formCrearNuevoGrupo.addOrReplace(new Label("etiquetaConf", negocio.getError()));
 					else{
 						setResponsePage(new ErrorPage("¡Su grupo ha sido creado!"));
 					}
-	
 				}
-				
 			});
 			
 			add(new Link("cancelar"){

@@ -13,21 +13,23 @@ import ObjetosDB.Usuario;
 
 public class MasterPage extends WebPage {
 	private static final long serialVersionUID = 1L;
-	
-	
-	
+
 	private Component headerPanel;
 	private Component menuPanel;
 	private Component footerPanel;
 	private Usuario user = ((SesionUsuario)getSession()).getUsuarioActual();
-	private Session session = ((SesionUsuario)getSession()).getSession();
+	private SesionUsuario sesion = (SesionUsuario)getSession();
 	
 	public Usuario getUsuarioActual(){
 		return user;
 	}
 	
 	public Session getSessionBD(){
-		return session;
+		return sesion.getSessionDB();
+	}
+	
+	public SesionUsuario getSessionUser(){
+		return sesion;
 	}
 	
 	public MasterPage() {
@@ -35,8 +37,8 @@ public class MasterPage extends WebPage {
 		add(menuPanel = new MenuPanel("menu"));
 		add(footerPanel = new FooterPanel("footer"));	
 		headerPanel.setVisible(false);
-		if(user.getUsername() != "Invitado")
-			session.refresh(user);
+		/*if(user.getUsername() != "Invitado")
+			sessionDB.refresh(user);*/
 		
     }
 

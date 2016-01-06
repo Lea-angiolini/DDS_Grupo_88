@@ -16,6 +16,7 @@ import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 
 import Database.DAOEstadistica;
+import ObjetosDB.Estadistico;
 
 public class Estadisticas extends RegisteredPage{
 
@@ -37,18 +38,22 @@ public class Estadisticas extends RegisteredPage{
 		public FrmEstadisticas(String id) {
 			super(id);
 			
-			add(new Label("estadistica", negocio.getDAO().descripcionEst()));
+			add(new Label("estadistica", negocio.descripcionEst()));
 	                RepeatingView col = new RepeatingView("iteradorCol");
 	                	
 	                	for(Integer f : negocio.getFechas()){
 	                		AbstractItem celda = new AbstractItem(col.newChildId());
 	                		
-	                		try {
+	                		ArrayList<Estadistico> estadisticos = negocio.obtenerEstadistica(f);
+	                		
+	                		if(estadisticos != null){
 	                			celda.add(new Label("tiempo", f+" dias"));
-								celda.add(new PanelTiposRecetasConsultadas("panel", negocio.getDAO().obtenerEstadistica(f)));
-							} catch (Exception e) {
+								celda.add(new PanelTiposRecetasConsultadas("panel", estadisticos));
+	                		}
+							else {
 								celda.add(new EmptyPanel("panel"));
 							}
+	                		
 	                		col.add(celda);
 	                	}
 	                add(col);

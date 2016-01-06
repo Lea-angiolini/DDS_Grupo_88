@@ -20,28 +20,24 @@ public class FormCalificarPanel extends Panel{
 	
 	private NegocioRecetas negocio;
 	private Calificacion calificacion;
-	private Session session;
 	private Receta receta;
 	private Usuario user;
 	
-	public FormCalificarPanel(String id, Session sess, Receta rec, Usuario use, NegocioRecetas negocio) {
+	public FormCalificarPanel(String id, Receta rec, Usuario use, NegocioRecetas negocio) {
 		super(id);
-		this.session = sess;
 		this.receta = rec;
 		this.user = use;
 		this.negocio = negocio;
 		
-		add(new FormCalificar(id, sess, rec, use));
+		add(new FormCalificar(id, rec, use));
 	}
 	
 	private class FormCalificar extends Form{
 	
 		private static final long serialVersionUID = -7463688006174588993L;
 		
-		public FormCalificar(String id, Session sess, Receta rec, Usuario use) {
+		public FormCalificar(String id, Receta rec, Usuario use) {
 			super(id);
-			
-			
 
 			calificacion = negocio.calificacionDe(receta, user);
 			

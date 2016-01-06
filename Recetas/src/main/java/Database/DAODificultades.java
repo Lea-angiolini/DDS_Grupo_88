@@ -12,7 +12,5 @@ public class DAODificultades extends DAOGenerico<Dificultades, Integer> implemen
 
 	public DAODificultades(Session session) {
 		super(session);
-		// TODO Auto-generated constructor stub
 	}
-
 }

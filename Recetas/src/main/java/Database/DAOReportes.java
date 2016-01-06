@@ -22,18 +22,11 @@ public class DAOReportes {
 	public List<Historial> recetasmasconsultadas(String desde, String hasta) throws Exception{
 		List<Historial> listaHistorial = null;
 		Query query;
-		try{
-			session.beginTransaction();
-			query = session.createQuery("from Historial h where fecha >= '"+desde+"' and fecha <= '"+hasta+"' and usuario.username = '"+user.getUsername()+"'");
-			listaHistorial = query.list();
-			session.getTransaction().commit();
-		}
-		catch(Exception ex){
-			if(session.getTransaction().isActive())
-				session.getTransaction().rollback();
-			session.flush();
-			throw ex;
-		}
+
+		session.beginTransaction();
+		query = session.createQuery("from Historial h where fecha >= '"+desde+"' and fecha <= '"+hasta+"' and usuario.username = '"+user.getUsername()+"'");
+		listaHistorial = query.list();
+		session.getTransaction().commit();
 		
 		return listaHistorial;
 	}
@@ -41,18 +34,11 @@ public class DAOReportes {
 	public List<Receta> recetasCreadas() throws Exception{
 		List<Receta> listaReceta = null;
 		Query query;
-		try{
-			session.beginTransaction();
-			query = session.createQuery("from Receta r where r.creador.username = '"+user.getUsername()+"'");
-			listaReceta = query.list();
-			session.getTransaction().commit();
-		}
-		catch(Exception ex){
-			if(session.getTransaction().isActive())
-				session.getTransaction().rollback();
-			session.flush();
-			throw ex;
-		}
+
+		session.beginTransaction();
+		query = session.createQuery("from Receta r where r.creador.username = '"+user.getUsername()+"'");
+		listaReceta = query.list();
+		session.getTransaction().commit();
 		
 		return listaReceta;
 	}
@@ -60,19 +46,12 @@ public class DAOReportes {
 	public List<Confirmacion> recetasConfirmadas(String calMin, String calMax) throws Exception{
 		List<Confirmacion> listaReceta = null;
 		Query query;
-		try{
-			session.beginTransaction();
-			query = session.createQuery("from Confirmacion c where c.user.username = '"+user.getUsername()+"' and "+
-			"c.receta.caloriasTotales >= '"+calMin+"' and c.receta.caloriasTotales <= '"+calMax+"'");
-			listaReceta = query.list();
-			session.getTransaction().commit();
-		}
-		catch(Exception ex){
-			if(session.getTransaction().isActive())
-				session.getTransaction().rollback();
-			session.flush();
-			throw ex;
-		}
+
+		session.beginTransaction();
+		query = session.createQuery("from Confirmacion c where c.user.username = '"+user.getUsername()+"' and "+
+		"c.receta.caloriasTotales >= '"+calMin+"' and c.receta.caloriasTotales <= '"+calMax+"'");
+		listaReceta = query.list();
+		session.getTransaction().commit();
 		
 		return listaReceta;
 	}

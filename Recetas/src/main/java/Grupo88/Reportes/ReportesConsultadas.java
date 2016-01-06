@@ -22,7 +22,7 @@ public class ReportesConsultadas extends RegisteredPage{
 
 	public ReportesConsultadas() {
 		add(new FormReporte("frmReportes"));
-		negocio = new NegocioReportes(getSessionBD(), getUsuarioActual());
+		negocio = new NegocioReportes(getSessionUser());
 	}
 	
 	private class FormReporte extends Form<Object>{
@@ -47,17 +47,7 @@ public class ReportesConsultadas extends RegisteredPage{
 		@Override
 		protected void onSubmit() {
 			super.onSubmit();
-			List<Historial> listaHistorial;
-			try {
-				listaHistorial = negocio.getDaoReportes().recetasmasconsultadas(fechaDesde, fechaHasta);
-				addOrReplace(new PanelListaRecetas("AreaRecetas", listaHistorial));
-			} catch (Exception e) {
-				e.printStackTrace();
-				info("error");
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
-			
-			
+			List<Historial> listaHistorial = negocio.recetasmasconsultadas(fechaDesde, fechaHasta);
 		}
 	}
 }

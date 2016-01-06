@@ -34,7 +34,7 @@ public class DetalleGrupo extends RegisteredPage {
 	public DetalleGrupo(final PageParameters parameters){
 		super();
 		pagina = this;
-		negocio = new NegocioGrupos(getSessionBD());
+		negocio = new NegocioGrupos(getSessionUser());
 		
 		if(parameters.getNamedKeys().contains("idGrupo")){
 			idGrupo = parameters.get("idGrupo");

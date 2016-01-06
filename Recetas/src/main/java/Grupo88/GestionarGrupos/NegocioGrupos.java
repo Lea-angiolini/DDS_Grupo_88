@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import master.Negocio;
+import objetosWicket.SesionUsuario;
+
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -14,33 +17,35 @@ import Database.DAOUsuarios;
 import ObjetosDB.Grupo;
 import ObjetosDB.Usuario;
 
-public class NegocioGrupos implements Serializable {
+public class NegocioGrupos extends Negocio implements Serializable {
 
 	private static final long serialVersionUID = -1324481714495775974L;
 	private DAOGrupos daogrupos;
 	private DAOUsuarios daoUsuarios;
-	private List<Grupo> todosGrupos;
-	private Session session;
-	private String error;
+	private ArrayList<Grupo> todosGrupos;
+	private SesionUsuario sesion;
 	
-	public NegocioGrupos(Session session) {
+	public NegocioGrupos(SesionUsuario sesion) {
 
-		daogrupos = new DAOGrupos(session);
-		daoUsuarios = new DAOUsuarios(session);
-		this.session = session;
+		super(sesion);
+		daogrupos = new DAOGrupos(sesion.getSessionDB());
+		daoUsuarios = new DAOUsuarios(sesion.getSessionDB());
+		this.sesion = sesion;
+		cargarListas();
 	}
 	
-	public boolean cargarListas(){
+	private boolean cargarListas(){
 		try {
-			todosGrupos = (List<Grupo>) daogrupos.findAll();
+			todosGrupos =  (ArrayList<Grupo>) daogrupos.findAll();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			todosGrupos = new ArrayList<Grupo>();
+			setError(manejador.tratarExcepcion(e));
 			return false;
 		}
 	}
 
-	public List<Grupo> getTodosGrupos() {
+	public ArrayList<Grupo> getTodosGrupos() {
 		return todosGrupos;
 	}
 	
@@ -51,13 +56,12 @@ public class NegocioGrupos implements Serializable {
 		try {
 			return daogrupos.gruposCon(nom);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			setError(manejador.tratarExcepcion(e));
+			return new ArrayList<Grupo>();
 		}
-		return new ArrayList<Grupo>();
 	}
 	
-	public void setTodosGrupos(List<Grupo> todosGrupos) {
+	public void setTodosGrupos(ArrayList<Grupo> todosGrupos) {
 		this.todosGrupos = todosGrupos;
 	}
 	public boolean sacarUsuario(Usuario user, Grupo grupo){
@@ -67,84 +71,54 @@ public class NegocioGrupos implements Serializable {
 		try {
 			daoUsuarios.saveOrUpdate(user);
 			return true;
-		} catch (ConstraintViolationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (javax.validation.ConstraintViolationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			setError(manejador.tratarExcepcion(e));
+			return false;
 		}
-		return false;
 	}
 	
 	public boolean agregarUsuario(Usuario user, Grupo grupo){
 		user.agregarGrupo(grupo);
+		
 		try{
-			try {
-				daoUsuarios.saveOrUpdate(user);
-				return true;
-			} catch (ConstraintViolationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (javax.validation.ConstraintViolationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			daoUsuarios.saveOrUpdate(user);
+			return true;
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			user.getGrupos().remove(grupo);
+			setError(manejador.tratarExcepcion(e));
+			return false;
 		}
-		user.getGrupos().remove(grupo);
-		return false;
 	}
 	
 	public boolean nuevoGrupo(Grupo grupo, Usuario user){
 		
 		try{
-			try {
-				//grupo.getUsuarios().add(user);
-				daogrupos.save(grupo);
-				user.getGrupos().add(grupo);
-				daoUsuarios.saveOrUpdate(user);
-				return true;
-			} catch (ConstraintViolationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				error = e.getMessage();
-			} catch (javax.validation.ConstraintViolationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				error = e.getConstraintViolations().iterator().next().getMessage();
-			}
+			//grupo.getUsuarios().add(user);
+			daogrupos.save(grupo);
+			user.getGrupos().add(grupo);
+			daoUsuarios.saveOrUpdate(user);
+			return true;
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			error = e.getMessage();
+			user.getGrupos().remove(grupo);
+			setError(manejador.tratarExcepcion(e));
+			return false;
 		}
-		user.getGrupos().remove(grupo);
-		return false;
 	}
 	
 	public Grupo grupoPorId(int id){
 		try {
 			return daogrupos.get(id);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			setError(manejador.tratarExcepcion(e));
+			return null;
 		}
-		return null;
+		
 	}
 	
 	public boolean admiteUsuario(Grupo grupo, Usuario user){
 		return user.getGrupos().contains(grupo);
 	}
 	
-	public String getError(){
-		return this.error;
-	}
 }

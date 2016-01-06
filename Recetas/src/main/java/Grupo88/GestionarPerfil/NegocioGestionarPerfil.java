@@ -1,22 +1,35 @@
 package Grupo88.GestionarPerfil;
 
+import java.io.Serializable;
+
+import master.Negocio;
+import objetosWicket.SesionUsuario;
+
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 
 import Database.DAOUsuarios;
 import ObjetosDB.Usuario;
 
-public class NegocioGestionarPerfil {
-
-	private DAOUsuarios daoUsuarios;
+	public class NegocioGestionarPerfil extends Negocio implements Serializable {
 	
-public NegocioGestionarPerfil(Session session){
-	daoUsuarios = new DAOUsuarios(session);
-}
-
-public void guardarUsuario(Usuario usuario) throws ConstraintViolationException, javax.validation.ConstraintViolationException, Exception{
-	daoUsuarios.saveOrUpdate(usuario);
+		private static final long serialVersionUID = 7769434769016840534L;
+		private DAOUsuarios daoUsuarios;
+		
+	public NegocioGestionarPerfil(SesionUsuario sesion){
+		super(sesion);
+		daoUsuarios = new DAOUsuarios(sesion.getSessionDB());
+	}
 	
-}
+	public boolean guardarUsuario(Usuario usuario){
+		try {
+			daoUsuarios.saveOrUpdate(usuario);
+			return true;
+		} catch (Exception e) {
+			setError(manejador.tratarExcepcion(e));
+			return false;
+		}
+		
+	}
 	 
 }

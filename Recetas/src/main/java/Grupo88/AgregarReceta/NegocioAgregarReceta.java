@@ -3,17 +3,18 @@ package Grupo88.AgregarReceta;
 import java.util.ArrayList;
 import java.util.Set;
 
+import master.Negocio;
+import objetosWicket.SesionUsuario;
+
 import org.hibernate.Session;
 
-import master.ErrorPage;
 import Database.DAOCondimentos;
 import Database.DAODificultades;
 import Database.DAOIngredientes;
 import Database.DAORecetas;
 import Database.DAOTemporadas;
 import Database.DAOTipoReceta;
-import Database.DBExeption;
-import Grupo88.MisRecetas.MisRecetas;
+import Database.ManejadorExepciones;
 import ObjetosDB.Condimentos;
 import ObjetosDB.Dificultades;
 import ObjetosDB.Ingredientes;
@@ -21,7 +22,7 @@ import ObjetosDB.Receta;
 import ObjetosDB.Temporadas;
 import ObjetosDB.TipoReceta;
 
-public class NegocioAgregarReceta {
+public class NegocioAgregarReceta extends Negocio {
 	
 	private DAOCondimentos daoCondimentos;
 	private DAODificultades daoDificultades;
@@ -35,13 +36,14 @@ public class NegocioAgregarReceta {
 	private ArrayList<Dificultades> todasDificultades;
 	private ArrayList<TipoReceta> todosTipoReceta;
 	
-	public NegocioAgregarReceta(Session session) {
-		daoIngredientes = new DAOIngredientes (session);
-		daoCondimentos = new DAOCondimentos(session);
-		daoDificultades = new DAODificultades(session);
-		daoTemporadas = new DAOTemporadas(session);
-		daoreceta = new DAORecetas (session);
-		daoTipoReceta = new DAOTipoReceta(session);
+	public NegocioAgregarReceta(SesionUsuario sesion) {
+		super(sesion);
+		daoIngredientes = new DAOIngredientes (sesion.getSessionDB());
+		daoCondimentos = new DAOCondimentos(sesion.getSessionDB());
+		daoDificultades = new DAODificultades(sesion.getSessionDB());
+		daoTemporadas = new DAOTemporadas(sesion.getSessionDB());
+		daoreceta = new DAORecetas (sesion.getSessionDB());
+		daoTipoReceta = new DAOTipoReceta(sesion.getSessionDB());
 	}
 	
 	public boolean cargarListas(){
@@ -52,8 +54,8 @@ public class NegocioAgregarReceta {
 			todosCondimentos= new ArrayList<Condimentos>(daoCondimentos.findAll());
 			todosTipoReceta = new ArrayList<TipoReceta>(daoTipoReceta.findAll());
 			return true;
-		} catch (Exception e2) {
-			e2.printStackTrace();
+		} catch (Exception e) {
+			setError(manejador.tratarExcepcion(e));
 			return false;
 		}
 	}
@@ -63,6 +65,7 @@ public class NegocioAgregarReceta {
 			daoreceta.saveOrUpdate(receta);
 			return true;
 		} catch (Exception e) {
+			setError(manejador.tratarExcepcion(e));
 			return false;
 		}		
 	}
@@ -119,7 +122,5 @@ public class NegocioAgregarReceta {
 
 	public void setTodosTipoReceta(ArrayList<TipoReceta> todosTipoReceta) {
 		this.todosTipoReceta = todosTipoReceta;
-	}
-	
-	
+	}	
 }

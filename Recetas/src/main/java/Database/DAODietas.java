@@ -11,7 +11,6 @@ public class DAODietas extends DAOGenerico<Dietas,Integer> implements Serializab
 	private static final long serialVersionUID = -8447676510206658151L;
 
 	public DAODietas(Session session) {
-	super(session);
+		super(session);
 	}
-
 }

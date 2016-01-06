@@ -20,23 +20,16 @@ public class DAOConfirmar extends DAOGenerico<Confirmacion, Integer> implements 
 	}
 	
 	public boolean userConfirmo(Receta receta, Usuario user) throws Exception{
-		try{
-			session.beginTransaction();
+
+		session.beginTransaction();
 			
-			Query query = session.createQuery("from Confirmacion c where c.receta.idreceta = "+receta.getIdreceta()+
+		Query query = session.createQuery("from Confirmacion c where c.receta.idreceta = "+receta.getIdreceta()+
 														" and c.user.username = '"+user.getUsername()+"'");
-			List<Confirmacion> conf = (List<Confirmacion>) query.list();
+		List<Confirmacion> conf = (List<Confirmacion>) query.list();
 			
-			session.getTransaction().commit();
+		session.getTransaction().commit();
 			
-			return !conf.isEmpty();
+		return !conf.isEmpty();
 			
-		}
-		catch(Exception ex){
-			if(session.getTransaction().isActive()){
-				session.getTransaction().rollback();
-			}
-			throw ex;
-		}
 	}
 }

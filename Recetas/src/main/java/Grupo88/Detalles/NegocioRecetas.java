@@ -8,6 +8,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import master.Negocio;
+import objetosWicket.SesionUsuario;
+
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.DateTime;
@@ -27,10 +30,10 @@ import ObjetosDB.Receta;
 import ObjetosDB.TipoReceta;
 import ObjetosDB.Usuario;
 
-public class NegocioRecetas implements Serializable{
+public class NegocioRecetas extends Negocio implements Serializable{
 
 	private static final long serialVersionUID = -2761007007476471175L;
-	private Session session;
+	//private SesionUsuario session;
 	private DAORecetas daoreceta;
 	private DAOCalificacion daoCalificacion;
 	private DAOConfirmar daoConfirmar;
@@ -38,44 +41,52 @@ public class NegocioRecetas implements Serializable{
 	private DAOTipoReceta daoTipoReceta;
 	private DAOConsultas daoConsultas;
 	
-	public NegocioRecetas(Session session) {
+	public NegocioRecetas(SesionUsuario sesion) {
 		
-		this.session = session;
-		this.daoreceta = new DAORecetas(session);
-		this.daoCalificacion = new DAOCalificacion(session);
-		this.daoConfirmar = new DAOConfirmar(session);
-		this.daoGrupos = new DAOGrupos(session);
-		this.daoTipoReceta = new DAOTipoReceta(session);
-		this.daoConsultas = new DAOConsultas(session);
+		super(sesion);
+		//this.session = session;
+		this.daoreceta = new DAORecetas(sesion.getSessionDB());
+		this.daoCalificacion = new DAOCalificacion(sesion.getSessionDB());
+		this.daoConfirmar = new DAOConfirmar(sesion.getSessionDB());
+		this.daoGrupos = new DAOGrupos(sesion.getSessionDB());
+		this.daoTipoReceta = new DAOTipoReceta(sesion.getSessionDB());
+		this.daoConsultas = new DAOConsultas(sesion.getSessionDB());
 	}
 	
-	public Receta getReceta(int id) throws Exception{
-		return daoreceta.get(id);
+	public Receta getReceta(int id){
+		try {
+			return daoreceta.get(id);
+		} catch (Exception e) {
+			setError(manejador.tratarExcepcion(e));
+			return null;
+		}
 	}
 	
-	public ArrayList<TipoReceta> getTiposDeReceta() throws Exception{
-		return (ArrayList<TipoReceta>) daoTipoReceta.findAll();
+	public ArrayList<TipoReceta> getTiposDeReceta(){
+		try {
+			return (ArrayList<TipoReceta>) daoTipoReceta.findAll();
+		} catch (Exception e) {
+			setError(manejador.tratarExcepcion(e));
+			return new ArrayList<TipoReceta>();
+		}
 	}
 	
 	public boolean guardarCOnfirmacion(Confirmacion confirmacion){
 		try {
 			daoConfirmar.save(confirmacion);
 			return true;
-		} catch (ConstraintViolationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (javax.validation.ConstraintViolationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			setError(manejador.tratarExcepcion(e));
+			return false;
 		}
-		return false;
 	}
 	
-	public List<Grupo> gruposde(Usuario user) throws Exception{
-		return daoGrupos.gruposde(user);
+	public List<Grupo> gruposde(Usuario user){
+		try {
+			return daoGrupos.gruposde(user);
+		} catch (Exception e) {
+			return new ArrayList<Grupo>();
+		}
 	}
 	
 	public boolean compartirEnGrupo(ArrayList<Grupo> grupos, Receta receta){
@@ -83,14 +94,10 @@ public class NegocioRecetas implements Serializable{
 			grupo.agregarReceta(receta);
 			try {
 				daoGrupos.saveOrUpdate(grupo);
-			} catch (ConstraintViolationException e) {
-				e.printStackTrace();
-				
-			} catch (javax.validation.ConstraintViolationException e) {
-				e.printStackTrace();
-				
+				return true;
 			} catch (Exception e) {
-				e.printStackTrace();
+				setError(manejador.tratarExcepcion(e));
+				return false;
 			}
 		}
 		return true;
@@ -101,9 +108,9 @@ public class NegocioRecetas implements Serializable{
 		try {
 			calificacion = daoCalificacion.calificacionDe(receta, user);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			setError(manejador.tratarExcepcion(e));
 		}
+		
 		if(calificacion == null){
 			calificacion = new Calificacion();
 			calificacion.setReceta(receta);
@@ -116,8 +123,7 @@ public class NegocioRecetas implements Serializable{
 		try {
 			return daoConfirmar.userConfirmo(receta, user);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			setError(manejador.tratarExcepcion(e));
 			return false;
 		}
 	}
@@ -126,15 +132,10 @@ public class NegocioRecetas implements Serializable{
 		try {
 			daoCalificacion.saveOrUpdate(calificacion);
 			return true;
-		} catch (ConstraintViolationException e) {
-			e.printStackTrace();
-		} catch (javax.validation.ConstraintViolationException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
+			setError(manejador.tratarExcepcion(e));
+			return false;
 		}
-		
-		return false;
 	}
 	
 	public boolean guardarConsulta(Historial consulta, Usuario user){
@@ -151,19 +152,9 @@ public class NegocioRecetas implements Serializable{
 		try {
 			daoConsultas.saveOrUpdate(consulta);
 			return true;
-		} catch (ConstraintViolationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		} catch (javax.validation.ConstraintViolationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e.getMessage());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			setError(manejador.tratarExcepcion(e));
+			return false;
 		}
-		return false;
 	}
 }

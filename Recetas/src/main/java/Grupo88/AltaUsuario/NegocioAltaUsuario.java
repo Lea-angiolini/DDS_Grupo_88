@@ -3,11 +3,8 @@ package Grupo88.AltaUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import master.ErrorPage;
-
-import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
-
+import master.Negocio;
+import objetosWicket.SesionUsuario;
 import Database.DAOComplexiones;
 import Database.DAOCondicionesPreexistentes;
 import Database.DAODietas;
@@ -15,6 +12,7 @@ import Database.DAOPreferenciasAlimenticias;
 import Database.DAORutinas;
 import Database.DAOSexo;
 import Database.DAOUsuarios;
+import Database.ManejadorExepciones;
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
 import ObjetosDB.Dietas;
@@ -23,7 +21,7 @@ import ObjetosDB.Rutinas;
 import ObjetosDB.Sexo;
 import ObjetosDB.Usuario;
 
-public class NegocioAltaUsuario implements Serializable {
+public class NegocioAltaUsuario extends Negocio implements Serializable {
 
 	private static final long serialVersionUID = 48472359735180319L;
 	private DAOComplexiones daoComplexiones;
@@ -33,23 +31,23 @@ public class NegocioAltaUsuario implements Serializable {
 	private DAOPreferenciasAlimenticias daoPreferenciasAlimenticias;
 	private DAOSexo daoSexo;
 	private DAOUsuarios daoUsuarios;
-	ArrayList<Sexo> todosSexos;
-	ArrayList<Complexiones> todasComplexiones;
-	ArrayList<PreferenciasAlimenticias> todasPreferenciasAlim;
-	ArrayList<CondicionesPreexistentes> todasCondiciones;
-	ArrayList<Rutinas> todasRutinas;
-	ArrayList<Dietas> todasDietas;
-
-	public NegocioAltaUsuario(Session session) {
-		
-		daoComplexiones =  new DAOComplexiones(session);
-		daoCondicionesPreexistentes = new DAOCondicionesPreexistentes(session);
-		daoDietas = new DAODietas(session);
-		daoRutinas = new DAORutinas(session);
-		daoPreferenciasAlimenticias = new DAOPreferenciasAlimenticias(session);
-		daoSexo = new DAOSexo(session);
-		// no subio los .java
-		daoUsuarios = new DAOUsuarios(session);
+	private ArrayList<Sexo> todosSexos;
+	private ArrayList<Complexiones> todasComplexiones;
+	private ArrayList<PreferenciasAlimenticias> todasPreferenciasAlim;
+	private ArrayList<CondicionesPreexistentes> todasCondiciones;
+	private ArrayList<Rutinas> todasRutinas;
+	private ArrayList<Dietas> todasDietas;
+	
+	public NegocioAltaUsuario(SesionUsuario sesion) {
+		super(sesion);
+		manejador = new ManejadorExepciones(sesion);
+		daoComplexiones =  new DAOComplexiones(sesion.getSessionDB());
+		daoCondicionesPreexistentes = new DAOCondicionesPreexistentes(sesion.getSessionDB());
+		daoDietas = new DAODietas(sesion.getSessionDB());
+		daoRutinas = new DAORutinas(sesion.getSessionDB());
+		daoPreferenciasAlimenticias = new DAOPreferenciasAlimenticias(sesion.getSessionDB());
+		daoSexo = new DAOSexo(sesion.getSessionDB());
+		daoUsuarios = new DAOUsuarios(sesion.getSessionDB());
 		
 	}
 	
@@ -63,21 +61,31 @@ public class NegocioAltaUsuario implements Serializable {
 			todasRutinas = new ArrayList<Rutinas>(daoRutinas.findAll());
 			todasDietas = new ArrayList<Dietas>(daoDietas.findAll());
 			return true;
-		} catch (Exception e2) {
-			e2.printStackTrace();
+		} catch (Exception e) {
+			setError(manejador.tratarExcepcion(e));
 			return false;
 		}
 		
 	}	
 	
-	public void guardarUsuario(Usuario usuario) throws ConstraintViolationException, javax.validation.ConstraintViolationException, Exception{
-
+	public boolean guardarUsuario(Usuario usuario){
+		try {
 			daoUsuarios.save(usuario);
+			return true;
+		} catch (Exception e) {
+			setError(manejador.tratarExcepcion(e));
+			return false;
+		}
 	}
 	
-	public void actualizarUsuario(Usuario usuario) throws ConstraintViolationException, javax.validation.ConstraintViolationException, Exception{
-
-		daoUsuarios.saveOrUpdate(usuario);
+	public boolean actualizarUsuario(Usuario usuario){
+		try {
+			daoUsuarios.saveOrUpdate(usuario);
+			return true;
+		} catch (Exception e) {
+			setError(manejador.tratarExcepcion(e));
+			return false;
+		}
 }
 	
 	
@@ -141,8 +149,4 @@ public ArrayList<Sexo> getTodosSexos() {
 	public void setTodasDietas(ArrayList<Dietas> todasDietas) {
 		this.todasDietas = todasDietas;
 	}
-
-
-
-
 }

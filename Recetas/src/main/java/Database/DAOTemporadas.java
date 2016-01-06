@@ -12,7 +12,6 @@ public class DAOTemporadas extends DAOGenerico<Temporadas, Integer> implements S
 
 	public DAOTemporadas(Session session) {
 		super(session);
-		// TODO Auto-generated constructor stub
 	}
 
 }

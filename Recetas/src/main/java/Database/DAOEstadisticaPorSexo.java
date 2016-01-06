@@ -29,28 +29,21 @@ public class DAOEstadisticaPorSexo extends DAOEstadistica implements Serializabl
 		this.dias = dias;
 		ArrayList<Estadistico> estadisticos = new ArrayList<Estadistico>();
 		Query query;
-		try{
+		
+		session.beginTransaction();
+		query = session.createQuery("from Sexo s");
+		List<Sexo> sexos = query.list();
+		session.getTransaction().commit();
+			
+		for(Sexo s : sexos){
 			session.beginTransaction();
-			query = session.createQuery("from Sexo s");
-			List<Sexo> sexos = query.list();
+			 query = session.createQuery(consulta(dias, s.getIdSexo()));
+			 query.setMaxResults(1);
+			 estadisticos.addAll(((ArrayList<Estadistico>) query.list()));
 			session.getTransaction().commit();
-			
-			for(Sexo s : sexos){
-				session.beginTransaction();
-				 query = session.createQuery(consulta(dias, s.getIdSexo()));
-				 query.setMaxResults(1);
-				 estadisticos.addAll(((ArrayList<Estadistico>) query.list()));
-				session.getTransaction().commit();
-			}
-			
-			return estadisticos;
 		}
-		catch(Exception ex){
-			if(session.getTransaction().isActive())
-				session.getTransaction().rollback();
-			session.flush();
-			throw ex;
-		}
+			
+		return estadisticos;
 	}
 	private String consulta(int dias, int sexo){
 		return "select new ObjetosDB.Estadistico(STR(h.usuario.sexo.descripcion),STR(h.receta.tipoReceta.descripcion)) from Historial h "+

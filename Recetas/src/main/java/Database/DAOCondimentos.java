@@ -12,7 +12,6 @@ public class DAOCondimentos extends DAOGenerico<Condimentos,Integer> implements 
 
 	public DAOCondimentos(Session session) {
 		super(session);
-		// TODO Auto-generated constructor stub
 	}
 
 }

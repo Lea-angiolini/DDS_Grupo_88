@@ -18,9 +18,11 @@ public class MisRecetas extends RegisteredPage {
 	@SuppressWarnings("unused")
 	private FrmMisRecetas frmMisRecetas;
 	private MisRecetas pagina;
+	private NegocioMisRecetas negocio;
 	
 	public MisRecetas(){
 		super();
+		negocio = new NegocioMisRecetas(getSessionUser());
 		pagina = this;
 		add(frmMisRecetas = new FrmMisRecetas("frmMisRecetas"));
 	
@@ -33,7 +35,7 @@ public class MisRecetas extends RegisteredPage {
 		public FrmMisRecetas(String id) {
 			super(id);			
 
-			add(new ListaDeRecetas("listaMisRecetas", new ArrayList<Receta>(getUsuarioActual().cargarMisRecetas(getSessionBD())) , getUsuarioActual(), pagina));
+			add(new ListaDeRecetas("listaMisRecetas", new ArrayList<Receta>(negocio.recetasParaUsuarioActual()) , getUsuarioActual(), pagina));
 			
 			add(new Link<Object>("cancelar"){
  

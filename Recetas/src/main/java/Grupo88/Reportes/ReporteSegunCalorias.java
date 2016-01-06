@@ -24,7 +24,7 @@ import ObjetosDB.Historial;
 
 		public ReporteSegunCalorias() {
 			add(new FormReporte("frmReportes"));
-			negocio = new NegocioReportes(getSessionBD(), getUsuarioActual());
+			negocio = new NegocioReportes(getSessionUser());
 		}
 		
 		private class FormReporte extends Form<Object>{
@@ -49,17 +49,7 @@ import ObjetosDB.Historial;
 			@Override
 			protected void onSubmit() {
 				super.onSubmit();
-				List<Confirmacion> listaHistorial;
-				try {
-					listaHistorial = negocio.getDaoReportes().recetasConfirmadas(calMin.toString(), calMax.toString());
-					addOrReplace(new PanelListaConfirmaciones("AreaRecetas", listaHistorial));
-				} catch (Exception e) {
-					e.printStackTrace();
-					info("error");
-					JOptionPane.showMessageDialog(null, e.getMessage());
-				}
-				
-				
+				List<Confirmacion> listaHistorial = negocio.recetasConfirmadas(calMin.toString(), calMax.toString());
 			}
 		}
 	}

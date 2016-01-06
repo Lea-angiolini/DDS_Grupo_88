@@ -16,14 +16,7 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.PropertyModel;
 
-import Database.DAODificultades;
-import Database.DAOGruposAlimenticios;
-import Database.DAOIngredientes;
-import Database.DAORecetas;
-import Database.DAOTemporadas;
-import Database.DBExeption;
 import Grupo88.Componentes.ListaDeRecetas;
-import ObjetosDB.Calificacion;
 import ObjetosDB.Dificultades;
 import ObjetosDB.GruposAlimenticios;
 import ObjetosDB.Ingredientes;
@@ -39,7 +32,7 @@ public class BuscarReceta extends MasterPage {
 	public BuscarReceta(){
 		super();
 		
-		negocio = new NegocioBuscarReceta(getSessionBD());
+		negocio = new NegocioBuscarReceta(getSessionUser());
 		
 		pagina = this;
 		add(frmBuscarReceta = new FrmBuscarReceta("FrmBuscarReceta"));
@@ -59,7 +52,6 @@ public class BuscarReceta extends MasterPage {
 			DropDownChoice<Dificultades> dropdownDificultades = new DropDownChoice<Dificultades>("dificultad",new PropertyModel<Dificultades>(items,"dificultad"), negocio.getDificultades() ,new ChoiceRenderer("dificultad","idDificultad")){
     			@Override
     			protected String getNullValidDisplayValue() {
-    				// TODO Auto-generated method stub
     				return "Todas";
     			}
     		};
@@ -128,20 +120,12 @@ public class BuscarReceta extends MasterPage {
         	super(id, markupId, markupPorvider);
         	
         	ArrayList<Receta> recetas;
-			try {
-				recetas= negocio.buscarPorFiltros(getUsuarioActual(), queBuscar);
-				markupPorvider.remove(id);
+			
+			recetas= negocio.buscarPorFiltros(getUsuarioActual(), queBuscar);
+			markupPorvider.remove(id);
 	        	
-	        	add(new Label("nombreGrilla"," Resultados"));
-	        	add(new ListaDeRecetas("listaRecetas", recetas, getUsuarioActual(), pagina));
-			} catch (DBExeption e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				setResponsePage(new ErrorPage("Oops!"));
-			}	
-    		
-        	
-            
+	        add(new Label("nombreGrilla"," Resultados"));
+	        add(new ListaDeRecetas("listaRecetas", recetas, getUsuarioActual(), pagina)); 
         }
 	}
 }
