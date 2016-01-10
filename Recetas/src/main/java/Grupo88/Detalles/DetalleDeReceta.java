@@ -88,7 +88,7 @@ public class DetalleDeReceta extends MasterPage {
 		
 		negocio.guardarConsulta(new Historial("", receta, getUsuarioActual()),getUsuarioActual());
 
-		if(getUsuarioActual().getUsername() != "Invitado"){
+		if(getSessionUser().estaLogueado()){
 			add(new FormCalificarPanel("formCalificar",receta,getUsuarioActual(),negocio));
 			add(new FormConfirmarPanel("formConfirmar",getUsuarioActual(),receta,negocio));
 			add(new FormCompartirPanel("formCompartir",getUsuarioActual(),receta,negocio));

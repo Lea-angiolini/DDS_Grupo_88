@@ -1,5 +1,7 @@
 package objetosWicket;
 
+import javax.swing.JOptionPane;
+
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
@@ -10,6 +12,7 @@ import Database.DAOUsuarios;
 import Database.HibernateUtil;
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Usuario;
+import ObjetosDB.UsuarioNoRegistrado;
 
 public class SesionUsuario extends WebSession {
 	
@@ -20,10 +23,8 @@ public class SesionUsuario extends WebSession {
 	
 	public SesionUsuario(Request request) {
 		super(request);
-		Usuario invitado = new Usuario();
-		invitado.setUsername("Invitado");
+		Usuario invitado = new UsuarioNoRegistrado();
 		this.usuario = invitado;
-		setAttribute("usuario", invitado);
 		abrirSessionDB();
 	}
 	
@@ -37,7 +38,7 @@ public class SesionUsuario extends WebSession {
 	}
 	
 	public Usuario loguearUsuario(Usuario user){
-		if (usuario.getUsername() == "Invitado"){
+		if (usuario instanceof UsuarioNoRegistrado){
 			Usuario logueado;
 			try {
 				logueado = daousuario.loguear(user.getUsername(), user.getPassword());
@@ -49,14 +50,21 @@ public class SesionUsuario extends WebSession {
 			}
 			
 		}
-		return null;
+		
+
+		return null; 
 	}
 
 	public void reiniciarSesion(){
 		session.close();
 		abrirSessionDB();
-		usuario = new Usuario();
-		usuario.setUsername("Invitado");
+		if(!(usuario instanceof UsuarioNoRegistrado)){
+			try {
+				usuario = daousuario.get(usuario.getUsername());
+			} catch (Exception e) {
+				usuario = new UsuarioNoRegistrado();
+			}
+		}
 		RequestCycle.get().setResponsePage(Inicio.class);
 	}
 	public void desloguearUsuario(){
@@ -78,7 +86,7 @@ public class SesionUsuario extends WebSession {
 	}
 	
 	public boolean estaLogueado(){
-		return getUsuario().getUsername() != "Invitado";
+		return !(getUsuario() instanceof UsuarioNoRegistrado);
 	}
 
 	public org.hibernate.Session getSessionDB() {

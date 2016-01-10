@@ -3,6 +3,7 @@ package Grupo88;
 import master.MasterPage;
 import objetosWicket.SesionUsuario;
 
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -42,8 +43,11 @@ public class WicketApplication extends WebApplication
 	
 	@Override
 	public Session newSession(Request request, Response response) {
-		// TODO Auto-generated method stub
 		return new SesionUsuario(request);
 	}
 	
+	@Override
+	public RuntimeConfigurationType getConfigurationType() {
+		return RuntimeConfigurationType.DEPLOYMENT;
+	}
 }

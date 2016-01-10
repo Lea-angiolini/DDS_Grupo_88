@@ -140,7 +140,7 @@ public class NegocioRecetas extends Negocio implements Serializable{
 	
 	public boolean guardarConsulta(Historial consulta, Usuario user){
 		
-		if(user.getUsername() == "Invitado")
+		if(!getSesion().estaLogueado())
 			return false;
 		
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");

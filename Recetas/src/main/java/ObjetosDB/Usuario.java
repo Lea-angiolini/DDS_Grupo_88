@@ -17,12 +17,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.swing.JOptionPane;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.Session;
 
 import Database.DAORecetas;
 
@@ -110,14 +108,8 @@ public class Usuario implements Serializable{
 	private Set<Usuario> usuarios=new HashSet<Usuario>();*/
 	
 	public Usuario() {
-		// TODO Auto-generated constructor stub
 	}
 	
-	public Usuario(String username){
-		this.username = username;
-		this.condiciones = new HashSet<CondicionesPreexistentes>();
-		this.grupos =new HashSet<Grupo>();
-	}
 
 	public String getUsername() {
 		return username;
@@ -314,31 +306,7 @@ public class Usuario implements Serializable{
 	public String modificarPerfil(){
 		return "";
 	}
-	
-	public ArrayList<Receta> cargarHome(Session session){
-		
-		DAORecetas daoRecetas = new DAORecetas(session);
-		List<Receta> recetas;
-		try {
-			recetas = daoRecetas.ultimasConfirmadas(this,10);
-				if(recetas.size() != 0){
-					return new ArrayList<Receta>(recetas);
-				}
-				
-			recetas = daoRecetas.ultimasConsultadas(this, 10);
-				if(recetas.size() != 0){
-					return new ArrayList<Receta>(recetas);
-				}
-				
-			recetas = daoRecetas.mejoresCalificadas(10);
-			return new ArrayList<Receta>(recetas);
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			return new ArrayList<Receta>();
-		}
-	}
-	
+
 	public boolean esAdecuada(Receta receta){
 		for(CondicionesPreexistentes cond : getCondiciones()){
 			if(!receta.accept(cond)){

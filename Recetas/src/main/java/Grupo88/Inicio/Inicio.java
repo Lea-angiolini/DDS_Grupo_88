@@ -19,10 +19,12 @@ public class Inicio extends MasterPage {
 	@SuppressWarnings("unused")
 	private FrmInicio frmInicio;
 	private Inicio pagina;
+	private NegocioInicio negocio;
 	
 	public Inicio(){
 		super();
 		pagina = this;
+		negocio = new NegocioInicio(getSessionUser());
 		add(frmInicio = new FrmInicio("FrmInicio"));
 	}
 	
@@ -34,7 +36,7 @@ public class Inicio extends MasterPage {
 			super(id);			
 			ArrayList<Receta> recetas;
 			try {
-				recetas = new ArrayList<Receta>(getUsuarioActual().cargarHome(getSessionBD()));
+				recetas = negocio.homePara(getUsuarioActual());
 			} catch (Exception e) {
 				setResponsePage(ErrorPage.ErrorRandom());
 				return;

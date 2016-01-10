@@ -1,9 +1,9 @@
 package Grupo88.Componentes;
 
-import objetosWicket.ModelUsuario;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -11,7 +11,9 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+
 
 
 //import paquete AltaUsuario
@@ -22,7 +24,6 @@ import ObjetosDB.Usuario;
 
 public class PanelLogin extends Panel {
 
-	ModelUsuario mUsuario;
 	SesionUsuario sesion = (SesionUsuario)getSession();
 	
 	public PanelLogin(String id) {
@@ -52,8 +53,8 @@ public class PanelLogin extends Panel {
 	public class FrmLogin extends Form {
 		
 		private Usuario usuario;
-		private String lblError;
-		
+		private String error;
+		private Label labelError;
 
 		public FrmLogin(String id) {
 			super(id);
@@ -62,7 +63,7 @@ public class PanelLogin extends Panel {
 			
 			add(new TextField<String>("username",new PropertyModel<String>(usuario, "username")));
 			add(new PasswordTextField("password",new PropertyModel<String>(usuario, "password")));
-			add(new Label("lblError"));
+			add(labelError = new Label("lblError", Model.of("")));
 			
 			
 			add(new Link("registrarse"){
@@ -89,10 +90,12 @@ public class PanelLogin extends Panel {
 			Usuario logueado = sesion.loguearUsuario(usuario);
 			if(logueado != null){
 				sesion.setUsuario(logueado);
-				setResponsePage(Inicio.class);
+				setResponsePage(Inicio.class); 
+				
 			}
 			else {
-				lblError = "Usuario incorrecto";
+				error = "Usuario incorrecto";
+				labelError.setDefaultModelObject(error);
 			}
 				
 		}
@@ -100,7 +103,7 @@ public class PanelLogin extends Panel {
 	}
 	
 	
-	public class Logout extends Fragment {
+	/*public class Logout extends Fragment {
 
 		public Logout(String id, String markupId, MarkupContainer markupProvider) {
 			super(id, markupId, markupProvider, mUsuario);
@@ -124,5 +127,5 @@ public class PanelLogin extends Panel {
 		}
 
 	}
-	
+	*/
 }
