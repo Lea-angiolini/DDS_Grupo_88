@@ -3,6 +3,7 @@ package Grupo88.Detalles;
 import master.ErrorPage;
 import master.MasterPage;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.image.Image;
@@ -31,35 +32,24 @@ public class DetalleDeReceta extends MasterPage {
 	private StringValue idReceta;
 	private Receta receta;
 	
+	@SuppressWarnings("unchecked")
 	public DetalleDeReceta(final PageParameters parameters){
 		super();
-		
 		iniciar(parameters);
 		
 		add(new Link("volver") {
 			@Override
 			public void onClick() {
-					setResponsePage(Inicio.class);
-			}
-		});
-		
-		}
-	
-	@SuppressWarnings("unchecked")
-	public DetalleDeReceta(final PageParameters parameters, final MasterPage pagina){
-		super();
-		iniciar(parameters);
-		
-		add(new Link("volver") {
-			@Override
-			public void onClick() {
-				setResponsePage(pagina);
+				setResponsePage(paginaRetorno());
 			}
 		});
 
 		}
 	
-
+	protected Page paginaRetorno(){
+		return new Inicio();
+	}
+	
 	private void iniciar(PageParameters parameters){
 
 		negocio = new NegocioRecetas(getSessionUser());

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import master.MasterPage;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -41,16 +42,19 @@ public ListaDeRecetas(String id, ArrayList<ObjetosDB.Receta> arrayList, final Us
 			pars.add("idReceta",recetas.getIdreceta());
 			
 			Link bton = new Link("bt"){
-				/**
-				 * 
-				 */
+
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void onClick() {
-					// TODO Auto-generated method stub
 					recetas.consulta(user);
-					setResponsePage(new DetalleDeReceta(pars, pagina));
+					final Page paginaActual = getPage();
+					setResponsePage(new DetalleDeReceta(pars){
+						@Override
+						protected Page paginaRetorno() {
+							return paginaActual;
+						}
+					});
 				}
 				
 			};
@@ -61,7 +65,7 @@ public ListaDeRecetas(String id, ArrayList<ObjetosDB.Receta> arrayList, final Us
 			if(usercreador != null) creador = usercreador.getUsername();
 			
 			bton.addOrReplace(new Label("campo1",recetas.getNombre()));
-			bton.addOrReplace(new Label("campo2",creador)); // TODO arreglar como se debe el problema con el null desde capa de negocios?
+			bton.addOrReplace(new Label("campo2",creador));
 			bton.addOrReplace(new Label("campo3",recetas.getDificultad().getDificultad()));
 			bton.addOrReplace(new Label("descripcion",recetas.getDetalle()));
 			item.add(bton);
