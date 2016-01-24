@@ -1,7 +1,5 @@
 package Database;
 
-import javax.swing.JOptionPane;
-
 import objetosWicket.SesionUsuario;
 
 import org.hibernate.HibernateException;
@@ -16,7 +14,7 @@ public class ManejadorExepciones {
 	
 	public String tratarExcepcion(Exception exepcion){
 		
-		JOptionPane.showMessageDialog(null, exepcion.getClass()+" /n"+ exepcion.getMessage());
+//		JOptionPane.showMessageDialog(null, exepcion.getClass()+" /n"+ exepcion.getMessage());
 		if(exepcion instanceof javax.validation.ConstraintViolationException){
 			javax.validation.ConstraintViolationException cve;
 			cve = (javax.validation.ConstraintViolationException) exepcion;
