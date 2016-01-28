@@ -2,8 +2,6 @@ package Grupo88.AltaUsuario;
 
 import java.io.Serializable;
 
-import javax.swing.JOptionPane;
-
 import master.ErrorPage;
 
 import org.apache.wicket.MarkupContainer;
@@ -66,7 +64,6 @@ public class PanelCampos extends Panel implements Serializable{
 	
 	public boolean cumpleCondiciones(){
 		if(!fragmento.password.getModelObject().equals(fragmento.repPassword.getModelObject())){
-			JOptionPane.showMessageDialog(null, fragmento.password.getModelObject() +"..."+fragmento.repPassword.getModelObject());
 			error = "Las contraseñas deben ser iguales";
 			return false;
 		}
