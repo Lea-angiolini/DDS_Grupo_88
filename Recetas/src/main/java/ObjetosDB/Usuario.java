@@ -57,6 +57,7 @@ public class Usuario implements Serializable{
 	private String apellido;
 	
 	@Column(name="fechaNac")
+	@NotNull(message="Ingrese una fecha de Nacimiento")
 	private String fechaNacimiento;
 	
 	@NotNull(message="Seleccione un sexo")

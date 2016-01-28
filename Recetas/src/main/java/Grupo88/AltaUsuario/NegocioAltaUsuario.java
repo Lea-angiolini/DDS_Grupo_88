@@ -1,7 +1,9 @@
 package Grupo88.AltaUsuario;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import master.Negocio;
 import objetosWicket.SesionUsuario;
@@ -68,9 +70,15 @@ public class NegocioAltaUsuario extends Negocio implements Serializable {
 		
 	}	
 	
-	public boolean guardarUsuario(Usuario usuario){
+	public boolean guardarUsuario(PanelCampos panel){
+		
+			
+		if(!validarDatos(panel)){
+			return false;
+		}
+		
 		try {
-			daoUsuarios.save(usuario);
+			daoUsuarios.save(panel.getUsuario());
 			return true;
 		} catch (Exception e) {
 			setError(manejador.tratarExcepcion(e));
@@ -78,9 +86,14 @@ public class NegocioAltaUsuario extends Negocio implements Serializable {
 		}
 	}
 	
-	public boolean actualizarUsuario(Usuario usuario){
+	public boolean actualizarUsuario(PanelCampos panel){
+		
+		if(!validarDatos(panel)){
+			return false;
+		}
+		
 		try {
-			daoUsuarios.saveOrUpdate(usuario);
+			daoUsuarios.saveOrUpdate(panel.getUsuario());
 			return true;
 		} catch (Exception e) {
 			setError(manejador.tratarExcepcion(e));
@@ -88,6 +101,41 @@ public class NegocioAltaUsuario extends Negocio implements Serializable {
 		}
 }
 	
+	//TODO
+	//Usar patron visitor para validar usuario
+	public boolean validarDatos(PanelCampos panel){
+		
+		Usuario usuario = panel.getUsuario();
+		
+		if(!panel.cumpleCondiciones()){
+			setError(panel.getError());
+			return false;
+		}
+		
+		if(usuario.getNombre().matches(".*\\d+.*")){
+			setError("El nombre no puede contener numeros");
+			return false;
+		}
+		
+		if(usuario.getApellido().matches(".*\\d+.*")){
+			setError("El apellido no puede contener numeros");
+			return false;
+		}
+		
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy/mm/dd");
+		Date date;
+		try {
+			date = formato.parse(usuario.getFechaNacimiento());
+			if (!usuario.getFechaNacimiento().equals(formato.format(date))) {
+				throw new java.text.ParseException("distintos", 0);
+	        }
+
+		} catch (Exception e) {
+			setError("El formato de la fecha no es valida. Debe ser del tipo yyyy/mm/dd");
+			return false;
+		}
+		return true;
+	}
 	
 public ArrayList<Sexo> getTodosSexos() {
 		return todosSexos;

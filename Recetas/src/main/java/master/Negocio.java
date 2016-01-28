@@ -15,6 +15,7 @@ public class Negocio implements Serializable {
 	
 	public Negocio(SesionUsuario sesion) {
 		
+		this.error = "";
 		this.sesion = sesion;
 		this.manejador = new ManejadorExepciones(sesion);
 	}

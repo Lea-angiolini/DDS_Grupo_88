@@ -32,6 +32,7 @@ public class GestionarPerfil extends RegisteredPage {
 		private Usuario usuario = getUsuarioActual();
 		private MarkupContainer error;
 		private NegocioAltaUsuario negocio;
+		private PanelCampos panel;
 		public FrmModifUsuario(String id) {
 			super(id);			
 			
@@ -43,7 +44,7 @@ public class GestionarPerfil extends RegisteredPage {
 			error.add(new FeedbackPanel("feedback"));
 			error.setOutputMarkupId(true);
 			
-			add(new PanelCampos("campos", negocio, usuario));
+			add(panel = new PanelCampos("campos", negocio, usuario));
 		    
 		    add(new Link<Object>("cancelar"){
 				
@@ -63,7 +64,7 @@ public class GestionarPerfil extends RegisteredPage {
 		protected void onSubmit() {
 			super.onSubmit();
 			
-			if(negocio.actualizarUsuario(getUsuarioActual()))
+			if(negocio.actualizarUsuario(panel))
 				setResponsePage(new ErrorPage("Su perfil ha sido actualizado"));
 			else {
 				error.setVisible(true);

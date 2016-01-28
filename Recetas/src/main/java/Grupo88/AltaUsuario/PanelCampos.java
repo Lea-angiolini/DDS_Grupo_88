@@ -1,7 +1,8 @@
 package Grupo88.AltaUsuario;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import master.ErrorPage;
 
@@ -13,14 +14,12 @@ import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
-import org.hibernate.Session;
 
 import ObjetosDB.Complexiones;
 import ObjetosDB.CondicionesPreexistentes;
@@ -36,7 +35,8 @@ public class PanelCampos extends Panel implements Serializable{
 	
 	private Usuario usuario;
 	private NegocioAltaUsuario negocio;
-	
+	private FragmentoDatosCuenta fragmento;;
+	private String error;
 	
 	public void adherirCamposPersonales(){
 		
@@ -64,12 +64,24 @@ public class PanelCampos extends Panel implements Serializable{
 		add(dieta = new DropDownChoice<Dietas>("dieta", new PropertyModel<Dietas>(usuario, "dieta"), negocio.getTodasDietas(), new ChoiceRenderer<Object>("dieta","idDieta")));
 	}
 	
+	public boolean cumpleCondiciones(){
+		if(!fragmento.password.getModelObject().equals(fragmento.repPassword.getModelObject())){
+			JOptionPane.showMessageDialog(null, fragmento.password.getModelObject() +"..."+fragmento.repPassword.getModelObject());
+			error = "Las contraseñas deben ser iguales";
+			return false;
+		}
+		return true;
+	}
+	
+	public String getError(){
+		return error;
+	}
 	public PanelCampos(String id, NegocioAltaUsuario negocio) {
 		super(id);
 		this.usuario = new Usuario();
 		this.negocio = negocio;
 		
-		add(new fragmentoDatosCuenta("DatosCuenta", "camposCuenta", this));
+		add(fragmento = new FragmentoDatosCuenta("DatosCuenta", "camposCuenta", this));
 		adherirCamposPersonales();
 		
 	}
@@ -88,17 +100,20 @@ public class PanelCampos extends Panel implements Serializable{
 		return usuario;
 	}
 	
-	private class fragmentoDatosCuenta extends Fragment{
-		public fragmentoDatosCuenta(String id, String markupId,MarkupContainer markupProvider) {
+	private class FragmentoDatosCuenta extends Fragment{
+		PasswordTextField password;
+		PasswordTextField repPassword;
+		
+		public FragmentoDatosCuenta(String id, String markupId,MarkupContainer markupProvider) {
 			super(id,markupId,markupProvider);
 			
-			PasswordTextField password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
-			PasswordTextField repPassword = new PasswordTextField("repPassword", Model.of(""));
+			password = new PasswordTextField("password", new PropertyModel<String>(usuario, "password"));
+			repPassword = new PasswordTextField("repPassword", Model.of(""));
 			
 			add(new TextField<String>("username", new PropertyModel<String>(usuario, "username")));
 			add(password);
 			add(repPassword);
-			add(new EqualPasswordInputValidator(password, repPassword));
+			//add(new EqualPasswordInputValidator(password, repPassword));
 		}
 	}
 }

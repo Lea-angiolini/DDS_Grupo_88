@@ -63,8 +63,10 @@ public class AltaUsuario extends MasterPage {
 		protected void onSubmit() {
 			super.onSubmit();
 			
-			if(negocio.guardarUsuario(panelCampos.getUsuario()))
-				setResponsePage(new ErrorPage("Ha sido registrado satisfactoriamente \n Ya puede iniciar sesion"));
+			if(negocio.guardarUsuario(panelCampos)){
+				setResponsePage(new ErrorPage("Ha sido registrado satisfactoriamente. Ya puede iniciar sesion"));
+				return;
+			}
 
 			error.setVisible(true);
 			info(negocio.getError());

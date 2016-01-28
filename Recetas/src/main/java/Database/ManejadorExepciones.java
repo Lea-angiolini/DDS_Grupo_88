@@ -1,11 +1,16 @@
 package Database;
 
+import java.io.Serializable;
+
+import javax.swing.JOptionPane;
+
 import objetosWicket.SesionUsuario;
 
 import org.hibernate.HibernateException;
 
-public class ManejadorExepciones {
+public class ManejadorExepciones implements Serializable {
 
+	private static final long serialVersionUID = -3032602191803325077L;
 	private SesionUsuario sesion;
 	
 	public ManejadorExepciones(SesionUsuario sesion) {
@@ -14,7 +19,6 @@ public class ManejadorExepciones {
 	
 	public String tratarExcepcion(Exception exepcion){
 		
-//		JOptionPane.showMessageDialog(null, exepcion.getClass()+" /n"+ exepcion.getMessage());
 		if(exepcion instanceof javax.validation.ConstraintViolationException){
 			javax.validation.ConstraintViolationException cve;
 			cve = (javax.validation.ConstraintViolationException) exepcion;
