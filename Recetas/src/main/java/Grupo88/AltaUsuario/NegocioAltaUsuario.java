@@ -2,8 +2,11 @@ package Grupo88.AltaUsuario;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.swing.JOptionPane;
 
 import master.Negocio;
 import objetosWicket.SesionUsuario;
@@ -122,13 +125,24 @@ public class NegocioAltaUsuario extends Negocio implements Serializable {
 			return false;
 		}
 		
+		
+		
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy/mm/dd");
-		Date date;
-		try {
-			date = formato.parse(usuario.getFechaNacimiento());
-			if (!usuario.getFechaNacimiento().equals(formato.format(date))) {
+		Date fecha_nacimiento;
+		String fecha_actual;
+		try {	
+			fecha_actual = LocalDate.now().toString().replace('-', '/');
+			fecha_nacimiento = formato.parse(usuario.getFechaNacimiento());
+			if (!usuario.getFechaNacimiento().equals(formato.format(fecha_nacimiento))) {
 				throw new java.text.ParseException("distintos", 0);
 	        }
+			
+			LocalDate nac = LocalDate.parse(usuario.getFechaNacimiento().replace("/", "-"));
+
+			if(nac.isAfter(LocalDate.parse(fecha_actual.replace('/', '-')))){
+				setError("La fecha debe ser anterior al "+ fecha_actual);
+				return false;
+			}
 
 		} catch (Exception e) {
 			setError("El formato de la fecha no es valida. Debe ser del tipo yyyy/mm/dd");
