@@ -44,6 +44,12 @@ public class PanelAdherirse extends RegisteredPage{
 				}
 			});
 			
+			add(new Link<Object>("volverAGrupos"){
+				@Override
+				public void onClick() {
+					setResponsePage(GestionarGrupos.class);
+				}
+			});
 			add(new Link<Object>("irInicio"){
 				@Override
 				public void onClick() {

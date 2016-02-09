@@ -63,9 +63,11 @@ public class PanelCampos extends Panel implements Serializable{
 	}
 	
 	public boolean cumpleCondiciones(){
-		if(!fragmento.password.getModelObject().equals(fragmento.repPassword.getModelObject())){
-			error = "Las contraseñas deben ser iguales";
-			return false;
+		if(fragmento != null){
+			if(!fragmento.password.getModelObject().equals(fragmento.repPassword.getModelObject())){
+				error = "Las contraseñas deben ser iguales";
+				return false;
+			}
 		}
 		return true;
 	}

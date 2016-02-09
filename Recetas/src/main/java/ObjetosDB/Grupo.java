@@ -27,7 +27,7 @@ public class Grupo implements Serializable{
 	private static final long serialVersionUID = -6889197720307310421L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idGrupo")
 	private int idGrupo;
 	
@@ -53,9 +53,7 @@ public class Grupo implements Serializable{
 	@JoinTable(name="relgruporeceta", joinColumns={@JoinColumn(name="idGrupo")}, inverseJoinColumns={@JoinColumn(name="idReceta")})
 	private Set<Receta> recetas;
 	
-	public Grupo() {
-		// TODO Auto-generated constructor stub
-	}
+	public Grupo() {}
 	
 	public Grupo(int id, String nom, String det){
 		setDetalle(det);

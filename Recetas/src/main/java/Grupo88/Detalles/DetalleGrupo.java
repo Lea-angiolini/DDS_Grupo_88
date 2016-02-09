@@ -51,7 +51,7 @@ public class DetalleGrupo extends RegisteredPage {
 			setResponsePage(new PanelAdherirse(negocio,grupo));
 			return;
 		}
-		
+
 		add(new FrmDetalleGrupo("frmDetalleGrupo"));
 		
 	}	
@@ -66,9 +66,15 @@ public class DetalleGrupo extends RegisteredPage {
 			super(id);
 			
 			add(new Label("nombreGrupo", grupo.getNombre()));
-			
-			add(new ListaDeRecetas("listaRecetas",new ArrayList<Receta>(grupo.obtenerRecetas()),getUsuarioActual(), pagina));
-			
+
+			ArrayList<Receta> recetas;
+			try{
+				recetas = new ArrayList<Receta>(grupo.obtenerRecetas());
+			}
+			catch(NullPointerException ex){
+				recetas = new ArrayList<Receta>();
+			}
+			add(new ListaDeRecetas("listaRecetas",recetas,getUsuarioActual(), pagina));
 			RepeatingView usuariosGrupo = new RepeatingView("listaUsuarios");
 			
 			for (Usuario usuario : grupo.obtenerUsuarios()){
@@ -79,7 +85,7 @@ public class DetalleGrupo extends RegisteredPage {
 				
 				usuariosGrupo.add(item);
 			}
-			
+
 			add(usuariosGrupo);
 			
 			

@@ -24,6 +24,7 @@ import ObjetosDB.TipoReceta;
 
 public class NegocioAgregarReceta extends Negocio {
 	
+	private static final long serialVersionUID = 7945263505572776547L;
 	private DAOCondimentos daoCondimentos;
 	private DAODificultades daoDificultades;
 	private DAOTemporadas daoTemporadas;
@@ -63,8 +64,10 @@ public class NegocioAgregarReceta extends Negocio {
 	public boolean guardarReceta(Receta receta){
 		try {
 			daoreceta.saveOrUpdate(receta);
+			getSesion().getUsuario().misRecetas().add(receta);
 			return true;
 		} catch (Exception e) {
+			getSesion().getUsuario().misRecetas().remove(receta);
 			setError(manejador.tratarExcepcion(e));
 			return false;
 		}		

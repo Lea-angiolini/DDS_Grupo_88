@@ -64,6 +64,7 @@ public class NegocioGrupos extends Negocio implements Serializable {
 	public void setTodosGrupos(ArrayList<Grupo> todosGrupos) {
 		this.todosGrupos = todosGrupos;
 	}
+	
 	public boolean sacarUsuario(Usuario user, Grupo grupo){
 		user.getGrupos().remove(grupo);
 		grupo.getUsuarios().remove(user);
@@ -82,6 +83,7 @@ public class NegocioGrupos extends Negocio implements Serializable {
 		
 		try{
 			daoUsuarios.saveOrUpdate(user);
+			grupo.agregarUsuario(user);
 			return true;
 		}
 		catch (Exception e) {
@@ -109,7 +111,7 @@ public class NegocioGrupos extends Negocio implements Serializable {
 	
 	public Grupo grupoPorId(int id){
 		try {
-			return daogrupos.get(id);
+			return daogrupos.grupoID(id);
 		} catch (Exception e) {
 			setError(manejador.tratarExcepcion(e));
 			return null;

@@ -63,4 +63,16 @@ public class DAOGrupos extends DAOGenerico<Grupo,Integer> implements Serializabl
 		return grupos;
 
 	}
+	
+	public Grupo grupoID(int id) throws Exception{
+		
+		session.beginTransaction();
+		Query query = session.createQuery("from Grupo g where g.idGrupo = " +id);
+		
+		Grupo grupo = (Grupo) query.uniqueResult();
+		session.getTransaction().commit();
+			
+		return grupo;
+
+	}
 }
