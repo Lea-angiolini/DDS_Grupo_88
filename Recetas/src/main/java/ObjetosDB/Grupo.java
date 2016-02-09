@@ -60,6 +60,7 @@ public class Grupo implements Serializable{
 		setIdGrupo(id);
 		setNombre(nom);
 		usuarios = new HashSet<Usuario>();
+		recetas = new HashSet<Receta>();
 	}
 	
 	public int getIdGrupo() {
