@@ -1,16 +1,20 @@
 package Database;
 
+import java.io.Serializable;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.w3c.dom.ls.LSInput;
 
 import ObjetosDB.Confirmacion;
 import ObjetosDB.Historial;
 import ObjetosDB.Receta;
 import ObjetosDB.Usuario;
 
-public class DAOReportes {
+public class DAOReportes implements Serializable {
 	
 	private Session session;
 	private Usuario user;

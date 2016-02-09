@@ -48,6 +48,7 @@ public class ReportesConsultadas extends RegisteredPage{
 		protected void onSubmit() {
 			super.onSubmit();
 			List<Historial> listaHistorial = negocio.recetasmasconsultadas(fechaDesde, fechaHasta);
+			addOrReplace(new PanelListaRecetas("AreaRecetas", listaHistorial));
 		}
 	}
 }

@@ -50,6 +50,7 @@ import ObjetosDB.Historial;
 			protected void onSubmit() {
 				super.onSubmit();
 				List<Confirmacion> listaHistorial = negocio.recetasConfirmadas(calMin.toString(), calMax.toString());
+				addOrReplace(new PanelListaConfirmaciones("AreaRecetas",listaHistorial));
 			}
 		}
 	}
