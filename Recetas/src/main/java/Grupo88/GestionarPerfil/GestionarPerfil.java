@@ -8,7 +8,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
-import Database.DAOUsuarios;
 import Grupo88.AltaUsuario.NegocioAltaUsuario;
 import Grupo88.AltaUsuario.PanelCampos;
 import Grupo88.Inicio.Inicio;

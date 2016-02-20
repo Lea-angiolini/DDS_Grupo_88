@@ -1,15 +1,9 @@
 package Database;
 
 import java.io.Serializable;
-import java.util.Set;
 
-import javax.swing.JOptionPane;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import objetosWicket.SesionUsuario;
-
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 

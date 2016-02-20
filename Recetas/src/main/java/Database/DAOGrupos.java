@@ -3,7 +3,6 @@ package Database;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.validation.ConstraintViolationException;
 
 import org.hibernate.Query;
@@ -37,6 +36,7 @@ public class DAOGrupos extends DAOGenerico<Grupo,Integer> implements Serializabl
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public List<Grupo> gruposde(Usuario user) throws Exception{
 		
 		session.beginTransaction();
@@ -51,6 +51,7 @@ public class DAOGrupos extends DAOGenerico<Grupo,Integer> implements Serializabl
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public List<Grupo> gruposCon(String nom) throws Exception{
 		
 		session.beginTransaction();

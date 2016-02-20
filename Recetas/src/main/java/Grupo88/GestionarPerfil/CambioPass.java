@@ -5,10 +5,8 @@ import master.RegisteredPage;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
-import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
-import org.hibernate.exception.ConstraintViolationException;
 
 import ObjetosDB.Usuario;
 
@@ -35,7 +33,6 @@ public class CambioPass extends RegisteredPage {
 		private PasswordTextField passNvaRep;
 		private Usuario user;
 		
-		@SuppressWarnings("unused")
 		public FrmCambioPass(String id) {
 			super(id);
 			

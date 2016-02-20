@@ -18,10 +18,8 @@ public class AltaUsuario extends MasterPage {
 	private FrmAltaUsuario frmAltaUsuario;
 	
 	public AltaUsuario(){
-		super();
-		
-		add(frmAltaUsuario = new FrmAltaUsuario("FrmAltaUsuario"));
-	
+		super();		
+		add(frmAltaUsuario = new FrmAltaUsuario("FrmAltaUsuario"));	
 	}
 	
 	private class FrmAltaUsuario extends Form<Object> {
@@ -30,14 +28,15 @@ public class AltaUsuario extends MasterPage {
 		private final MarkupContainer error;
 		private PanelCampos panelCampos;
 		private NegocioAltaUsuario negocio;
-		@SuppressWarnings({ "rawtypes", "unchecked" })
+
 		public FrmAltaUsuario(String id) {
 			super(id);		
 			
 			negocio = new NegocioAltaUsuario(getSessionUser());
 			
 			add(error = new MarkupContainer("error"){
-				private static final long serialVersionUID = 6315760448959379801L;});
+					private static final long serialVersionUID = 6315760448959379801L;
+				});
 			
 			error.setVisible(false);
 			error.add(new FeedbackPanel("feedback"));

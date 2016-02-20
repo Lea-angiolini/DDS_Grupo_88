@@ -3,8 +3,6 @@ package Database;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -19,6 +17,7 @@ public class DAORecetasMasConsultadas extends DAOEstadistica implements Serializ
 		this.cantidad = cantidad;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Estadistico> obtenerEstadistica(int dias) throws Exception {
 

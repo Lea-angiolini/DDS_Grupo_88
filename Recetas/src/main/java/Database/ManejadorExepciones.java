@@ -2,8 +2,6 @@ package Database;
 
 import java.io.Serializable;
 
-import javax.swing.JOptionPane;
-
 import objetosWicket.SesionUsuario;
 
 import org.hibernate.HibernateException;

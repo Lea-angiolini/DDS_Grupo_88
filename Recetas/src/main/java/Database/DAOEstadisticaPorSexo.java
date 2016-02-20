@@ -23,6 +23,7 @@ public class DAOEstadisticaPorSexo extends DAOEstadistica implements Serializabl
 		return "Estadisticas por Sexo";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Estadistico> obtenerEstadistica(int dias) throws Exception{
 		
@@ -32,7 +33,7 @@ public class DAOEstadisticaPorSexo extends DAOEstadistica implements Serializabl
 		
 		session.beginTransaction();
 		query = session.createQuery("from Sexo s");
-		List<Sexo> sexos = query.list();
+		List<Sexo> sexos = (List<Sexo>)query.list();
 		session.getTransaction().commit();
 			
 		for(Sexo s : sexos){

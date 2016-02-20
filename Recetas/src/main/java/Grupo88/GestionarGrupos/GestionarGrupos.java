@@ -2,10 +2,8 @@ package Grupo88.GestionarGrupos;
 
 import java.util.ArrayList;
 
-import master.ErrorPage;
 import master.MasterPage;
 
-import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
@@ -68,6 +66,8 @@ public class GestionarGrupos extends MasterPage {
         	
 			AjaxCheckBox check = new AjaxCheckBox("elegir", Model.of(Boolean.FALSE)) {
 				
+				private static final long serialVersionUID = -9070267766827358541L;
+
 				@Override
 				protected void onUpdate(AjaxRequestTarget target) {
 					VistaGrupos fragmento;
@@ -98,8 +98,11 @@ public class GestionarGrupos extends MasterPage {
 			add(checkLabel);
 			
 			
-			add(buscar = new TextField("buscar", textoBuscar));
-			buscar.add(new AjaxFormComponentUpdatingBehavior ("onkeyup"){
+			add(buscar = new TextField<String>("buscar", textoBuscar));
+			buscar.add(new AjaxFormComponentUpdatingBehavior("onkeyup"){
+
+				private static final long serialVersionUID = 1381679760725177008L;
+
 				@Override
 				protected void onUpdate(AjaxRequestTarget target) {
 					VistaGrupos nuevaVista;

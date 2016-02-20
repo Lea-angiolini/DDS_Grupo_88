@@ -3,11 +3,9 @@ package master;
 import objetosWicket.SesionUsuario;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.*;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.http.WebResponse;
 import org.hibernate.Session;
-import org.omg.CORBA.PRIVATE_MEMBER;
 
 import ObjetosDB.Usuario;
 

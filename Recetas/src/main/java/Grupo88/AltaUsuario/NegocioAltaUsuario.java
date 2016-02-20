@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
-
 import master.Negocio;
 import objetosWicket.SesionUsuario;
 import Database.DAOComplexiones;
@@ -104,8 +102,6 @@ public class NegocioAltaUsuario extends Negocio implements Serializable {
 		}
 }
 	
-	//TODO
-	//Usar patron visitor para validar usuario
 	public boolean validarDatos(PanelCampos panel){
 		
 		Usuario usuario = panel.getUsuario();
@@ -124,8 +120,6 @@ public class NegocioAltaUsuario extends Negocio implements Serializable {
 			setError("El apellido no puede contener numeros");
 			return false;
 		}
-		
-		
 		
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy/mm/dd");
 		Date fecha_nacimiento;

@@ -1,8 +1,6 @@
 package Grupo88.Estadisticas;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import master.RegisteredPage;
 
@@ -10,12 +8,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
-import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.markup.repeater.data.DataView;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
 
-import Database.DAOEstadistica;
 import ObjetosDB.Estadistico;
 
 public class Estadisticas extends RegisteredPage{

@@ -2,14 +2,9 @@ package Grupo88.Componentes;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -48,11 +43,15 @@ public class DragAndDropAlim extends Panel{
 		RepeatingView repLista = new RepeatingView("listado");
 
 		for(final AlimDeReceta alim : lista){
-			final MarkupContainer item = new MarkupContainer(repLista.newChildId()){};
+			final MarkupContainer item = new MarkupContainer(repLista.newChildId()){
+
+			private static final long serialVersionUID = 1L;};
 			final Label text;
 			item.add(text = new Label("name",alim.getName()));
 			text.add(new AjaxEventBehavior("ondragstart") {
 				
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				protected void onEvent(AjaxRequestTarget target) {
 					onDrag = alim;
@@ -61,7 +60,9 @@ public class DragAndDropAlim extends Panel{
 			repLista.add(item);
 		}
 		
-		MarkupContainer dev = new MarkupContainer("listaNO"){};
+		MarkupContainer dev = new MarkupContainer("listaNO"){
+
+			private static final long serialVersionUID = 1L;};
 		dev.add(repLista);
 		return dev;
 }
@@ -71,18 +72,24 @@ public class DragAndDropAlim extends Panel{
 		RepeatingView repLista = new RepeatingView("listadoAcept");
 
 		for(final AlimDeReceta alim : lista){
-			final MarkupContainer item = new MarkupContainer(repLista.newChildId()){};
+			final MarkupContainer item = new MarkupContainer(repLista.newChildId()){
+
+			private static final long serialVersionUID = 1L;};
 			final Label text;
 			item.add(text = new Label("name",alim.getName()));
 			text.add();
 			repLista.add(item);
 		}
 		
-		MarkupContainer dev = new MarkupContainer("listaSI"){};
+		MarkupContainer dev = new MarkupContainer("listaSI"){
+
+			private static final long serialVersionUID = 1L;};
 		dev.add(new AjaxEventBehavior("ondrag"){
+
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onEvent(AjaxRequestTarget target) {
-				JOptionPane.showConfirmDialog(null, "se solto "+onDrag.getName());
 				alimentosNo.remove(onDrag);
 				alimentosSi.add(onDrag);
 				listaNO = generarListaNO(alimentosNo);

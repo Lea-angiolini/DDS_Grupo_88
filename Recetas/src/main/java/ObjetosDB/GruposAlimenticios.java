@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -38,7 +37,6 @@ public class GruposAlimenticios implements Serializable{
 	private Set<TipoIngrediente> tiposIngredientes= new HashSet<TipoIngrediente>();
 	
 	public GruposAlimenticios() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public GruposAlimenticios(int idGrupoAlim, String grupoAlim) 

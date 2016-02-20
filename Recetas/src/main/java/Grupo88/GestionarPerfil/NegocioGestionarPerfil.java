@@ -4,10 +4,6 @@ import java.io.Serializable;
 
 import master.Negocio;
 import objetosWicket.SesionUsuario;
-
-import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
-
 import Database.DAOUsuarios;
 import ObjetosDB.Usuario;
 

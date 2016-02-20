@@ -34,7 +34,10 @@ public class VistaGrupos extends Panel implements Serializable{
 				final PageParameters pars = new PageParameters();
 				pars.add("idGrupo",grupo.getIdGrupo());
 				
-				Link link = new Link("ver"){
+				Link<Object> link = new Link<Object>("ver"){
+
+					private static final long serialVersionUID = -2212221540602831837L;
+
 					@Override
 					public void onClick() {
 						setResponsePage(DetalleGrupo.class,pars);

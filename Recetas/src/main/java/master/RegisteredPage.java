@@ -1,6 +1,5 @@
 package master;
 
-import Grupo88.Inicio.Inicio;
 import ObjetosDB.UsuarioNoRegistrado;
 
 public class RegisteredPage extends MasterPage {
@@ -13,8 +12,6 @@ public class RegisteredPage extends MasterPage {
 		if (getUsuarioActual() instanceof UsuarioNoRegistrado){
 			setResponsePage(new ErrorPage("Debe estar registrado"));
 		}
-		
-			
 	
 	}
 	

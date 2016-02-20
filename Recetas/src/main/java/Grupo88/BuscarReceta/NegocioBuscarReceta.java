@@ -69,7 +69,7 @@ public ArrayList<Receta> buscarPorFiltros(Usuario usuario, itemsABuscar queBusca
 	
 	try {
 		for(Receta rec : daorecetas.buscarReceta(queBuscar)){
-			if(usuario.esAdecuada(rec))
+			if(usuario.puedeComer(rec))
 				aceptadas.add(rec);
 		}
 	} catch (Exception e) {

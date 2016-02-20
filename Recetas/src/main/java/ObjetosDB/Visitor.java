@@ -1,5 +1,5 @@
 package ObjetosDB;
 
 public interface Visitor {
-	boolean visitarRecera(Receta receta);
+	boolean visitarReceta(Receta receta);
 }

@@ -8,7 +8,6 @@ import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
-import org.hibernate.Session;
 
 import ObjetosDB.Calificacion;
 import ObjetosDB.Receta;
@@ -32,7 +31,7 @@ public class FormCalificarPanel extends Panel{
 		add(new FormCalificar(id, rec, use));
 	}
 	
-	private class FormCalificar extends Form{
+	private class FormCalificar extends Form<Object>{
 	
 		private static final long serialVersionUID = -7463688006174588993L;
 		

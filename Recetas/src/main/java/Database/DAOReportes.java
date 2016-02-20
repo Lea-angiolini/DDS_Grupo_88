@@ -3,11 +3,8 @@ package Database;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.w3c.dom.ls.LSInput;
 
 import ObjetosDB.Confirmacion;
 import ObjetosDB.Historial;
@@ -15,7 +12,8 @@ import ObjetosDB.Receta;
 import ObjetosDB.Usuario;
 
 public class DAOReportes implements Serializable {
-	
+
+	private static final long serialVersionUID = 1647682211098490174L;
 	private Session session;
 	private Usuario user;
 	public DAOReportes(Session session, Usuario user) {
@@ -23,6 +21,7 @@ public class DAOReportes implements Serializable {
 		this.user = user;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Historial> recetasmasconsultadas(String desde, String hasta) throws Exception{
 		List<Historial> listaHistorial = null;
 		Query query;
@@ -35,6 +34,7 @@ public class DAOReportes implements Serializable {
 		return listaHistorial;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Receta> recetasCreadas() throws Exception{
 		List<Receta> listaReceta = null;
 		Query query;
@@ -47,6 +47,7 @@ public class DAOReportes implements Serializable {
 		return listaReceta;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Confirmacion> recetasConfirmadas(String calMin, String calMax) throws Exception{
 		List<Confirmacion> listaReceta = null;
 		Query query;

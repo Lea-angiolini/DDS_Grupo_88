@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import master.ErrorPage;
-
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
@@ -14,7 +12,6 @@ import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.hibernate.Session;
 
 import ObjetosDB.Confirmacion;
 import ObjetosDB.Receta;
@@ -42,7 +39,7 @@ public class FormConfirmarPanel extends Panel{
 	}
 
 	
-	private class FormConfirmar extends Form{
+	private class FormConfirmar extends Form<Object>{
 	
 		private static final long serialVersionUID = 3482226522671170037L;
 
@@ -53,7 +50,7 @@ public class FormConfirmarPanel extends Panel{
 			todosTipoReceta= negocio.getTiposDeReceta();
 	
 			
-			add(new RadioChoice("comida", new PropertyModel(confirmacion, "tipoReceta"), todosTipoReceta,new ChoiceRenderer("descripcion","idTipoReceta")));
+			add(new RadioChoice<TipoReceta>("comida", new PropertyModel<TipoReceta>(confirmacion, "tipoReceta"), todosTipoReceta,new ChoiceRenderer<TipoReceta>("descripcion","idTipoReceta")));
 			add(new Button("confirmar"){
 				
 				private static final long serialVersionUID = 8149758093736016771L;
@@ -71,7 +68,6 @@ public class FormConfirmarPanel extends Panel{
 						setResponsePage(DetalleDeReceta.class,pars);
 					else
 						info(negocio.getError());
-					
 					
 				}
 			});

@@ -3,19 +3,18 @@ package Grupo88.MisRecetas;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import Database.DAORecetas;
-import ObjetosDB.Receta;
 import master.Negocio;
 import objetosWicket.SesionUsuario;
+import ObjetosDB.Receta;
 
 public class NegocioMisRecetas extends Negocio implements Serializable{
 	
-	private DAORecetas daoRecetas;
+
+	private static final long serialVersionUID = 6759471156143234234L;
 	private SesionUsuario sesion;
 	public NegocioMisRecetas(SesionUsuario sesion) {
 
 		super(sesion);
-		daoRecetas = new DAORecetas(sesion.getSessionDB());
 		this.sesion = sesion;
 	}
 	

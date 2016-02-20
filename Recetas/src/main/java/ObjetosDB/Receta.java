@@ -20,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.IndexColumn;
@@ -210,15 +209,9 @@ public class Receta implements Serializable, Visitable{
 	public void setFotoPrincipal(byte[] fotoPrincipal) {
 		this.fotoPrincipal = fotoPrincipal;
 	}
-
-	public void consulta(Usuario user){
-		// TODO
-		//Browser.agregarHistConsultas(getIdreceta(),user.getUsername());
-	}
-
 	
 	public boolean accept(Visitor visitor){
-		return visitor.visitarRecera(this);
+		return visitor.visitarReceta(this);
 	}
 	
 	public void calcularCalorias(){

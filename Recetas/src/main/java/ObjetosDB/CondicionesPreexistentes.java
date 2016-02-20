@@ -1,7 +1,6 @@
 package ObjetosDB;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.swing.JOptionPane;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -95,7 +93,7 @@ public class CondicionesPreexistentes implements Visitor,Serializable{
 	}
 	
 	@Override
-	public boolean visitarRecera(Receta receta) {
+	public boolean visitarReceta(Receta receta) {
 		
 		for(Receta_Ingrediente ing : receta.getRelacionIngredientes()){
 			if(getIngredientesNoComestible().contains(ing.getIngrediente()))

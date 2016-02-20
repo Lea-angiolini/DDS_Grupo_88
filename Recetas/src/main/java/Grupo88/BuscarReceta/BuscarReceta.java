@@ -26,6 +26,7 @@ import ObjetosDB.itemsABuscar;
 
 public class BuscarReceta extends MasterPage {
 	
+	private static final long serialVersionUID = -5692664542852073548L;
 	private FrmBuscarReceta frmBuscarReceta;
 	private BuscarReceta pagina;
 	private NegocioBuscarReceta negocio;
@@ -39,8 +40,9 @@ public class BuscarReceta extends MasterPage {
 		
 		}
 	
-	private class FrmBuscarReceta extends Form {
+	private class FrmBuscarReceta extends Form<Object> {
 		
+		private static final long serialVersionUID = -1970941538448227225L;
 		final itemsABuscar items = new itemsABuscar();
 		public FrmBuscarReceta(String id) {
 			super(id);			
@@ -49,8 +51,11 @@ public class BuscarReceta extends MasterPage {
 				setResponsePage(ErrorPage.ErrorCargaDatos());
 			
 			
-			DropDownChoice<Dificultades> dropdownDificultades = new DropDownChoice<Dificultades>("dificultad",new PropertyModel<Dificultades>(items,"dificultad"), negocio.getDificultades() ,new ChoiceRenderer("dificultad","idDificultad")){
-    			@Override
+			DropDownChoice<Dificultades> dropdownDificultades = new DropDownChoice<Dificultades>("dificultad",new PropertyModel<Dificultades>(items,"dificultad"), negocio.getDificultades() ,new ChoiceRenderer<Dificultades>("dificultad","idDificultad")){
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
     			protected String getNullValidDisplayValue() {
     				return "Todas";
     			}
@@ -58,42 +63,50 @@ public class BuscarReceta extends MasterPage {
     		dropdownDificultades.setNullValid(true);
     		add(dropdownDificultades);
     		
-    		//
-    		DropDownChoice<Ingredientes> dropdownIngredientes = new DropDownChoice<Ingredientes>("ingrediente",new PropertyModel<Ingredientes>(items,"ingredientePrincipal"), negocio.getIngredientes(),new ChoiceRenderer("ingrediente","idIngrediente")){
-    			
-    			protected String getNullValidDisplayValue() {
+    		
+    		DropDownChoice<Ingredientes> dropdownIngredientes = new DropDownChoice<Ingredientes>("ingrediente",new PropertyModel<Ingredientes>(items,"ingredientePrincipal"), negocio.getIngredientes(),new ChoiceRenderer<Ingredientes>("ingrediente","idIngrediente")){
+
+				private static final long serialVersionUID = 1L;
+
+				protected String getNullValidDisplayValue() {
     				return "Todos";
     			}
     		};
     		dropdownIngredientes.setNullValid(true);
     		add(dropdownIngredientes);
-    		//
-    		DropDownChoice<Temporadas> dropdownTemporadas = new DropDownChoice<Temporadas>("temporada",new PropertyModel<Temporadas>(items,"temporada"), negocio.getTemporadas(),new ChoiceRenderer("temporada","idTemporada")){
-    			protected String getNullValidDisplayValue(){
+    		
+    		DropDownChoice<Temporadas> dropdownTemporadas = new DropDownChoice<Temporadas>("temporada",new PropertyModel<Temporadas>(items,"temporada"), negocio.getTemporadas(),new ChoiceRenderer<Temporadas>("temporada","idTemporada")){
+   
+				private static final long serialVersionUID = 1L;
+
+				protected String getNullValidDisplayValue(){
     				return "Todas";
     			}
     		};
     		dropdownTemporadas.setNullValid(true);
     		add(dropdownTemporadas);
-    		//
     		
     		DropDownChoice<Integer> dropdownCalificacion = new DropDownChoice<Integer>("calificaciones",new PropertyModel<Integer>(items, "calificacion"), negocio.getCalificaciones()){
-    			protected String getNullValidDisplayValue() {
+    
+				private static final long serialVersionUID = 1L;
+
+				protected String getNullValidDisplayValue() {
     				return "Todas";
     			}
     		};
     		dropdownCalificacion.setNullValid(true);
     		add(dropdownCalificacion);
-    		//
     		
-    		DropDownChoice<GruposAlimenticios> dropdownGruposAlimenticios = new DropDownChoice<GruposAlimenticios>("grupoAlim",new PropertyModel<GruposAlimenticios>(items,"grupoAlimenticio"), negocio.getGrpAlim() ,new ChoiceRenderer("grupoAlim","idGrupoAlim")){
-    			protected String getNullValidDisplayValue(){
+    		DropDownChoice<GruposAlimenticios> dropdownGruposAlimenticios = new DropDownChoice<GruposAlimenticios>("grupoAlim",new PropertyModel<GruposAlimenticios>(items,"grupoAlimenticio"), negocio.getGrpAlim() ,new ChoiceRenderer<GruposAlimenticios>("grupoAlim","idGrupoAlim")){
+
+				private static final long serialVersionUID = 1L;
+
+				protected String getNullValidDisplayValue(){
     				return "Todos";
     			}
     		};
     		dropdownGruposAlimenticios.setNullValid(true);
         	add(dropdownGruposAlimenticios);
-        	//
         	
         	NumberTextField<Integer> caloriasMin = new NumberTextField<Integer>("caloriasMin", new PropertyModel<Integer>(items, "caloriasMin"), Integer.class);
         	caloriasMin.setRequired(true);
@@ -103,7 +116,10 @@ public class BuscarReceta extends MasterPage {
         	add(caloriasMax);
     		
         	add(new Button("botonBuscar") {
-        		public void onSubmit() {
+
+				private static final long serialVersionUID = 1L;
+
+				public void onSubmit() {
     		Fragment fragment = new  FragmentoRecetasBuscadas ("areaRecetas", "listaRecetas", frmBuscarReceta, items);
     		frmBuscarReceta.add(fragment);
         		}
@@ -115,7 +131,10 @@ public class BuscarReceta extends MasterPage {
 	}
 	
 	private class FragmentoRecetasBuscadas extends Fragment {
-        public FragmentoRecetasBuscadas(String id, String markupId, MarkupContainer markupPorvider, itemsABuscar queBuscar ) {
+
+		private static final long serialVersionUID = 1L;
+
+		public FragmentoRecetasBuscadas(String id, String markupId, MarkupContainer markupPorvider, itemsABuscar queBuscar ) {
         	
         	super(id, markupId, markupPorvider);
         	

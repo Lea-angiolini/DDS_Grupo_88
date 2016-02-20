@@ -25,6 +25,7 @@ public class DAOConfirmar extends DAOGenerico<Confirmacion, Integer> implements 
 			
 		Query query = session.createQuery("from Confirmacion c where c.receta.idreceta = "+receta.getIdreceta()+
 														" and c.user.username = '"+user.getUsername()+"'");
+		@SuppressWarnings("unchecked")
 		List<Confirmacion> conf = (List<Confirmacion>) query.list();
 			
 		session.getTransaction().commit();

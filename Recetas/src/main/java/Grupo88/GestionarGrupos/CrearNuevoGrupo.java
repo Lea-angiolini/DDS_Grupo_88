@@ -1,6 +1,7 @@
 package Grupo88.GestionarGrupos;
 
-import javassist.tools.framedump;
+import master.ErrorPage;
+import master.RegisteredPage;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -11,11 +12,8 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import Database.DAOGrupos;
 import Grupo88.Inicio.Inicio;
 import ObjetosDB.Grupo;
-import master.ErrorPage;
-import master.RegisteredPage;
 
 public class CrearNuevoGrupo extends RegisteredPage{
 
@@ -61,7 +59,10 @@ public class CrearNuevoGrupo extends RegisteredPage{
 				}
 			});
 			
-			add(new Link("cancelar"){
+			add(new Link<Object>("cancelar"){
+
+				private static final long serialVersionUID = 5553826760717416225L;
+
 				@Override
 				public void onClick() {
 					setResponsePage(Inicio.class);

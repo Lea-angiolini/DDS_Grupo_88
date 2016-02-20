@@ -7,9 +7,6 @@ import java.util.List;
 
 import master.Negocio;
 import objetosWicket.SesionUsuario;
-
-import org.hibernate.Session;
-
 import Database.DAOEstadistica;
 import Database.DAOEstadisticaPorSexo;
 import Database.DAOEstadisticasPorDificultad;
@@ -17,7 +14,8 @@ import Database.DAORecetasMasConsultadas;
 import ObjetosDB.Estadistico;
 
 public class NegocioEstadistica extends Negocio implements Serializable{
-	private SesionUsuario sesion;
+
+	private static final long serialVersionUID = -3955783136211330307L;
 	private DAOEstadistica dao;
 	
 	public static NegocioEstadistica porSexo(SesionUsuario sesion){
@@ -35,7 +33,6 @@ public class NegocioEstadistica extends Negocio implements Serializable{
 	public NegocioEstadistica(SesionUsuario sesion, DAOEstadistica dao) {
 		
 		super(sesion);
-		this.sesion = sesion;
 		this.dao = dao;
 	}
 	

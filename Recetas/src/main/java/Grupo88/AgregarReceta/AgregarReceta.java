@@ -27,7 +27,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.DynamicImageResource;
 import org.apache.wicket.request.resource.SharedResourceReference;
 import org.apache.wicket.util.lang.Bytes;
-import org.apache.wicket.validation.validator.StringValidator;
 
 import Grupo88.Componentes.DropList;
 import Grupo88.MisRecetas.MisRecetas;
@@ -38,34 +37,34 @@ import ObjetosDB.Pasos;
 import ObjetosDB.Receta;
 import ObjetosDB.Temporadas;
 import ObjetosDB.TipoReceta;
-import ObjetosDB.Usuario;
 
 public class AgregarReceta extends RegisteredPage {
 	
 
 	private static final long serialVersionUID = 1L;
-	private Usuario user;
 	private final Receta nuevareceta;
 	private List<Fragmento> fragmentos;
 	private NegocioAgregarReceta negocio;
-
+	private FeedbackPanel feedback;
+	
 	public AgregarReceta(){
 		super();
 		
-		user =  getUsuarioActual();
 		nuevareceta = new Receta();
-		nuevareceta.setCreador(user);
+		nuevareceta.setCreador(getUsuarioActual());
 		fragmentos = new ArrayList<Fragmento>();
 		negocio = new NegocioAgregarReceta(getSessionUser());
 		
 		generarFragmentos();
-		
 		add(fragmentos.get(0));
 		
-		add(new FeedbackPanel("feedback").setOutputMarkupId(true));
+		add(feedback = new FeedbackPanel("feedback"));
+		feedback.setOutputMarkupId(true);
+		feedback.setVisible(false);
 		
 	}
 	
+	//Metodo para generar los fragmentos con los Pasos y Descripcion de la receta
 	private void generarFragmentos(){
 		nuevareceta.setPasos(new ArrayList<Pasos>());
 		fragmentos.add(new Fragmento("areaForms","fragmentoInicial",this,new FrmDatosReceta("frmDatosBasicos")));
@@ -79,6 +78,12 @@ public class AgregarReceta extends RegisteredPage {
 	
 	protected AgregarReceta pagina(){
 		return this;
+	}
+	
+	
+	private void errorfb(String msg){
+		feedback.setVisible(true);
+		error(msg);
 	}
 	
 	public class Fragmento extends Fragment{
@@ -141,23 +146,25 @@ public class AgregarReceta extends RegisteredPage {
 		protected void onSubmit() {
 			super.onSubmit();
 			
+			//Cargar los ingredientes seleccionados
 			if(!negocio.cargarIngyCond(nuevareceta, dropIng.getElegidos(), dropCond.getElegidos())){
-				error("Debe elegir un ingrediente minimo");
+				errorfb(negocio.getError());
 				return;
 			}
-				
+			
+			//Comprobar que la imagen sea correcta
 			if(fileUpload.getFileUpload() != null){		
 				try {
 					
 					if(ImageIO.read(fileUpload.getFileUpload().getInputStream()) == null){
-						error("Formato de archivo no soportado");
+						errorfb("Formato de archivo no soportado");
 						return;
 					}
 					
 					nuevareceta.setFotoPrincipal(fileUpload.getFileUpload().getBytes());
 					
 				} catch (IOException e) {
-					error("Formato de archivo no soportado");
+					errorfb("Formato de archivo no soportado");
 					return;
 				}
 			}
@@ -174,17 +181,18 @@ public class AgregarReceta extends RegisteredPage {
 		private FileUploadField fileUpload;
 		private FileUpload imagenSubida;
 		private Image imagen;
+		
 		public FrmPaso(String id,final int idPaso) {
 			super(id);
 			idFrmPaso = idPaso;
 			
-			StringValidator vText = new StringValidator(5, 2000);
+			//StringValidator vText = new StringValidator(5, 2000);
 			add(new Label("numPaso",idPaso));
 			add(detallePaso = new TextArea<String>("paso", new PropertyModel<String>(nuevareceta.getPasos().get(idPaso-1), "descripcionPaso")));
 			add(imagen = new Image("img", new SharedResourceReference(AgregarReceta.class, "default.jpg")));
 			add(fileUpload = new FileUploadField("fileUpload"));
 			
-			detallePaso.add(vText);
+			//detallePaso.add(vText);
 			detallePaso.setRequired(true);
 			setMultiPart(true);
 			setMaxSize(Bytes.megabytes(15));
@@ -212,16 +220,24 @@ public class AgregarReceta extends RegisteredPage {
 		
 		@Override
 		protected void onSubmit() {
-		// Va a conectarse con BD y comprobar las validaciones
+		
 		super.onSubmit();
+		feedback.setVisible(false);
 		
+		//Corroborar que la descripcion sea correcta
+		int tamaño = detallePaso.getModelObject().length();
+		if(tamaño < 5 || tamaño > 5000){
+			errorfb("El procedimiento debe tener entre 5 y 5000 caracteres");
+			return;
+		}
 		
+		//Corroborar que la imagen sea correcta
 		if(fileUpload.getFileUpload() != null){
 		try {
 			imagenSubida = fileUpload.getFileUpload();
 			
 			if(ImageIO.read(imagenSubida.getInputStream()) == null){
-				error("Formato de archivo no soportado");
+				errorfb("Formato de archivo no soportado");
 				return;
 			}
 			else
@@ -242,27 +258,28 @@ public class AgregarReceta extends RegisteredPage {
 			}
 		} catch (HeadlessException e) {
 			e.printStackTrace();
-			error("Formato de archivo no soportado");
+			errorfb("Formato de archivo no soportado");
 			return;
 			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			error("Formato de archivo no soportado");
+			errorfb("Formato de archivo no soportado");
 			return;
 			
 			
 		}}
 		
-		if(idFrmPaso < fragmentos.size()-1){
-		pagina().addOrReplace(fragmentos.get(idFrmPaso+1));	
+		if(idFrmPaso < fragmentos.size()-1)
+		{
+			pagina().addOrReplace(fragmentos.get(idFrmPaso+1));	
 		}
 		else{
 			if(negocio.guardarReceta(nuevareceta)){
 				setResponsePage(MisRecetas.class);
 			}
 				
-			error(negocio.getError());
+			errorfb(negocio.getError());
 			}
 		}
 	}

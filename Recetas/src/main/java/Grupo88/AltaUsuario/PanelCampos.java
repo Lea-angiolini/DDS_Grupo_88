@@ -36,6 +36,7 @@ public class PanelCampos extends Panel implements Serializable{
 	private FragmentoDatosCuenta fragmento;;
 	private String error;
 	
+	@SuppressWarnings({ "unused", "rawtypes", "unchecked" })
 	public void adherirCamposPersonales(){
 		
 		DropDownChoice<Sexo> sexo;
@@ -100,6 +101,7 @@ public class PanelCampos extends Panel implements Serializable{
 	}
 	
 	private class FragmentoDatosCuenta extends Fragment{
+		private static final long serialVersionUID = 449493454639843331L;
 		PasswordTextField password;
 		PasswordTextField repPassword;
 		

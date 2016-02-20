@@ -4,14 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import master.Negocio;
 import objetosWicket.SesionUsuario;
-
-import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
-
 import Database.DAOGrupos;
 import Database.DAOUsuarios;
 import ObjetosDB.Grupo;
@@ -23,14 +17,12 @@ public class NegocioGrupos extends Negocio implements Serializable {
 	private DAOGrupos daogrupos;
 	private DAOUsuarios daoUsuarios;
 	private ArrayList<Grupo> todosGrupos;
-	private SesionUsuario sesion;
 	
 	public NegocioGrupos(SesionUsuario sesion) {
 
 		super(sesion);
 		daogrupos = new DAOGrupos(sesion.getSessionDB());
 		daoUsuarios = new DAOUsuarios(sesion.getSessionDB());
-		this.sesion = sesion;
 		cargarListas();
 	}
 	

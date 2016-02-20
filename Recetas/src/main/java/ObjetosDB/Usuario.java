@@ -1,9 +1,7 @@
 package ObjetosDB;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,9 +18,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-
-import Database.DAORecetas;
 
 @Entity
 @Table(name="Usuarios")
@@ -308,7 +303,7 @@ public class Usuario implements Serializable{
 		return "";
 	}
 
-	public boolean esAdecuada(Receta receta){
+	public boolean puedeComer(Receta receta){
 		for(CondicionesPreexistentes cond : getCondiciones()){
 			if(!receta.accept(cond)){
 				return false;

@@ -6,15 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import master.Negocio;
 import objetosWicket.SesionUsuario;
-
-import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
-import org.joda.time.DateTime;
-
 import Database.DAOCalificacion;
 import Database.DAOConfirmar;
 import Database.DAOConsultas;
@@ -23,7 +16,6 @@ import Database.DAORecetas;
 import Database.DAOTipoReceta;
 import ObjetosDB.Calificacion;
 import ObjetosDB.Confirmacion;
-import ObjetosDB.Consulta;
 import ObjetosDB.Grupo;
 import ObjetosDB.Historial;
 import ObjetosDB.Receta;
@@ -33,7 +25,6 @@ import ObjetosDB.Usuario;
 public class NegocioRecetas extends Negocio implements Serializable{
 
 	private static final long serialVersionUID = -2761007007476471175L;
-	//private SesionUsuario session;
 	private DAORecetas daoreceta;
 	private DAOCalificacion daoCalificacion;
 	private DAOConfirmar daoConfirmar;

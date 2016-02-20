@@ -31,7 +31,10 @@ public class PanelListaConfirmaciones extends Panel{
 				final PageParameters pars = new PageParameters();
 				pars.add("idReceta", historial.getReceta().getIdreceta());
 				
-				Link link = new Link("irReceta") {
+				Link<Object> link = new Link<Object>("irReceta") {
+
+					private static final long serialVersionUID = 7554847068232107151L;
+
 					@Override
 					public void onClick() {
 						setResponsePage(DetalleDeReceta.class,pars);

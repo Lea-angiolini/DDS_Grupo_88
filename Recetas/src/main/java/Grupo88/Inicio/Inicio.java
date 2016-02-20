@@ -6,9 +6,7 @@ import master.ErrorPage;
 import master.MasterPage;
 
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.CompoundPropertyModel;
 
-import Database.DAORecetas;
 import Grupo88.Componentes.ListaDeRecetas;
 import ObjetosDB.Receta;
 

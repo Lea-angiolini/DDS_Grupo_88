@@ -5,16 +5,12 @@ import java.util.Set;
 
 import master.Negocio;
 import objetosWicket.SesionUsuario;
-
-import org.hibernate.Session;
-
 import Database.DAOCondimentos;
 import Database.DAODificultades;
 import Database.DAOIngredientes;
 import Database.DAORecetas;
 import Database.DAOTemporadas;
 import Database.DAOTipoReceta;
-import Database.ManejadorExepciones;
 import ObjetosDB.Condimentos;
 import ObjetosDB.Dificultades;
 import ObjetosDB.Ingredientes;
@@ -39,6 +35,8 @@ public class NegocioAgregarReceta extends Negocio {
 	
 	public NegocioAgregarReceta(SesionUsuario sesion) {
 		super(sesion);
+		
+		// Inicializar Daos
 		daoIngredientes = new DAOIngredientes (sesion.getSessionDB());
 		daoCondimentos = new DAOCondimentos(sesion.getSessionDB());
 		daoDificultades = new DAODificultades(sesion.getSessionDB());
@@ -84,7 +82,7 @@ public class NegocioAgregarReceta extends Negocio {
 		receta.setCondimentos(listaCondimentos);
 		
 		return true;
-		
+				
 	}
 	
 	public ArrayList<Ingredientes> getTodosIngredientes() {

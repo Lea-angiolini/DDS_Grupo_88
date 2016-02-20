@@ -2,8 +2,6 @@ package Grupo88.Reportes;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import master.RegisteredPage;
 
 import org.apache.wicket.markup.html.form.Form;
@@ -11,7 +9,6 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.PropertyModel;
 
-import Database.DAOReportes;
 import ObjetosDB.Historial;
 
 public class ReportesConsultadas extends RegisteredPage{

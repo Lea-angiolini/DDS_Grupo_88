@@ -1,10 +1,7 @@
 package Database;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -42,6 +39,7 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> implements Serializa
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public List<Receta> buscarReceta (itemsABuscar items) throws Exception{
 
 		session.beginTransaction();
@@ -92,6 +90,7 @@ public class DAORecetas extends DAOGenerico<Receta,Integer> implements Serializa
 		return recetas_in("select c.receta.idreceta from Confirmacion c where c.user.username = '"+user.getUsername()+"' "+
 	                        "order by c.IdConfirmacion desc",cantidad);
 	}
+	@SuppressWarnings("unchecked")
 	public List<Receta> recetas_in(String select, int cantidad) throws Exception {
 		
 		List<Receta> recetas;

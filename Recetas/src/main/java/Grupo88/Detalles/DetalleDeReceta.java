@@ -22,7 +22,6 @@ import ObjetosDB.Historial;
 import ObjetosDB.Pasos;
 import ObjetosDB.Receta;
 import ObjetosDB.Receta_Ingrediente;
-import ObjetosDB.Usuario;
 
 public class DetalleDeReceta extends MasterPage {
 
@@ -32,12 +31,14 @@ public class DetalleDeReceta extends MasterPage {
 	private StringValue idReceta;
 	private Receta receta;
 	
-	@SuppressWarnings("unchecked")
 	public DetalleDeReceta(final PageParameters parameters){
 		super();
 		iniciar(parameters);
 		
-		add(new Link("volver") {
+		add(new Link<Object>("volver") {
+
+			private static final long serialVersionUID = -7738673708435294081L;
+
 			@Override
 			public void onClick() {
 				setResponsePage(paginaRetorno());

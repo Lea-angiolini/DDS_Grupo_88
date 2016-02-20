@@ -1,11 +1,9 @@
 package ObjetosDB;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,13 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.swing.JOptionPane;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 
 @javax.persistence.Entity
@@ -108,13 +102,11 @@ public class Ingredientes extends AlimDeReceta implements Serializable{
 	
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
 		return idIngrediente;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return ingrediente;
 	}
 	

@@ -2,18 +2,13 @@ package Grupo88.Reportes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import master.Negocio;
 import objetosWicket.SesionUsuario;
-
-import org.hibernate.Session;
-
 import Database.DAOReportes;
 import ObjetosDB.Confirmacion;
 import ObjetosDB.Historial;
 import ObjetosDB.Receta;
-import ObjetosDB.Usuario;
 
 public class NegocioReportes extends Negocio implements Serializable {
 

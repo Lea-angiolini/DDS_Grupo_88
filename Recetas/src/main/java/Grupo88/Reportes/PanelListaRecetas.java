@@ -31,7 +31,10 @@ public class PanelListaRecetas extends Panel{
 				final PageParameters pars = new PageParameters();
 				pars.add("idReceta", historial.getReceta().getIdreceta());
 				
-				Link link = new Link("irReceta") {
+				Link<Object> link = new Link<Object>("irReceta") {
+
+					private static final long serialVersionUID = -4045024294339586828L;
+
 					@Override
 					public void onClick() {
 						setResponsePage(DetalleDeReceta.class,pars);

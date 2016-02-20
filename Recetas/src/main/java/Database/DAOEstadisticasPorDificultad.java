@@ -3,8 +3,6 @@ package Database;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -18,6 +16,7 @@ public class DAOEstadisticasPorDificultad extends DAOEstadistica implements Seri
 		super(session);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Estadistico> obtenerEstadistica(int dias) throws Exception {
 		
